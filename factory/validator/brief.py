@@ -77,6 +77,8 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
     data = _hidden_data(validations, with_assessments=True)
     if len(body) + len(data) > MAX_BODY_CHARS:
         data = _hidden_data(validations, with_assessments=False)
+    if len(body) + len(data) > MAX_BODY_CHARS:
+        data = ""  # the visible brief matters more than the machine copy
     return body + data + "\n"
 
 

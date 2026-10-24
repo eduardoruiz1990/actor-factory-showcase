@@ -66,3 +66,16 @@ def test_watcher_summary_and_warnings_are_shown(result, config):
     body = render_issue_body(result, config)
     assert "All 3 Actors healthy." in body
     assert "> Ideas page fetched but no ideas were parsed." in body
+
+
+def test_hidden_data_holds_only_the_listed_candidates(result, config):
+    data = parse_hidden_data(render_issue_body(result, config))
+    assert len(result.candidates) > config["scout"]["candidates_per_week"]
+    assert len(data["candidates"]) == config["scout"]["candidates_per_week"]
+
+
+def test_oversized_body_drops_the_hidden_data_but_keeps_the_table(result, config, monkeypatch):
+    monkeypatch.setattr("factory.scout.report.MAX_BODY_CHARS", 1_000)
+    body = render_issue_body(result, config)
+    assert parse_hidden_data(body) is None
+    assert len(table_rows(body)) == 20

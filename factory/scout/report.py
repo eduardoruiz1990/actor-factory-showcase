@@ -98,9 +98,12 @@ def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dic
         lines += [f"Skipped niches where you already have an Actor: {', '.join(result.skipped_own_niches)}", ""]
 
     body = "\n".join(lines)
-    data = _hidden_data(result, include_alternatives=True)
+    # The hidden data carries only the listed candidates; the full shortlist travels in scout.json.
+    data = _hidden_data(result, shown, include_alternatives=True)
     if len(body) + len(data) > MAX_BODY_CHARS:
-        data = _hidden_data(result, include_alternatives=False)
+        data = _hidden_data(result, shown, include_alternatives=False)
+    if len(body) + len(data) > MAX_BODY_CHARS:
+        data = ""  # the visible table matters more than the machine copy
     return body + "\n" + data + "\n"
 
 
@@ -112,8 +115,9 @@ def parse_hidden_data(body: str) -> dict[str, Any] | None:
     return json.loads(body[start + len(DATA_MARKER) + 6 : end])
 
 
-def _hidden_data(result: ScoutResult, include_alternatives: bool) -> str:
+def _hidden_data(result: ScoutResult, shown: list[Candidate], include_alternatives: bool) -> str:
     data = result.to_dict()
+    data["candidates"] = [c.to_dict() for c in shown]
     if not include_alternatives:
         for candidate in data["candidates"]:
             candidate["alternatives"] = []

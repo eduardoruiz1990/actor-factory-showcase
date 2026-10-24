@@ -62,10 +62,17 @@ def test_hidden_data_round_trips(validations, config):
     assert data[0]["assessment"]["proposed_actor_name"]
 
 
-def test_size_guard_drops_assessments(validations, config, monkeypatch):
-    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", 5_000)
+def test_size_guard_drops_assessments_then_all_hidden_data(validations, config, monkeypatch):
+    from factory.validator.brief import _hidden_data
+
+    full = render_brief(validations, config, "2026-W43", assessed=ASSESSED)
+    slim = len(visible(full)) + len(_hidden_data(validations, with_assessments=False)) + 10
+    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", slim)
     data = parse_hidden_data(render_brief(validations, config, "2026-W43", assessed=ASSESSED))
-    assert all(d["assessment"] is None for d in data)
+    assert data and all(d["assessment"] is None for d in data)
+    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", 1_000)
+    brief = render_brief(validations, config, "2026-W43", assessed=ASSESSED)
+    assert parse_hidden_data(brief) is None and "### Best picks" in brief
     assert MAX_BODY_CHARS < 65_536
 
 
