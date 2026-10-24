@@ -1,5 +1,13 @@
 # Changelog
 
+## 🧪 Real fixtures for Builder builds (2026-10-25, branch `builder-fixtures`)
+
+- **Why:** in the Builder rehearsal (issue #5, PR #6) Claude could not save raw API responses. 6 of its commands were blocked, and it rebuilt the fixture from WebFetch's summary instead.
+- **Fetch helper (`templates/python-actor/tests/fetch_fixture.py`):** `python -m tests.fetch_fixture <url> tests/fixtures/<name>` saves one real response. It goes through the Actor's own polite client and robots.txt check, then the privacy guard. It writes only under `tests/fixtures/`, and runs under the `python` permission Claude already has, so it does not add `curl`, which would skip robots.txt. 5 new template tests (30 in all).
+- **`docs/BUILDER.md`:** tells Claude to use the helper and not to build fixtures from WebFetch.
+- **`claude.yml`:** keeps Claude's full transcript as the `builder-transcript` artifact for 14 days, so blocked commands and costs can be read after a build.
+- **Rehearsal result:** one build took about 5½ minutes, 40 turns and $1.05. The PR passed the test, actors and scope checks.
+
 ## 🔎 REVIEW verdict for unclear terms (2026-10-25, branch `phase-2-review`)
 
 - **What it is:** a candidate that passes every other rule, but whose terms neither forbid nor clearly allow reuse, is marked 🔎 REVIEW (QUESTIONS Q17). The rules: official API or public feed, no login, no personal data, robots.txt allowing it.

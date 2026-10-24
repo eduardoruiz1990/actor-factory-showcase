@@ -32,7 +32,14 @@ You are building one paid Actor for the Apify Store, in a GitHub Actions run sta
    - Give real input and output examples.
    - State the price.
 9. **Tests in `actors/<name>/tests/`**: keep the template's tests passing, and add tests for the parsing.
-   - Save one or two real responses as fixtures under `tests/fixtures/`. Fetch them with at most a few polite requests, and remove anything personal from them.
+   - Save one or two real responses as fixtures under `tests/fixtures/` with the fetch helper, one call per response:
+
+     ```bash
+     python -m tests.fetch_fixture '<url>' tests/fixtures/<name>.json
+     ```
+
+     It goes through the Actor's polite client and robots.txt check, and blanks e-mail addresses, phone numbers and personal-data fields. Make at most a few calls, and ask the source for a small page of results. Then read the file and remove any names of private people it still holds.
+   - Do not build fixtures from WebFetch: it returns a summary, not the raw response. If the helper cannot fetch the source, say so under **Open points** in the PR.
    - Tests must run offline.
    - Cover these cases: a normal page or response, an empty result, a malformed response, and the robots.txt or terms behaviour that matters for this source.
 

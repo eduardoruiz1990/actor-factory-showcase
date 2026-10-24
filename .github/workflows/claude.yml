@@ -100,6 +100,7 @@ jobs:
           sed -i "s/\"name\": \"my-actor\"/\"name\": \"$NAME\"/" "actors/$NAME/.actor/actor.json"
 
       - name: Build the Actor with Claude
+        id: claude
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -116,6 +117,15 @@ jobs:
             --max-turns ${{ steps.prepare.outputs.max_turns }}
             --allowedTools "Read,Write,Edit,MultiEdit,Glob,Grep,LS,WebFetch,WebSearch,Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(find:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(python:*),Bash(python3:*),Bash(pip:*),Bash(pip3:*),Bash(pytest:*),Bash(apify validate-schema:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*),Bash(git push -u origin ${{ steps.prepare.outputs.branch }}),Bash(git push origin ${{ steps.prepare.outputs.branch }}),Bash(gh pr create:*),Bash(gh issue comment:*)"
             --disallowedTools "Bash(gh pr merge:*),Bash(git push --force:*),Bash(git push -f:*),Bash(apify push:*),Bash(apify login:*)"
+
+      # Claude's full transcript (tool calls, results, permission denials, cost) for diagnosing a build.
+      - name: Keep the build transcript
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: builder-transcript
+          path: ${{ steps.claude.outputs.execution_file }}
+          retention-days: 14
 
       - name: Report a failed build on the issue
         if: failure()

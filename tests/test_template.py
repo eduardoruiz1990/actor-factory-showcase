@@ -13,7 +13,7 @@ def test_template_has_the_official_layout_and_factory_files():
     for path in (".actor/actor.json", ".actor/input_schema.json", ".actor/dataset_schema.json", ".actor/output_schema.json",
                  ".actor/pricing.json", ".actor/listing.json", "Dockerfile", "requirements.txt", "requirements-dev.txt",
                  "README.md", "my_actor/main.py", "my_actor/source.py", "my_actor/polite.py", "my_actor/robots.py",
-                 "my_actor/privacy.py", "tests/test_main.py"):
+                 "my_actor/privacy.py", "tests/test_main.py", "tests/fetch_fixture.py"):
         assert (TEMPLATE / path).is_file(), path
 
 
@@ -53,3 +53,13 @@ def test_publisher_runs_only_after_merges_to_main():
     workflow = yaml.safe_load((ROOT / ".github" / "workflows" / "publish.yml").read_text())
     assert workflow[True]["push"]["branches"] == ["main"]
     assert "apify push --dir" in (ROOT / ".github" / "workflows" / "publish.yml").read_text()
+
+
+def test_builder_is_told_to_fetch_fixtures_with_the_helper():
+    assert "python -m tests.fetch_fixture" in (ROOT / "docs" / "BUILDER.md").read_text()
+    workflow = yaml.safe_load((ROOT / ".github" / "workflows" / "claude.yml").read_text())
+    steps = workflow["jobs"]["build"]["steps"]
+    assert any(s.get("id") == "claude" for s in steps)
+    transcript = next(s for s in steps if s.get("name") == "Keep the build transcript")
+    assert transcript["if"] == "always()"
+    assert "Bash(python:*)" in str(steps)  # the helper runs under the already-allowed python
