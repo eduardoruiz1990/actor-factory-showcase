@@ -6,13 +6,13 @@ Status: **open** means it needs your answer; **assumed** means a choice was made
 
 ---
 
-### Q1. How does the `go` label pick which candidate to build? (open, needed for Phase 2)
+### Q1. How the `go` label picks which candidate to build (resolved 2026-10-25)
 
-The spec has Scout open **one issue per week listing 20 candidates**, and the Builder start "when I add the label `go` to a candidate issue". A label on the weekly issue cannot say which of the 20 you mean.
+You add the `go` label to the weekly Scout issue, then comment `/build <niche-id>`, for example `/build greenhouse-job`.
 
-- Phase 1: one weekly issue, exactly as specified. Every candidate has a stable niche id (for example `greenhouse-job`) in the table, the brief and the hidden JSON.
-- Proposal for Phase 2: add `go`, then comment `/build <niche-id>`. If there is no such comment, the Builder builds nothing and asks which candidate you mean. It never builds a candidate that failed a check.
-- Alternative: Scout also opens one small issue per passing candidate, and you label that issue `go`.
+- **A `go` label alone:** the Builder replies with the ids of the candidates that passed all five checks.
+- **A `/build` command:** before Claude starts, code checks four things. The issue has both the `scout` and `go` labels, the niche passed all five checks in the Validator's data, the proposed Actor name is valid, and `actors/<name>/` does not exist yet. If any check fails, the Builder says why on the issue and builds nothing.
+- **Who can trigger it:** only the repository owner, for both the label and the command.
 
 ### Q2. One brief for all 20 candidates, or one per candidate? (assumed)
 
@@ -89,3 +89,19 @@ What Scout and the Validator do now:
 
 1. **Scout leaves out niches that can never pass** (`scout.exclude` in `config.yaml`): any niche whose title keywords include a listed word (social networks, people and lead data, generic tools and templates), or whose leading Actor is in the `SOCIAL_MEDIA` or `LEAD_GENERATION` category. On the 2026-10-24 data that left out 1,805 of 3,955 niches. Edit the lists freely. The category rule could hide a company-data niche filed under lead generation; remove `LEAD_GENERATION` if you see that happen.
 2. **The Validator assesses the top 40** (`scout.candidates_to_validate`), not 20, and the issue lists the 20 best after validation: candidates passing all five checks first, then by checks passed, then by Scout's score. The issue body is rewritten with that order once the Validator finishes, and the brief says how many were assessed. That is 40 Claude calls a week, roughly $0.30 by the token counts of the first live run.
+
+### Q14. Where pay-per-event pricing is set (assumed)
+
+Pricing is entered once per Actor in Apify Console (**Publishing → Monetization**), not by the Publisher through the API. Apify treats raising a price or adding a paid event as a significant change: users get 14 days' notice, it is allowed once a month, and it cannot be cancelled. A wrong automated write would be costly.
+
+- **Per-result event:** the Actor charges with Apify's synthetic `apify-default-dataset-item` event, which charges once for each item written to the dataset. Keep `apify-actor-start` at Apify's default price, and add no other per-result event, or each result would be charged twice.
+- **Where the values come from:** the Builder writes the price into `actors/<name>/.actor/pricing.json` (the Validator's planned price, Q5). The Publisher prints those values in the "Publish <name>" issue for you to copy.
+
+### Q15. Safety setup the Builder needs from you (open)
+
+1. **Install the Claude GitHub App** on this repository: https://github.com/apps/claude. Without it the Builder workflow cannot run.
+2. **Recommended: protect `main`** (Settings → Branches → add a rule for `main` that requires a pull request before merging). The Builder is told never to push to `main` and is denied force-pushes and `gh pr merge`, but the app has write access. Branch protection makes "only you merge" a rule GitHub enforces, not just an instruction.
+
+### Q16. The Builder's model and cost (assumed)
+
+The Builder runs Claude Code with `claude-opus-5-5`, with at most 120 turns and a 90-minute job timeout (`builder` in `config.yaml`). Building and testing one Actor is long agentic coding work, where the most capable model is worth its price. One build should cost a few dollars, but that is a guess until the first one runs. To try a cheaper run, set `builder.model` to `claude-sonnet-5-5`.

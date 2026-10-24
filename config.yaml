@@ -170,6 +170,18 @@ validator:
     # Layout-change ratings that pass when the site has no official API or feed.
     passing_layout_change: ["rare"]
 
+builder:
+  # The Claude Code GitHub Action that builds an Actor after `go` + `/build <niche-id>` (Q1).
+  model: "claude-opus-5-5"
+  max_turns: 120
+  template_dir: "templates/python-actor"
+  branch_prefix: "build/"
+
+publisher:
+  # Seconds `apify push` waits for the platform build before the workflow moves on.
+  push_wait_seconds: 900
+  publish_label: "publish"
+
 watcher:
   # Phase 3: open a "broken" issue when the 24-hour failure rate passes this.
   broken_failure_rate_24h_above: 0.10

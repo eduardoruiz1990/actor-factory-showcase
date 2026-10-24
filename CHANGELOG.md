@@ -1,5 +1,37 @@
 # Changelog
 
+## Phase 2, part 1: Builder and Publisher infrastructure (2026-10-25, branch `phase-2`)
+
+Everything that does not depend on which niche passes. The first three Actors wait for Scout candidates that pass all five checks.
+
+### Added
+
+- **Actor template (`templates/python-actor/`)**, based on Apify's official `python-start` template (Dockerfile, `.actor/` schemas, `my_actor` package), with the factory's rules built in:
+  - **`polite.py`:** a per-host rate limit, and retries with exponential back-off that honour `Retry-After`.
+  - **`robots.py`:** RFC 9309 matching. When a site's robots.txt cannot be read, the whole site is skipped.
+  - **`privacy.py`:** every item passes through a guard that drops personal-data fields and blanks e-mail addresses and international phone numbers.
+  - **`main.py`:** charges per result with Apify's synthetic `apify-default-dataset-item` event, and stops at the user's spending limit.
+  - **`source.py`:** the only niche-specific file.
+  - **Listing and docs:** a Store README skeleton, plus `.actor/pricing.json` and `.actor/listing.json` for the Publisher.
+  - **Tests:** 25 tests, including local runs that charge against a test pricing setup.
+- **Builder (`.github/workflows/claude.yml`, `factory/builder/`, `docs/BUILDER.md`):**
+  - **Trigger:** `go` plus `/build <niche-id>`, from the owner only (Q1).
+  - **Preparation:** code refuses the build unless the niche passed all five checks. It writes a build brief, copies the template to `actors/<name>/` on a `build/<name>` branch, and runs the Claude Code GitHub Action with `claude-opus-5-5`.
+  - **Claude's tools:** limited to editing files, running Python, tests and schema validation, committing, pushing that branch, opening the PR and commenting. It is denied `gh pr merge`, force-pushes and `apify push`.
+- **Publisher (`.github/workflows/publish.yml`, `factory/publisher/`):** after a merge to `main` touching `actors/`, it tests each changed Actor, deploys it with `apify push`, and, for an Actor that is not public yet, opens the issue "Publish <name>" with the listing text and the monetization values (Q14).
+- **Tests workflow:** now also tests the template and every Actor in its own environment, runs `apify validate-schema` on each, and checks that a `build/*` pull request changes only one `actors/<name>/` folder.
+- **Factory tests:** for the Builder's preparation and its refusals, the scope check, the listing generator, and guards on the template and the Builder workflow.
+
+### Fixed while building
+
+- In the Actor template, a run without pay-per-event pricing (a free Actor, or before monetization is set up) would have stopped after the first result. The SDK reports "limit reached" on every push in that case, so the template now acts on charge results only under pay-per-event pricing.
+- The personal-data guard now normalises keys like `profileURL` correctly.
+
+### Needs you (Q15)
+
+- Install the Claude GitHub App on the repository.
+- Recommended: add branch protection on `main`.
+
 ## Phase 1 fixes after the first live run (2026-10-24, branch `phase-1-live-fixes`)
 
 The first run against live data (Scout and the Validator, both as dry runs, from the owner's machine) worked end to end: 9,688 Store Actors from 19 queries, 245 Actor detail lookups, 148 ideas, and 20 Claude assessments in about 2.5 minutes for roughly $0.15. It found two problems, fixed here:

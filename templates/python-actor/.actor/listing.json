@@ -1,0 +1,6 @@
+{
+    "_comment": "Actor Factory convention, not read by Apify. The Publisher prints these for the owner to paste into Apify Console > Publishing. Categories use Apify Store category names (for example JOBS, BUSINESS, DEVELOPER_TOOLS, ECOMMERCE).",
+    "categories": ["DEVELOPER_TOOLS"],
+    "seoTitle": "Up to 60 characters with the main search keyword",
+    "seoDescription": "Up to 155 characters: what data, from where, for whom."
+}

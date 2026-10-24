@@ -1,0 +1,99 @@
+name: Publisher
+
+# After you merge an Actor pull request, deploy every changed Actor with `apify push`, then prepare its
+# Store listing. For an Actor that is not public yet, it opens the issue "Publish <name>" with the
+# listing text and the monetization values. You publish it once in Apify Console (QUESTIONS Q14).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "actors/**"
+  workflow_dispatch:
+    inputs:
+      actor:
+        description: "Actor folder name to deploy (actors/<name>)"
+        required: true
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install
+        run: |
+          pip install -e .
+          npm install -g apify-cli@1.10.0
+
+      - name: Find changed Actors
+        id: changed
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          MANUAL: ${{ inputs.actor }}
+        run: |
+          if [ -n "$MANUAL" ]; then
+            names="$MANUAL"
+          else
+            names=$(python -m factory.publisher changed --before "$BEFORE" --after "$AFTER" | tr '\n' ' ')
+          fi
+          echo "names=$names" >> "$GITHUB_OUTPUT"
+          echo "Actors to deploy: ${names:-none}"
+
+      - name: Test each Actor before deploying
+        if: steps.changed.outputs.names != ''
+        env:
+          NAMES: ${{ steps.changed.outputs.names }}
+        run: |
+          for name in $NAMES; do
+            echo "::group::Test $name"
+            python -m venv "/tmp/venv-$name"
+            "/tmp/venv-$name/bin/pip" install -q -r "actors/$name/requirements-dev.txt"
+            (cd "actors/$name" && "/tmp/venv-$name/bin/pytest" && apify validate-schema)
+            echo "::endgroup::"
+          done
+
+      - name: Deploy with apify push and prepare the listing
+        if: steps.changed.outputs.names != ''
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NAMES: ${{ steps.changed.outputs.names }}
+          APIFY_CLI_DISABLE_TELEMETRY: "1"
+        run: |
+          apify login --token "$APIFY_TOKEN" > /dev/null
+          wait=$(python -c "from factory.common.config import load_config; print(load_config()['publisher']['push_wait_seconds'])")
+          for name in $NAMES; do
+            echo "::group::Deploy $name"
+            apify push --dir "actors/$name" --wait-for-finish "$wait" --json > "/tmp/push-$name.json"
+            build_url=$(python -c "
+          import json, sys
+          data = json.load(open('/tmp/push-$name.json'))
+          build = data.get('build', data) if isinstance(data, dict) else {}
+          print(build.get('url') or build.get('consoleUrl') or '')
+          " 2>/dev/null || true)
+            python -m factory.publisher listing "$name" ${build_url:+--build-url "$build_url"}
+            echo "::endgroup::"
+          done
