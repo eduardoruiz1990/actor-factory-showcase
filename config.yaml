@@ -1,0 +1,142 @@
+# Actor Factory configuration.
+# Every threshold the agents apply lives in this file; code must not hard-code them.
+# Secrets never go here: they live in GitHub Actions secrets (see .env.example).
+# Choices marked "Q<n>" are explained in docs/QUESTIONS.md.
+
+owner:
+  # Your Apify username. Scout leaves your own Actors out of niche statistics.
+  # Empty until you set it (Q7).
+  apify_username: ""
+
+apify:
+  api_base: "https://api.apify.com/v2"
+  ideas_url: "https://apify.com/ideas"
+  # Platform prices used by the Cost check. Pay-as-you-go list prices, the most
+  # expensive tier, so the check stays conservative (Q5).
+  compute_unit_usd: 0.40
+  residential_proxy_usd_per_gb: 8.00
+
+http:
+  user_agent: "ActorFactoryScout/0.1 (+https://github.com/eduardoruiz1990/actor-factory)"
+  timeout_seconds: 30
+  # Polite rate limit: at most one request per this many seconds to each host.
+  min_interval_seconds: 1.0
+  # Retries on 429, 5xx and network errors; back-off doubles from the base
+  # (2, 4, 8, 16 s plus jitter) unless the server sends Retry-After.
+  max_retries: 4
+  backoff_base_seconds: 2.0
+  backoff_max_seconds: 60.0
+
+scout:
+  candidates_per_week: 20
+  store:
+    sort_by: popularity
+    page_size: 1000            # API maximum per request
+    max_items_per_query: 1000  # the endpoint never returns more than 1,000 records per query
+    # The Store caps each query at 1,000 records, so Scout runs one query per
+    # category (plus one with no category filter) and merges the results.
+    categories:
+      - AI
+      - AGENTS
+      - AUTOMATION
+      - BUSINESS
+      - DEVELOPER_TOOLS
+      - ECOMMERCE
+      - INTEGRATIONS
+      - JOBS
+      - LEAD_GENERATION
+      - MARKETING
+      - NEWS
+      - OPEN_SOURCE
+      - OTHER
+      - REAL_ESTATE
+      - SEO_TOOLS
+      - SOCIAL_MEDIA
+      - TRAVEL
+      - VIDEOS
+  details:
+    # The Store list has no last-update date, so Scout fetches Actor details
+    # (GET /v2/acts/{id}) for the Actors of the best-ranked niches only.
+    niche_pool: 40
+    actors_per_niche: 10
+  # Run statuses counted as failures in the 30-day failure rate. ABORTED runs
+  # are usually stopped by the user, so they are not counted.
+  failure_statuses: ["FAILED", "TIMED-OUT"]
+  # An Actor counts as maintained when its latest build is at most this old
+  # and it is not marked UNDER_MAINTENANCE. Actors without a known build date
+  # count as maintained (conservative, Q3).
+  maintained_max_days_since_update: 90
+  ideas:
+    # Normalised idea statuses that count as "open". Ideas with any other or
+    # no status do not count towards Demand (conservative, Q4).
+    open_statuses: ["open", "open_to_develop", "new"]
+  clustering:
+    # Actors join a niche when the Jaccard similarity of their title keywords
+    # with the niche leader's is at least this value.
+    similarity_threshold: 0.5
+    idea_match_threshold: 0.5
+    # Words that describe the tool rather than the niche. Keep them quoted:
+    # YAML would read a bare no or on as a boolean.
+    stopwords:
+      ["a", "actor", "advanced", "all", "an", "and", "api", "apify", "automation", "best",
+       "bot", "by", "cheap", "cheapest", "complete", "crawler", "data", "downloader", "easy",
+       "extract", "extractor", "fast", "fastest", "for", "free", "from", "full", "get", "in",
+       "info", "lite", "new", "no", "of", "on", "plus", "premium", "pro", "quick", "rapid",
+       "scrape", "scraper", "scrapper", "simple", "smart", "super", "the", "to", "tool",
+       "ultimate", "unlimited", "unofficial", "v1", "v2", "v3", "with", "2024", "2025", "2026",
+       "2027"]
+  ranking:
+    # Opportunity score = log10(1 + demand) * (1 + weakness_bonus * weaknesses),
+    # where demand = niche users over 30 days, or idea upvotes times
+    # idea_upvote_user_equivalent when that is larger, and weaknesses counts
+    # the competition gaps (few maintained alternatives, failing, low-rated or
+    # stale leader).
+    idea_upvote_user_equivalent: 10
+    weakness_bonus: 0.5
+    # Niches below this demand are not listed at all.
+    min_demand: 5
+
+validator:
+  model: "claude-sonnet-5-5"
+  effort: "medium"
+  max_tokens: 16000
+  # Server-side refusal fallback (fallbacks: "default", Claude API only).
+  server_side_fallback: true
+  demand:
+    min_users_30d: 50
+    min_idea_upvotes: 1
+  competition:
+    fewer_than_maintained_alternatives: 3
+    leader_failure_rate_above: 0.10
+    leader_rating_below: 4.0
+  legality:
+    # When false, data that holds personal data the Actor could strip still
+    # fails Legality (conservative, Q6).
+    allow_removable_personal_data: false
+    robots_user_agent: "*"
+  cost:
+    max_share_of_price: 0.30
+    # Planned price per 1,000 results = the niche leader's price times this
+    # share; a free or unpriced leader uses the default (Q5).
+    planned_price_share_of_leader: 0.8
+    default_price_per_1000_usd: 2.00
+    # Floors on the model's compute estimate per 1,000 results, by approach.
+    min_compute_units_per_1000:
+      official_api: 0.02
+      http: 0.10
+      browser: 1.00
+    # Floor on residential proxy traffic when the model says residential
+    # proxies are needed.
+    min_residential_gb_per_1000: 0.10
+  stability:
+    # Layout-change ratings that pass when the site has no official API or feed.
+    passing_layout_change: ["rare"]
+
+watcher:
+  # Phase 3: open a "broken" issue when the 24-hour failure rate passes this.
+  broken_failure_rate_24h_above: 0.10
+
+github:
+  scout_label: "scout"
+  go_label: "go"
+  broken_label: "broken"

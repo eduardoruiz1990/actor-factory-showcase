@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "actor-factory"
+version = "0.1.0"
+description = "Agents that find, build, publish and maintain paid Actors on the Apify Store."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=2.3,<3",
+    "httpx>=0.28,<1",
+    "pyyaml>=6,<7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9,<10"]
+
+[tool.setuptools.packages.find]
+include = ["factory*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

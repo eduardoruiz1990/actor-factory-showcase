@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/
+
+# Local secrets: copy .env.example to .env for local runs; never commit it
+.env
+.env.*
+!.env.example
+
+# Agent output (issue bodies, briefs, raw API captures)
+out/
+
+# Apify CLI local storage
+storage/
+apify_storage/

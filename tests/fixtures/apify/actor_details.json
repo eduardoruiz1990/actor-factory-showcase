@@ -1,0 +1,5395 @@
+{
+ "2P5wvASQsAHst8rvy": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: npm download stats.",
+   "id": "2P5wvASQsAHst8rvy",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-29T00:00:00.000Z",
+   "name": "npm-download-stats",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 2,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 12,
+     "FAILED": 4,
+     "SUCCEEDED": 579,
+     "TIMED-OUT": 2,
+     "TOTAL": 597
+    },
+    "totalBuilds": 114,
+    "totalMetamorphs": 0,
+    "totalRuns": 8358,
+    "totalUsers": 326,
+    "totalUsers30Days": 40,
+    "totalUsers7Days": 15,
+    "totalUsers90Days": 83
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "HWxcDBbHUmZsTehoS",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-04T00:00:00.000Z"
+    }
+   },
+   "title": "npm Download Stats",
+   "userId": "dQwUWVbd5o5dnHSpd",
+   "username": "kestrel-data"
+  }
+ },
+ "2tk3JrhP65KrA4rJc": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: app store reviews scraper.",
+   "id": "2tk3JrhP65KrA4rJc",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-18T00:00:00.000Z",
+   "name": "app-store-reviews-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0005,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 25,
+    "actorReviewRating": 4.1,
+    "bookmarkCount": 65,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 280,
+     "FAILED": 587,
+     "SUCCEEDED": 12857,
+     "TIMED-OUT": 252,
+     "TOTAL": 13976
+    },
+    "totalBuilds": 129,
+    "totalMetamorphs": 0,
+    "totalRuns": 195664,
+    "totalUsers": 9548,
+    "totalUsers30Days": 1300,
+    "totalUsers7Days": 463,
+    "totalUsers90Days": 2931
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "bcNYU5W8eTec2nGoM",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-12T00:00:00.000Z"
+    }
+   },
+   "title": "App Store Reviews Scraper",
+   "userId": "dAxwm5R6Kbu77AJfY",
+   "username": "zephyr-dev"
+  }
+ },
+ "46sEmyzJqA6H3HKc7": {
+  "data": {
+   "categories": [
+    "SOCIAL_MEDIA"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: instagram profile scraper.",
+   "id": "46sEmyzJqA6H3HKc7",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-21T00:00:00.000Z",
+   "name": "instagram-profile-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0023,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 380,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 750,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 5454,
+     "FAILED": 7635,
+     "SUCCEEDED": 256328,
+     "TIMED-OUT": 3273,
+     "TOTAL": 272690
+    },
+    "totalBuilds": 118,
+    "totalMetamorphs": 0,
+    "totalRuns": 3817660,
+    "totalUsers": 120195,
+    "totalUsers30Days": 15000,
+    "totalUsers7Days": 6653,
+    "totalUsers90Days": 36145
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "3oyKK7YChZz4foaCc",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-18T00:00:00.000Z"
+    }
+   },
+   "title": "Instagram Profile Scraper",
+   "userId": "C69KbMi9EvpgCEkpK",
+   "username": "tidepool"
+  }
+ },
+ "4ZngSacBuxU9i2cQX": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: yelp reviews.",
+   "id": "4ZngSacBuxU9i2cQX",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-29T00:00:00.000Z",
+   "name": "yelp-reviews",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 3,
+    "actorReviewRating": 4.3,
+    "bookmarkCount": 10,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 37,
+     "FAILED": 64,
+     "SUCCEEDED": 1703,
+     "TIMED-OUT": 28,
+     "TOTAL": 1832
+    },
+    "totalBuilds": 49,
+    "totalMetamorphs": 0,
+    "totalRuns": 25648,
+    "totalUsers": 1421,
+    "totalUsers30Days": 200,
+    "totalUsers7Days": 68,
+    "totalUsers90Days": 473
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "YA2iJoMj3LiaDL3R7",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-04T00:00:00.000Z"
+    }
+   },
+   "title": "Yelp Reviews",
+   "userId": "za4tzWJaqfJMxwkVN",
+   "username": "alder-labs"
+  }
+ },
+ "78zy37ryA2PfKD54y": {
+  "data": {
+   "categories": [
+    "NEWS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: hacker news posts.",
+   "id": "78zy37ryA2PfKD54y",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-07T12:00:00.000Z",
+   "name": "hacker-news-posts",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.001,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 4,
+    "actorReviewRating": 4.8,
+    "bookmarkCount": 3,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 14,
+     "FAILED": 10,
+     "SUCCEEDED": 677,
+     "TIMED-OUT": 4,
+     "TOTAL": 705
+    },
+    "totalBuilds": 41,
+    "totalMetamorphs": 0,
+    "totalRuns": 9870,
+    "totalUsers": 346,
+    "totalUsers30Days": 60,
+    "totalUsers7Days": 20,
+    "totalUsers90Days": 130
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "pNvFKBTPbi6sErPHM",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-21T00:00:00.000Z"
+    }
+   },
+   "title": "Hacker News Posts",
+   "userId": "QQVaKWxDy7oMnCdRv",
+   "username": "harbor-scrapers"
+  }
+ },
+ "7X2HCjL5SdS6fAZaB": {
+  "data": {
+   "categories": [
+    "AI"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: website content extractor.",
+   "id": "7X2HCjL5SdS6fAZaB",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-17T00:00:00.000Z",
+   "name": "website-content-extractor",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0004,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 12,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 25,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 171,
+     "FAILED": 179,
+     "SUCCEEDED": 8118,
+     "TIMED-OUT": 77,
+     "TOTAL": 8545
+    },
+    "totalBuilds": 89,
+    "totalMetamorphs": 0,
+    "totalRuns": 119630,
+    "totalUsers": 3429,
+    "totalUsers30Days": 500,
+    "totalUsers7Days": 222,
+    "totalUsers90Days": 1265
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "CYyHuAANXaxew8q9m",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-10T00:00:00.000Z"
+    }
+   },
+   "title": "Website Content Extractor",
+   "userId": "W6tqJxaXnf9JkXHiY",
+   "username": "quarry-tools"
+  }
+ },
+ "7aBsEzNhrhDxu5KMN": {
+  "data": {
+   "categories": [
+    "LEAD_GENERATION"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google maps leads.",
+   "id": "7aBsEzNhrhDxu5KMN",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-07-16T00:00:00.000Z",
+   "name": "google-maps-leads",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 15.0,
+     "pricingModel": "FLAT_PRICE_PER_MONTH",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "trialMinutes": 1440
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 12,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 40,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 271,
+     "FAILED": 1139,
+     "SUCCEEDED": 11666,
+     "TIMED-OUT": 489,
+     "TOTAL": 13565
+    },
+    "totalBuilds": 167,
+    "totalMetamorphs": 0,
+    "totalRuns": 189910,
+    "totalUsers": 5590,
+    "totalUsers30Days": 800,
+    "totalUsers7Days": 307,
+    "totalUsers90Days": 1752
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "RTZwg4gYHDNLPLMWx",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-04-07T00:00:00.000Z"
+    }
+   },
+   "title": "Google Maps Leads",
+   "userId": "QQVaKWxDy7oMnCdRv",
+   "username": "harbor-scrapers"
+  }
+ },
+ "8DGQ3HTGz4PZTENBP": {
+  "data": {
+   "categories": [
+    "BUSINESS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: sec filings api.",
+   "id": "8DGQ3HTGz4PZTENBP",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-19T00:00:00.000Z",
+   "name": "sec-filings-api",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 2,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 13,
+     "FAILED": 5,
+     "SUCCEEDED": 626,
+     "TIMED-OUT": 1,
+     "TOTAL": 645
+    },
+    "totalBuilds": 113,
+    "totalMetamorphs": 0,
+    "totalRuns": 9030,
+    "totalUsers": 231,
+    "totalUsers30Days": 40,
+    "totalUsers7Days": 14,
+    "totalUsers90Days": 93
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "skTGCPuPAhAceYWcZ",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-14T00:00:00.000Z"
+    }
+   },
+   "title": "SEC Filings API",
+   "userId": "MVJ7AKrS7oejWQMmy",
+   "username": "fjord-dev"
+  }
+ },
+ "9hGdprNp97qJSJDnx": {
+  "data": {
+   "categories": [
+    "NEWS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: hacker news top stories.",
+   "id": "9hGdprNp97qJSJDnx",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-19T00:00:00.000Z",
+   "name": "hn-top-stories",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 7,
+     "FAILED": 2,
+     "SUCCEEDED": 321,
+     "TIMED-OUT": 1,
+     "TOTAL": 331
+    },
+    "totalBuilds": 154,
+    "totalMetamorphs": 0,
+    "totalRuns": 4634,
+    "totalUsers": 214,
+    "totalUsers30Days": 25,
+    "totalUsers7Days": 8,
+    "totalUsers90Days": 62
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "fHHgmbbKpN2YrKAXa",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-15T00:00:00.000Z"
+    }
+   },
+   "title": "Hacker News Top Stories",
+   "userId": "C69KbMi9EvpgCEkpK",
+   "username": "tidepool"
+  }
+ },
+ "9jSx5ftGkyWHDXoRb": {
+  "data": {
+   "categories": [
+    "OTHER"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: steam game prices.",
+   "id": "9jSx5ftGkyWHDXoRb",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-19T00:00:00.000Z",
+   "name": "steam-game-prices",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 5,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 61,
+     "FAILED": 128,
+     "SUCCEEDED": 2808,
+     "TIMED-OUT": 55,
+     "TOTAL": 3052
+    },
+    "totalBuilds": 192,
+    "totalMetamorphs": 0,
+    "totalRuns": 42728,
+    "totalUsers": 2368,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 110,
+    "totalUsers90Days": 687
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "Z9gssHE5VNFPK3ZEb",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-15T00:00:00.000Z"
+    }
+   },
+   "title": "Steam Game Prices",
+   "userId": "2q2VGgxihhzmasg4Q",
+   "username": "wren-automation"
+  }
+ },
+ "A5PkCThxfcSDiwWck": {
+  "data": {
+   "categories": [
+    "VIDEOS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: youtube channel videos.",
+   "id": "A5PkCThxfcSDiwWck",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-04T00:00:00.000Z",
+   "name": "youtube-channel-videos",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.0015,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 18,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 55,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 430,
+     "FAILED": 1054,
+     "SUCCEEDED": 19580,
+     "TIMED-OUT": 452,
+     "TOTAL": 21516
+    },
+    "totalBuilds": 10,
+    "totalMetamorphs": 0,
+    "totalRuns": 301224,
+    "totalUsers": 8393,
+    "totalUsers30Days": 1100,
+    "totalUsers7Days": 416,
+    "totalUsers90Days": 2839
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "RqCHhWiCLDgazGn6q",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-14T00:00:00.000Z"
+    }
+   },
+   "title": "YouTube Channel Videos",
+   "userId": "EqKsrsn8F6iG5YtLy",
+   "username": "cinder-io"
+  }
+ },
+ "B3g5zVy27BYcWie6C": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: amazon products api.",
+   "id": "B3g5zVy27BYcWie6C",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-20T12:00:00.000Z",
+   "name": "amazon-products-api",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0025,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 33,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 90,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 346,
+     "FAILED": 484,
+     "SUCCEEDED": 16238,
+     "TIMED-OUT": 207,
+     "TOTAL": 17275
+    },
+    "totalBuilds": 25,
+    "totalMetamorphs": 0,
+    "totalRuns": 241850,
+    "totalUsers": 10212,
+    "totalUsers30Days": 1800,
+    "totalUsers7Days": 541,
+    "totalUsers90Days": 4566
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "zVvRf6U43vtkXooeL",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-17T00:00:00.000Z"
+    }
+   },
+   "title": "Amazon Products API",
+   "userId": "dAxwm5R6Kbu77AJfY",
+   "username": "zephyr-dev"
+  }
+ },
+ "C3zufwfirws4SF29t": {
+  "data": {
+   "categories": [
+    "BUSINESS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: eu tenders.",
+   "id": "C3zufwfirws4SF29t",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-07-16T00:00:00.000Z",
+   "name": "eu-tenders",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 7,
+     "FAILED": 14,
+     "SUCCEEDED": 304,
+     "TIMED-OUT": 6,
+     "TOTAL": 331
+    },
+    "totalBuilds": 67,
+    "totalMetamorphs": 0,
+    "totalRuns": 4634,
+    "totalUsers": 91,
+    "totalUsers30Days": 20,
+    "totalUsers7Days": 7,
+    "totalUsers90Days": 42
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "tAgDkp5QhLYNk6bqf",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-04-07T00:00:00.000Z"
+    }
+   },
+   "title": "EU Tenders",
+   "userId": "pNceUNXmZXGgwDZyf",
+   "username": "brightline-io"
+  }
+ },
+ "CTX6aFKLKSXqMFkFV": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: linkedin job postings.",
+   "id": "CTX6aFKLKSXqMFkFV",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-16T12:00:00.000Z",
+   "name": "linkedin-job-postings",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 5,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 48,
+     "FAILED": 168,
+     "SUCCEEDED": 2113,
+     "TIMED-OUT": 72,
+     "TOTAL": 2401
+    },
+    "totalBuilds": 50,
+    "totalMetamorphs": 0,
+    "totalRuns": 33614,
+    "totalUsers": 1359,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 96,
+    "totalUsers90Days": 670
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "nRqKhbZeeySmKNejo",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-09T00:00:00.000Z"
+    }
+   },
+   "title": "LinkedIn Job Postings",
+   "userId": "NrUPHdYwRYvNZbmaj",
+   "username": "sable-data"
+  }
+ },
+ "DYYbVmuFujgTW6yXN": {
+  "data": {
+   "categories": [
+    "SEO_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: sitemap urls scraper.",
+   "id": "DYYbVmuFujgTW6yXN",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-19T00:00:00.000Z",
+   "name": "sitemap-urls-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 14,
+    "actorReviewRating": 4.6,
+    "bookmarkCount": 30,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 151,
+     "FAILED": 106,
+     "SUCCEEDED": 7234,
+     "TIMED-OUT": 45,
+     "TOTAL": 7536
+    },
+    "totalBuilds": 177,
+    "totalMetamorphs": 0,
+    "totalRuns": 105504,
+    "totalUsers": 4896,
+    "totalUsers30Days": 600,
+    "totalUsers7Days": 210,
+    "totalUsers90Days": 1430
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "QdzcLSPZWo9TdKbdU",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-14T00:00:00.000Z"
+    }
+   },
+   "title": "Sitemap URLs Scraper",
+   "userId": "QQVaKWxDy7oMnCdRv",
+   "username": "harbor-scrapers"
+  }
+ },
+ "EKzpBR8cWDZgkdYUJ": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: wordpress plugins scraper.",
+   "id": "EKzpBR8cWDZgkdYUJ",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-25T00:00:00.000Z",
+   "name": "wordpress-plugins-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.002,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 3,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 4,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 22,
+     "FAILED": 83,
+     "SUCCEEDED": 937,
+     "TIMED-OUT": 36,
+     "TOTAL": 1078
+    },
+    "totalBuilds": 149,
+    "totalMetamorphs": 0,
+    "totalRuns": 15092,
+    "totalUsers": 443,
+    "totalUsers30Days": 85,
+    "totalUsers7Days": 25,
+    "totalUsers90Days": 208
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "kmJELiRWVnFLkAoXg",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-06-26T00:00:00.000Z"
+    }
+   },
+   "title": "WordPress Plugins Scraper",
+   "userId": "EkfiCvUHZjmQwTRKz",
+   "username": "cobalt-crawl"
+  }
+ },
+ "EPHJBXnHL96E3bt4b": {
+  "data": {
+   "categories": [
+    "AI"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: website content scraper.",
+   "id": "EPHJBXnHL96E3bt4b",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-14T00:00:00.000Z",
+   "name": "website-content-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 6,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 118,
+     "FAILED": 207,
+     "SUCCEEDED": 5494,
+     "TIMED-OUT": 88,
+     "TOTAL": 5907
+    },
+    "totalBuilds": 115,
+    "totalMetamorphs": 0,
+    "totalRuns": 82698,
+    "totalUsers": 1902,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 100,
+    "totalUsers90Days": 617
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "3dCDcgXZevXhxKRtj",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-04T00:00:00.000Z"
+    }
+   },
+   "title": "Website Content Scraper",
+   "userId": "dQwUWVbd5o5dnHSpd",
+   "username": "kestrel-data"
+  }
+ },
+ "F7qEzWauQZdwtELZW": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: github repositories scraper.",
+   "id": "F7qEzWauQZdwtELZW",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-17T12:00:00.000Z",
+   "name": "github-repositories-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.001,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 8,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 20,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 158,
+     "FAILED": 277,
+     "SUCCEEDED": 7357,
+     "TIMED-OUT": 119,
+     "TOTAL": 7911
+    },
+    "totalBuilds": 145,
+    "totalMetamorphs": 0,
+    "totalRuns": 110754,
+    "totalUsers": 2263,
+    "totalUsers30Days": 400,
+    "totalUsers7Days": 136,
+    "totalUsers90Days": 876
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "EPAF948FvBApV3foD",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-11T00:00:00.000Z"
+    }
+   },
+   "title": "GitHub Repositories Scraper",
+   "userId": "QQVaKWxDy7oMnCdRv",
+   "username": "harbor-scrapers"
+  }
+ },
+ "FMGLcAFUPB7jmTJvA": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: amazon product details.",
+   "id": "FMGLcAFUPB7jmTJvA",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-11T12:00:00.000Z",
+   "name": "amazon-product-details",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.0025,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 70,
+    "actorReviewRating": 4.3,
+    "bookmarkCount": 125,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 925,
+     "FAILED": 1619,
+     "SUCCEEDED": 43020,
+     "TIMED-OUT": 694,
+     "TOTAL": 46258
+    },
+    "totalBuilds": 39,
+    "totalMetamorphs": 0,
+    "totalRuns": 647612,
+    "totalUsers": 17545,
+    "totalUsers30Days": 2500,
+    "totalUsers7Days": 914,
+    "totalUsers90Days": 6396
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "2y7cKcQV6GmpyRrcT",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-29T00:00:00.000Z"
+    }
+   },
+   "title": "Amazon Product Details",
+   "userId": "FBBK8mjQjuQqdXVNa",
+   "username": "orbit-tools"
+  }
+ },
+ "JC8c4WLiFWPAf4XCs": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: indeed jobs api.",
+   "id": "JC8c4WLiFWPAf4XCs",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-15T00:00:00.000Z",
+   "name": "indeed-jobs-api",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 8,
+    "actorReviewRating": 3.4,
+    "bookmarkCount": 20,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 142,
+     "FAILED": 995,
+     "SUCCEEDED": 5545,
+     "TIMED-OUT": 427,
+     "TOTAL": 7109
+    },
+    "totalBuilds": 152,
+    "totalMetamorphs": 0,
+    "totalRuns": 99526,
+    "totalUsers": 1619,
+    "totalUsers30Days": 400,
+    "totalUsers7Days": 161,
+    "totalUsers90Days": 866
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "adhgdRdbrTyUWBoRe",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-06-06T00:00:00.000Z"
+    }
+   },
+   "title": "Indeed Jobs API",
+   "userId": "LKLdbp3zam6gAJcNj",
+   "username": "northwind-data"
+  }
+ },
+ "JGZh3cf28CVvyLgpF": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: linkedin jobs scraper - no login.",
+   "id": "JGZh3cf28CVvyLgpF",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-20T00:00:00.000Z",
+   "name": "linkedin-jobs-no-login",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.001,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 19,
+    "actorReviewRating": 3.2,
+    "bookmarkCount": 40,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 170,
+     "FAILED": 1486,
+     "SUCCEEDED": 6197,
+     "TIMED-OUT": 636,
+     "TOTAL": 8489
+    },
+    "totalBuilds": 95,
+    "totalMetamorphs": 0,
+    "totalRuns": 118846,
+    "totalUsers": 5130,
+    "totalUsers30Days": 800,
+    "totalUsers7Days": 304,
+    "totalUsers90Days": 1701
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "nyPtJpKtRvan7ZBrS",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-06-16T00:00:00.000Z"
+    }
+   },
+   "title": "LinkedIn Jobs Scraper - No Login",
+   "userId": "PLfBH4xKbYUru2dmq",
+   "username": "parcel-bots"
+  }
+ },
+ "JTi4qyQ3KFf2ZFCC5": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: apple app store reviews.",
+   "id": "JTi4qyQ3KFf2ZFCC5",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "apple-app-store-reviews",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.0005,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 8,
+    "actorReviewRating": 4.3,
+    "bookmarkCount": 20,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 134,
+     "FAILED": 187,
+     "SUCCEEDED": 6290,
+     "TIMED-OUT": 81,
+     "TOTAL": 6692
+    },
+    "totalBuilds": 84,
+    "totalMetamorphs": 0,
+    "totalRuns": 93688,
+    "totalUsers": 3246,
+    "totalUsers30Days": 400,
+    "totalUsers7Days": 138,
+    "totalUsers90Days": 1035
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "KbazWApYnxr9is278",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Apple App Store Reviews",
+   "userId": "za4tzWJaqfJMxwkVN",
+   "username": "alder-labs"
+  }
+ },
+ "K48iuowwzdGyK2oLa": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: shopify catalog scraper.",
+   "id": "K48iuowwzdGyK2oLa",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-05-27T00:00:00.000Z",
+   "name": "shopify-catalog-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 2,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 7,
+     "FAILED": 0,
+     "SUCCEEDED": 364,
+     "TIMED-OUT": 0,
+     "TOTAL": 371
+    },
+    "totalBuilds": 127,
+    "totalMetamorphs": 0,
+    "totalRuns": 5194,
+    "totalUsers": 317,
+    "totalUsers30Days": 40,
+    "totalUsers7Days": 13,
+    "totalUsers90Days": 102
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "bcmHX9JUAcvd7J5cL",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2025-12-28T00:00:00.000Z"
+    }
+   },
+   "title": "Shopify Catalog Scraper",
+   "userId": "PLfBH4xKbYUru2dmq",
+   "username": "parcel-bots"
+  }
+ },
+ "KumAMJnFAmT9pHj3V": {
+  "data": {
+   "categories": [
+    "NEWS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: federal register documents scraper.",
+   "id": "KumAMJnFAmT9pHj3V",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "federal-register-documents",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 4,
+     "FAILED": 0,
+     "SUCCEEDED": 221,
+     "TIMED-OUT": 0,
+     "TOTAL": 225
+    },
+    "totalBuilds": 119,
+    "totalMetamorphs": 0,
+    "totalRuns": 3150,
+    "totalUsers": 187,
+    "totalUsers30Days": 25,
+    "totalUsers7Days": 10,
+    "totalUsers90Days": 64
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "eYE7BQtAQB7J7FSf6",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Federal Register Documents Scraper",
+   "userId": "EkfiCvUHZjmQwTRKz",
+   "username": "cobalt-crawl"
+  }
+ },
+ "L4pnXHgKVzPs8CeNz": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: etsy listings scraper.",
+   "id": "L4pnXHgKVzPs8CeNz",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-11T12:00:00.000Z",
+   "name": "etsy-listings-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 20,
+    "actorReviewRating": 3.4,
+    "bookmarkCount": 55,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 375,
+     "FAILED": 2234,
+     "SUCCEEDED": 15206,
+     "TIMED-OUT": 957,
+     "TOTAL": 18772
+    },
+    "totalBuilds": 44,
+    "totalMetamorphs": 0,
+    "totalRuns": 262808,
+    "totalUsers": 7733,
+    "totalUsers30Days": 1100,
+    "totalUsers7Days": 448,
+    "totalUsers90Days": 2226
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "qAspNsDG2kYEo9Euj",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-29T00:00:00.000Z"
+    }
+   },
+   "title": "Etsy Listings Scraper",
+   "userId": "EqKsrsn8F6iG5YtLy",
+   "username": "cinder-io"
+  }
+ },
+ "LEA6eL4XBbAHWcnVW": {
+  "data": {
+   "categories": [
+    "SOCIAL_MEDIA"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: instagram profiles.",
+   "id": "LEA6eL4XBbAHWcnVW",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-01T12:00:00.000Z",
+   "name": "instagram-profiles",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 14,
+    "actorReviewRating": 3.6,
+    "bookmarkCount": 45,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 297,
+     "FAILED": 1560,
+     "SUCCEEDED": 12332,
+     "TIMED-OUT": 669,
+     "TOTAL": 14858
+    },
+    "totalBuilds": 17,
+    "totalMetamorphs": 0,
+    "totalRuns": 208012,
+    "totalUsers": 4847,
+    "totalUsers30Days": 900,
+    "totalUsers7Days": 286,
+    "totalUsers90Days": 1866
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "faj7QUQrX49D4kxSU",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-09T00:00:00.000Z"
+    }
+   },
+   "title": "Instagram Profiles",
+   "userId": "EkfiCvUHZjmQwTRKz",
+   "username": "cobalt-crawl"
+  }
+ },
+ "LLxFYTX8af48BkYW2": {
+  "data": {
+   "categories": [
+    "BUSINESS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: ted eu tenders scraper.",
+   "id": "LLxFYTX8af48BkYW2",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-10T00:00:00.000Z",
+   "name": "ted-eu-tenders-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.004,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 5,
+    "actorReviewRating": 3.2,
+    "bookmarkCount": 3,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 14,
+     "FAILED": 93,
+     "SUCCEEDED": 555,
+     "TIMED-OUT": 41,
+     "TOTAL": 703
+    },
+    "totalBuilds": 66,
+    "totalMetamorphs": 0,
+    "totalRuns": 9842,
+    "totalUsers": 492,
+    "totalUsers30Days": 70,
+    "totalUsers7Days": 27,
+    "totalUsers90Days": 169
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "QvEiZhhVpW8BZczRX",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-05-27T00:00:00.000Z"
+    }
+   },
+   "title": "TED EU Tenders Scraper",
+   "userId": "C69KbMi9EvpgCEkpK",
+   "username": "tidepool"
+  }
+ },
+ "Mf5EScyRHFBv5FAMd": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: greenhouse job board scraper.",
+   "id": "Mf5EScyRHFBv5FAMd",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "greenhouse-job-board",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.001,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 2,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 17,
+     "FAILED": 30,
+     "SUCCEEDED": 801,
+     "TIMED-OUT": 13,
+     "TOTAL": 861
+    },
+    "totalBuilds": 157,
+    "totalMetamorphs": 0,
+    "totalRuns": 12054,
+    "totalUsers": 304,
+    "totalUsers30Days": 45,
+    "totalUsers7Days": 18,
+    "totalUsers90Days": 99
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "NjeCUGBj7MdWbxFmi",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Greenhouse Job Board Scraper",
+   "userId": "EqKsrsn8F6iG5YtLy",
+   "username": "cinder-io"
+  }
+ },
+ "N2yGRYVb4rysEKMpy": {
+  "data": {
+   "categories": [
+    "TRAVEL"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: booking.com reviews.",
+   "id": "N2yGRYVb4rysEKMpy",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-02T00:00:00.000Z",
+   "name": "booking-com-reviews",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.001,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 15,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 35,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 273,
+     "FAILED": 763,
+     "SUCCEEDED": 12268,
+     "TIMED-OUT": 328,
+     "TOTAL": 13632
+    },
+    "totalBuilds": 76,
+    "totalMetamorphs": 0,
+    "totalRuns": 190848,
+    "totalUsers": 3415,
+    "totalUsers30Days": 700,
+    "totalUsers7Days": 247,
+    "totalUsers90Days": 1599
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "mzYfEHHc8dapcVMAM",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-10T00:00:00.000Z"
+    }
+   },
+   "title": "Booking.com Reviews",
+   "userId": "NrUPHdYwRYvNZbmaj",
+   "username": "sable-data"
+  }
+ },
+ "Nh6RJdroRV4TF86j6": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: github repositories.",
+   "id": "Nh6RJdroRV4TF86j6",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-24T00:00:00.000Z",
+   "name": "github-repositories",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 2,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 3,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 10,
+     "FAILED": 14,
+     "SUCCEEDED": 456,
+     "TIMED-OUT": 5,
+     "TOTAL": 485
+    },
+    "totalBuilds": 132,
+    "totalMetamorphs": 0,
+    "totalRuns": 6790,
+    "totalUsers": 311,
+    "totalUsers30Days": 60,
+    "totalUsers7Days": 18,
+    "totalUsers90Days": 137
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "JERRCczEmusL3NbY2",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-25T00:00:00.000Z"
+    }
+   },
+   "title": "GitHub Repositories",
+   "userId": "EkfiCvUHZjmQwTRKz",
+   "username": "cobalt-crawl"
+  }
+ },
+ "P7amo4v6yGTQ8qFqm": {
+  "data": {
+   "categories": [
+    "OTHER"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: weather forecast api.",
+   "id": "P7amo4v6yGTQ8qFqm",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-04-07T00:00:00.000Z",
+   "name": "weather-forecast-api",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 0,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 4,
+     "FAILED": 0,
+     "SUCCEEDED": 188,
+     "TIMED-OUT": 0,
+     "TOTAL": 192
+    },
+    "totalBuilds": 157,
+    "totalMetamorphs": 0,
+    "totalRuns": 2688,
+    "totalUsers": 102,
+    "totalUsers30Days": 15,
+    "totalUsers7Days": 4,
+    "totalUsers90Days": 38
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "qKS7KuK9VktayFV4D",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2025-09-19T00:00:00.000Z"
+    }
+   },
+   "title": "Weather Forecast API",
+   "userId": "PLfBH4xKbYUru2dmq",
+   "username": "parcel-bots"
+  }
+ },
+ "Q57VcMBNqBDZ2TEUM": {
+  "data": {
+   "categories": [
+    "SEO_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: sitemap url extractor.",
+   "id": "Q57VcMBNqBDZ2TEUM",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "sitemap-url-extractor",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 7,
+    "actorReviewRating": 4.8,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 66,
+     "FAILED": 23,
+     "SUCCEEDED": 3183,
+     "TIMED-OUT": 10,
+     "TOTAL": 3282
+    },
+    "totalBuilds": 78,
+    "totalMetamorphs": 0,
+    "totalRuns": 45948,
+    "totalUsers": 1898,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 130,
+    "totalUsers90Days": 691
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "UAvHtQmjzPR6R9PqQ",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Sitemap URL Extractor",
+   "userId": "C69KbMi9EvpgCEkpK",
+   "username": "tidepool"
+  }
+ },
+ "QrJSjD9VKWwxgEwwd": {
+  "data": {
+   "categories": [
+    "BUSINESS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: sec edgar filings scraper.",
+   "id": "QrJSjD9VKWwxgEwwd",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-25T00:00:00.000Z",
+   "name": "sec-edgar-filings-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 9,
+    "actorReviewRating": 3.8,
+    "bookmarkCount": 19,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 76,
+     "FAILED": 320,
+     "SUCCEEDED": 3279,
+     "TIMED-OUT": 137,
+     "TOTAL": 3812
+    },
+    "totalBuilds": 32,
+    "totalMetamorphs": 0,
+    "totalRuns": 53368,
+    "totalUsers": 3175,
+    "totalUsers30Days": 380,
+    "totalUsers7Days": 149,
+    "totalUsers90Days": 793
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "hs94YHF8DdvLQWvUx",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-06-26T00:00:00.000Z"
+    }
+   },
+   "title": "SEC EDGAR Filings Scraper",
+   "userId": "TNZTGyJJ8adVeAhtr",
+   "username": "lumen-labs"
+  }
+ },
+ "QvC6EwmiXJMt7bN6N": {
+  "data": {
+   "categories": [
+    "LEAD_GENERATION"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: fast google maps scraper.",
+   "id": "QvC6EwmiXJMt7bN6N",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-24T00:00:00.000Z",
+   "name": "fast-google-maps-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 22,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 65,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 318,
+     "FAILED": 1002,
+     "SUCCEEDED": 14149,
+     "TIMED-OUT": 429,
+     "TOTAL": 15898
+    },
+    "totalBuilds": 84,
+    "totalMetamorphs": 0,
+    "totalRuns": 222572,
+    "totalUsers": 6095,
+    "totalUsers30Days": 1300,
+    "totalUsers7Days": 526,
+    "totalUsers90Days": 2618
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "crqaoBsp5W26RoBZn",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-25T00:00:00.000Z"
+    }
+   },
+   "title": "Fast Google Maps Scraper",
+   "userId": "dQwUWVbd5o5dnHSpd",
+   "username": "kestrel-data"
+  }
+ },
+ "QxCzdaSkgBRmSWFaD": {
+  "data": {
+   "categories": [
+    "REAL_ESTATE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: zillow zestimate scraper.",
+   "id": "QxCzdaSkgBRmSWFaD",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-10T00:00:00.000Z",
+   "name": "zillow-zestimate-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 6,
+    "actorReviewRating": 3.5,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 76,
+     "FAILED": 529,
+     "SUCCEEDED": 2949,
+     "TIMED-OUT": 227,
+     "TOTAL": 3781
+    },
+    "totalBuilds": 10,
+    "totalMetamorphs": 0,
+    "totalRuns": 52934,
+    "totalUsers": 1271,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 109,
+    "totalUsers90Days": 689
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "hyVTCeznAUPQpqPCN",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-05-27T00:00:00.000Z"
+    }
+   },
+   "title": "Zillow Zestimate Scraper",
+   "userId": "8dcWdBfdKWbW4BQph",
+   "username": "basalt-api"
+  }
+ },
+ "RR7FPuAk5ZeLSxmVa": {
+  "data": {
+   "categories": [
+    "REAL_ESTATE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: rightmove scraper.",
+   "id": "RR7FPuAk5ZeLSxmVa",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-10T00:00:00.000Z",
+   "name": "rightmove-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 30,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 75,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 255,
+     "FAILED": 1249,
+     "SUCCEEDED": 10703,
+     "TIMED-OUT": 535,
+     "TOTAL": 12742
+    },
+    "totalBuilds": 55,
+    "totalMetamorphs": 0,
+    "totalRuns": 178388,
+    "totalUsers": 7767,
+    "totalUsers30Days": 1500,
+    "totalUsers7Days": 632,
+    "totalUsers90Days": 3874
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "QyufdWQizgqJrTnEW",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-26T00:00:00.000Z"
+    }
+   },
+   "title": "Rightmove Scraper",
+   "userId": "NrUPHdYwRYvNZbmaj",
+   "username": "sable-data"
+  }
+ },
+ "SA3FnYQRfEpjxkTkD": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: shopify product data.",
+   "id": "SA3FnYQRfEpjxkTkD",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-04T00:00:00.000Z",
+   "name": "shopify-product-data",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 7,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 116,
+     "FAILED": 163,
+     "SUCCEEDED": 5472,
+     "TIMED-OUT": 70,
+     "TOTAL": 5821
+    },
+    "totalBuilds": 166,
+    "totalMetamorphs": 0,
+    "totalRuns": 81494,
+    "totalUsers": 1677,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 120,
+    "totalUsers90Days": 620
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "ER9nXggCgagAcyFTy",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-14T00:00:00.000Z"
+    }
+   },
+   "title": "Shopify Product Data",
+   "userId": "FDWkoTKXwxzSHRtBf",
+   "username": "meridian-io"
+  }
+ },
+ "SKoQwqazFsvbSRbxt": {
+  "data": {
+   "categories": [
+    "BUSINESS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: edgar filings extractor.",
+   "id": "SKoQwqazFsvbSRbxt",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-29T00:00:00.000Z",
+   "name": "edgar-filings-extractor",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.003,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 3,
+    "actorReviewRating": 4.6,
+    "bookmarkCount": 4,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 32,
+     "FAILED": 33,
+     "SUCCEEDED": 1503,
+     "TIMED-OUT": 14,
+     "TOTAL": 1582
+    },
+    "totalBuilds": 36,
+    "totalMetamorphs": 0,
+    "totalRuns": 22148,
+    "totalUsers": 737,
+    "totalUsers30Days": 90,
+    "totalUsers7Days": 32,
+    "totalUsers90Days": 180
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "MvDoRRbdfP6wHofD9",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-04T00:00:00.000Z"
+    }
+   },
+   "title": "EDGAR Filings Extractor",
+   "userId": "W6tqJxaXnf9JkXHiY",
+   "username": "quarry-tools"
+  }
+ },
+ "TPxQYhDugEeqBCnCD": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: trustpilot reviews scraper.",
+   "id": "TPxQYhDugEeqBCnCD",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-15T00:00:00.000Z",
+   "name": "trustpilot-reviews-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0008,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 41,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 90,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 607,
+     "FAILED": 1488,
+     "SUCCEEDED": 27632,
+     "TIMED-OUT": 637,
+     "TOTAL": 30364
+    },
+    "totalBuilds": 37,
+    "totalMetamorphs": 0,
+    "totalRuns": 425096,
+    "totalUsers": 13965,
+    "totalUsers30Days": 1800,
+    "totalUsers7Days": 629,
+    "totalUsers90Days": 4439
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "9bYMwUrdaTUVBBfWF",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-06T00:00:00.000Z"
+    }
+   },
+   "title": "Trustpilot Reviews Scraper",
+   "userId": "NrUPHdYwRYvNZbmaj",
+   "username": "sable-data"
+  }
+ },
+ "ToKL32oqvWpqkUMNN": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: shopify products scraper.",
+   "id": "ToKL32oqvWpqkUMNN",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-16T12:00:00.000Z",
+   "name": "shopify-products-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.001,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 48,
+    "actorReviewRating": 4.3,
+    "bookmarkCount": 105,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 516,
+     "FAILED": 1986,
+     "SUCCEEDED": 22436,
+     "TIMED-OUT": 851,
+     "TOTAL": 25789
+    },
+    "totalBuilds": 89,
+    "totalMetamorphs": 0,
+    "totalRuns": 361046,
+    "totalUsers": 13405,
+    "totalUsers30Days": 2100,
+    "totalUsers7Days": 853,
+    "totalUsers90Days": 4311
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "s6HqfzaxiyNRTJaWx",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-09T00:00:00.000Z"
+    }
+   },
+   "title": "Shopify Products Scraper",
+   "userId": "pNceUNXmZXGgwDZyf",
+   "username": "brightline-io"
+  }
+ },
+ "VW3gJdnVKz89SvLYN": {
+  "data": {
+   "categories": [
+    "VIDEOS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: youtube channel scraper.",
+   "id": "VW3gJdnVKz89SvLYN",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-16T12:00:00.000Z",
+   "name": "youtube-channel-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 70,
+    "actorReviewRating": 3.8,
+    "bookmarkCount": 250,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 1779,
+     "FAILED": 4980,
+     "SUCCEEDED": 80037,
+     "TIMED-OUT": 2134,
+     "TOTAL": 88930
+    },
+    "totalBuilds": 132,
+    "totalMetamorphs": 0,
+    "totalRuns": 1245020,
+    "totalUsers": 32118,
+    "totalUsers30Days": 5000,
+    "totalUsers7Days": 1854,
+    "totalUsers90Days": 12139
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "SJM3VPwPXH5eVTPPW",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-09T00:00:00.000Z"
+    }
+   },
+   "title": "YouTube Channel Scraper",
+   "userId": "8dcWdBfdKWbW4BQph",
+   "username": "basalt-api"
+  }
+ },
+ "WMbWWmTt6WzYaANyy": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: lever jobs scraper.",
+   "id": "WMbWWmTt6WzYaANyy",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-04T00:00:00.000Z",
+   "name": "lever-jobs-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 6,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 6,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 23,
+     "FAILED": 90,
+     "SUCCEEDED": 1012,
+     "TIMED-OUT": 38,
+     "TOTAL": 1163
+    },
+    "totalBuilds": 152,
+    "totalMetamorphs": 0,
+    "totalRuns": 16282,
+    "totalUsers": 643,
+    "totalUsers30Days": 120,
+    "totalUsers7Days": 38,
+    "totalUsers90Days": 241
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "6NFAW6aQvTaVkXCag",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-07-16T00:00:00.000Z"
+    }
+   },
+   "title": "Lever Jobs Scraper",
+   "userId": "cS5aRMvQTKr6ubEkg",
+   "username": "ember-data"
+  }
+ },
+ "WQbv7zVhVG8jChzBA": {
+  "data": {
+   "categories": [
+    "OTHER"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: steam store games.",
+   "id": "WQbv7zVhVG8jChzBA",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-07-16T00:00:00.000Z",
+   "name": "steam-store-games",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 2,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 5,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 19,
+     "FAILED": 99,
+     "SUCCEEDED": 785,
+     "TIMED-OUT": 43,
+     "TOTAL": 946
+    },
+    "totalBuilds": 19,
+    "totalMetamorphs": 0,
+    "totalRuns": 13244,
+    "totalUsers": 499,
+    "totalUsers30Days": 100,
+    "totalUsers7Days": 38,
+    "totalUsers90Days": 241
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "7ZmxE7CbBJa9zdZvm",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-04-07T00:00:00.000Z"
+    }
+   },
+   "title": "Steam Store Games",
+   "userId": "FBBK8mjQjuQqdXVNa",
+   "username": "orbit-tools"
+  }
+ },
+ "XUGqyaAbUYKQy7zCZ": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: indeed job listings.",
+   "id": "XUGqyaAbUYKQy7zCZ",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-26T12:00:00.000Z",
+   "name": "indeed-job-listings",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.002,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 14,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 45,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 234,
+     "FAILED": 983,
+     "SUCCEEDED": 10061,
+     "TIMED-OUT": 421,
+     "TOTAL": 11699
+    },
+    "totalBuilds": 191,
+    "totalMetamorphs": 0,
+    "totalRuns": 163786,
+    "totalUsers": 6132,
+    "totalUsers30Days": 900,
+    "totalUsers7Days": 319,
+    "totalUsers90Days": 2139
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "TUdSmDo26s9VGCN6v",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-30T00:00:00.000Z"
+    }
+   },
+   "title": "Indeed Job Listings",
+   "userId": "cS5aRMvQTKr6ubEkg",
+   "username": "ember-data"
+  }
+ },
+ "XaLj69ZebuaTrecK2": {
+  "data": {
+   "categories": [
+    "LEAD_GENERATION"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google maps extractor.",
+   "id": "XaLj69ZebuaTrecK2",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-18T00:00:00.000Z",
+   "name": "google-maps-extractor",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.003,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 210,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 455,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 2167,
+     "FAILED": 3034,
+     "SUCCEEDED": 101862,
+     "TIMED-OUT": 1301,
+     "TOTAL": 108364
+    },
+    "totalBuilds": 185,
+    "totalMetamorphs": 0,
+    "totalRuns": 1517096,
+    "totalUsers": 41720,
+    "totalUsers30Days": 9100,
+    "totalUsers7Days": 4050,
+    "totalUsers90Days": 21170
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "af8PqXTuLSbJ5Y2Cq",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-12T00:00:00.000Z"
+    }
+   },
+   "title": "Google Maps Extractor",
+   "userId": "TNZTGyJJ8adVeAhtr",
+   "username": "lumen-labs"
+  }
+ },
+ "YGanh9JTvs8ATMpMS": {
+  "data": {
+   "categories": [
+    "LEAD_GENERATION",
+    "TRAVEL"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google maps scraper.",
+   "id": "YGanh9JTvs8ATMpMS",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-22T00:00:00.000Z",
+   "name": "google-maps-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.004,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 812,
+    "actorReviewRating": 4.6,
+    "bookmarkCount": 2100,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 13882,
+     "FAILED": 9717,
+     "SUCCEEDED": 666318,
+     "TIMED-OUT": 4165,
+     "TOTAL": 694082
+    },
+    "totalBuilds": 12,
+    "totalMetamorphs": 0,
+    "totalRuns": 9717148,
+    "totalUsers": 372376,
+    "totalUsers30Days": 42000,
+    "totalUsers7Days": 16409,
+    "totalUsers90Days": 88773
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "WNGJd8CShkcBskHQe",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-20T00:00:00.000Z"
+    }
+   },
+   "title": "Google Maps Scraper",
+   "userId": "LKLdbp3zam6gAJcNj",
+   "username": "northwind-data"
+  }
+ },
+ "YbTcRALnZM7wDSXow": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: indeed jobs scraper.",
+   "id": "YbTcRALnZM7wDSXow",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-13T12:00:00.000Z",
+   "name": "indeed-jobs-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 60,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 175,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 999,
+     "FAILED": 5243,
+     "SUCCEEDED": 41441,
+     "TIMED-OUT": 2247,
+     "TOTAL": 49930
+    },
+    "totalBuilds": 98,
+    "totalMetamorphs": 0,
+    "totalRuns": 699020,
+    "totalUsers": 30113,
+    "totalUsers30Days": 3500,
+    "totalUsers7Days": 1142,
+    "totalUsers90Days": 7680
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "AWf5yYnHWjWxkNoj2",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-03T00:00:00.000Z"
+    }
+   },
+   "title": "Indeed Jobs Scraper",
+   "userId": "DjWTcBsASPhfHnj59",
+   "username": "delta-fetch"
+  }
+ },
+ "Z6GUQh9xRgaaybApn": {
+  "data": {
+   "categories": [
+    "LEAD_GENERATION"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google maps email extractor.",
+   "id": "Z6GUQh9xRgaaybApn",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "google-maps-email-extractor",
+   "notice": "UNDER_MAINTENANCE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.006,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 40,
+    "actorReviewRating": 4.1,
+    "bookmarkCount": 105,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 355,
+     "FAILED": 870,
+     "SUCCEEDED": 16148,
+     "TIMED-OUT": 372,
+     "TOTAL": 17745
+    },
+    "totalBuilds": 142,
+    "totalMetamorphs": 0,
+    "totalRuns": 248430,
+    "totalUsers": 13044,
+    "totalUsers30Days": 2100,
+    "totalUsers7Days": 784,
+    "totalUsers90Days": 4847
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "P8SUQMxK2gKyfJbHv",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Google Maps Email Extractor",
+   "userId": "MVJ7AKrS7oejWQMmy",
+   "username": "fjord-dev"
+  }
+ },
+ "Z6cez8atK5ibWsiSV": {
+  "data": {
+   "categories": [
+    "VIDEOS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: podcast episodes scraper.",
+   "id": "Z6cez8atK5ibWsiSV",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-29T00:00:00.000Z",
+   "name": "podcast-episodes-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0008,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 7,
+    "actorReviewRating": 4.6,
+    "bookmarkCount": 7,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 43,
+     "FAILED": 60,
+     "SUCCEEDED": 2022,
+     "TIMED-OUT": 26,
+     "TOTAL": 2151
+    },
+    "totalBuilds": 174,
+    "totalMetamorphs": 0,
+    "totalRuns": 30114,
+    "totalUsers": 1016,
+    "totalUsers30Days": 140,
+    "totalUsers7Days": 48,
+    "totalUsers90Days": 306
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "SDqPUXjCaCb3VTva9",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-04T00:00:00.000Z"
+    }
+   },
+   "title": "Podcast Episodes Scraper",
+   "userId": "cS5aRMvQTKr6ubEkg",
+   "username": "ember-data"
+  }
+ },
+ "Z8QMQgXc8KaYHjqCB": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: app store review scraper.",
+   "id": "Z8QMQgXc8KaYHjqCB",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-01T12:00:00.000Z",
+   "name": "app-store-review-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 4,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 12,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 100,
+     "FAILED": 174,
+     "SUCCEEDED": 4627,
+     "TIMED-OUT": 75,
+     "TOTAL": 4976
+    },
+    "totalBuilds": 25,
+    "totalMetamorphs": 0,
+    "totalRuns": 69664,
+    "totalUsers": 1612,
+    "totalUsers30Days": 250,
+    "totalUsers7Days": 103,
+    "totalUsers90Days": 648
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "3WP6oLfWuzHepJ8Zp",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-09T00:00:00.000Z"
+    }
+   },
+   "title": "App Store Review Scraper",
+   "userId": "8dcWdBfdKWbW4BQph",
+   "username": "basalt-api"
+  }
+ },
+ "ZAe9BWWDXFUpqdupJ": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: product hunt scraper.",
+   "id": "ZAe9BWWDXFUpqdupJ",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-05-27T00:00:00.000Z",
+   "name": "product-hunt-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.003,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 8,
+    "actorReviewRating": 3.5,
+    "bookmarkCount": 7,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 37,
+     "FAILED": 289,
+     "SUCCEEDED": 1425,
+     "TIMED-OUT": 123,
+     "TOTAL": 1874
+    },
+    "totalBuilds": 29,
+    "totalMetamorphs": 0,
+    "totalRuns": 26236,
+    "totalUsers": 1293,
+    "totalUsers30Days": 150,
+    "totalUsers7Days": 53,
+    "totalUsers90Days": 354
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "CxW4mBjd7NTsRcJx2",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2025-12-28T00:00:00.000Z"
+    }
+   },
+   "title": "Product Hunt Scraper",
+   "userId": "EqKsrsn8F6iG5YtLy",
+   "username": "cinder-io"
+  }
+ },
+ "ZcWuKQ7w286FEbcmT": {
+  "data": {
+   "categories": [
+    "SEO_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google trends explorer.",
+   "id": "ZcWuKQ7w286FEbcmT",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-09T00:00:00.000Z",
+   "name": "google-trends-explorer",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.003,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 11,
+    "actorReviewRating": 3.3,
+    "bookmarkCount": 30,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 139,
+     "FAILED": 1212,
+     "SUCCEEDED": 5057,
+     "TIMED-OUT": 520,
+     "TOTAL": 6928
+    },
+    "totalBuilds": 39,
+    "totalMetamorphs": 0,
+    "totalRuns": 96992,
+    "totalUsers": 3578,
+    "totalUsers30Days": 600,
+    "totalUsers7Days": 208,
+    "totalUsers90Days": 1408
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "zCD4gm8G68Hn7m7DE",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-07-26T00:00:00.000Z"
+    }
+   },
+   "title": "Google Trends Explorer",
+   "userId": "W6tqJxaXnf9JkXHiY",
+   "username": "quarry-tools"
+  }
+ },
+ "ZxLkEMW5YLQXgbstT": {
+  "data": {
+   "categories": [
+    "TRAVEL"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: booking.com prices.",
+   "id": "ZxLkEMW5YLQXgbstT",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "booking-com-prices",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 5,
+    "actorReviewRating": 4.6,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 58,
+     "FAILED": 82,
+     "SUCCEEDED": 2744,
+     "TIMED-OUT": 35,
+     "TOTAL": 2919
+    },
+    "totalBuilds": 158,
+    "totalMetamorphs": 0,
+    "totalRuns": 40866,
+    "totalUsers": 2045,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 112,
+    "totalUsers90Days": 661
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "6PDAKFdPd4mjHKhwV",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Booking.com Prices",
+   "userId": "2q2VGgxihhzmasg4Q",
+   "username": "wren-automation"
+  }
+ },
+ "aDY5YgWWP3zqwJRPh": {
+  "data": {
+   "categories": [
+    "VIDEOS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: podcast episode feed.",
+   "id": "aDY5YgWWP3zqwJRPh",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-14T00:00:00.000Z",
+   "name": "podcast-episode-feed",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 11,
+     "FAILED": 8,
+     "SUCCEEDED": 534,
+     "TIMED-OUT": 3,
+     "TOTAL": 556
+    },
+    "totalBuilds": 18,
+    "totalMetamorphs": 0,
+    "totalRuns": 7784,
+    "totalUsers": 239,
+    "totalUsers30Days": 30,
+    "totalUsers7Days": 10,
+    "totalUsers90Days": 60
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "V4RWTtqFwDX22JTE4",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-04T00:00:00.000Z"
+    }
+   },
+   "title": "Podcast Episode Feed",
+   "userId": "LKLdbp3zam6gAJcNj",
+   "username": "northwind-data"
+  }
+ },
+ "c6YTF5PE8unmHMfxb": {
+  "data": {
+   "categories": [
+    "AI",
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: website content crawler.",
+   "id": "c6YTF5PE8unmHMfxb",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-23T00:00:00.000Z",
+   "name": "website-content-crawler",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0005,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 90,
+    "actorReviewRating": 4.7,
+    "bookmarkCount": 110,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 398,
+     "FAILED": 139,
+     "SUCCEEDED": 19299,
+     "TIMED-OUT": 60,
+     "TOTAL": 19896
+    },
+    "totalBuilds": 154,
+    "totalMetamorphs": 0,
+    "totalRuns": 278544,
+    "totalUsers": 14562,
+    "totalUsers30Days": 2200,
+    "totalUsers7Days": 839,
+    "totalUsers90Days": 5276
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "ozwbw9NaQ556oXJ9c",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-22T00:00:00.000Z"
+    }
+   },
+   "title": "Website Content Crawler",
+   "userId": "TNZTGyJJ8adVeAhtr",
+   "username": "lumen-labs"
+  }
+ },
+ "cBptR8KMpbXuSchWd": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: yelp reviews scraper.",
+   "id": "cBptR8KMpbXuSchWd",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-16T00:00:00.000Z",
+   "name": "yelp-reviews-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.001,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 30,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 80,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 375,
+     "FAILED": 1181,
+     "SUCCEEDED": 16684,
+     "TIMED-OUT": 506,
+     "TOTAL": 18746
+    },
+    "totalBuilds": 45,
+    "totalMetamorphs": 0,
+    "totalRuns": 262444,
+    "totalUsers": 13268,
+    "totalUsers30Days": 1600,
+    "totalUsers7Days": 487,
+    "totalUsers90Days": 3915
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "JwP2fS8Le7w2kmL5u",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-08T00:00:00.000Z"
+    }
+   },
+   "title": "Yelp Reviews Scraper",
+   "userId": "FBBK8mjQjuQqdXVNa",
+   "username": "orbit-tools"
+  }
+ },
+ "ecwkFh7mKEZPvanu7": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: github repository search.",
+   "id": "ecwkFh7mKEZPvanu7",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-11T12:00:00.000Z",
+   "name": "github-repository-search",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 4,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 7,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 32,
+     "FAILED": 34,
+     "SUCCEEDED": 1519,
+     "TIMED-OUT": 14,
+     "TOTAL": 1599
+    },
+    "totalBuilds": 145,
+    "totalMetamorphs": 0,
+    "totalRuns": 22386,
+    "totalUsers": 1264,
+    "totalUsers30Days": 150,
+    "totalUsers7Days": 62,
+    "totalUsers90Days": 335
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "DXS7QdfTPVQPBvePR",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-29T00:00:00.000Z"
+    }
+   },
+   "title": "GitHub Repository Search",
+   "userId": "pNceUNXmZXGgwDZyf",
+   "username": "brightline-io"
+  }
+ },
+ "f3GsVPpj7hXYN8uU9": {
+  "data": {
+   "categories": [
+    "OTHER"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: openfda drug recalls.",
+   "id": "f3GsVPpj7hXYN8uU9",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "openfda-drug-recalls",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 2,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 12,
+     "FAILED": 0,
+     "SUCCEEDED": 576,
+     "TIMED-OUT": 0,
+     "TOTAL": 588
+    },
+    "totalBuilds": 139,
+    "totalMetamorphs": 0,
+    "totalRuns": 8232,
+    "totalUsers": 375,
+    "totalUsers30Days": 45,
+    "totalUsers7Days": 15,
+    "totalUsers90Days": 107
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "pEgJXHZVAmcY6dfjU",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "openFDA Drug Recalls",
+   "userId": "PLfBH4xKbYUru2dmq",
+   "username": "parcel-bots"
+  }
+ },
+ "fHrtuuFyHyKqMWoDG": {
+  "data": {
+   "categories": [
+    "SEO_TOOLS",
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google trends scraper.",
+   "id": "fHrtuuFyHyKqMWoDG",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "google-trends-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.003,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 45,
+    "actorReviewRating": 3.7,
+    "bookmarkCount": 125,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 804,
+     "FAILED": 5911,
+     "SUCCEEDED": 30962,
+     "TIMED-OUT": 2533,
+     "TOTAL": 40210
+    },
+    "totalBuilds": 92,
+    "totalMetamorphs": 0,
+    "totalRuns": 562940,
+    "totalUsers": 15600,
+    "totalUsers30Days": 2500,
+    "totalUsers7Days": 823,
+    "totalUsers90Days": 5935
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "ucDs6EZA7gUTTxHSw",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Google Trends Scraper",
+   "userId": "TNZTGyJJ8adVeAhtr",
+   "username": "lumen-labs"
+  }
+ },
+ "h8HedUE5VMUWUrzPf": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: trustpilot company reviews.",
+   "id": "h8HedUE5VMUWUrzPf",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-18T00:00:00.000Z",
+   "name": "trustpilot-company-reviews",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 6,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 10,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 59,
+     "FAILED": 103,
+     "SUCCEEDED": 2739,
+     "TIMED-OUT": 44,
+     "TOTAL": 2945
+    },
+    "totalBuilds": 41,
+    "totalMetamorphs": 0,
+    "totalRuns": 41230,
+    "totalUsers": 1275,
+    "totalUsers30Days": 200,
+    "totalUsers7Days": 61,
+    "totalUsers90Days": 411
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "ZoUdkFU8ZdpBKSccy",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-12T00:00:00.000Z"
+    }
+   },
+   "title": "Trustpilot Company Reviews",
+   "userId": "FBBK8mjQjuQqdXVNa",
+   "username": "orbit-tools"
+  }
+ },
+ "hReSDiRutrobYTc9C": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: linkedin jobs scraper.",
+   "id": "hReSDiRutrobYTc9C",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-04T00:00:00.000Z",
+   "name": "linkedin-jobs-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.001,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 55,
+    "actorReviewRating": 3.6,
+    "bookmarkCount": 120,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 423,
+     "FAILED": 2664,
+     "SUCCEEDED": 16911,
+     "TIMED-OUT": 1141,
+     "TOTAL": 21139
+    },
+    "totalBuilds": 143,
+    "totalMetamorphs": 0,
+    "totalRuns": 295946,
+    "totalUsers": 15589,
+    "totalUsers30Days": 2400,
+    "totalUsers7Days": 1007,
+    "totalUsers90Days": 5075
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "TEpHoCJ9ixgcyZ8sz",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-14T00:00:00.000Z"
+    }
+   },
+   "title": "LinkedIn Jobs Scraper",
+   "userId": "FDWkoTKXwxzSHRtBf",
+   "username": "meridian-io"
+  }
+ },
+ "iKpEf3WuuVurnQhfM": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: npm package downloads scraper.",
+   "id": "iKpEf3WuuVurnQhfM",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-04T00:00:00.000Z",
+   "name": "npm-package-downloads",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0005,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 4,
+    "actorReviewRating": 4.8,
+    "bookmarkCount": 6,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 38,
+     "FAILED": 158,
+     "SUCCEEDED": 1612,
+     "TIMED-OUT": 67,
+     "TOTAL": 1875
+    },
+    "totalBuilds": 121,
+    "totalMetamorphs": 0,
+    "totalRuns": 26250,
+    "totalUsers": 1002,
+    "totalUsers30Days": 120,
+    "totalUsers7Days": 39,
+    "totalUsers90Days": 260
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "Z2pzTQHJaP4dTjHwr",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-07-16T00:00:00.000Z"
+    }
+   },
+   "title": "npm Package Downloads Scraper",
+   "userId": "cS5aRMvQTKr6ubEkg",
+   "username": "ember-data"
+  }
+ },
+ "kUG4wUP4eBtU5AcFH": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: greenhouse jobs scraper.",
+   "id": "kUG4wUP4eBtU5AcFH",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-07-16T00:00:00.000Z",
+   "name": "greenhouse-jobs-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "apify-default-dataset-item": {
+        "eventDescription": "Charged for each item in the default dataset.",
+        "eventPriceUsd": 0.0015,
+        "eventTitle": "Dataset item"
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 12,
+    "actorReviewRating": 3.7,
+    "bookmarkCount": 13,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 76,
+     "FAILED": 427,
+     "SUCCEEDED": 3125,
+     "TIMED-OUT": 183,
+     "TOTAL": 3811
+    },
+    "totalBuilds": 120,
+    "totalMetamorphs": 0,
+    "totalRuns": 53354,
+    "totalUsers": 1094,
+    "totalUsers30Days": 260,
+    "totalUsers7Days": 98,
+    "totalUsers90Days": 566
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "xzV25Lb3aYfT5SJvF",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-04-07T00:00:00.000Z"
+    }
+   },
+   "title": "Greenhouse Jobs Scraper",
+   "userId": "8dcWdBfdKWbW4BQph",
+   "username": "basalt-api"
+  }
+ },
+ "kVv4fPZVfAFcTAQU5": {
+  "data": {
+   "categories": [
+    "SEO_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: sitemap urls.",
+   "id": "kVv4fPZVfAFcTAQU5",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-24T00:00:00.000Z",
+   "name": "sitemap-urls",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 3,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 7,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 29,
+     "FAILED": 31,
+     "SUCCEEDED": 1393,
+     "TIMED-OUT": 13,
+     "TOTAL": 1466
+    },
+    "totalBuilds": 29,
+    "totalMetamorphs": 0,
+    "totalRuns": 20524,
+    "totalUsers": 944,
+    "totalUsers30Days": 150,
+    "totalUsers7Days": 62,
+    "totalUsers90Days": 323
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "WrWPUuEzSDFzufVdF",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-25T00:00:00.000Z"
+    }
+   },
+   "title": "Sitemap URLs",
+   "userId": "pNceUNXmZXGgwDZyf",
+   "username": "brightline-io"
+  }
+ },
+ "nYgLC7Nd37dz4ZAEX": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: pypi package metadata scraper.",
+   "id": "nYgLC7Nd37dz4ZAEX",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-06T12:00:00.000Z",
+   "name": "pypi-package-metadata",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 11,
+     "FAILED": 4,
+     "SUCCEEDED": 523,
+     "TIMED-OUT": 1,
+     "TOTAL": 539
+    },
+    "totalBuilds": 175,
+    "totalMetamorphs": 0,
+    "totalRuns": 7546,
+    "totalUsers": 199,
+    "totalUsers30Days": 30,
+    "totalUsers7Days": 9,
+    "totalUsers90Days": 67
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "hRTSv7R6Z943E2XXc",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-07-21T00:00:00.000Z"
+    }
+   },
+   "title": "PyPI Package Metadata Scraper",
+   "userId": "QQVaKWxDy7oMnCdRv",
+   "username": "harbor-scrapers"
+  }
+ },
+ "nqs2TjGFeDrr2eKLb": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: yelp business reviews.",
+   "id": "nqs2TjGFeDrr2eKLb",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-09T00:00:00.000Z",
+   "name": "yelp-business-reviews",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.001,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 10,
+    "actorReviewRating": 4.1,
+    "bookmarkCount": 25,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 169,
+     "FAILED": 415,
+     "SUCCEEDED": 7709,
+     "TIMED-OUT": 178,
+     "TOTAL": 8471
+    },
+    "totalBuilds": 189,
+    "totalMetamorphs": 0,
+    "totalRuns": 118594,
+    "totalUsers": 2533,
+    "totalUsers30Days": 500,
+    "totalUsers7Days": 177,
+    "totalUsers90Days": 1145
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "7WdD6n95zYThLpzZV",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-24T00:00:00.000Z"
+    }
+   },
+   "title": "Yelp Business Reviews",
+   "userId": "dAxwm5R6Kbu77AJfY",
+   "username": "zephyr-dev"
+  }
+ },
+ "o5tNATPDnY8tDTKeY": {
+  "data": {
+   "categories": [
+    "OTHER"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: weather forecast scraper.",
+   "id": "o5tNATPDnY8tDTKeY",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-01T12:00:00.000Z",
+   "name": "weather-forecast-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0005,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 2,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 3,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 22,
+     "FAILED": 23,
+     "SUCCEEDED": 1025,
+     "TIMED-OUT": 9,
+     "TOTAL": 1079
+    },
+    "totalBuilds": 133,
+    "totalMetamorphs": 0,
+    "totalRuns": 15106,
+    "totalUsers": 478,
+    "totalUsers30Days": 60,
+    "totalUsers7Days": 26,
+    "totalUsers90Days": 135
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "oDeEcPZSnkFytfJwU",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-09T00:00:00.000Z"
+    }
+   },
+   "title": "Weather Forecast Scraper",
+   "userId": "FDWkoTKXwxzSHRtBf",
+   "username": "meridian-io"
+  }
+ },
+ "q75u9QEEKJByXhaqK": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: amazon product scraper.",
+   "id": "q75u9QEEKJByXhaqK",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-19T00:00:00.000Z",
+   "name": "amazon-product-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "tieredPricing": {
+      "BRONZE": {
+       "tieredPricePerUnitUsd": 0.0036
+      },
+      "FREE": {
+       "tieredPricePerUnitUsd": 0.004
+      },
+      "GOLD": {
+       "tieredPricePerUnitUsd": 0.0028
+      },
+      "SILVER": {
+       "tieredPricePerUnitUsd": 0.0032
+      }
+     },
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 240,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 450,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 2504,
+     "FAILED": 5259,
+     "SUCCEEDED": 115203,
+     "TIMED-OUT": 2254,
+     "TOTAL": 125220
+    },
+    "totalBuilds": 111,
+    "totalMetamorphs": 0,
+    "totalRuns": 1753080,
+    "totalUsers": 59410,
+    "totalUsers30Days": 9000,
+    "totalUsers7Days": 3852,
+    "totalUsers90Days": 23345
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "oVMqYjZMMTTfVueE5",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-14T00:00:00.000Z"
+    }
+   },
+   "title": "Amazon Product Scraper",
+   "userId": "2q2VGgxihhzmasg4Q",
+   "username": "wren-automation"
+  }
+ },
+ "qDzkc27phSwVRQ2YZ": {
+  "data": {
+   "categories": [
+    "TRAVEL"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: booking.com hotels scraper.",
+   "id": "qDzkc27phSwVRQ2YZ",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-20T00:00:00.000Z",
+   "name": "booking-com-hotels",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.003,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 130,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 300,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 1919,
+     "FAILED": 3359,
+     "SUCCEEDED": 89252,
+     "TIMED-OUT": 1439,
+     "TOTAL": 95969
+    },
+    "totalBuilds": 23,
+    "totalMetamorphs": 0,
+    "totalRuns": 1343566,
+    "totalUsers": 27752,
+    "totalUsers30Days": 6000,
+    "totalUsers7Days": 2603,
+    "totalUsers90Days": 14885
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "JZtaTzpkZVNg4vjj8",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-16T00:00:00.000Z"
+    }
+   },
+   "title": "Booking.com Hotels Scraper",
+   "userId": "FDWkoTKXwxzSHRtBf",
+   "username": "meridian-io"
+  }
+ },
+ "qdAMPeTwcD85ENzRf": {
+  "data": {
+   "categories": [
+    "NEWS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: hacker news scraper.",
+   "id": "qdAMPeTwcD85ENzRf",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-17T00:00:00.000Z",
+   "name": "hacker-news-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 11,
+    "actorReviewRating": 4.7,
+    "bookmarkCount": 11,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 79,
+     "FAILED": 83,
+     "SUCCEEDED": 3749,
+     "TIMED-OUT": 35,
+     "TOTAL": 3946
+    },
+    "totalBuilds": 165,
+    "totalMetamorphs": 0,
+    "totalRuns": 55244,
+    "totalUsers": 1426,
+    "totalUsers30Days": 220,
+    "totalUsers7Days": 84,
+    "totalUsers90Days": 448
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "KTM7UkMotryorwVsE",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-10T00:00:00.000Z"
+    }
+   },
+   "title": "Hacker News Scraper",
+   "userId": "dQwUWVbd5o5dnHSpd",
+   "username": "kestrel-data"
+  }
+ },
+ "sNqHHvLnNhP7iVeaM": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: greenhouse jobs.",
+   "id": "sNqHHvLnNhP7iVeaM",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-04-07T00:00:00.000Z",
+   "name": "greenhouse-jobs",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 0,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 3,
+     "FAILED": 31,
+     "SUCCEEDED": 99,
+     "TIMED-OUT": 13,
+     "TOTAL": 146
+    },
+    "totalBuilds": 38,
+    "totalMetamorphs": 0,
+    "totalRuns": 2044,
+    "totalUsers": 66,
+    "totalUsers30Days": 12,
+    "totalUsers7Days": 5,
+    "totalUsers90Days": 26
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "hxz86uTCVbC9SMYmT",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2025-09-19T00:00:00.000Z"
+    }
+   },
+   "title": "Greenhouse Jobs",
+   "userId": "DjWTcBsASPhfHnj59",
+   "username": "delta-fetch"
+  }
+ },
+ "t3WSJfTu9EZ9WVp6S": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: shopify store products.",
+   "id": "t3WSJfTu9EZ9WVp6S",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-13T00:00:00.000Z",
+   "name": "shopify-store-products",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.0009,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 20,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 35,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 136,
+     "FAILED": 285,
+     "SUCCEEDED": 6248,
+     "TIMED-OUT": 123,
+     "TOTAL": 6792
+    },
+    "totalBuilds": 181,
+    "totalMetamorphs": 0,
+    "totalRuns": 95088,
+    "totalUsers": 5209,
+    "totalUsers30Days": 700,
+    "totalUsers7Days": 241,
+    "totalUsers90Days": 1774
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "pKbqH2pxdh8q7gsQn",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-02T00:00:00.000Z"
+    }
+   },
+   "title": "Shopify Store Products",
+   "userId": "EkfiCvUHZjmQwTRKz",
+   "username": "cobalt-crawl"
+  }
+ },
+ "tHTmGcBzXqRPQHyE5": {
+  "data": {
+   "categories": [
+    "DEVELOPER_TOOLS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: wordpress plugin stats.",
+   "id": "tHTmGcBzXqRPQHyE5",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-07-16T00:00:00.000Z",
+   "name": "wordpress-plugin-stats",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 4,
+     "FAILED": 7,
+     "SUCCEEDED": 197,
+     "TIMED-OUT": 4,
+     "TOTAL": 212
+    },
+    "totalBuilds": 124,
+    "totalMetamorphs": 0,
+    "totalRuns": 2968,
+    "totalUsers": 161,
+    "totalUsers30Days": 20,
+    "totalUsers7Days": 7,
+    "totalUsers90Days": 45
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "aqYnGW7DFNivLiJ3r",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-04-07T00:00:00.000Z"
+    }
+   },
+   "title": "WordPress Plugin Stats",
+   "userId": "FDWkoTKXwxzSHRtBf",
+   "username": "meridian-io"
+  }
+ },
+ "todR45CvJ3Ha6cAZK": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: product hunt launches.",
+   "id": "todR45CvJ3Ha6cAZK",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-08-25T00:00:00.000Z",
+   "name": "product-hunt-launches",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 6,
+     "FAILED": 11,
+     "SUCCEEDED": 298,
+     "TIMED-OUT": 5,
+     "TOTAL": 320
+    },
+    "totalBuilds": 186,
+    "totalMetamorphs": 0,
+    "totalRuns": 4480,
+    "totalUsers": 204,
+    "totalUsers30Days": 35,
+    "totalUsers7Days": 13,
+    "totalUsers90Days": 76
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "KTE5Pb4QRmCKgRsJH",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-06-26T00:00:00.000Z"
+    }
+   },
+   "title": "Product Hunt Launches",
+   "userId": "DjWTcBsASPhfHnj59",
+   "username": "delta-fetch"
+  }
+ },
+ "udXu6sxb8HF35qAGD": {
+  "data": {
+   "categories": [
+    "REAL_ESTATE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: zillow scraper.",
+   "id": "udXu6sxb8HF35qAGD",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-19T12:00:00.000Z",
+   "name": "zillow-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.002,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 88,
+    "actorReviewRating": 4.0,
+    "bookmarkCount": 210,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 955,
+     "FAILED": 4347,
+     "SUCCEEDED": 40608,
+     "TIMED-OUT": 1863,
+     "TOTAL": 47773
+    },
+    "totalBuilds": 99,
+    "totalMetamorphs": 0,
+    "totalRuns": 668822,
+    "totalUsers": 19646,
+    "totalUsers30Days": 4200,
+    "totalUsers7Days": 1819,
+    "totalUsers90Days": 9151
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "eLQdThSH3yzqe4HBB",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-15T00:00:00.000Z"
+    }
+   },
+   "title": "Zillow Scraper",
+   "userId": "dAxwm5R6Kbu77AJfY",
+   "username": "zephyr-dev"
+  }
+ },
+ "uephD24MrCTZm2TLE": {
+  "data": {
+   "categories": [
+    "TRAVEL"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: booking hotels scraper.",
+   "id": "uephD24MrCTZm2TLE",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-14T00:00:00.000Z",
+   "name": "booking-hotels-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.0025,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 31,
+    "actorReviewRating": 4.3,
+    "bookmarkCount": 75,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 291,
+     "FAILED": 612,
+     "SUCCEEDED": 13396,
+     "TIMED-OUT": 262,
+     "TOTAL": 14561
+    },
+    "totalBuilds": 187,
+    "totalMetamorphs": 0,
+    "totalRuns": 203854,
+    "totalUsers": 9582,
+    "totalUsers30Days": 1500,
+    "totalUsers7Days": 649,
+    "totalUsers90Days": 3420
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "LBYy7QwFGjkFfbQQM",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-04T00:00:00.000Z"
+    }
+   },
+   "title": "Booking Hotels Scraper",
+   "userId": "PLfBH4xKbYUru2dmq",
+   "username": "parcel-bots"
+  }
+ },
+ "vBCqjZQmQKLvVUFVk": {
+  "data": {
+   "categories": [
+    "REAL_ESTATE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: zillow property scraper.",
+   "id": "vBCqjZQmQKLvVUFVk",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-06T12:00:00.000Z",
+   "name": "zillow-property-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.002,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 24,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 60,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 399,
+     "FAILED": 1396,
+     "SUCCEEDED": 17553,
+     "TIMED-OUT": 599,
+     "TOTAL": 19947
+    },
+    "totalBuilds": 48,
+    "totalMetamorphs": 0,
+    "totalRuns": 279258,
+    "totalUsers": 9420,
+    "totalUsers30Days": 1200,
+    "totalUsers7Days": 367,
+    "totalUsers90Days": 2974
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "eEvrnXxY8LMWdv3fS",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-09-19T00:00:00.000Z"
+    }
+   },
+   "title": "Zillow Property Scraper",
+   "userId": "za4tzWJaqfJMxwkVN",
+   "username": "alder-labs"
+  }
+ },
+ "wUFhrQJvXdZ7JCEYo": {
+  "data": {
+   "categories": [
+    "JOBS"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: lever job postings scraper.",
+   "id": "wUFhrQJvXdZ7JCEYo",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-06T12:00:00.000Z",
+   "name": "lever-job-postings",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 0,
+    "actorReviewRating": 0,
+    "bookmarkCount": 1,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 6,
+     "FAILED": 5,
+     "SUCCEEDED": 313,
+     "TIMED-OUT": 1,
+     "TOTAL": 325
+    },
+    "totalBuilds": 188,
+    "totalMetamorphs": 0,
+    "totalRuns": 4550,
+    "totalUsers": 201,
+    "totalUsers30Days": 30,
+    "totalUsers7Days": 12,
+    "totalUsers90Days": 65
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "cDeSjhazbyTVkDSxw",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-07-21T00:00:00.000Z"
+    }
+   },
+   "title": "Lever Job Postings Scraper",
+   "userId": "LKLdbp3zam6gAJcNj",
+   "username": "northwind-data"
+  }
+ },
+ "x5isVTP84dhE9Shbf": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: etsy shop listings.",
+   "id": "x5isVTP84dhE9Shbf",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-14T00:00:00.000Z",
+   "name": "etsy-shop-listings",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 6,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 15,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 101,
+     "FAILED": 353,
+     "SUCCEEDED": 4442,
+     "TIMED-OUT": 152,
+     "TOTAL": 5048
+    },
+    "totalBuilds": 77,
+    "totalMetamorphs": 0,
+    "totalRuns": 70672,
+    "totalUsers": 1910,
+    "totalUsers30Days": 300,
+    "totalUsers7Days": 119,
+    "totalUsers90Days": 710
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "RyjkMHFwSG4abALgB",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-05T00:00:00.000Z"
+    }
+   },
+   "title": "Etsy Shop Listings",
+   "userId": "DjWTcBsASPhfHnj59",
+   "username": "delta-fetch"
+  }
+ },
+ "xKuP49SgLDnbkjQXy": {
+  "data": {
+   "categories": [
+    "OTHER"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: steam games scraper.",
+   "id": "xKuP49SgLDnbkjQXy",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-14T00:00:00.000Z",
+   "name": "steam-games-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "isPPEPlatformUsagePaidByUser": false,
+     "minimalMaxTotalChargeUsd": 0.5,
+     "pricingModel": "PAY_PER_EVENT",
+     "pricingPerEvent": {
+      "actorChargeEvents": {
+       "actor-start": {
+        "eventDescription": "Charged once when the run starts.",
+        "eventPriceUsd": 0.005,
+        "eventTitle": "Actor start",
+        "isOneTimeEvent": true
+       },
+       "result": {
+        "eventDescription": "Charged for each result.",
+        "eventPriceUsd": 0.001,
+        "eventTitle": "Result",
+        "isPrimaryEvent": true
+       }
+      }
+     },
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 16,
+    "actorReviewRating": 4.4,
+    "bookmarkCount": 45,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 327,
+     "FAILED": 1030,
+     "SUCCEEDED": 14549,
+     "TIMED-OUT": 441,
+     "TOTAL": 16347
+    },
+    "totalBuilds": 83,
+    "totalMetamorphs": 0,
+    "totalRuns": 228858,
+    "totalUsers": 4820,
+    "totalUsers30Days": 900,
+    "totalUsers7Days": 353,
+    "totalUsers90Days": 2271
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "JaCdVoQcqnfKwTqdi",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-04T00:00:00.000Z"
+    }
+   },
+   "title": "Steam Games Scraper",
+   "userId": "NrUPHdYwRYvNZbmaj",
+   "username": "sable-data"
+  }
+ },
+ "yPeKDSk4oZkrke2WN": {
+  "data": {
+   "categories": [
+    "ECOMMERCE"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: amazon product data scraper.",
+   "id": "yPeKDSk4oZkrke2WN",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-14T00:00:00.000Z",
+   "name": "amazon-product-data",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricingModel": "FREE",
+     "startedAt": "2025-10-09T00:00:00.000Z"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 9,
+    "actorReviewRating": 3.9,
+    "bookmarkCount": 30,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 117,
+     "FAILED": 450,
+     "SUCCEEDED": 5080,
+     "TIMED-OUT": 192,
+     "TOTAL": 5839
+    },
+    "totalBuilds": 185,
+    "totalMetamorphs": 0,
+    "totalRuns": 81746,
+    "totalUsers": 5398,
+    "totalUsers30Days": 600,
+    "totalUsers7Days": 268,
+    "totalUsers90Days": 1390
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "utYQrmDaxeHs4bEWx",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-05T00:00:00.000Z"
+    }
+   },
+   "title": "Amazon Product Data Scraper",
+   "userId": "za4tzWJaqfJMxwkVN",
+   "username": "alder-labs"
+  }
+ },
+ "zYjZJYko7VcRHRh5F": {
+  "data": {
+   "categories": [
+    "SOCIAL_MEDIA"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: instagram profile details scraper.",
+   "id": "zYjZJYko7VcRHRh5F",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-14T00:00:00.000Z",
+   "name": "instagram-profile-details",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.002,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 60,
+    "actorReviewRating": 4.2,
+    "bookmarkCount": 160,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 829,
+     "FAILED": 2320,
+     "SUCCEEDED": 37289,
+     "TIMED-OUT": 995,
+     "TOTAL": 41433
+    },
+    "totalBuilds": 39,
+    "totalMetamorphs": 0,
+    "totalRuns": 580062,
+    "totalUsers": 21124,
+    "totalUsers30Days": 3200,
+    "totalUsers7Days": 1305,
+    "totalUsers90Days": 8082
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "SsyDZE9gbqs8fkQNM",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-10-04T00:00:00.000Z"
+    }
+   },
+   "title": "Instagram Profile Details Scraper",
+   "userId": "pNceUNXmZXGgwDZyf",
+   "username": "brightline-io"
+  }
+ },
+ "zywu5xsTnbfUJxVba": {
+  "data": {
+   "categories": [
+    "MARKETING"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: trustpilot reviews.",
+   "id": "zywu5xsTnbfUJxVba",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-09-24T00:00:00.000Z",
+   "name": "trustpilot-reviews",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.0005,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 9,
+    "actorReviewRating": 4.1,
+    "bookmarkCount": 22,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 139,
+     "FAILED": 437,
+     "SUCCEEDED": 6177,
+     "TIMED-OUT": 188,
+     "TOTAL": 6941
+    },
+    "totalBuilds": 40,
+    "totalMetamorphs": 0,
+    "totalRuns": 97174,
+    "totalUsers": 2428,
+    "totalUsers30Days": 450,
+    "totalUsers7Days": 148,
+    "totalUsers90Days": 922
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "Bac3ecsBNT4BdkEgc",
+     "buildNumber": "0.1.42",
+     "finishedAt": "2026-08-25T00:00:00.000Z"
+    }
+   },
+   "title": "Trustpilot Reviews",
+   "userId": "2q2VGgxihhzmasg4Q",
+   "username": "wren-automation"
+  }
+ }
+}
