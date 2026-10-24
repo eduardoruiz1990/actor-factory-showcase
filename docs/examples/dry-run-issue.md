@@ -21,8 +21,8 @@ The 20 best candidate niches after validation: candidates that pass all five che
 | 4 | [npm Package Downloads Scraper](https://apify.com/ember-data/npm-package-downloads) `npm-package-download` | 54 / 160 / 343 | 12.0% | 4.8 (4) | 100 | $0.50 / 1,000 results (per event) | 1 of 2 | — | 5.52 | 5/5 ✅ PASS |
 | 5 | [Lever Jobs Scraper](https://apify.com/ember-data/lever-jobs-scraper) `lever-job` | 50 / 150 / 306 | 11.0% | 4.5 (6) | 100 | $2.00 / 1,000 results (per event) | 0 of 2 | — | 5.45 | 5/5 ✅ PASS |
 | 6 | [Federal grant opportunities from Grants.gov](https://apify.com/ideas/federal-grant-opportunities-grants-gov) `federal-grant-opportunity-gov` | 0 / 0 / 0 | — | — | — | no Actor yet | none | 96 | 4.47 | 5/5 ✅ PASS |
-| 7 | [Product Hunt Scraper](https://apify.com/cinder-io/product-hunt-scraper) `product-hunt` | 66 / 185 / 430 | 22.0% | 3.5 (8) | 300 | $3.00 / 1,000 results | 0 of 2 | — | 6.81 | 4/5 ❌ |
-| 8 | [Shopify Products Scraper](https://apify.com/brightline-io/shopify-products-scraper) `shopify-product` | 1,214 / 3,100 / 6,705 | 11.0% | 4.3 (48) | 15 | $1.00 / 1,000 results | 3+ of 3 | — | 5.24 | 4/5 ❌ |
+| 7 | [Shopify Products Scraper](https://apify.com/brightline-io/shopify-products-scraper) `shopify-product` | 1,214 / 3,100 / 6,705 | 11.0% | 4.3 (48) | 15 | $1.00 / 1,000 results | 3+ of 3 | — | 5.24 | 4/5 🔎 REVIEW |
+| 8 | [Product Hunt Scraper](https://apify.com/cinder-io/product-hunt-scraper) `product-hunt` | 66 / 185 / 430 | 22.0% | 3.5 (8) | 300 | $3.00 / 1,000 results | 0 of 2 | — | 6.81 | 4/5 ❌ |
 | 9 | [WordPress Plugins Scraper](https://apify.com/cobalt-crawl/wordpress-plugins-scraper) `wordpress-plugin` | 32 / 105 / 253 | 11.0% | 4.0 (3) | 120 | $2.00 / 1,000 results | 0 of 2 | — | 5.06 | 4/5 ❌ |
 | 10 | [PyPI Package Metadata Scraper](https://apify.com/harbor-scrapers/pypi-package-metadata) `pypi-package-metadata` | 9 / 30 / 67 | 0.9% | — | 95 | Free | 0 of 1 | 31 | 4.99 | 4/5 ❌ |
 | 11 | [Podcast Episodes Scraper](https://apify.com/ember-data/podcast-episodes-scraper) `podcast-episode` | 58 / 170 / 366 | 4.0% | 4.6 (7) | 50 | $0.80 / 1,000 results (per event) | 2 of 2 | — | 3.35 | 4/5 ❌ |
@@ -76,18 +76,18 @@ The 20 best candidate niches after validation: candidates that pass all five che
 - Idea: [Federal grant opportunities from Grants.gov](https://apify.com/ideas/federal-grant-opportunities-grants-gov) — 96 upvotes (open_to_develop)
 - Competition gaps: no maintained Actor
 
-#### 7. Product Hunt Scraper — `product-hunt`
-- Leader: [cinder-io/product-hunt-scraper](https://apify.com/cinder-io/product-hunt-scraper) · 150 users/30d · fails 22.0% of 1,874 runs · rating 3.5 (8) · updated 300 days ago · $3.00 / 1,000 results
-- Other Actors (1):
-  - [delta-fetch/product-hunt-launches](https://apify.com/delta-fetch/product-hunt-launches) · 35 users/30d · fails 5.0% of 320 runs · unrated · updated 120 days ago · Free
-- Competition gaps: no maintained Actor; leader fails 22% of runs; leader rated 3.5; leader not updated for 300 days
-
-#### 8. Shopify Products Scraper — `shopify-product`
+#### 7. Shopify Products Scraper — `shopify-product`
 - Leader: [brightline-io/shopify-products-scraper](https://apify.com/brightline-io/shopify-products-scraper) · 2,100 users/30d · fails 11.0% of 25,789 runs · rating 4.3 (48) · updated 15 days ago · $1.00 / 1,000 results
 - Other Actors (2):
   - [cobalt-crawl/shopify-store-products](https://apify.com/cobalt-crawl/shopify-store-products) · 700 users/30d · fails 6.0% of 6,792 runs · rating 4.4 (20) · update date unknown · $0.90 / 1,000 results (per event)
   - [meridian-io/shopify-product-data](https://apify.com/meridian-io/shopify-product-data) · 300 users/30d · fails 4.0% of 5,821 runs · rating 4.2 (7) · updated 40 days ago · Free
 - Competition gaps: leader fails 11% of runs
+
+#### 8. Product Hunt Scraper — `product-hunt`
+- Leader: [cinder-io/product-hunt-scraper](https://apify.com/cinder-io/product-hunt-scraper) · 150 users/30d · fails 22.0% of 1,874 runs · rating 3.5 (8) · updated 300 days ago · $3.00 / 1,000 results
+- Other Actors (1):
+  - [delta-fetch/product-hunt-launches](https://apify.com/delta-fetch/product-hunt-launches) · 35 users/30d · fails 5.0% of 320 runs · unrated · updated 120 days ago · Free
+- Competition gaps: no maintained Actor; leader fails 22% of runs; leader rated 3.5; leader not updated for 300 days
 
 #### 9. WordPress Plugins Scraper — `wordpress-plugin`
 - Leader: [cobalt-crawl/wordpress-plugins-scraper](https://apify.com/cobalt-crawl/wordpress-plugins-scraper) · 85 users/30d · fails 11.0% of 1,078 runs · rating 4.0 (3) · updated 120 days ago · $2.00 / 1,000 results
@@ -174,7 +174,7 @@ _Comment from the Validator:_
 <!-- factory:validator v1 -->
 ## Validator brief — week 2026-W43
 
-**6 of 20 listed candidates pass all five checks** (33 assessed; the issue lists the best 20). Facts assessed by `claude-sonnet-5-5` (served by `hand-written-sample`); pass/fail decided by the thresholds in `config.yaml`. ✅ pass · ❌ fail · ❔ unknown (counts as a fail)
+**6 of 20 listed candidates pass all five checks, 1 needs your review of its terms** (33 assessed; the issue lists the best 20). Facts assessed by `claude-sonnet-5-5` (served by `hand-written-sample`); pass/fail decided by the thresholds in `config.yaml`. ✅ pass · ❌ fail · ❔ unknown (counts as a fail) · 🔎 REVIEW: only unclear terms are open
 
 | # | Niche | Demand | Competition | Legality | Cost | Stability | Result |
 |---|---|---|---|---|---|---|---|
@@ -184,8 +184,8 @@ _Comment from the Validator:_
 | 4 | npm Package Downloads Scraper | ✅ | ✅ | ✅ | ✅ | ✅ | **PASS** |
 | 5 | Lever Jobs Scraper | ✅ | ✅ | ✅ | ✅ | ✅ | **PASS** |
 | 6 | Federal grant opportunities from Grants.gov | ✅ | ✅ | ✅ | ✅ | ✅ | **PASS** |
-| 7 | Product Hunt Scraper | ✅ | ✅ | ❌ | ✅ | ✅ | 4/5 |
-| 8 | Shopify Products Scraper | ✅ | ✅ | ❔ | ✅ | ✅ | 4/5 |
+| 7 | Shopify Products Scraper | ✅ | ✅ | ❔ | ✅ | ✅ | 🔎 **REVIEW** |
+| 8 | Product Hunt Scraper | ✅ | ✅ | ❌ | ✅ | ✅ | 4/5 |
 | 9 | WordPress Plugins Scraper | ✅ | ✅ | ❌ | ✅ | ✅ | 4/5 |
 | 10 | PyPI Package Metadata Scraper | ✅ | ✅ | ❌ | ✅ | ✅ | 4/5 |
 | 11 | Podcast Episodes Scraper | ✅ | ✅ | ❌ | ✅ | ✅ | 4/5 |
@@ -245,10 +245,16 @@ Output: notice_id, buyer, country, cpv_codes, estimated_value, deadline, url.
 
 Also passing: #4 npm Package Downloads Scraper, #5 Lever Jobs Scraper, #6 Federal grant opportunities from Grants.gov.
 
+### 🔎 Needs your review: terms
+
+Clean on everything else: official API or public feed, no login, no personal data, robots.txt allows it. The terms neither forbid automated reuse nor clearly allow it. Read them; if you are satisfied, comment the command shown (Q17).
+
+- **#7 Shopify Products Scraper** (example-store.myshopify.com): Each store's own terms apply; Shopify's platform terms grant no third-party scraping rights.
+  - To build after reviewing: `/build shopify-product terms-reviewed`
+
 ### Why the others did not pass
 
-- **#7 Product Hunt Scraper** — Legality: needs a login; the source mixes in personal data
-- **#8 Shopify Products Scraper** — Legality: terms unclear
+- **#8 Product Hunt Scraper** — Legality: needs a login; the source mixes in personal data
 - **#9 WordPress Plugins Scraper** — Legality: the source mixes in personal data
 - **#10 PyPI Package Metadata Scraper** — Legality: the source mixes in personal data
 - **#11 Podcast Episodes Scraper** — Legality: the source mixes in personal data
@@ -262,5 +268,5 @@ Also passing: #4 npm Package Downloads Scraper, #5 Lever Jobs Scraper, #6 Federa
 - **#19 Shopify Catalog Scraper** — Demand: 40 users in 30 days, no open idea; Legality: terms unclear
 - **#20 Sitemap URLs Scraper** — Competition: 3 maintained alternatives and a strong leader; Legality: robots.txt for www.example.org could not be read (unreachable)
 
-**Decision for you:** add the `go` label to this issue to build a passing candidate. The Builder arrives in Phase 2; until then the label does nothing (see docs/QUESTIONS.md Q1).
+**Decision for you:** to build a candidate, add the `go` label to this issue, then comment `/build <niche-id>` (or `/build <niche-id> terms-reviewed` for a 🔎 REVIEW candidate). The Builder opens a pull request; nothing merges without you.
 <!-- factory:validator-data (hidden JSON hand-off, removed from this snapshot) -->

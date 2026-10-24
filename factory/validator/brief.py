@@ -10,6 +10,8 @@ BRIEF_MARKER = "<!-- factory:validator v1 -->"
 DATA_MARKER = "factory:validator-data"
 ICONS = {PASS: "✅", FAIL: "❌"}
 UNKNOWN_ICON = "❔"
+REVIEW_ICON = "🔎"
+VERDICT_LABELS = {"PASS": "✅ PASS", "REVIEW": f"{REVIEW_ICON} REVIEW"}
 DETAILED_PICKS = 3
 MAX_BODY_CHARS = 60_000  # GitHub's limit is 65,536
 
@@ -17,7 +19,7 @@ MAX_BODY_CHARS = 60_000  # GitHub's limit is 65,536
 def verdict_labels(validations: list[Validation]) -> dict[str, str]:
     """Short results for the Checks column of the weekly issue."""
     return {
-        v.candidate.niche_id: f"{v.passed}/{len(v.checks)} {'✅ PASS' if v.verdict == 'PASS' else '❌'}"
+        v.candidate.niche_id: f"{v.passed}/{len(v.checks)} {VERDICT_LABELS.get(v.verdict, '❌')}"
         for v in validations
     }
 
@@ -26,7 +28,8 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
     """`validations` are the candidates the issue lists; `assessed` is how many were validated in all."""
     # Passing candidates keep Scout's order (opportunity score).
     passing = sorted((v for v in validations if v.verdict == "PASS"), key=lambda v: v.candidate.rank)
-    failing = [v for v in validations if v.verdict != "PASS"]
+    review = sorted((v for v in validations if v.verdict == "REVIEW"), key=lambda v: v.candidate.rank)
+    failing = [v for v in validations if v.verdict == "FAIL"]
     model = config["validator"]["model"]
     served = sorted({v.assessment.model for v in validations if v.assessment and v.assessment.model})
 
@@ -34,20 +37,24 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
         BRIEF_MARKER,
         f"## Validator brief — week {week}",
         "",
-        f"**{len(passing)} of {len(validations)} listed candidates pass all five checks**"
+        f"**{len(passing)} of {len(validations)} listed candidates pass all five checks"
+        + (f", {len(review)} need{'s' if len(review) == 1 else ''} your review of {'its' if len(review) == 1 else 'their'} terms"
+           if review else "")
+        + "**"
         + (f" ({assessed} assessed; the issue lists the best {len(validations)})" if assessed and assessed > len(validations) else "")
         + ". "
         f"Facts assessed by `{model}`"
         + (f" (served by {', '.join(f'`{m}`' for m in served)})" if served and served != [model] else "")
         + "; pass/fail decided by the thresholds in `config.yaml`. "
-        f"{ICONS[PASS]} pass · {ICONS[FAIL]} fail · {UNKNOWN_ICON} unknown (counts as a fail)",
+        f"{ICONS[PASS]} pass · {ICONS[FAIL]} fail · {UNKNOWN_ICON} unknown (counts as a fail) · "
+        f"{REVIEW_ICON} REVIEW: only unclear terms are open",
         "",
         "| # | Niche | Demand | Competition | Legality | Cost | Stability | Result |",
         "|---|---|---|---|---|---|---|---|",
     ]
     for v in sorted(validations, key=lambda v: v.candidate.rank):
         icons = " | ".join(ICONS.get(v.check(name).status, UNKNOWN_ICON) for name in CHECK_NAMES)
-        result = "**PASS**" if v.verdict == "PASS" else f"{v.passed}/5"
+        result = {"PASS": "**PASS**", "REVIEW": f"{REVIEW_ICON} **REVIEW**"}.get(v.verdict, f"{v.passed}/5")
         lines.append(f"| {v.candidate.rank} | {_plain(v.candidate.label)} | {icons} | {result} |")
     lines.append("")
 
@@ -61,6 +68,25 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
     else:
         lines += ["### Best picks", "", "None this week: no candidate passed all five checks.", ""]
 
+    if review:
+        lines += [
+            f"### {REVIEW_ICON} Needs your review: terms",
+            "",
+            "Clean on everything else: official API or public feed, no login, no personal data, robots.txt allows "
+            "it. The terms neither forbid automated reuse nor clearly allow it. Read them; if you are satisfied, "
+            "comment the command shown (Q17).",
+            "",
+        ]
+        for v in review:
+            a = v.assessment
+            lines.append(f"- **#{v.candidate.rank} {v.candidate.label}** ({a.target_domain}): {v.review_reason}")
+            if a.terms_source_url:
+                quote = " ".join(a.terms_quote.split()).replace("|", "/")
+                lines.append(f"  - Closest passage: “{quote}” ([source]({a.terms_source_url}))" if quote
+                             else f"  - Page read: {a.terms_source_url}")
+            lines.append(f"  - To build after reviewing: `/build {v.candidate.niche_id} terms-reviewed`")
+        lines.append("")
+
     if failing:
         lines += ["### Why the others did not pass", ""]
         for v in sorted(failing, key=lambda v: v.candidate.rank):
@@ -69,8 +95,9 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
         lines.append("")
 
     lines += [
-        "**Decision for you:** add the `go` label to this issue to build a passing candidate. "
-        "The Builder arrives in Phase 2; until then the label does nothing (see docs/QUESTIONS.md Q1).",
+        "**Decision for you:** to build a candidate, add the `go` label to this issue, then comment "
+        "`/build <niche-id>` (or `/build <niche-id> terms-reviewed` for a 🔎 REVIEW candidate). "
+        "The Builder opens a pull request; nothing merges without you.",
         "",
     ]
     body = "\n".join(lines)

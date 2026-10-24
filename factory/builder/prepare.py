@@ -5,7 +5,9 @@ The owner adds the `go` label to a weekly Scout issue, then comments
 never starts on a candidate that should not be built:
 
 - the comment is a valid /build command on a Scout issue labelled `go`
-- the Validator's latest data for that niche says it passed all five checks
+- the Validator's latest data for that niche says it passed all five checks, or it
+  is a REVIEW candidate (only unclear terms open, Q17) and the command says
+  `terms-reviewed`, meaning the owner has read the terms
 - the proposed Actor name is valid and actors/<name>/ does not exist yet
 
 It then writes the build brief Claude works from (out/build/brief.md) and the
@@ -32,7 +34,7 @@ from factory.validator.brief import BRIEF_MARKER
 from factory.validator.brief import parse_hidden_data as parse_validator_data
 from factory.validator.checks import planned_price_per_1000
 
-COMMAND = re.compile(r"^/build\s+([a-z0-9][a-z0-9-]{0,80})\s*$")
+COMMAND = re.compile(r"^/build\s+([a-z0-9][a-z0-9-]{0,80})(\s+terms-reviewed)?\s*$")
 ACTOR_NAME = re.compile(r"^[a-z0-9](?:[a-z0-9-]{1,61}[a-z0-9])$")
 MARKER = "<!-- factory:builder -->"
 
@@ -41,12 +43,14 @@ class Refusal(Exception):
     """The build must not start; the message is posted on the issue."""
 
 
-def parse_command(text: str) -> str:
+def parse_command(text: str) -> tuple[str, bool]:
+    """Return (niche id, whether the owner confirmed reviewing the terms)."""
     first_line = (text or "").strip().splitlines()[0] if (text or "").strip() else ""
     match = COMMAND.match(first_line.strip())
     if not match:
-        raise Refusal("The command must be `/build <niche-id>` on its own line, for example `/build greenhouse-job`.")
-    return match.group(1)
+        raise Refusal("The command must be `/build <niche-id>` on its own line, for example `/build greenhouse-job` "
+                      "(add ` terms-reviewed` for a REVIEW candidate).")
+    return match.group(1), bool(match.group(2))
 
 
 def validator_records(comments: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -61,7 +65,7 @@ def validator_records(comments: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def plan_build(issue: dict[str, Any], comments: list[dict[str, Any]], niche_id: str, config: dict[str, Any],
-               repo_root: Path) -> dict[str, Any]:
+               repo_root: Path, terms_reviewed: bool = False) -> dict[str, Any]:
     labels = {label["name"] for label in issue.get("labels", [])}
     gh_cfg = config["github"]
     if gh_cfg["scout_label"] not in labels or gh_cfg["go_label"] not in labels:
@@ -73,8 +77,12 @@ def plan_build(issue: dict[str, Any], comments: list[dict[str, Any]], niche_id: 
     if record is None:
         ids = ", ".join(f"`{r['niche_id']}`" for r in records)
         raise Refusal(f"`{niche_id}` is not a candidate in this week's brief. Candidates: {ids}.")
-    failed = [c for c in record["checks"] if c["status"] != "pass"]
-    if failed:
+    verdict = record.get("verdict")
+    if verdict == "REVIEW" and not terms_reviewed:
+        raise Refusal(f"`{niche_id}` needs your review of its terms first ({record.get('review_reason')}). "
+                      f"Read them, then comment `/build {niche_id} terms-reviewed`.")
+    if verdict not in ("PASS", "REVIEW"):
+        failed = [c for c in record["checks"] if c["status"] != "pass"]
         reasons = "; ".join(f"{c['name']}: {c['short'] or c['reason']}" for c in failed)
         raise Refusal(f"`{niche_id}` did not pass all five checks, so it will not be built ({reasons}).")
     assessment = record.get("assessment")
@@ -103,6 +111,7 @@ def plan_build(issue: dict[str, Any], comments: list[dict[str, Any]], niche_id: 
         "branch": f"{builder['branch_prefix']}{name}",
         "price_per_1000_usd": round(price, 2),
         "price_basis": basis,
+        "terms_reviewed_by_owner": verdict == "REVIEW",
         "model": builder["model"],
         "max_turns": int(builder["max_turns"]),
         "candidate": candidate.to_dict(),
@@ -137,6 +146,9 @@ def render_brief(plan: dict[str, Any]) -> str:
     ]
     if a.get("terms_quote") and a.get("terms_source_url"):
         lines.append(f"  - Deciding passage: “{a['terms_quote']}” ({a['terms_source_url']})")
+    if plan.get("terms_reviewed_by_owner"):
+        lines.append("  - The owner read these terms and approved the build (`terms-reviewed`). In the README FAQ, "
+                     "link the terms page and describe the use plainly; do not claim the terms explicitly allow it.")
     lines += [
         f"- **Personal data:** {a['personal_data']}. {a['personal_data_notes']}",
         f"- **Stability:** {a['stability_notes']}",
@@ -155,26 +167,30 @@ def render_brief(plan: dict[str, Any]) -> str:
                      f"{leader['price_label']}. Beat it on reliability and clear output.")
     for idea in c.get("ideas", []):
         lines.append(f"- Ideas page: [{idea['title']}]({idea['url']}), {idea['upvotes']} upvotes")
-    lines += ["", "## Checks that passed", ""]
-    lines += [f"- {check['name'].capitalize()}: {check['reason']}" for check in plan["record"]["checks"]]
+    lines += ["", "## Validator checks", ""]
+    lines += [f"- {check['name'].capitalize()} ({check['status']}): {check['reason']}" for check in plan["record"]["checks"]]
     return "\n".join(lines) + "\n"
 
 
-def passing_ids(comments: list[dict[str, Any]]) -> list[str]:
+def ids_by_verdict(comments: list[dict[str, Any]], verdict: str) -> list[str]:
     try:
-        return [r["niche_id"] for r in validator_records(comments) if r["verdict"] == "PASS"]
+        return [r["niche_id"] for r in validator_records(comments) if r["verdict"] == verdict]
     except Refusal:
         return []
 
 
 def ask_message(comments: list[dict[str, Any]]) -> str:
-    ids = passing_ids(comments)
-    if not ids:
-        return (f"{MARKER}\nNo candidate in this week's brief passed all five checks, so there is nothing to build. "
-                "Remove the `go` label, or wait for next week's Scout run.")
-    listing = ", ".join(f"`{i}`" for i in ids)
-    return (f"{MARKER}\nWhich candidate should I build? Comment `/build <niche-id>` on this issue. "
-            f"Candidates that passed all five checks: {listing}.")
+    passing, review = ids_by_verdict(comments, "PASS"), ids_by_verdict(comments, "REVIEW")
+    if not passing and not review:
+        return (f"{MARKER}\nNo candidate in this week's brief passed all five checks or is waiting for your review, "
+                "so there is nothing to build. Remove the `go` label, or wait for next week's Scout run.")
+    parts = [f"{MARKER}\nWhich candidate should I build?"]
+    if passing:
+        parts.append(f"Passed all five checks: {', '.join(f'`{i}`' for i in passing)}; comment `/build <niche-id>`.")
+    if review:
+        parts.append(f"Waiting for your review of their terms: {', '.join(f'`{i}`' for i in review)}; read the terms "
+                     "in the brief, then comment `/build <niche-id> terms-reviewed`.")
+    return " ".join(parts)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -195,8 +211,8 @@ def main(argv: list[str] | None = None) -> int:
             github.add_comment(args.issue, ask_message(comments))
             return 0
         try:
-            niche_id = parse_command(args.command)
-            plan = plan_build(issue, comments, niche_id, config, REPO_ROOT)
+            niche_id, terms_reviewed = parse_command(args.command)
+            plan = plan_build(issue, comments, niche_id, config, REPO_ROOT, terms_reviewed)
         except Refusal as refusal:
             github.add_comment(args.issue, f"{MARKER}\nNot building: {refusal}")
             print(f"::error title=Builder::{refusal}")

@@ -32,10 +32,12 @@ def week(fixtures_dir, config, as_of):
 
 @pytest.mark.parametrize("text", ["/build greenhouse-job", "  /build greenhouse-job  \nthanks!"])
 def test_parse_command(text):
-    assert parse_command(text) == "greenhouse-job"
+    assert parse_command(text) == ("greenhouse-job", False)
+    assert parse_command("/build shopify-product terms-reviewed") == ("shopify-product", True)
 
 
-@pytest.mark.parametrize("text", ["", "/build", "/build Greenhouse Job", "please /build greenhouse-job", "/build a;rm -rf /"])
+@pytest.mark.parametrize("text", ["", "/build", "/build Greenhouse Job", "please /build greenhouse-job", "/build a;rm -rf /",
+                                  "/build x terms-reviewed now", "/build x reviewed"])
 def test_parse_command_rejects_anything_else(text):
     with pytest.raises(Refusal, match="/build <niche-id>"):
         parse_command(text)
@@ -102,6 +104,7 @@ def test_ask_lists_passing_candidates(week):
     _, comments = week
     message = ask_message(comments)
     assert message.startswith(MARKER) and "`/build <niche-id>`" in message and "`greenhouse-job`" in message
+    assert "`shopify-product`" in message and "`/build <niche-id> terms-reviewed`" in message
     assert "nothing to build" in ask_message([{"body": "no brief"}])
 
 
@@ -117,3 +120,18 @@ def test_ask_lists_passing_candidates(week):
 )
 def test_scope(files, name, outside):
     assert check_scope(files) == (name, outside)
+
+
+def test_a_review_candidate_needs_the_owners_confirmation(week, config, tmp_path):
+    issue, comments = week
+    with pytest.raises(Refusal, match="needs your review of its terms.*/build shopify-product terms-reviewed"):
+        plan_build(issue, comments, "shopify-product", config, tmp_path)
+    plan = plan_build(issue, comments, "shopify-product", config, tmp_path, terms_reviewed=True)
+    assert plan["terms_reviewed_by_owner"] is True
+    assert "The owner read these terms and approved the build" in render_brief(plan)
+
+
+def test_terms_reviewed_cannot_rescue_a_failing_candidate(week, config, tmp_path):
+    issue, comments = week
+    with pytest.raises(Refusal, match="did not pass all five checks"):
+        plan_build(issue, comments, "product-hunt", config, tmp_path, terms_reviewed=True)

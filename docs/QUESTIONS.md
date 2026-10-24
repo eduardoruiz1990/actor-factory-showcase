@@ -105,3 +105,24 @@ Pricing is entered once per Actor in Apify Console (**Publishing → Monetizatio
 ### Q16. The Builder's model and cost (assumed)
 
 The Builder runs Claude Code with `claude-opus-5-5`, with at most 120 turns and a 90-minute job timeout (`builder` in `config.yaml`). Building and testing one Actor is long agentic coding work, where the most capable model is worth its price. One build should cost a few dollars, but that is a guess until the first one runs. To try a cheaper run, set `builder.model` to `claude-sonnet-5-5`.
+
+### Q17. Candidates whose only open point is unclear terms (resolved 2026-10-25: 🔎 REVIEW)
+
+On the first live data, every strong candidate failed only because Claude found no sentence that explicitly grants commercial reuse. Most official public APIs simply publish their data without saying so. Such a candidate is now marked **🔎 REVIEW** instead of failing, but only when all of this holds:
+
+- **Other checks:** Demand, Competition, Cost and Stability pass.
+- **Access:** the data comes from an official API or public feed (`validator.legality.review_access`).
+- **Login:** none is needed. "Unclear" does not count.
+- **Personal data:** the data holds none at all. "Removable" does not count.
+- **robots.txt:** it allows the sample URLs.
+- **Terms:** they neither forbid the use nor were shown to allow it with a cited passage.
+
+The brief lists REVIEW candidates in their own section, with the passage and link Claude found. A REVIEW candidate never builds by itself:
+
+- **To build one:** read the terms, then comment `/build <niche-id> terms-reviewed`.
+- **Without the flag:** the Builder refuses.
+- **The flag's limits:** it cannot rescue a candidate that failed any rule.
+
+In the Actor's README, the Builder links the terms and does not claim they explicitly allow the use. To go back to the strict rule, set `validator.legality.review_unclear_terms: false`.
+
+On the 2026-10-24 rehearsal data, this turned 2 of 40 candidates into REVIEW: Greenhouse Jobs API and Sitemap Extractor.

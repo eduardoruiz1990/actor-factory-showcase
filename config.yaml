@@ -151,6 +151,11 @@ validator:
     # "Terms allow it" only counts when the assessment cites the page and quotes
     # the deciding sentence (Q9); otherwise the terms count as unclear.
     require_terms_source: true
+    # Candidates that pass every other rule but whose terms do not settle commercial
+    # reuse are marked REVIEW instead of failing (Q17). They build only after the owner
+    # reads the terms and comments `/build <niche-id> terms-reviewed`.
+    review_unclear_terms: true
+    review_access: ["official_api", "public_feed"]
     robots_user_agent: "*"
   cost:
     max_share_of_price: 0.30
