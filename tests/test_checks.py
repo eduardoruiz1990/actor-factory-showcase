@@ -31,7 +31,9 @@ def candidate(**overrides):
 def assessment(**overrides):
     values = dict(target_site="X API", target_domain="api.x.com", sample_urls=["https://api.x.com/v1/items"],
                   data_access="official_api", login_required="no", personal_data="none", personal_data_notes="",
-                  terms_allow_automated_access="yes", terms_notes="", approach="official_api",
+                  terms_allow_automated_access="yes", terms_notes="",
+                  terms_source_url="https://api.x.com/terms", terms_quote="You may use the API commercially.",
+                  approach="official_api",
                   compute_units_per_1000_results=0.02, proxy="none", residential_gb_per_1000_results=0.0,
                   official_api_or_feed=True, layout_change_frequency="rare", stability_notes="",
                   proposed_actor_name="x-api", pitch="p", output_fields=["a"], risks=[], confidence="high")
@@ -100,6 +102,26 @@ def test_login_or_personal_data_never_pass_even_if_allowed_elsewhere(config):
     assert check_legality(assessment(personal_data="removable"), ALLOWED, cfg).status == PASS
     assert check_legality(assessment(personal_data="core"), ALLOWED, cfg).status == FAIL
     assert check_legality(assessment(login_required="yes"), ALLOWED, cfg).status == FAIL
+
+
+@pytest.mark.parametrize(
+    ("source", "quote"),
+    [("", "You may use it."), ("https://api.x.com/terms", "  "), ("javascript:alert(1)", "You may use it."),
+     ("api.x.com/terms", "You may use it.")],
+)
+def test_terms_yes_needs_a_cited_page_and_quote(config, source, quote):
+    result = check_legality(assessment(terms_source_url=source, terms_quote=quote), ALLOWED, config["validator"]["legality"])
+    assert result.status == UNKNOWN
+    assert "no source page and quote" in result.reason
+
+
+def test_terms_source_requirement_can_be_switched_off(config):
+    cfg = dict(config["validator"]["legality"], require_terms_source=False)
+    assert check_legality(assessment(terms_source_url="", terms_quote=""), ALLOWED, cfg).status == PASS
+
+
+def test_legality_pass_names_the_terms_source(config):
+    assert "(api.x.com)" in check_legality(assessment(), ALLOWED, config["validator"]["legality"]).reason
 
 
 def test_legality_without_assessment_is_unknown(config):

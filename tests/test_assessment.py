@@ -7,8 +7,8 @@ import pytest
 
 from factory.scout.models import Candidate
 from factory.validator.assessment import (
-    ASSESSMENT_SCHEMA, SERVER_SIDE_FALLBACK_BETA, SYSTEM_PROMPT, AssessmentError, ClaudeAssessor, FixtureAssessor,
-    render_candidate,
+    ASSESSMENT_SCHEMA, SERVER_SIDE_FALLBACK_BETA, SYSTEM_PROMPT, WEB_FETCH_TOOL, WEB_SEARCH_TOOL, AssessmentError,
+    ClaudeAssessor, FixtureAssessor, final_text, render_candidate,
 )
 
 
@@ -30,23 +30,38 @@ def candidate(fixtures_dir, config, as_of):
 
 
 class FakeMessages:
-    def __init__(self, response=None, error=None):
-        self.response, self.error, self.requests = response, error, []
+    """Returns `responses` in order (the last one repeats)."""
+
+    def __init__(self, response=None, error=None, responses=None):
+        self.responses = responses or [response]
+        self.error, self.requests = error, []
 
     def create(self, **kwargs):
         self.requests.append(kwargs)
         if self.error:
             raise self.error
-        return self.response
+        return self.responses[min(len(self.requests), len(self.responses)) - 1]
 
 
 def fake_client(messages):
     return SimpleNamespace(beta=SimpleNamespace(messages=messages))
 
 
-def response(text, stop_reason="end_turn", stop_details=None, model="claude-sonnet-5-5"):
-    usage = SimpleNamespace(input_tokens=900, cache_read_input_tokens=1200, output_tokens=400)
-    content = [SimpleNamespace(type="thinking", thinking=""), SimpleNamespace(type="text", text=text)]
+def block(kind, **fields):
+    return SimpleNamespace(type=kind, **fields)
+
+
+def response(text, stop_reason="end_turn", stop_details=None, model="claude-sonnet-5-5", content=None, searches=1, fetches=1):
+    usage = SimpleNamespace(input_tokens=900, cache_read_input_tokens=1200, output_tokens=400,
+                            server_tool_use=SimpleNamespace(web_search_requests=searches, web_fetch_requests=fetches))
+    if content is None:
+        content = [
+            block("thinking", thinking=""),
+            block("text", text="Let me find the terms."),
+            block("server_tool_use", name="web_search"),
+            block("web_search_tool_result", content=[]),
+            block("text", text=text),
+        ]
     return SimpleNamespace(content=content, stop_reason=stop_reason, stop_details=stop_details, model=model, usage=usage)
 
 
@@ -62,10 +77,52 @@ def test_request_uses_the_configured_model_and_structured_output(config, candida
     }
     assert request["system"] == [{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}]
     assert request["betas"] == [SERVER_SIDE_FALLBACK_BETA] and request["fallbacks"] == "default"
-    assert "thinking" not in request and "temperature" not in request
+    research = config["validator"]["research"]
+    assert request["tools"] == [
+        {"type": WEB_SEARCH_TOOL, "name": "web_search", "max_uses": research["max_searches"]},
+        {"type": WEB_FETCH_TOOL, "name": "web_fetch", "max_uses": research["max_fetches"],
+         "max_content_tokens": research["max_fetch_tokens"]},
+    ]
+    assert "thinking" not in request and "temperature" not in request and "citations" not in str(request["tools"])
     assert "greenhouse-jobs-scraper" in request["messages"][0]["content"]
     assert result.target_domain == "boards-api.greenhouse.io"
     assert result.model == "claude-sonnet-5-5"
+    assert (result.web_searches, result.web_fetches) == (1, 1)
+
+
+def test_research_can_be_switched_off(config, candidate, sample):
+    config["validator"]["research"]["enabled"] = False
+    messages = FakeMessages(response(json.dumps(sample)))
+    ClaudeAssessor(fake_client(messages), config["validator"]).assess(candidate)
+    assert "tools" not in messages.requests[0]
+
+
+def test_paused_turns_are_resumed_without_a_new_user_message(config, candidate, sample):
+    paused_content = [block("server_tool_use", name="web_fetch")]
+    paused = response("", stop_reason="pause_turn", content=paused_content, searches=2, fetches=1)
+    messages = FakeMessages(responses=[paused, response(json.dumps(sample), searches=1, fetches=2)])
+    result = ClaudeAssessor(fake_client(messages), config["validator"]).assess(candidate)
+    first, second = messages.requests
+    assert len(first["messages"]) == 1
+    assert second["messages"][0] == first["messages"][0]
+    assert second["messages"][1] == {"role": "assistant", "content": paused_content}
+    assert len(second["messages"]) == 2
+    assert (result.web_searches, result.web_fetches) == (3, 3)
+
+
+def test_endless_pauses_become_an_assessment_error(config, candidate):
+    paused = response("", stop_reason="pause_turn", content=[block("server_tool_use", name="web_fetch")])
+    messages = FakeMessages(paused)
+    with pytest.raises(AssessmentError, match="continuations"):
+        ClaudeAssessor(fake_client(messages), config["validator"]).assess(candidate)
+    assert len(messages.requests) == config["validator"]["research"]["max_continuations"] + 1
+
+
+def test_final_text_ignores_text_written_before_the_last_tool_call():
+    content = [block("text", text="Searching..."), block("web_fetch_tool_result", content=None),
+               block("thinking", thinking=""), block("text", text='{"a": '), block("text", text="1}")]
+    assert final_text(content) == '{"a": 1}'
+    assert final_text([block("text", text="{}")]) == "{}"
 
 
 def test_fallback_can_be_switched_off(config, candidate, sample):

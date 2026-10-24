@@ -67,3 +67,29 @@ def test_rank_for_issue_puts_passing_candidates_first(scout_result, fixtures_dir
     passed = [v.passed for v in ordered[6:]]
     assert passed == sorted(passed, reverse=True)
     assert ordered[0].candidate.niche_id == "sec-edgar-filing"  # the passing candidate Scout ranked highest
+
+
+class SlowAssessor(FixtureAssessor):
+    """Records how many assessments overlap, to show they run in parallel."""
+
+    def __init__(self, path):
+        super().__init__(path)
+        import threading
+        self.lock, self.active, self.peak = threading.Lock(), 0, 0
+
+    def assess(self, candidate):
+        import time
+        with self.lock:
+            self.active += 1
+            self.peak = max(self.peak, self.active)
+        time.sleep(0.02)
+        with self.lock:
+            self.active -= 1
+        return super().assess(candidate)
+
+
+def test_assessments_run_in_parallel_and_keep_their_order(scout_result, fixtures_dir, config):
+    assessor = SlowAssessor(fixtures_dir / "validator" / "assessments.json")
+    validations = run(scout_result, fixtures_dir, config, assessor=assessor)
+    assert assessor.peak == config["validator"]["concurrency"]
+    assert [v.candidate.niche_id for v in validations] == [c.niche_id for c in scout_result.candidates]

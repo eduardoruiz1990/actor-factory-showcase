@@ -55,7 +55,7 @@ python tests/fixtures/build_fixtures.py              # regenerate the synthetic 
 - GitHub writes are idempotent: the weekly issue is found by title and label; bot comments are found by a hidden `<!-- factory:... -->` marker and edited, not duplicated.
 - Machine-readable hand-offs travel as hidden JSON in issue bodies and comments (`factory:scout-data`, `factory:validator-data`), with `>` escaped so the comment cannot be closed early.
 - Tests run offline against `tests/fixtures/`. A new network call needs a fixture and a test.
-- The Validator calls Claude through the official `anthropic` SDK with structured output (`output_config.format`). The model reports facts; `checks.py` decides pass or fail.
+- The Validator calls Claude through the official `anthropic` SDK with structured output (`output_config.format`) and the server-side web search and fetch tools for reading terms. The model reports facts with their source; `checks.py` decides pass or fail.
 
 ## Network
 

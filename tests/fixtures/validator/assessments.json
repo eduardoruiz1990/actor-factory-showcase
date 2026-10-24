@@ -33,7 +33,9 @@
       "Terms forbid scraping"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "google-trend": {
     "target_site": "Google Trends",
@@ -67,7 +69,9 @@
       "robots.txt disallows the API"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "sec-edgar-filing": {
     "target_site": "SEC EDGAR",
@@ -104,7 +108,9 @@
       "Fair-access limit of 10 requests per second"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+    "terms_quote": "Sample quote for sec-edgar-filing: the data may be accessed programmatically and reused, including commercially."
   },
   "rightmove": {
     "target_site": "Rightmove property listings",
@@ -140,7 +146,9 @@
       "Blocking"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "etsy-listing": {
     "target_site": "Etsy marketplace",
@@ -175,7 +183,9 @@
       "Terms"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "zillow": {
     "target_site": "Zillow real estate",
@@ -211,7 +221,9 @@
       "Terms"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "greenhouse-job": {
     "target_site": "Greenhouse job boards",
@@ -251,7 +263,9 @@
       "Low price ceiling"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://developers.greenhouse.io/job-board.html",
+    "terms_quote": "Sample quote for greenhouse-job: the data may be accessed programmatically and reused, including commercially."
   },
   "product-hunt": {
     "target_site": "Product Hunt",
@@ -286,7 +300,9 @@
       "Commercial use restricted"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "ted-eu-tender": {
     "target_site": "TED (Tenders Electronic Daily)",
@@ -323,7 +339,9 @@
       "Notices are multilingual"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://ted.europa.eu/en/legal-notice",
+    "terms_quote": "Sample quote for ted-eu-tender: the data may be accessed programmatically and reused, including commercially."
   },
   "npm-package-download": {
     "target_site": "npm download counts",
@@ -359,7 +377,9 @@
       "Free alternatives"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://github.com/npm/registry/blob/main/docs/download-counts.md",
+    "terms_quote": "Sample quote for npm-package-download: the data may be accessed programmatically and reused, including commercially."
   },
   "lever-job": {
     "target_site": "Lever job postings",
@@ -397,7 +417,9 @@
       "Small niche"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://github.com/lever/postings-api",
+    "terms_quote": "Sample quote for lever-job: the data may be accessed programmatically and reused, including commercially."
   },
   "shopify-product": {
     "target_site": "Shopify storefronts",
@@ -433,7 +455,9 @@
       "Crowded niche"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "trustpilot-review": {
     "target_site": "Trustpilot",
@@ -468,7 +492,9 @@
       "Terms"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "wordpress-plugin": {
     "target_site": "WordPress.org plugin directory",
@@ -503,7 +529,9 @@
       "Author names must be dropped"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://wordpress.org/about/license/",
+    "terms_quote": "Sample quote for wordpress-plugin: the data may be accessed programmatically and reused, including commercially."
   },
   "pypi-package-metadata": {
     "target_site": "PyPI",
@@ -538,7 +566,9 @@
       "Author and maintainer fields must be dropped"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://docs.pypi.org/api/json/",
+    "terms_quote": "Sample quote for pypi-package-metadata: the data may be accessed programmatically and reused, including commercially."
   },
   "steam-game": {
     "target_site": "Steam store",
@@ -573,7 +603,9 @@
       "Rate limits"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "federal-grant-opportunity-gov": {
     "target_site": "Grants.gov",
@@ -611,7 +643,9 @@
       "Idea-only demand so far"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://www.grants.gov/api",
+    "terms_quote": "Sample quote for federal-grant-opportunity-gov: the data may be accessed programmatically and reused, including commercially."
   },
   "booking-hotel": {
     "target_site": "Booking.com hotel search",
@@ -646,7 +680,9 @@
       "Blocking"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "booking-review": {
     "target_site": "Booking.com reviews",
@@ -680,7 +716,9 @@
       "Terms"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "amazon-product": {
     "target_site": "Amazon product pages",
@@ -715,7 +753,9 @@
       "Crowded niche"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "booking-price": {
     "target_site": "Booking.com prices",
@@ -747,7 +787,9 @@
       "Terms"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "yelp-review": {
     "target_site": "Yelp",
@@ -780,7 +822,9 @@
       "Terms"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "podcast-episode": {
     "target_site": "Podcast RSS feeds",
@@ -814,7 +858,9 @@
       "Host and guest names must be dropped"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://feeds.example-podcast-host.com/terms",
+    "terms_quote": "Sample quote for podcast-episode: the data may be accessed programmatically and reused, including commercially."
   },
   "shopify-catalog": {
     "target_site": "Shopify storefronts",
@@ -846,7 +892,9 @@
       "Terms vary per store"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "sitemap-url": {
     "target_site": "Website sitemaps",
@@ -877,7 +925,9 @@
       "Crowded, mostly free niche"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://www.sitemaps.org/protocol.html",
+    "terms_quote": "Sample quote for sitemap-url: the data may be accessed programmatically and reused, including commercially."
   },
   "weather-forecast": {
     "target_site": "National weather service API",
@@ -908,7 +958,9 @@
       "Non-commercial terms"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   },
   "github-repository": {
     "target_site": "GitHub REST API",
@@ -941,7 +993,9 @@
       "Low rate limit without a token"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "terms_quote": "Sample quote for github-repository: the data may be accessed programmatically and reused, including commercially."
   },
   "court-opinion-courtlistener": {
     "target_site": "CourtListener",
@@ -974,7 +1028,9 @@
       "API needs an account token"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://www.courtlistener.com/terms/",
+    "terms_quote": "Sample quote for court-opinion-courtlistener: the data may be accessed programmatically and reused, including commercially."
   },
   "openfda-drug-recall": {
     "target_site": "openFDA",
@@ -1008,7 +1064,9 @@
       "Small demand"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://open.fda.gov/terms/",
+    "terms_quote": "Sample quote for openfda-drug-recall: the data may be accessed programmatically and reused, including commercially."
   },
   "hacker-news": {
     "target_site": "Hacker News API",
@@ -1041,7 +1099,9 @@
       "Free alternatives"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://github.com/HackerNews/API",
+    "terms_quote": "Sample quote for hacker-news: the data may be accessed programmatically and reused, including commercially."
   },
   "hacker-news-who-is-hiring-parser": {
     "target_site": "Hacker News Who is Hiring",
@@ -1074,7 +1134,9 @@
       "Personal data in posts"
     ],
     "confidence": "medium",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://github.com/HackerNews/API",
+    "terms_quote": "Sample quote for hacker-news-who-is-hiring-parser: the data may be accessed programmatically and reused, including commercially."
   },
   "federal-register-document": {
     "target_site": "Federal Register API",
@@ -1107,7 +1169,9 @@
       "Small demand"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "https://www.federalregister.gov/reader-aids/developer-resources",
+    "terms_quote": "Sample quote for federal-register-document: the data may be accessed programmatically and reused, including commercially."
   },
   "app-store-review": {
     "target_site": "Apple App Store reviews",
@@ -1141,6 +1205,8 @@
       "Terms"
     ],
     "confidence": "high",
-    "model": "hand-written-sample"
+    "model": "hand-written-sample",
+    "terms_source_url": "",
+    "terms_quote": ""
   }
 }

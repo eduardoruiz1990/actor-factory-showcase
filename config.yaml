@@ -127,6 +127,16 @@ validator:
   max_tokens: 16000
   # Server-side refusal fallback (fallbacks: "default", Claude API only).
   server_side_fallback: true
+  # Assessments running at the same time (each is one Claude request, slower with research).
+  concurrency: 4
+  # Claude reads each target's terms with web search and web fetch before answering
+  # the terms question (Q9). Searches are billed per use; fetched pages count as input tokens.
+  research:
+    enabled: true
+    max_searches: 3
+    max_fetches: 5
+    max_fetch_tokens: 20000   # per fetched page
+    max_continuations: 3      # resumes after the API pauses a long tool loop
   demand:
     min_users_30d: 50
     min_idea_upvotes: 1
@@ -138,6 +148,9 @@ validator:
     # When false, data that holds personal data the Actor could strip still
     # fails Legality (conservative, Q6).
     allow_removable_personal_data: false
+    # "Terms allow it" only counts when the assessment cites the page and quotes
+    # the deciding sentence (Q9); otherwise the terms count as unclear.
+    require_terms_source: true
     robots_user_agent: "*"
   cost:
     max_share_of_price: 0.30

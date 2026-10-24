@@ -56,13 +56,20 @@ The spec says Legality never passes when the data contains personal data. The mo
 - **Unrated** Actors, which have no reviews, do not count as "rated below 4".
 - A **niche** is a group of Actors whose title keywords overlap (a Jaccard similarity of at least 0.5 with the leader's keywords). Open ideas that match no Actor become niches of their own.
 
-### Q9. Reading a site's terms (assumed)
+### Q9. Reading a site's terms (resolved 2026-10-25: the Validator researches them)
 
-The Validator does not download and read each site's terms of service. The model reports what it knows (`yes`, `no` or `unclear`) and names the relevant term. **"Unclear" never passes.** robots.txt, by contrast, is fetched live and checked against the URLs the Actor would request, with RFC 9309 wildcard matching. A robots.txt that cannot be read (other than a 404) also leaves Legality unknown. Should a later phase fetch and check the terms pages too?
+The first live runs showed the model answering "terms unclear" for most candidates, because it could not read the terms. Now:
+
+- **Research:** each assessment can use Claude's web search and web fetch tools: up to 3 searches and 5 page fetches (`validator.research`). The prompt tells it to find the target's own API, developer or service terms, or the data's licence, and to read the part about automated access and reuse before answering.
+- **Evidence:** it must return the page's URL (`terms_source_url`) and the deciding sentence word for word (`terms_quote`). Code accepts "terms allow it" only with both (`validator.legality.require_terms_source`). Without them the terms count as unclear, and unclear never passes.
+- **In the brief:** each passing candidate shows the quote and a link to its source, so you can check it before adding `go`.
+- **robots.txt** is still fetched live and checked against the URLs the Actor would request, with RFC 9309 matching. A robots.txt that cannot be read (other than a 404) leaves Legality unknown.
+
+Pages the model reads can be written by anyone. They are treated as data: the model reports what they say, and code makes the decision.
 
 ### Q10. Model settings for the Validator (assumed)
 
-- `claude-sonnet-5-5` at `effort: medium` with structured JSON output. One request per candidate, so 20 a week. The shared system prompt is cached.
+- `claude-sonnet-5-5` at `effort: medium` with structured JSON output and web research (Q9). One request per candidate, 40 a week, 4 at a time (`validator.concurrency`). The shared system prompt is cached. With research, a run costs more than the first live run's $0.15. A researched candidate used about 30,000–100,000 cached input tokens, 1,000–2,500 output tokens and up to 3 searches, so expect roughly $1–2 a week. Check it in the Claude Console after the first runs.
 - Server-side refusal fallback is on (`fallbacks: "default"`, a beta). If the model declines a request on safety grounds, the API retries it on Anthropic's recommended fallback model, and the brief names the model that answered. Turn it off with `validator.server_side_fallback: false`.
 - If a single assessment fails (a refusal or an API error), that candidate's Legality, Cost and Stability checks show as unknown and the run continues. If every assessment fails, the workflow step fails so the run shows red.
 

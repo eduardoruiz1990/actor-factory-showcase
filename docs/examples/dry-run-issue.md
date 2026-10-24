@@ -209,9 +209,10 @@ Output: company, cik, form, filed_at, report_date, accession_number, document_ur
 
 - Demand: 510 users in 30 days across 3 Actors (≥ 50)
 - Competition: 2 maintained alternatives (< 3)
-- Legality: official API, no login, no personal data, terms allow it; robots.txt allows /submissions/CIK0000320193.json on data.sec.gov
+- Legality: official API, no login, no personal data, terms allow it (www.sec.gov); robots.txt allows /submissions/CIK0000320193.json on data.sec.gov
 - Cost: ~$0.008 platform cost per 1,000 results (0.02 CU) is 0.5% of the planned $1.60 (80% of the leader's $2.00); limit 30%
 - Stability: official API or feed (data.sec.gov)
+- Terms: “Sample quote for sec-edgar-filing: the data may be accessed programmatically and reused, including commercially.” ([source](https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data))
 - Risks: Free SEC tools exist; Fair-access limit of 10 requests per second
 
 **#2 Greenhouse Jobs Scraper** — proposed Actor `greenhouse-job-board-api` (boards-api.greenhouse.io, confidence medium)
@@ -222,9 +223,10 @@ Output: company, job_id, title, location, departments, offices, updated_at, url,
 
 - Demand: 317 users in 30 days across 3 Actors (≥ 50)
 - Competition: 1 maintained alternative (< 3)
-- Legality: official API, no login, no personal data, terms allow it; boards-api.greenhouse.io has no robots.txt
+- Legality: official API, no login, no personal data, terms allow it (developers.greenhouse.io); boards-api.greenhouse.io has no robots.txt
 - Cost: ~$0.008 platform cost per 1,000 results (0.02 CU) is 0.7% of the planned $1.20 (80% of the leader's $1.50); limit 30%
 - Stability: official API or feed (boards-api.greenhouse.io)
+- Terms: “Sample quote for greenhouse-job: the data may be accessed programmatically and reused, including commercially.” ([source](https://developers.greenhouse.io/job-board.html))
 - Risks: Board tokens must be known per company; The current leader may fix its failures; Low price ceiling
 
 **#3 TED EU Tenders Scraper** — proposed Actor `ted-eu-tenders` (api.ted.europa.eu, confidence high)
@@ -235,9 +237,10 @@ Output: notice_id, buyer, country, cpv_codes, estimated_value, deadline, url.
 
 - Demand: 90 users in 30 days across 2 Actors (≥ 50)
 - Competition: no maintained alternative (< 3)
-- Legality: official API, no login, no personal data, terms allow it; api.ted.europa.eu has no robots.txt
+- Legality: official API, no login, no personal data, terms allow it (ted.europa.eu); api.ted.europa.eu has no robots.txt
 - Cost: ~$0.012 platform cost per 1,000 results (0.03 CU) is 0.4% of the planned $3.20 (80% of the leader's $4.00); limit 30%
 - Stability: official API or feed (api.ted.europa.eu)
+- Terms: “Sample quote for ted-eu-tender: the data may be accessed programmatically and reused, including commercially.” ([source](https://ted.europa.eu/en/legal-notice))
 - Risks: Query syntax is complex; Notices are multilingual
 
 Also passing: #4 npm Package Downloads Scraper, #5 Lever Jobs Scraper, #6 Federal grant opportunities from Grants.gov.

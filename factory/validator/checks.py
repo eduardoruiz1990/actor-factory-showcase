@@ -7,6 +7,7 @@ be decided is "unknown", and unknown never counts as a pass.
 
 from dataclasses import asdict, dataclass
 from typing import Any
+from urllib.parse import urlsplit
 
 from factory.scout.models import Candidate
 from factory.validator.assessment import Assessment
@@ -101,6 +102,8 @@ def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[
         fails.append("terms forbid automated access or reuse")
     elif a.terms_allow_automated_access != "yes":
         unknowns.append("terms unclear")
+    elif cfg["require_terms_source"] and not (_is_http_url(a.terms_source_url) and a.terms_quote.strip()):
+        unknowns.append("terms said to allow it, but no source page and quote were given")
     if a.data_access == "unknown":
         unknowns.append("access method unknown")
     if robots is None or robots.allowed is None:
@@ -112,10 +115,16 @@ def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[
     if unknowns:
         return CheckResult("legality", UNKNOWN, "; ".join(unknowns))
     access = ACCESS_LABELS.get(a.data_access, a.data_access)
+    source = f" ({urlsplit(a.terms_source_url).netloc})" if _is_http_url(a.terms_source_url) else ""
     return CheckResult(
         "legality", PASS,
-        f"{access}, no login, no personal data, terms allow it; {robots.detail}",
+        f"{access}, no login, no personal data, terms allow it{source}; {robots.detail}",
     )
+
+
+def _is_http_url(value: str) -> bool:
+    parts = urlsplit(value or "")
+    return parts.scheme in ("http", "https") and bool(parts.netloc)
 
 
 def check_cost(c: Candidate, a: Assessment | None, cfg: dict[str, Any], apify_cfg: dict[str, Any]) -> CheckResult:

@@ -90,6 +90,9 @@ def _pick(v: Validation) -> list[str]:
     if a:
         lines += [a.pitch, "", f"Output: {', '.join(a.output_fields)}.", ""]
     lines += [f"- {check.name.capitalize()}: {check.reason}" for check in v.checks]
+    if a and a.terms_quote and a.terms_source_url:
+        quote = " ".join(a.terms_quote.split()).replace("|", "/")
+        lines.append(f"- Terms: “{quote}” ([source]({a.terms_source_url}))")
     if a and a.risks:
         lines.append(f"- Risks: {'; '.join(a.risks)}")
     lines.append("")
