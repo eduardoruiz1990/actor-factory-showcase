@@ -10,15 +10,16 @@ def source(fixtures_dir):
     return FixtureSource(fixtures_dir)
 
 
-def test_selects_twenty_ranked_candidates(source, config, as_of):
+def test_selects_ranked_candidates_for_validation(source, config, as_of):
     result = run_scout(source, config, as_of)
-    assert len(result.candidates) == 20
-    assert [c.rank for c in result.candidates] == list(range(1, 21))
+    # Up to candidates_to_validate (40); the sample data has 33 niches above the minimum demand.
+    assert len(result.candidates) == 33
+    assert [c.rank for c in result.candidates] == list(range(1, 34))
     scores = [c.score for c in result.candidates]
     assert scores == sorted(scores, reverse=True)
     assert result.store_queries == 1 + len(config["scout"]["store"]["categories"])
     assert result.actors_seen == 84  # merged across overlapping category queries
-    assert result.ideas_parsed == 8 and result.ideas_open == 6
+    assert result.ideas_parsed == 6 and result.ideas_open == 6
 
 
 def test_every_candidate_has_the_required_numbers(source, config, as_of):
@@ -32,7 +33,22 @@ def test_every_candidate_has_the_required_numbers(source, config, as_of):
             assert c.open_idea_upvotes > 0
 
 
+def test_niches_that_can_never_pass_are_excluded(source, config, as_of):
+    result = run_scout(source, config, as_of)
+    ids = {c.niche_id for c in result.candidates}
+    assert not ids & {"linkedin-job", "youtube-channel", "google-map", "instagram-profile", "website-content"}
+    assert result.niches_excluded == 5
+
+
+def test_inconsistent_pool_sizes_are_rejected(source, config, as_of):
+    config["scout"]["details"]["niche_pool"] = 10
+    with pytest.raises(ValueError, match="candidates_to_validate"):
+        run_scout(source, config, as_of)
+
+
 def test_details_are_fetched_only_for_the_pool(source, config, as_of):
+    config["scout"]["candidates_per_week"] = 5
+    config["scout"]["candidates_to_validate"] = 5
     config["scout"]["details"]["niche_pool"] = 5
     config["scout"]["details"]["actors_per_niche"] = 1
     result = run_scout(source, config, as_of)
@@ -43,8 +59,8 @@ def test_details_are_fetched_only_for_the_pool(source, config, as_of):
 def test_missing_detail_is_reported(source, config, as_of):
     result = run_scout(source, config, as_of)
     assert "1 Actor detail lookup failed; that Actor counts as maintained." in result.warnings
-    maps = next(c for c in result.candidates if c.niche_id == "google-map")
-    assert maps.maintained_unknown == 1
+    shopify = next(c for c in result.candidates if c.niche_id == "shopify-product")
+    assert shopify.maintained_unknown == 1
 
 
 def test_niches_with_your_own_actor_are_skipped(source, config, as_of):
@@ -70,15 +86,15 @@ class FlakySource(FixtureSource):
             raise httpx.ConnectError("blocked")
         return super().store_page(category=category, offset=offset, limit=limit, sort_by=sort_by)
 
-    def ideas_html(self):
+    def ideas_export(self):
         raise httpx.ConnectError("blocked")
 
 
 def test_a_failed_query_becomes_a_warning(fixtures_dir, config, as_of):
     result = run_scout(FlakySource(fixtures_dir, {"JOBS"}), config, as_of)
     assert any("category=JOBS" in w for w in result.warnings)
-    assert any("Ideas page could not be fetched" in w for w in result.warnings)
-    assert len(result.candidates) == 20
+    assert any("Ideas export could not be fetched" in w for w in result.warnings)
+    assert len(result.candidates) >= config["scout"]["candidates_per_week"]
 
 
 def test_every_query_failing_is_an_error(fixtures_dir, config, as_of):

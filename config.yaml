@@ -5,12 +5,14 @@
 
 owner:
   # Your Apify username. Scout leaves your own Actors out of niche statistics.
-  # Empty until you set it (Q7).
-  apify_username: ""
+  # Set 2026-10-24 (Q7).
+  apify_username: "guayox"
 
 apify:
   api_base: "https://api.apify.com/v2"
   ideas_url: "https://apify.com/ideas"
+  # The list behind the Ideas page's "Export ideas" button: every idea still open to develop.
+  ideas_export_url: "https://apify.com/api/ideas/download?format=json&status=toDevelop"
   # Platform prices used by the Cost check. Pay-as-you-go list prices, the most
   # expensive tier, so the check stays conservative (Q5).
   compute_unit_usd: 0.40
@@ -28,7 +30,26 @@ http:
   backoff_max_seconds: 60.0
 
 scout:
+  # The weekly issue lists this many niches...
   candidates_per_week: 20
+  # ...chosen from this many: the Validator assesses them all (one Claude call each)
+  # and the issue keeps the best after validation (Q13).
+  candidates_to_validate: 40
+  # Niches that can never pass, left out before ranking (Q13). A niche is excluded
+  # when one of its title keywords (singular, lower case) is listed, or when its
+  # leading Actor is in a listed Store category.
+  exclude:
+    # Social networks and people data: personal data, login walls or terms that forbid scraping.
+    # Generic scraping tools and templates: platform utilities, not niches.
+    title_words:
+      ["instagram", "facebook", "tiktok", "twitter", "tweet", "x", "threads", "linkedin",
+       "youtube", "reddit", "pinterest", "snapchat", "telegram", "whatsapp", "discord",
+       "likee", "kwai", "bilibili", "weibo", "douyin", "xiaohongshu", "onlyfans",
+       "lead", "email", "phone", "contact", "people", "person", "profile", "follower",
+       "influencer", "apollo", "zoominfo", "employee",
+       "playwright", "puppeteer", "cheerio", "selenium", "browser", "web", "website", "rag",
+       "hello", "example"]
+    categories: ["SOCIAL_MEDIA", "LEAD_GENERATION"]
   store:
     sort_by: popularity
     page_size: 1000            # API maximum per request
@@ -57,7 +78,8 @@ scout:
   details:
     # The Store list has no last-update date, so Scout fetches Actor details
     # (GET /v2/acts/{id}) for the Actors of the best-ranked niches only.
-    niche_pool: 40
+    # Must be at least candidates_to_validate.
+    niche_pool: 50
     actors_per_niche: 10
   # Run statuses counted as failures in the 30-day failure rate. ABORTED runs
   # are usually stopped by the user, so they are not counted.
@@ -67,9 +89,12 @@ scout:
   # count as maintained (conservative, Q3).
   maintained_max_days_since_update: 90
   ideas:
-    # Normalised idea statuses that count as "open". Ideas with any other or
-    # no status do not count towards Demand (conservative, Q4).
-    open_statuses: ["open", "open_to_develop", "new"]
+    # Idea statuses that count as "open". The export only lists ideas that are
+    # open to develop; any other status does not count towards Demand (Q4).
+    open_statuses: ["open_to_develop"]
+    # Upvotes come from one page per idea (one request per second). Ideas past
+    # this many keep 0 upvotes.
+    max_pages: 400
   clustering:
     # Actors join a niche when the Jaccard similarity of their title keywords
     # with the niche leader's is at least this value.
@@ -79,7 +104,7 @@ scout:
     # YAML would read a bare no or on as a boolean.
     stopwords:
       ["a", "actor", "advanced", "all", "an", "and", "api", "apify", "automation", "best",
-       "bot", "by", "cheap", "cheapest", "complete", "crawler", "data", "downloader", "easy",
+       "bot", "by", "cheap", "cheapest", "com", "complete", "crawler", "data", "downloader", "easy",
        "extract", "extractor", "fast", "fastest", "for", "free", "from", "full", "get", "in",
        "info", "lite", "new", "no", "of", "on", "plus", "premium", "pro", "quick", "rapid",
        "scrape", "scraper", "scrapper", "simple", "smart", "super", "the", "to", "tool",
@@ -102,6 +127,16 @@ validator:
   max_tokens: 16000
   # Server-side refusal fallback (fallbacks: "default", Claude API only).
   server_side_fallback: true
+  # Assessments running at the same time (each is one Claude request, slower with research).
+  concurrency: 4
+  # Claude reads each target's terms with web search and web fetch before answering
+  # the terms question (Q9). Searches are billed per use; fetched pages count as input tokens.
+  research:
+    enabled: true
+    max_searches: 3
+    max_fetches: 5
+    max_fetch_tokens: 20000   # per fetched page
+    max_continuations: 3      # resumes after the API pauses a long tool loop
   demand:
     min_users_30d: 50
     min_idea_upvotes: 1
@@ -113,6 +148,9 @@ validator:
     # When false, data that holds personal data the Actor could strip still
     # fails Legality (conservative, Q6).
     allow_removable_personal_data: false
+    # "Terms allow it" only counts when the assessment cites the page and quotes
+    # the deciding sentence (Q9); otherwise the terms count as unclear.
+    require_terms_source: true
     robots_user_agent: "*"
   cost:
     max_share_of_price: 0.30

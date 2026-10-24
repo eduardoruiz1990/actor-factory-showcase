@@ -1,6 +1,7 @@
 """Validator pipeline: assess each candidate, check robots.txt, apply the five checks."""
 
 import logging
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Any
 
@@ -45,19 +46,28 @@ class Validation:
         }
 
 
+def rank_for_issue(validations: list[Validation]) -> list[Validation]:
+    """Order all validations for the issue and renumber their ranks from 1.
+
+    Candidates passing all five checks come first, then by checks passed, then by Scout's order.
+    """
+    ordered = sorted(validations, key=lambda v: (v.verdict != "PASS", -v.passed, v.candidate.rank))
+    for position, validation in enumerate(ordered, start=1):
+        validation.candidate.rank = position
+    return ordered
+
+
 def validate(
     candidates: list[Candidate], assessor: Assessor, robots: RobotsChecker, config: dict[str, Any]
 ) -> list[Validation]:
+    # Claude assessments run in parallel; robots.txt fetches stay sequential so the polite rate limit holds.
+    workers = max(1, int(config["validator"].get("concurrency", 1)))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        outcomes = list(pool.map(lambda c: _assess(assessor, c), candidates))
+
     results = []
-    for candidate in candidates:
-        assessment, error, robots_result = None, None, None
-        try:
-            assessment = assessor.assess(candidate)
-        except AssessmentError as exc:
-            error = str(exc)
-            log.warning("%s: %s", candidate.niche_id, error)
-        if assessment is not None:
-            robots_result = robots.check(assessment.sample_urls, assessment.target_domain)
+    for candidate, (assessment, error) in zip(candidates, outcomes):
+        robots_result = robots.check(assessment.sample_urls, assessment.target_domain) if assessment else None
         checks = evaluate(candidate, assessment, robots_result, config)
         if error:
             # Show why the model-based checks are unknown.
@@ -67,3 +77,11 @@ def validate(
             ]
         results.append(Validation(candidate, checks, assessment, error, robots_result))
     return results
+
+
+def _assess(assessor: Assessor, candidate: Candidate) -> tuple[Assessment | None, str | None]:
+    try:
+        return assessor.assess(candidate), None
+    except AssessmentError as exc:
+        log.warning("%s: %s", candidate.niche_id, exc)
+        return None, str(exc)

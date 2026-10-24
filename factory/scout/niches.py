@@ -18,11 +18,27 @@ WORD = re.compile(r"[a-z0-9]+")
 KEEP_S = frozenset({"news", "series", "species", "lens", "gas", "ios", "macos", "aws", "sms", "dns", "https"})
 
 
+# Store titles often add a sales tail after a separator ("Tweet Scraper V2 - X Scraper / Twitter Scraper",
+# "LinkedIn Profile Scraper (No Cookies)"); the niche is named before it.
+TITLE_TAIL = re.compile(r"\s[-–—|:/+]\s|[|(\[:]|\s[-–—]")
+
+
+def title_core(title: str) -> str:
+    return TITLE_TAIL.split(title, maxsplit=1)[0]
+
+
 def keywords(title: str, stopwords: set[str]) -> tuple[str, ...]:
-    """Title words that describe the niche, singular, in title order, without duplicates."""
+    """Words that describe the niche, singular, in title order, without duplicates.
+
+    Only the part of the title before its first separator counts, unless that part has no such words.
+    """
+    return _keywords(title_core(title), stopwords) or _keywords(title, stopwords)
+
+
+def _keywords(text: str, stopwords: set[str]) -> tuple[str, ...]:
     words: list[str] = []
-    for word in WORD.findall(title.lower()):
-        if word in stopwords:
+    for word in WORD.findall(text.lower()):
+        if word in stopwords or word.isdigit():
             continue
         word = _singular(word)
         if word not in stopwords and word not in words:
@@ -109,6 +125,13 @@ def attach_ideas(
         elif idea.status in open_statuses:
             result.append(Niche(keywords=words, ideas=[idea]))
     return result
+
+
+def is_excluded(niche: Niche, exclude_cfg: dict[str, Any]) -> bool:
+    """True when the niche can never pass: a listed title word, or a leader in a listed category."""
+    if set(niche.keywords) & set(exclude_cfg["title_words"]):
+        return True
+    return bool(niche.leader and set(niche.leader.categories) & set(exclude_cfg["categories"]))
 
 
 def days_since(iso: str | None, now: datetime) -> int | None:

@@ -2303,6 +2303,66 @@
    "username": "sable-data"
   }
  },
+ "RXpgopWaqXwsJNwqc": {
+  "data": {
+   "categories": [
+    "LEAD_GENERATION"
+   ],
+   "createdAt": "2025-06-11T00:00:00.000Z",
+   "defaultRunOptions": {
+    "build": "latest",
+    "memoryMbytes": 1024,
+    "timeoutSecs": 3600
+   },
+   "description": "Synthetic fixture Actor: google maps reviews scraper.",
+   "id": "RXpgopWaqXwsJNwqc",
+   "isDeprecated": false,
+   "isPublic": true,
+   "modifiedAt": "2026-10-24T00:00:00.000Z",
+   "name": "google-maps-reviews-scraper",
+   "notice": "NONE",
+   "pricingInfos": [
+    {
+     "apifyMarginPercentage": 0.2,
+     "createdAt": "2025-09-19T00:00:00.000Z",
+     "pricePerUnitUsd": 0.0005,
+     "pricingModel": "PRICE_PER_DATASET_ITEM",
+     "startedAt": "2025-10-09T00:00:00.000Z",
+     "unitName": "result"
+    }
+   ],
+   "stats": {
+    "actorReviewCount": 150,
+    "actorReviewRating": 4.5,
+    "bookmarkCount": 310,
+    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+    "publicActorRunStats30Days": {
+     "ABORTED": 2219,
+     "FAILED": 2330,
+     "SUCCEEDED": 105403,
+     "TIMED-OUT": 998,
+     "TOTAL": 110950
+    },
+    "totalBuilds": 55,
+    "totalMetamorphs": 0,
+    "totalRuns": 1553300,
+    "totalUsers": 26870,
+    "totalUsers30Days": 6200,
+    "totalUsers7Days": 1878,
+    "totalUsers90Days": 14199
+   },
+   "taggedBuilds": {
+    "latest": {
+     "buildId": "XoSDe2QWTGZiy8Yo6",
+     "buildNumber": "0.1.42",
+     "finishedAt": null
+    }
+   },
+   "title": "Google Maps Reviews Scraper",
+   "userId": "W6tqJxaXnf9JkXHiY",
+   "username": "quarry-tools"
+  }
+ },
  "SA3FnYQRfEpjxkTkD": {
   "data": {
    "categories": [
@@ -4632,82 +4692,6 @@
    "title": "Greenhouse Jobs",
    "userId": "DjWTcBsASPhfHnj59",
    "username": "delta-fetch"
-  }
- },
- "t3WSJfTu9EZ9WVp6S": {
-  "data": {
-   "categories": [
-    "ECOMMERCE"
-   ],
-   "createdAt": "2025-06-11T00:00:00.000Z",
-   "defaultRunOptions": {
-    "build": "latest",
-    "memoryMbytes": 1024,
-    "timeoutSecs": 3600
-   },
-   "description": "Synthetic fixture Actor: shopify store products.",
-   "id": "t3WSJfTu9EZ9WVp6S",
-   "isDeprecated": false,
-   "isPublic": true,
-   "modifiedAt": "2026-10-13T00:00:00.000Z",
-   "name": "shopify-store-products",
-   "notice": "NONE",
-   "pricingInfos": [
-    {
-     "apifyMarginPercentage": 0.2,
-     "createdAt": "2025-09-19T00:00:00.000Z",
-     "isPPEPlatformUsagePaidByUser": false,
-     "minimalMaxTotalChargeUsd": 0.5,
-     "pricingModel": "PAY_PER_EVENT",
-     "pricingPerEvent": {
-      "actorChargeEvents": {
-       "actor-start": {
-        "eventDescription": "Charged once when the run starts.",
-        "eventPriceUsd": 0.005,
-        "eventTitle": "Actor start",
-        "isOneTimeEvent": true
-       },
-       "result": {
-        "eventDescription": "Charged for each result.",
-        "eventPriceUsd": 0.0009,
-        "eventTitle": "Result",
-        "isPrimaryEvent": true
-       }
-      }
-     },
-     "startedAt": "2025-10-09T00:00:00.000Z"
-    }
-   ],
-   "stats": {
-    "actorReviewCount": 20,
-    "actorReviewRating": 4.4,
-    "bookmarkCount": 35,
-    "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
-    "publicActorRunStats30Days": {
-     "ABORTED": 136,
-     "FAILED": 285,
-     "SUCCEEDED": 6248,
-     "TIMED-OUT": 123,
-     "TOTAL": 6792
-    },
-    "totalBuilds": 181,
-    "totalMetamorphs": 0,
-    "totalRuns": 95088,
-    "totalUsers": 5209,
-    "totalUsers30Days": 700,
-    "totalUsers7Days": 241,
-    "totalUsers90Days": 1774
-   },
-   "taggedBuilds": {
-    "latest": {
-     "buildId": "pKbqH2pxdh8q7gsQn",
-     "buildNumber": "0.1.42",
-     "finishedAt": "2026-10-02T00:00:00.000Z"
-    }
-   },
-   "title": "Shopify Store Products",
-   "userId": "EkfiCvUHZjmQwTRKz",
-   "username": "cobalt-crawl"
   }
  },
  "tHTmGcBzXqRPQHyE5": {

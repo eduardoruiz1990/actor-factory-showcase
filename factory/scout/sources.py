@@ -23,8 +23,11 @@ class ScoutSource(Protocol):
     def actor_detail(self, actor_id: str) -> dict[str, Any] | None:
         """The `data` object of GET /v2/acts/{actorId}, or None when unavailable."""
 
-    def ideas_html(self) -> str | None:
-        """The Ideas page HTML, or None when it could not be fetched."""
+    def ideas_export(self) -> Any:
+        """The Ideas export (a JSON list), or None when it could not be fetched."""
+
+    def idea_page(self, url: str) -> str | None:
+        """One idea's page HTML (for its upvotes), or None when it could not be fetched."""
 
 
 class LiveSource:
@@ -33,12 +36,14 @@ class LiveSource:
         http: PoliteClient,
         api_base: str,
         ideas_url: str,
+        ideas_export_url: str,
         apify_token: str | None = None,
         raw_dir: Path | None = None,
     ) -> None:
         self._http = http
         self._api_base = api_base.rstrip("/")
-        self._ideas_url = ideas_url
+        self._ideas_url = ideas_url.rstrip("/") + "/"
+        self._ideas_export_url = ideas_export_url
         self._token = apify_token
         self._raw_dir = raw_dir
 
@@ -61,12 +66,24 @@ class LiveSource:
         self._save(f"acts/{actor_id}.json", payload)
         return payload.get("data")
 
-    def ideas_html(self) -> str | None:
-        response = self._http.get(self._ideas_url)
+    def ideas_export(self) -> Any:
+        response = self._http.get(self._ideas_export_url)
         if response.status_code != 200:
-            log.warning("Ideas page -> HTTP %d", response.status_code)
+            log.warning("Ideas export -> HTTP %d", response.status_code)
             return None
-        self._save("ideas.html", response.text)
+        payload = response.json()
+        self._save("ideas_export.json", payload)
+        return payload
+
+    def idea_page(self, url: str) -> str | None:
+        # The URLs come from the export: only fetch pages under the Ideas section of apify.com.
+        if not url.startswith(self._ideas_url):
+            log.warning("Skipping idea URL outside %s: %s", self._ideas_url, url)
+            return None
+        response = self._http.get(url)
+        if response.status_code != 200:
+            log.warning("Idea page %s -> HTTP %d", url, response.status_code)
+            return None
         return response.text
 
     def _save(self, relative: str, payload: Any) -> None:
@@ -82,7 +99,7 @@ class LiveSource:
 
 
 class FixtureSource:
-    """Serves tests/fixtures/apify/: store_actors.json, actor_details.json, ideas.html.
+    """Serves tests/fixtures/apify/: store_actors.json, actor_details.json, ideas_export.json, idea_pages.json.
 
     store_actors.json holds Store items; this class filters and pages them the
     way the API does (category filter, popularity order, offset/limit).
@@ -92,8 +109,12 @@ class FixtureSource:
         apify_dir = fixture_dir / "apify"
         self._items: list[dict[str, Any]] = json.loads((apify_dir / "store_actors.json").read_text(encoding="utf-8"))
         self._details: dict[str, Any] = json.loads((apify_dir / "actor_details.json").read_text(encoding="utf-8"))
-        ideas_path = apify_dir / "ideas.html"
-        self._ideas = ideas_path.read_text(encoding="utf-8") if ideas_path.exists() else None
+        export_path = apify_dir / "ideas_export.json"
+        self._ideas = json.loads(export_path.read_text(encoding="utf-8")) if export_path.exists() else None
+        pages_path = apify_dir / "idea_pages.json"
+        self._idea_pages: dict[str, str] = (
+            json.loads(pages_path.read_text(encoding="utf-8")) if pages_path.exists() else {}
+        )
         self.requests: list[tuple[str, Any]] = []
 
     def store_page(self, *, category: str | None, offset: int, limit: int, sort_by: str) -> dict[str, Any]:
@@ -108,6 +129,10 @@ class FixtureSource:
         response = self._details.get(actor_id)
         return response.get("data") if response else None
 
-    def ideas_html(self) -> str | None:
+    def ideas_export(self) -> Any:
         self.requests.append(("ideas", None))
         return self._ideas
+
+    def idea_page(self, url: str) -> str | None:
+        self.requests.append(("idea_page", url))
+        return self._idea_pages.get(url)

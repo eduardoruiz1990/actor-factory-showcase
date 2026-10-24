@@ -7,9 +7,9 @@ from typing import Any
 
 import httpx
 
-from factory.scout.ideas import parse_ideas_html
+from factory.scout.ideas import parse_ideas_export, parse_upvotes
 from factory.scout.models import ActorRecord, Candidate, Idea
-from factory.scout.niches import Niche, attach_ideas, build_candidate, cluster_actors, rank
+from factory.scout.niches import Niche, attach_ideas, build_candidate, cluster_actors, is_excluded, rank
 from factory.scout.sources import ScoutSource
 from factory.scout.store import apply_actor_detail, parse_store_item
 
@@ -23,6 +23,7 @@ class ScoutResult:
     actors_seen: int = 0
     store_queries: int = 0
     niches_total: int = 0
+    niches_excluded: int = 0
     ideas_parsed: int = 0
     ideas_open: int = 0
     details_fetched: int = 0
@@ -49,12 +50,18 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
     items, queries = fetch_store(source, scout_cfg["store"], warnings)
     actors = [parse_store_item(item, scout_cfg["failure_statuses"]) for item in items]
 
-    ideas = fetch_ideas(source, config["apify"]["ideas_url"], warnings)
+    ideas = fetch_ideas(source, int(scout_cfg["ideas"]["max_pages"]), warnings)
     open_statuses = set(scout_cfg["ideas"]["open_statuses"])
 
     clustering = scout_cfg["clustering"]
-    if not all(isinstance(w, str) for w in clustering["stopwords"]):
-        raise ValueError("scout.clustering.stopwords must all be quoted strings in config.yaml")
+    exclude = scout_cfg["exclude"]
+    for key, words in (("clustering.stopwords", clustering["stopwords"]), ("exclude.title_words", exclude["title_words"])):
+        if not all(isinstance(w, str) for w in words):
+            raise ValueError(f"scout.{key} must all be quoted strings in config.yaml")
+    to_validate = int(scout_cfg["candidates_to_validate"])
+    per_week = int(scout_cfg["candidates_per_week"])
+    if int(scout_cfg["details"]["niche_pool"]) < to_validate or to_validate < per_week:
+        raise ValueError("config.yaml needs candidates_per_week <= candidates_to_validate <= details.niche_pool")
     stopwords = set(clustering["stopwords"])
     niches = cluster_actors(actors, stopwords, float(clustering["similarity_threshold"]))
     niches = attach_ideas(niches, ideas, stopwords, float(clustering["idea_match_threshold"]), open_statuses)
@@ -63,6 +70,8 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
     owner = (config.get("owner") or {}).get("apify_username") or ""
     skipped_own = [n.id for n in niches if owner and any(a.username == owner for a in n.actors)]
     niches = [n for n in niches if n.id not in skipped_own]
+    total = len(niches)
+    niches = [n for n in niches if not is_excluded(n, exclude)]
 
     min_demand = float(scout_cfg["ranking"]["min_demand"])
     first_pass = rank([c for c in (build_candidate(n, now, config) for n in niches) if c.demand >= min_demand])
@@ -74,8 +83,8 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
     fetched = fetch_details(source, pool, int(details_cfg["actors_per_niche"]), scout_cfg["failure_statuses"], warnings)
 
     final = rank([build_candidate(n, now, config) for n in pool])
-    selected = final[: int(scout_cfg["candidates_per_week"])]
-    if len(selected) < int(scout_cfg["candidates_per_week"]):
+    selected = final[:to_validate]
+    if len(selected) < per_week:
         warnings.append(f"Only {len(selected)} niches met the minimum demand of {min_demand:g}.")
 
     return ScoutResult(
@@ -83,7 +92,8 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
         candidates=selected,
         actors_seen=len(actors),
         store_queries=queries,
-        niches_total=len(niches),
+        niches_total=total,
+        niches_excluded=total - len(niches),
         ideas_parsed=len(ideas),
         ideas_open=sum(1 for i in ideas if i.status in open_statuses),
         details_fetched=fetched,
@@ -122,19 +132,36 @@ def fetch_store(source: ScoutSource, store_cfg: dict[str, Any], warnings: list[s
     return list(seen.values()), len(queries)
 
 
-def fetch_ideas(source: ScoutSource, ideas_url: str, warnings: list[str]) -> list[Idea]:
+def fetch_ideas(source: ScoutSource, max_pages: int, warnings: list[str]) -> list[Idea]:
+    """Open ideas from the export, with upvotes read from each idea's page."""
     try:
-        html = source.ideas_html()
-    except httpx.HTTPError as exc:
-        warnings.append(f"Ideas page could not be fetched: {exc}")
+        export = source.ideas_export()
+    except (httpx.HTTPError, ValueError) as exc:
+        warnings.append(f"Ideas export could not be fetched: {exc}")
         return []
-    if not html:
-        warnings.append("Ideas page could not be fetched.")
+    if export is None:
+        warnings.append("Ideas export could not be fetched.")
         return []
-    ideas = parse_ideas_html(html, ideas_url)
+    ideas = parse_ideas_export(export)
     if not ideas:
-        warnings.append("Ideas page fetched but no ideas were parsed; the page layout may have changed.")
-    return ideas
+        warnings.append("Ideas export fetched but no ideas were parsed; its format may have changed.")
+        return []
+    unknown = 0
+    for position, idea in enumerate(ideas):
+        html = None
+        if position < max_pages:
+            try:
+                html = source.idea_page(idea.url)
+            except httpx.HTTPError as exc:
+                log.warning("Idea page %s failed: %s", idea.url, exc)
+        votes = parse_upvotes(html) if html else None
+        if votes is None:
+            unknown += 1  # stays at 0 upvotes, so it cannot pass Demand on its own
+        else:
+            idea.upvotes = votes
+    if unknown:
+        warnings.append(f"Upvotes unknown for {unknown} of {len(ideas)} ideas; they count as 0.")
+    return sorted(ideas, key=lambda i: (-i.upvotes, i.title))
 
 
 def fetch_details(

@@ -22,7 +22,8 @@ def verdict_labels(validations: list[Validation]) -> dict[str, str]:
     }
 
 
-def render_brief(validations: list[Validation], config: dict[str, Any], week: str) -> str:
+def render_brief(validations: list[Validation], config: dict[str, Any], week: str, assessed: int | None = None) -> str:
+    """`validations` are the candidates the issue lists; `assessed` is how many were validated in all."""
     # Passing candidates keep Scout's order (opportunity score).
     passing = sorted((v for v in validations if v.verdict == "PASS"), key=lambda v: v.candidate.rank)
     failing = [v for v in validations if v.verdict != "PASS"]
@@ -33,7 +34,9 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
         BRIEF_MARKER,
         f"## Validator brief — week {week}",
         "",
-        f"**{len(passing)} of {len(validations)} candidates pass all five checks.** "
+        f"**{len(passing)} of {len(validations)} listed candidates pass all five checks**"
+        + (f" ({assessed} assessed; the issue lists the best {len(validations)})" if assessed and assessed > len(validations) else "")
+        + ". "
         f"Facts assessed by `{model}`"
         + (f" (served by {', '.join(f'`{m}`' for m in served)})" if served and served != [model] else "")
         + "; pass/fail decided by the thresholds in `config.yaml`. "
@@ -74,6 +77,8 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
     data = _hidden_data(validations, with_assessments=True)
     if len(body) + len(data) > MAX_BODY_CHARS:
         data = _hidden_data(validations, with_assessments=False)
+    if len(body) + len(data) > MAX_BODY_CHARS:
+        data = ""  # the visible brief matters more than the machine copy
     return body + data + "\n"
 
 
@@ -87,6 +92,9 @@ def _pick(v: Validation) -> list[str]:
     if a:
         lines += [a.pitch, "", f"Output: {', '.join(a.output_fields)}.", ""]
     lines += [f"- {check.name.capitalize()}: {check.reason}" for check in v.checks]
+    if a and a.terms_quote and a.terms_source_url:
+        quote = " ".join(a.terms_quote.split()).replace("|", "/")
+        lines.append(f"- Terms: “{quote}” ([source]({a.terms_source_url}))")
     if a and a.risks:
         lines.append(f"- Risks: {'; '.join(a.risks)}")
     lines.append("")

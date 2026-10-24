@@ -49,6 +49,7 @@ def main(argv: list[str] | None = None) -> int:
                 http,
                 api_base=config["apify"]["api_base"],
                 ideas_url=config["apify"]["ideas_url"],
+                ideas_export_url=config["apify"]["ideas_export_url"],
                 apify_token=os.environ.get("APIFY_TOKEN") or None,
                 raw_dir=args.out / "raw",
             )
@@ -56,7 +57,7 @@ def main(argv: list[str] | None = None) -> int:
 
         if args.watcher_summary and args.watcher_summary.exists():
             result.watcher_summary = args.watcher_summary.read_text(encoding="utf-8")
-        title = issue_title(result)
+        title = issue_title(result, config)
         body = render_issue_body(result, config)
 
         (args.out / "scout.json").write_text(json.dumps(result.to_dict(), indent=2), encoding="utf-8")

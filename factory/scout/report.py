@@ -17,24 +17,37 @@ def week_key(now: datetime) -> str:
     return f"{year}-W{week:02d}"
 
 
-def issue_title(result: ScoutResult) -> str:
+def issue_title(result: ScoutResult, config: dict[str, Any]) -> str:
     week = week_key(datetime.fromisoformat(result.collected_at))
-    return f"Scout {week}: {len(result.candidates)} candidate niches"
+    return f"Scout {week}: {len(listed(result, config))} candidate niches"
+
+
+def listed(result: ScoutResult, config: dict[str, Any]) -> list[Candidate]:
+    """The candidates the issue shows: the first candidates_per_week in the result's order."""
+    return result.candidates[: int(config["scout"]["candidates_per_week"])]
 
 
 def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dict[str, str] | None = None) -> str:
     """`verdicts` maps niche_id to a short Validator result such as "5/5 PASS"."""
     week = week_key(datetime.fromisoformat(result.collected_at))
+    shown = listed(result, config)
+    if verdicts:
+        intro = (f"The {len(shown)} best candidate niches after validation: candidates that pass all five checks "
+                 "come first, then the rest by checks passed and opportunity score. The Validator's brief is in "
+                 "the comments; its result is in the **Checks** column.")
+    else:
+        intro = (f"The top {len(shown)} of {len(result.candidates)} candidate niches from the Apify Store and Ideas "
+                 f"page, by opportunity score. The Validator scores all {len(result.candidates)} on five checks, "
+                 "then keeps the best here and posts a brief below.")
     lines = [
         ISSUE_MARKER,
         f"## Scout — week {week}",
         "",
-        f"{len(result.candidates)} candidate niches from the Apify Store and Ideas page, ranked by opportunity score. "
-        + ("The Validator's brief is in the comments; its result is in the **Checks** column."
-           if verdicts else "The Validator scores each one on five checks and posts a brief below."),
+        intro,
         "",
         f"**Data:** {result.actors_seen:,} Store Actors from {result.store_queries} queries · "
-        f"{result.ideas_parsed} ideas parsed ({result.ideas_open} open) · "
+        f"{result.niches_total:,} niches, {result.niches_excluded:,} left out by `scout.exclude` · "
+        f"{result.ideas_parsed} open ideas · "
         f"{result.details_fetched} Actor detail lookups · collected {_when(result.collected_at)}",
         "",
     ]
@@ -47,7 +60,7 @@ def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dic
         header += " Checks |"
         divider += "---|"
     lines += [header, divider]
-    for c in result.candidates:
+    for c in shown:
         row = (
             f"| {c.rank} | {_niche_link(c)} | {c.users_7d:,} / {c.users_30d:,} / {c.users_90d:,} "
             f"| {_pct(c.leader.failure_rate if c.leader else None)} | {_rating(c.leader)} "
@@ -59,7 +72,7 @@ def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dic
         lines.append(row)
 
     lines += ["", "<details><summary>Niche details</summary>", ""]
-    for c in result.candidates:
+    for c in shown:
         lines += _details(c)
     lines += ["</details>", ""]
 
@@ -85,9 +98,12 @@ def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dic
         lines += [f"Skipped niches where you already have an Actor: {', '.join(result.skipped_own_niches)}", ""]
 
     body = "\n".join(lines)
-    data = _hidden_data(result, include_alternatives=True)
+    # The hidden data carries only the listed candidates; the full shortlist travels in scout.json.
+    data = _hidden_data(result, shown, include_alternatives=True)
     if len(body) + len(data) > MAX_BODY_CHARS:
-        data = _hidden_data(result, include_alternatives=False)
+        data = _hidden_data(result, shown, include_alternatives=False)
+    if len(body) + len(data) > MAX_BODY_CHARS:
+        data = ""  # the visible table matters more than the machine copy
     return body + "\n" + data + "\n"
 
 
@@ -99,8 +115,9 @@ def parse_hidden_data(body: str) -> dict[str, Any] | None:
     return json.loads(body[start + len(DATA_MARKER) + 6 : end])
 
 
-def _hidden_data(result: ScoutResult, include_alternatives: bool) -> str:
+def _hidden_data(result: ScoutResult, shown: list[Candidate], include_alternatives: bool) -> str:
     data = result.to_dict()
+    data["candidates"] = [c.to_dict() for c in shown]
     if not include_alternatives:
         for candidate in data["candidates"]:
             candidate["alternatives"] = []

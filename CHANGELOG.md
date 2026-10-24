@@ -1,5 +1,17 @@
 # Changelog
 
+## Phase 1 fixes after the first live run (2026-10-24, branch `phase-1-live-fixes`)
+
+The first run against live data (Scout and the Validator, both as dry runs, from the owner's machine) worked end to end: 9,688 Store Actors from 19 queries, 245 Actor detail lookups, 148 ideas, and 20 Claude assessments in about 2.5 minutes for roughly $0.15. It found two problems, fixed here:
+
+- **Ideas:** the Ideas page loads its list in the browser, so none were parsed. Scout now reads the page's own export (`/api/ideas/download?format=json&status=toDevelop`) and takes each idea's upvotes from its page (QUESTIONS Q4). New config: `apify.ideas_export_url`, `scout.ideas.max_pages`. Only `open_to_develop` counts as open.
+- **Niche grouping:** real titles carry sales text after a separator ("Tweet Scraper V2 - X Scraper / Twitter Scraper…"). Keywords now come from the part before the first separator, pure numbers are ignored and `com` is a stopword. The same Store data grouped into 3,955 niches instead of 5,111.
+- `owner.apify_username` is set to `guayox` (Q7).
+- Fixtures: a synthetic Ideas export and idea pages replace the guessed `ideas.html`, plus small real samples of the export and an idea page. A Booking.com sample assessment was added because the new grouping brings that niche into the sample top 20.
+- The `APIFY_TOKEN` and `ANTHROPIC_API_KEY` GitHub Actions secrets are set.
+- **Shortlist (QUESTIONS Q13):** on live data no candidate passed, because the top 20 by demand were social-media and lead-list scrapers and generic tools. Scout now leaves out niches that can never pass (`scout.exclude`: title words and Store categories), shortlists 40 (`scout.candidates_to_validate`), and the Validator assesses all 40 and rewrites the issue with the best 20 after validation, passing candidates first. `scout.details.niche_pool` rises from 40 to 50. On the 2026-10-24 data, 1,805 of 3,955 niches were left out and the shortlist became G2 reviews, Flashscore and Sofascore, Yandex search, SEO tools, Greenhouse jobs, sitemaps and retail products, among others.
+- **Terms research (QUESTIONS Q9):** a dry run of the workflow on GitHub still gave 0 of 20 passing, and every near-miss failed only on "terms unclear". The Validator now gives Claude web search and web fetch (`validator.research`). It must cite the terms page and quote the deciding sentence, and code accepts "terms allow it" only with both. The brief shows the quote and link for passing candidates. Assessments run 4 at a time (`validator.concurrency`), long tool turns are resumed when the API pauses them, and the Scout workflow timeout rises to 75 minutes.
+
 ## Phase 1: Scout and Validator (2026-10-24, branch `phase-1`)
 
 ### Added
