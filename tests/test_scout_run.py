@@ -1,0 +1,102 @@
+import httpx
+import pytest
+
+from factory.scout.run import ScoutResult, run_scout
+from factory.scout.sources import FixtureSource
+
+
+@pytest.fixture
+def source(fixtures_dir):
+    return FixtureSource(fixtures_dir)
+
+
+def test_selects_twenty_ranked_candidates(source, config, as_of):
+    result = run_scout(source, config, as_of)
+    assert len(result.candidates) == 20
+    assert [c.rank for c in result.candidates] == list(range(1, 21))
+    scores = [c.score for c in result.candidates]
+    assert scores == sorted(scores, reverse=True)
+    assert result.store_queries == 1 + len(config["scout"]["store"]["categories"])
+    assert result.actors_seen == 84  # merged across overlapping category queries
+    assert result.ideas_parsed == 8 and result.ideas_open == 6
+
+
+def test_every_candidate_has_the_required_numbers(source, config, as_of):
+    for c in run_scout(source, config, as_of).candidates:
+        assert c.users_7d <= c.users_30d <= c.users_90d
+        if c.leader:
+            assert c.leader.failure_rate is not None
+            assert c.leader.price_label
+            assert c.leader.days_since_update is not None
+        else:
+            assert c.open_idea_upvotes > 0
+
+
+def test_details_are_fetched_only_for_the_pool(source, config, as_of):
+    config["scout"]["details"]["niche_pool"] = 5
+    config["scout"]["details"]["actors_per_niche"] = 1
+    result = run_scout(source, config, as_of)
+    assert result.details_fetched <= 5
+    assert len(result.candidates) == 5  # only pool niches are ranked in the final pass
+
+
+def test_missing_detail_is_reported(source, config, as_of):
+    result = run_scout(source, config, as_of)
+    assert "1 Actor detail lookup failed; that Actor counts as maintained." in result.warnings
+    maps = next(c for c in result.candidates if c.niche_id == "google-map")
+    assert maps.maintained_unknown == 1
+
+
+def test_niches_with_your_own_actor_are_skipped(source, config, as_of):
+    config["owner"]["apify_username"] = "basalt-api"  # owns the Greenhouse leader in the fixtures
+    result = run_scout(source, config, as_of)
+    assert "greenhouse-job" in result.skipped_own_niches
+    assert all(c.niche_id != "greenhouse-job" for c in result.candidates)
+
+
+def test_round_trips_through_json(source, config, as_of):
+    result = run_scout(source, config, as_of)
+    again = ScoutResult.from_dict(result.to_dict())
+    assert again.to_dict() == result.to_dict()
+
+
+class FlakySource(FixtureSource):
+    def __init__(self, fixtures_dir, fail_categories):
+        super().__init__(fixtures_dir)
+        self.fail_categories = fail_categories
+
+    def store_page(self, *, category, offset, limit, sort_by):
+        if category in self.fail_categories:
+            raise httpx.ConnectError("blocked")
+        return super().store_page(category=category, offset=offset, limit=limit, sort_by=sort_by)
+
+    def ideas_html(self):
+        raise httpx.ConnectError("blocked")
+
+
+def test_a_failed_query_becomes_a_warning(fixtures_dir, config, as_of):
+    result = run_scout(FlakySource(fixtures_dir, {"JOBS"}), config, as_of)
+    assert any("category=JOBS" in w for w in result.warnings)
+    assert any("Ideas page could not be fetched" in w for w in result.warnings)
+    assert len(result.candidates) == 20
+
+
+def test_every_query_failing_is_an_error(fixtures_dir, config, as_of):
+    every = {None, *config["scout"]["store"]["categories"]}
+    with pytest.raises(RuntimeError, match="Every Store query failed"):
+        run_scout(FlakySource(fixtures_dir, every), config, as_of)
+
+
+def test_unquoted_stopwords_are_rejected(source, config, as_of):
+    config["scout"]["clustering"]["stopwords"].append(False)
+    with pytest.raises(ValueError, match="quoted strings"):
+        run_scout(source, config, as_of)
+
+
+def test_pagination_advances_by_limit(fixtures_dir, config, as_of):
+    config["scout"]["store"]["page_size"] = 10
+    config["scout"]["store"]["max_items_per_query"] = 30
+    source = FixtureSource(fixtures_dir)
+    run_scout(source, config, as_of)
+    offsets = [args[1] for kind, args in source.requests if kind == "store" and args[0] is None]
+    assert offsets == [0, 10, 20]

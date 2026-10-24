@@ -1,0 +1,724 @@
+{
+  "indeed-job": {
+    "target_site": "Indeed job search",
+    "target_domain": "www.indeed.com",
+    "sample_urls": [
+      "https://www.indeed.com/jobs?q=data+engineer&l=Remote"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Some job posts include recruiter names and contact details.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Indeed's terms prohibit scraping and automated collection of its content.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.5,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.6,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Heavy anti-bot protection and frequent markup changes.",
+    "proposed_actor_name": "indeed-jobs-scraper",
+    "pitch": "Search Indeed jobs by keyword and location.",
+    "output_fields": [
+      "title",
+      "company",
+      "location",
+      "salary",
+      "posted_at",
+      "url"
+    ],
+    "risks": [
+      "Aggressive blocking",
+      "Terms forbid scraping"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "linkedin-job": {
+    "target_site": "LinkedIn job search (guest pages)",
+    "target_domain": "www.linkedin.com",
+    "sample_urls": [
+      "https://www.linkedin.com/jobs/search?keywords=python&location=Berlin"
+    ],
+    "data_access": "public_html",
+    "login_required": "unclear",
+    "personal_data": "removable",
+    "personal_data_notes": "Job posts show the poster's name and profile link.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "The LinkedIn User Agreement forbids scraping and automated access.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.5,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Guest pages change often and rate-limit hard.",
+    "proposed_actor_name": "linkedin-jobs-scraper",
+    "pitch": "Collect LinkedIn job posts by keyword and location.",
+    "output_fields": [
+      "title",
+      "company",
+      "location",
+      "posted_at",
+      "url"
+    ],
+    "risks": [
+      "Login walls",
+      "Terms forbid scraping",
+      "Legal action history"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "google-trend": {
+    "target_site": "Google Trends",
+    "target_domain": "trends.google.com",
+    "sample_urls": [
+      "https://trends.google.com/trends/api/explore?hl=en-US&tz=0"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Aggregate search interest; no individuals.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Google's terms forbid automated access that ignores robots.txt, and the internal API is undocumented.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.3,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.2,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "occasional",
+    "stability_notes": "Internal endpoints change without notice.",
+    "proposed_actor_name": "google-trends-scraper",
+    "pitch": "Interest over time and related queries for any keyword.",
+    "output_fields": [
+      "keyword",
+      "date",
+      "value",
+      "geo"
+    ],
+    "risks": [
+      "429 rate limits",
+      "robots.txt disallows the API"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "sec-edgar-filing": {
+    "target_site": "SEC EDGAR",
+    "target_domain": "data.sec.gov",
+    "sample_urls": [
+      "https://data.sec.gov/submissions/CIK0000320193.json"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Inputs are company tickers or CIKs; the output is company filing metadata.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "SEC data is public domain; the fair-access policy allows automated access up to 10 requests per second with a declared User-Agent.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Documented JSON API, stable for years.",
+    "proposed_actor_name": "sec-edgar-filings",
+    "pitch": "New SEC filings for any list of companies, with form type, dates and document links.",
+    "output_fields": [
+      "company",
+      "cik",
+      "form",
+      "filed_at",
+      "report_date",
+      "accession_number",
+      "document_url"
+    ],
+    "risks": [
+      "Free SEC tools exist",
+      "Fair-access limit of 10 requests per second"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "rightmove": {
+    "target_site": "Rightmove property listings",
+    "target_domain": "www.rightmove.co.uk",
+    "sample_urls": [
+      "https://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=REGION%5E87490"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Listings carry agent branch contacts and occasionally private sellers.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Rightmove's terms prohibit automated extraction of listings.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.3,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.3,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "occasional",
+    "stability_notes": "Search pages are restructured a few times a year.",
+    "proposed_actor_name": "rightmove-scraper",
+    "pitch": "UK property listings from Rightmove searches.",
+    "output_fields": [
+      "price",
+      "address",
+      "bedrooms",
+      "property_type",
+      "agent",
+      "url"
+    ],
+    "risks": [
+      "Terms forbid scraping",
+      "Blocking"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "etsy-listing": {
+    "target_site": "Etsy marketplace",
+    "target_domain": "www.etsy.com",
+    "sample_urls": [
+      "https://www.etsy.com/search?q=ceramic+mug"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Shop pages name individual sellers.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Etsy's terms forbid scraping; its Open API needs an account-bound key.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.8,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Strong anti-bot and frequent front-end changes.",
+    "proposed_actor_name": "etsy-listings-scraper",
+    "pitch": "Etsy listings by search term with price and shop.",
+    "output_fields": [
+      "title",
+      "price",
+      "shop",
+      "rating",
+      "url"
+    ],
+    "risks": [
+      "Anti-bot",
+      "Terms"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "youtube-channel": {
+    "target_site": "YouTube channels",
+    "target_domain": "www.youtube.com",
+    "sample_urls": [
+      "https://www.youtube.com/@ExampleChannel/videos"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "core",
+    "personal_data_notes": "Most channels are individual creators; channel data identifies them.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "YouTube's terms forbid automated access except through its API.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 1.5,
+    "proxy": "datacenter",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Page data structures change often.",
+    "proposed_actor_name": "youtube-channel-scraper",
+    "pitch": "Videos and stats for YouTube channels.",
+    "output_fields": [
+      "channel",
+      "video_title",
+      "views",
+      "published_at",
+      "url"
+    ],
+    "risks": [
+      "Terms",
+      "Personal data"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "zillow": {
+    "target_site": "Zillow real estate",
+    "target_domain": "www.zillow.com",
+    "sample_urls": [
+      "https://www.zillow.com/homes/for_sale/Austin-TX_rb/"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Listings include listing-agent names and phone numbers.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Zillow's terms prohibit scraping.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.5,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Active anti-bot work and redesigns.",
+    "proposed_actor_name": "zillow-scraper",
+    "pitch": "Homes for sale from Zillow searches.",
+    "output_fields": [
+      "price",
+      "address",
+      "beds",
+      "baths",
+      "zestimate",
+      "url"
+    ],
+    "risks": [
+      "Blocking",
+      "Terms"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "greenhouse-job": {
+    "target_site": "Greenhouse job boards",
+    "target_domain": "boards-api.greenhouse.io",
+    "sample_urls": [
+      "https://boards-api.greenhouse.io/v1/boards/examplecompany/jobs?content=true"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "The Job Board API returns job posts and departments; it has no applicant or recruiter fields.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The Job Board API is public and documented so companies can publish their openings widely.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned, documented API (v1) unchanged for years.",
+    "proposed_actor_name": "greenhouse-job-board-api",
+    "pitch": "Every open job from any company's Greenhouse board as clean JSON.",
+    "output_fields": [
+      "company",
+      "job_id",
+      "title",
+      "location",
+      "departments",
+      "offices",
+      "updated_at",
+      "url",
+      "description_text"
+    ],
+    "risks": [
+      "Board tokens must be known per company",
+      "The current leader may fix its failures",
+      "Low price ceiling"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "product-hunt": {
+    "target_site": "Product Hunt",
+    "target_domain": "api.producthunt.com",
+    "sample_urls": [
+      "https://api.producthunt.com/v2/api/graphql"
+    ],
+    "data_access": "requires_login",
+    "login_required": "yes",
+    "personal_data": "removable",
+    "personal_data_notes": "Launches list maker and hunter names.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "API v2 needs an OAuth developer token and its terms bar commercial use without permission.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.03,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned GraphQL API.",
+    "proposed_actor_name": "product-hunt-launches",
+    "pitch": "Daily Product Hunt launches with votes and topics.",
+    "output_fields": [
+      "name",
+      "tagline",
+      "votes",
+      "topics",
+      "url"
+    ],
+    "risks": [
+      "Needs an account token",
+      "Commercial use restricted"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "ted-eu-tender": {
+    "target_site": "TED (Tenders Electronic Daily)",
+    "target_domain": "api.ted.europa.eu",
+    "sample_urls": [
+      "https://api.ted.europa.eu/v3/notices/search"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Notice fields used (buyer organisation, CPV codes, values, deadlines) identify organisations, not people.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "TED data may be reused free of charge, including commercially, under the EU reuse policy.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.03,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Official, versioned search API (v3).",
+    "proposed_actor_name": "ted-eu-tenders",
+    "pitch": "New EU public tenders from TED by CPV code, country and deadline.",
+    "output_fields": [
+      "notice_id",
+      "buyer",
+      "country",
+      "cpv_codes",
+      "estimated_value",
+      "deadline",
+      "url"
+    ],
+    "risks": [
+      "Query syntax is complex",
+      "Notices are multilingual"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "npm-package-download": {
+    "target_site": "npm download counts",
+    "target_domain": "api.npmjs.org",
+    "sample_urls": [
+      "https://api.npmjs.org/downloads/point/last-month/react",
+      "https://api.npmjs.org/downloads/range/last-year/express"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Aggregate download counts per package.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The npm downloads API is public and documented for programmatic use.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Simple, stable public API.",
+    "proposed_actor_name": "npm-download-stats",
+    "pitch": "Daily and monthly npm download counts for any list of packages.",
+    "output_fields": [
+      "package",
+      "period",
+      "downloads",
+      "start",
+      "end"
+    ],
+    "risks": [
+      "Low price point",
+      "Free alternatives"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "lever-job": {
+    "target_site": "Lever job postings",
+    "target_domain": "api.lever.co",
+    "sample_urls": [
+      "https://api.lever.co/v0/postings/examplecompany?mode=json"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Postings carry job details only.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The Postings API is public so companies can publish their openings; no key is needed.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Documented API (v0) unchanged for years.",
+    "proposed_actor_name": "lever-job-postings",
+    "pitch": "All open postings from any company's Lever job site.",
+    "output_fields": [
+      "company",
+      "id",
+      "title",
+      "team",
+      "location",
+      "commitment",
+      "created_at",
+      "url"
+    ],
+    "risks": [
+      "Company slugs must be known",
+      "Small niche"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "shopify-product": {
+    "target_site": "Shopify storefronts",
+    "target_domain": "example-store.myshopify.com",
+    "sample_urls": [
+      "https://example-store.myshopify.com/products.json?limit=250&page=1"
+    ],
+    "data_access": "public_feed",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Product catalogue data only.",
+    "terms_allow_automated_access": "unclear",
+    "terms_notes": "Each store's own terms apply; Shopify's platform terms grant no third-party scraping rights.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.08,
+    "proxy": "datacenter",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "rare",
+    "stability_notes": "The products.json endpoint has been stable across storefronts for years.",
+    "proposed_actor_name": "shopify-store-products",
+    "pitch": "Full product catalogue of any Shopify store.",
+    "output_fields": [
+      "title",
+      "vendor",
+      "price",
+      "variants",
+      "images",
+      "url"
+    ],
+    "risks": [
+      "Terms vary per store",
+      "Crowded niche"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "trustpilot-review": {
+    "target_site": "Trustpilot",
+    "target_domain": "www.trustpilot.com",
+    "sample_urls": [
+      "https://www.trustpilot.com/review/example.com"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "core",
+    "personal_data_notes": "Reviews come with reviewer names, locations and profile links.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Trustpilot's terms prohibit scraping.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.3,
+    "proxy": "datacenter",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "occasional",
+    "stability_notes": "Page data format changes a few times a year.",
+    "proposed_actor_name": "trustpilot-reviews",
+    "pitch": "Reviews of any company on Trustpilot.",
+    "output_fields": [
+      "rating",
+      "title",
+      "text",
+      "date",
+      "reviewer"
+    ],
+    "risks": [
+      "Personal data",
+      "Terms"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "wordpress-plugin": {
+    "target_site": "WordPress.org plugin directory",
+    "target_domain": "api.wordpress.org",
+    "sample_urls": [
+      "https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&request[page]=1&request[per_page]=100"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Plugin author fields often name individual developers.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The WordPress.org API is public and directory content is GPL-licensed.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.03,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Long-lived public API.",
+    "proposed_actor_name": "wordpress-plugin-stats",
+    "pitch": "Installs, ratings and versions for WordPress plugins.",
+    "output_fields": [
+      "slug",
+      "name",
+      "version",
+      "active_installs",
+      "rating",
+      "last_updated"
+    ],
+    "risks": [
+      "Author names must be dropped"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "pypi-package-metadata": {
+    "target_site": "PyPI",
+    "target_domain": "pypi.org",
+    "sample_urls": [
+      "https://pypi.org/pypi/requests/json"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "The JSON API includes author and maintainer names and email addresses.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "PyPI's JSON API is public and intended for programmatic use.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Documented JSON API, stable for years.",
+    "proposed_actor_name": "pypi-package-metadata",
+    "pitch": "Versions, release dates, licence and dependencies for PyPI packages.",
+    "output_fields": [
+      "package",
+      "version",
+      "released_at",
+      "license",
+      "requires_python",
+      "dependencies"
+    ],
+    "risks": [
+      "Author and maintainer fields must be dropped"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "google-map": {
+    "target_site": "Google Maps",
+    "target_domain": "www.google.com",
+    "sample_urls": [
+      "https://www.google.com/maps/search/coffee+shops+in+Austin"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Listings include reviewer names and owner replies; some businesses are sole traders.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Google Maps terms prohibit scraping Maps content.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 3.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 1.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Heavy client-side rendering that changes often.",
+    "proposed_actor_name": "google-maps-places",
+    "pitch": "Places from Google Maps searches.",
+    "output_fields": [
+      "name",
+      "address",
+      "rating",
+      "phone",
+      "website",
+      "url"
+    ],
+    "risks": [
+      "Crowded niche",
+      "Terms",
+      "Blocking"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "steam-game": {
+    "target_site": "Steam store",
+    "target_domain": "store.steampowered.com",
+    "sample_urls": [
+      "https://store.steampowered.com/api/appdetails?appids=570"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Game catalogue and prices only.",
+    "terms_allow_automated_access": "unclear",
+    "terms_notes": "The Steam Web API terms cover the documented API with a key; this store endpoint is undocumented.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.1,
+    "proxy": "datacenter",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "occasional",
+    "stability_notes": "The undocumented store endpoint changes now and then.",
+    "proposed_actor_name": "steam-game-prices",
+    "pitch": "Prices, discounts and metadata for Steam games.",
+    "output_fields": [
+      "app_id",
+      "name",
+      "price",
+      "discount",
+      "release_date"
+    ],
+    "risks": [
+      "Undocumented endpoint",
+      "Rate limits"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "federal-grant-opportunity-gov": {
+    "target_site": "Grants.gov",
+    "target_domain": "api.grants.gov",
+    "sample_urls": [
+      "https://api.grants.gov/v1/api/search2"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Opportunity listings by federal agencies; contact fields name agency offices.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "US federal government data in the public domain, offered through a public search API.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Official API plus a daily XML extract.",
+    "proposed_actor_name": "grants-gov-opportunities",
+    "pitch": "Open US federal grant opportunities with agency, deadline and award ceiling.",
+    "output_fields": [
+      "opportunity_id",
+      "title",
+      "agency",
+      "posted_at",
+      "close_date",
+      "award_ceiling",
+      "eligibility",
+      "url"
+    ],
+    "risks": [
+      "Free government search exists",
+      "Idea-only demand so far"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  }
+}

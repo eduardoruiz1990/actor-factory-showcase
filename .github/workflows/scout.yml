@@ -1,0 +1,75 @@
+name: Scout
+
+# Weekly. Scout reads the Apify Store and Ideas page and opens (or updates) the
+# week's candidates issue; the Validator then scores every candidate with
+# claude-sonnet-5-5 and posts its brief as a comment on that issue.
+# Both steps need network access to api.apify.com and apify.com, so they only
+# run here, not in the development sandbox (see docs/QUESTIONS.md).
+
+on:
+  schedule:
+    - cron: "17 5 * * 0" # Sundays 05:17 UTC, ahead of Monday's digest
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build the issue body and brief, but do not open or edit issues"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Tests
+        run: pytest
+
+      - name: Scout
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: python -m factory.scout --out out $DRY_RUN
+
+      - name: Validator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: python -m factory.validator --scout out/scout.json --out out $DRY_RUN
+
+      - name: Job summary
+        if: always()
+        run: |
+          if [ -f out/brief.md ]; then
+            sed '/<!-- factory:validator-data/d' out/brief.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # out/raw holds the raw Store, Actor and Ideas responses: download them to
+      # refresh tests/fixtures with real data (see tests/fixtures/README.md).
+      - name: Keep outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scout-output
+          path: out/
+          retention-days: 30

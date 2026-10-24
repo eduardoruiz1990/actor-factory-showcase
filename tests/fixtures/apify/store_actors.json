@@ -1,0 +1,4447 @@
+[
+ {
+  "id": "YGanh9JTvs8ATMpMS",
+  "title": "Google Maps Scraper",
+  "name": "google-maps-scraper",
+  "username": "northwind-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google maps scraper.",
+  "categories": [
+   "LEAD_GENERATION",
+   "TRAVEL"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/northwind-data/google-maps-scraper",
+  "stats": {
+   "totalBuilds": 12,
+   "totalRuns": 9717148,
+   "totalUsers": 372376,
+   "totalUsers7Days": 16409,
+   "totalUsers30Days": 42000,
+   "totalUsers90Days": 88773,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 812,
+   "actorReviewRating": 4.6,
+   "bookmarkCount": 2100,
+   "publicActorRunStats30Days": {
+    "ABORTED": 13882,
+    "FAILED": 9717,
+    "SUCCEEDED": 666318,
+    "TIMED-OUT": 4165,
+    "TOTAL": 694082
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.004,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 812,
+  "actorReviewRating": 4.6,
+  "bookmarkCount": 2100,
+  "badge": null
+ },
+ {
+  "id": "XaLj69ZebuaTrecK2",
+  "title": "Google Maps Extractor",
+  "name": "google-maps-extractor",
+  "username": "lumen-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google maps extractor.",
+  "categories": [
+   "LEAD_GENERATION"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/lumen-labs/google-maps-extractor",
+  "stats": {
+   "totalBuilds": 185,
+   "totalRuns": 1517096,
+   "totalUsers": 41720,
+   "totalUsers7Days": 4050,
+   "totalUsers30Days": 9100,
+   "totalUsers90Days": 21170,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 210,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 455,
+   "publicActorRunStats30Days": {
+    "ABORTED": 2167,
+    "FAILED": 3034,
+    "SUCCEEDED": 101862,
+    "TIMED-OUT": 1301,
+    "TOTAL": 108364
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.003,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 210,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 455,
+  "badge": null
+ },
+ {
+  "id": "RXpgopWaqXwsJNwqc",
+  "title": "Google Maps Reviews Scraper",
+  "name": "google-maps-reviews-scraper",
+  "username": "quarry-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google maps reviews scraper.",
+  "categories": [
+   "LEAD_GENERATION"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/quarry-tools/google-maps-reviews-scraper",
+  "stats": {
+   "totalBuilds": 55,
+   "totalRuns": 1553300,
+   "totalUsers": 26870,
+   "totalUsers7Days": 1878,
+   "totalUsers30Days": 6200,
+   "totalUsers90Days": 14199,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 150,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 310,
+   "publicActorRunStats30Days": {
+    "ABORTED": 2219,
+    "FAILED": 2330,
+    "SUCCEEDED": 105403,
+    "TIMED-OUT": 998,
+    "TOTAL": 110950
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.0005,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 150,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 310,
+  "badge": null
+ },
+ {
+  "id": "Z6GUQh9xRgaaybApn",
+  "title": "Google Maps Email Extractor",
+  "name": "google-maps-email-extractor",
+  "username": "fjord-dev",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google maps email extractor.",
+  "categories": [
+   "LEAD_GENERATION"
+  ],
+  "notice": "UNDER_MAINTENANCE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/fjord-dev/google-maps-email-extractor",
+  "stats": {
+   "totalBuilds": 142,
+   "totalRuns": 248430,
+   "totalUsers": 13044,
+   "totalUsers7Days": 784,
+   "totalUsers30Days": 2100,
+   "totalUsers90Days": 4847,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 40,
+   "actorReviewRating": 4.1,
+   "bookmarkCount": 105,
+   "publicActorRunStats30Days": {
+    "ABORTED": 355,
+    "FAILED": 870,
+    "SUCCEEDED": 16148,
+    "TIMED-OUT": 372,
+    "TOTAL": 17745
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.006,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 40,
+  "actorReviewRating": 4.1,
+  "bookmarkCount": 105,
+  "badge": null
+ },
+ {
+  "id": "QvC6EwmiXJMt7bN6N",
+  "title": "Fast Google Maps Scraper",
+  "name": "fast-google-maps-scraper",
+  "username": "kestrel-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: fast google maps scraper.",
+  "categories": [
+   "LEAD_GENERATION"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/kestrel-data/fast-google-maps-scraper",
+  "stats": {
+   "totalBuilds": 84,
+   "totalRuns": 222572,
+   "totalUsers": 6095,
+   "totalUsers7Days": 526,
+   "totalUsers30Days": 1300,
+   "totalUsers90Days": 2618,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 22,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 65,
+   "publicActorRunStats30Days": {
+    "ABORTED": 318,
+    "FAILED": 1002,
+    "SUCCEEDED": 14149,
+    "TIMED-OUT": 429,
+    "TOTAL": 15898
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 22,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 65,
+  "badge": null
+ },
+ {
+  "id": "7aBsEzNhrhDxu5KMN",
+  "title": "Google Maps Leads",
+  "name": "google-maps-leads",
+  "username": "harbor-scrapers",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google maps leads.",
+  "categories": [
+   "LEAD_GENERATION"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/harbor-scrapers/google-maps-leads",
+  "stats": {
+   "totalBuilds": 167,
+   "totalRuns": 189910,
+   "totalUsers": 5590,
+   "totalUsers7Days": 307,
+   "totalUsers30Days": 800,
+   "totalUsers90Days": 1752,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 12,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 40,
+   "publicActorRunStats30Days": {
+    "ABORTED": 271,
+    "FAILED": 1139,
+    "SUCCEEDED": 11666,
+    "TIMED-OUT": 489,
+    "TOTAL": 13565
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FLAT_PRICE_PER_MONTH",
+   "pricePerUnitUsd": 15.0,
+   "trialMinutes": 1440,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": false,
+  "actorReviewCount": 12,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 40,
+  "badge": null
+ },
+ {
+  "id": "46sEmyzJqA6H3HKc7",
+  "title": "Instagram Profile Scraper",
+  "name": "instagram-profile-scraper",
+  "username": "tidepool",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: instagram profile scraper.",
+  "categories": [
+   "SOCIAL_MEDIA"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/tidepool/instagram-profile-scraper",
+  "stats": {
+   "totalBuilds": 118,
+   "totalRuns": 3817660,
+   "totalUsers": 120195,
+   "totalUsers7Days": 6653,
+   "totalUsers30Days": 15000,
+   "totalUsers90Days": 36145,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 380,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 750,
+   "publicActorRunStats30Days": {
+    "ABORTED": 5454,
+    "FAILED": 7635,
+    "SUCCEEDED": 256328,
+    "TIMED-OUT": 3273,
+    "TOTAL": 272690
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0023,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 380,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 750,
+  "badge": null
+ },
+ {
+  "id": "zYjZJYko7VcRHRh5F",
+  "title": "Instagram Profile Details Scraper",
+  "name": "instagram-profile-details",
+  "username": "brightline-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: instagram profile details scraper.",
+  "categories": [
+   "SOCIAL_MEDIA"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/brightline-io/instagram-profile-details",
+  "stats": {
+   "totalBuilds": 39,
+   "totalRuns": 580062,
+   "totalUsers": 21124,
+   "totalUsers7Days": 1305,
+   "totalUsers30Days": 3200,
+   "totalUsers90Days": 8082,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 60,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 160,
+   "publicActorRunStats30Days": {
+    "ABORTED": 829,
+    "FAILED": 2320,
+    "SUCCEEDED": 37289,
+    "TIMED-OUT": 995,
+    "TOTAL": 41433
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.002,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 60,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 160,
+  "badge": null
+ },
+ {
+  "id": "LEA6eL4XBbAHWcnVW",
+  "title": "Instagram Profiles",
+  "name": "instagram-profiles",
+  "username": "cobalt-crawl",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: instagram profiles.",
+  "categories": [
+   "SOCIAL_MEDIA"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cobalt-crawl/instagram-profiles",
+  "stats": {
+   "totalBuilds": 17,
+   "totalRuns": 208012,
+   "totalUsers": 4847,
+   "totalUsers7Days": 286,
+   "totalUsers30Days": 900,
+   "totalUsers90Days": 1866,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 14,
+   "actorReviewRating": 3.6,
+   "bookmarkCount": 45,
+   "publicActorRunStats30Days": {
+    "ABORTED": 297,
+    "FAILED": 1560,
+    "SUCCEEDED": 12332,
+    "TIMED-OUT": 669,
+    "TOTAL": 14858
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 14,
+  "actorReviewRating": 3.6,
+  "bookmarkCount": 45,
+  "badge": null
+ },
+ {
+  "id": "hReSDiRutrobYTc9C",
+  "title": "LinkedIn Jobs Scraper",
+  "name": "linkedin-jobs-scraper",
+  "username": "meridian-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: linkedin jobs scraper.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/meridian-io/linkedin-jobs-scraper",
+  "stats": {
+   "totalBuilds": 143,
+   "totalRuns": 295946,
+   "totalUsers": 15589,
+   "totalUsers7Days": 1007,
+   "totalUsers30Days": 2400,
+   "totalUsers90Days": 5075,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 55,
+   "actorReviewRating": 3.6,
+   "bookmarkCount": 120,
+   "publicActorRunStats30Days": {
+    "ABORTED": 423,
+    "FAILED": 2664,
+    "SUCCEEDED": 16911,
+    "TIMED-OUT": 1141,
+    "TOTAL": 21139
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 55,
+  "actorReviewRating": 3.6,
+  "bookmarkCount": 120,
+  "badge": null
+ },
+ {
+  "id": "JGZh3cf28CVvyLgpF",
+  "title": "LinkedIn Jobs Scraper - No Login",
+  "name": "linkedin-jobs-no-login",
+  "username": "parcel-bots",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: linkedin jobs scraper - no login.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/parcel-bots/linkedin-jobs-no-login",
+  "stats": {
+   "totalBuilds": 95,
+   "totalRuns": 118846,
+   "totalUsers": 5130,
+   "totalUsers7Days": 304,
+   "totalUsers30Days": 800,
+   "totalUsers90Days": 1701,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 19,
+   "actorReviewRating": 3.2,
+   "bookmarkCount": 40,
+   "publicActorRunStats30Days": {
+    "ABORTED": 170,
+    "FAILED": 1486,
+    "SUCCEEDED": 6197,
+    "TIMED-OUT": 636,
+    "TOTAL": 8489
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.001,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 19,
+  "actorReviewRating": 3.2,
+  "bookmarkCount": 40,
+  "badge": null
+ },
+ {
+  "id": "CTX6aFKLKSXqMFkFV",
+  "title": "LinkedIn Job Postings",
+  "name": "linkedin-job-postings",
+  "username": "sable-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: linkedin job postings.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/sable-data/linkedin-job-postings",
+  "stats": {
+   "totalBuilds": 50,
+   "totalRuns": 33614,
+   "totalUsers": 1359,
+   "totalUsers7Days": 96,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 670,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 5,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 48,
+    "FAILED": 168,
+    "SUCCEEDED": 2113,
+    "TIMED-OUT": 72,
+    "TOTAL": 2401
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 5,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "q75u9QEEKJByXhaqK",
+  "title": "Amazon Product Scraper",
+  "name": "amazon-product-scraper",
+  "username": "wren-automation",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: amazon product scraper.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/wren-automation/amazon-product-scraper",
+  "stats": {
+   "totalBuilds": 111,
+   "totalRuns": 1753080,
+   "totalUsers": 59410,
+   "totalUsers7Days": 3852,
+   "totalUsers30Days": 9000,
+   "totalUsers90Days": 23345,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 240,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 450,
+   "publicActorRunStats30Days": {
+    "ABORTED": 2504,
+    "FAILED": 5259,
+    "SUCCEEDED": 115203,
+    "TIMED-OUT": 2254,
+    "TOTAL": 125220
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "tieredPricing": {
+    "FREE": {
+     "tieredPricePerUnitUsd": 0.004
+    },
+    "BRONZE": {
+     "tieredPricePerUnitUsd": 0.0036
+    },
+    "SILVER": {
+     "tieredPricePerUnitUsd": 0.0032
+    },
+    "GOLD": {
+     "tieredPricePerUnitUsd": 0.0028
+    }
+   },
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 240,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 450,
+  "badge": null
+ },
+ {
+  "id": "FMGLcAFUPB7jmTJvA",
+  "title": "Amazon Product Details",
+  "name": "amazon-product-details",
+  "username": "orbit-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: amazon product details.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/orbit-tools/amazon-product-details",
+  "stats": {
+   "totalBuilds": 39,
+   "totalRuns": 647612,
+   "totalUsers": 17545,
+   "totalUsers7Days": 914,
+   "totalUsers30Days": 2500,
+   "totalUsers90Days": 6396,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 70,
+   "actorReviewRating": 4.3,
+   "bookmarkCount": 125,
+   "publicActorRunStats30Days": {
+    "ABORTED": 925,
+    "FAILED": 1619,
+    "SUCCEEDED": 43020,
+    "TIMED-OUT": 694,
+    "TOTAL": 46258
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.0025,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 70,
+  "actorReviewRating": 4.3,
+  "bookmarkCount": 125,
+  "badge": null
+ },
+ {
+  "id": "B3g5zVy27BYcWie6C",
+  "title": "Amazon Products API",
+  "name": "amazon-products-api",
+  "username": "zephyr-dev",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: amazon products api.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/zephyr-dev/amazon-products-api",
+  "stats": {
+   "totalBuilds": 25,
+   "totalRuns": 241850,
+   "totalUsers": 10212,
+   "totalUsers7Days": 541,
+   "totalUsers30Days": 1800,
+   "totalUsers90Days": 4566,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 33,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 90,
+   "publicActorRunStats30Days": {
+    "ABORTED": 346,
+    "FAILED": 484,
+    "SUCCEEDED": 16238,
+    "TIMED-OUT": 207,
+    "TOTAL": 17275
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0025,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 33,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 90,
+  "badge": null
+ },
+ {
+  "id": "yPeKDSk4oZkrke2WN",
+  "title": "Amazon Product Data Scraper",
+  "name": "amazon-product-data",
+  "username": "alder-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: amazon product data scraper.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/alder-labs/amazon-product-data",
+  "stats": {
+   "totalBuilds": 185,
+   "totalRuns": 81746,
+   "totalUsers": 5398,
+   "totalUsers7Days": 268,
+   "totalUsers30Days": 600,
+   "totalUsers90Days": 1390,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 9,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 30,
+   "publicActorRunStats30Days": {
+    "ABORTED": 117,
+    "FAILED": 450,
+    "SUCCEEDED": 5080,
+    "TIMED-OUT": 192,
+    "TOTAL": 5839
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 9,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 30,
+  "badge": null
+ },
+ {
+  "id": "kUG4wUP4eBtU5AcFH",
+  "title": "Greenhouse Jobs Scraper",
+  "name": "greenhouse-jobs-scraper",
+  "username": "basalt-api",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: greenhouse jobs scraper.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/basalt-api/greenhouse-jobs-scraper",
+  "stats": {
+   "totalBuilds": 120,
+   "totalRuns": 53354,
+   "totalUsers": 1094,
+   "totalUsers7Days": 98,
+   "totalUsers30Days": 260,
+   "totalUsers90Days": 566,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 12,
+   "actorReviewRating": 3.7,
+   "bookmarkCount": 13,
+   "publicActorRunStats30Days": {
+    "ABORTED": 76,
+    "FAILED": 427,
+    "SUCCEEDED": 3125,
+    "TIMED-OUT": 183,
+    "TOTAL": 3811
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "apify-default-dataset-item": {
+      "eventTitle": "Dataset item",
+      "eventDescription": "Charged for each item in the default dataset.",
+      "eventPriceUsd": 0.0015
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 12,
+  "actorReviewRating": 3.7,
+  "bookmarkCount": 13,
+  "badge": null
+ },
+ {
+  "id": "Mf5EScyRHFBv5FAMd",
+  "title": "Greenhouse Job Board Scraper",
+  "name": "greenhouse-job-board",
+  "username": "cinder-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: greenhouse job board scraper.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cinder-io/greenhouse-job-board",
+  "stats": {
+   "totalBuilds": 157,
+   "totalRuns": 12054,
+   "totalUsers": 304,
+   "totalUsers7Days": 18,
+   "totalUsers30Days": 45,
+   "totalUsers90Days": 99,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 2,
+   "publicActorRunStats30Days": {
+    "ABORTED": 17,
+    "FAILED": 30,
+    "SUCCEEDED": 801,
+    "TIMED-OUT": 13,
+    "TOTAL": 861
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.001,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 2,
+  "badge": null
+ },
+ {
+  "id": "sNqHHvLnNhP7iVeaM",
+  "title": "Greenhouse Jobs",
+  "name": "greenhouse-jobs",
+  "username": "delta-fetch",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: greenhouse jobs.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/delta-fetch/greenhouse-jobs",
+  "stats": {
+   "totalBuilds": 38,
+   "totalRuns": 2044,
+   "totalUsers": 66,
+   "totalUsers7Days": 5,
+   "totalUsers30Days": 12,
+   "totalUsers90Days": 26,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 0,
+   "publicActorRunStats30Days": {
+    "ABORTED": 3,
+    "FAILED": 31,
+    "SUCCEEDED": 99,
+    "TIMED-OUT": 13,
+    "TOTAL": 146
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 0,
+  "badge": null
+ },
+ {
+  "id": "WMbWWmTt6WzYaANyy",
+  "title": "Lever Jobs Scraper",
+  "name": "lever-jobs-scraper",
+  "username": "ember-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: lever jobs scraper.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/ember-data/lever-jobs-scraper",
+  "stats": {
+   "totalBuilds": 152,
+   "totalRuns": 16282,
+   "totalUsers": 643,
+   "totalUsers7Days": 38,
+   "totalUsers30Days": 120,
+   "totalUsers90Days": 241,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 6,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 6,
+   "publicActorRunStats30Days": {
+    "ABORTED": 23,
+    "FAILED": 90,
+    "SUCCEEDED": 1012,
+    "TIMED-OUT": 38,
+    "TOTAL": 1163
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 6,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 6,
+  "badge": null
+ },
+ {
+  "id": "wUFhrQJvXdZ7JCEYo",
+  "title": "Lever Job Postings Scraper",
+  "name": "lever-job-postings",
+  "username": "northwind-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: lever job postings scraper.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/northwind-data/lever-job-postings",
+  "stats": {
+   "totalBuilds": 188,
+   "totalRuns": 4550,
+   "totalUsers": 201,
+   "totalUsers7Days": 12,
+   "totalUsers30Days": 30,
+   "totalUsers90Days": 65,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 6,
+    "FAILED": 5,
+    "SUCCEEDED": 313,
+    "TIMED-OUT": 1,
+    "TOTAL": 325
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "QrJSjD9VKWwxgEwwd",
+  "title": "SEC EDGAR Filings Scraper",
+  "name": "sec-edgar-filings-scraper",
+  "username": "lumen-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: sec edgar filings scraper.",
+  "categories": [
+   "BUSINESS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/lumen-labs/sec-edgar-filings-scraper",
+  "stats": {
+   "totalBuilds": 32,
+   "totalRuns": 53368,
+   "totalUsers": 3175,
+   "totalUsers7Days": 149,
+   "totalUsers30Days": 380,
+   "totalUsers90Days": 793,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 9,
+   "actorReviewRating": 3.8,
+   "bookmarkCount": 19,
+   "publicActorRunStats30Days": {
+    "ABORTED": 76,
+    "FAILED": 320,
+    "SUCCEEDED": 3279,
+    "TIMED-OUT": 137,
+    "TOTAL": 3812
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 9,
+  "actorReviewRating": 3.8,
+  "bookmarkCount": 19,
+  "badge": null
+ },
+ {
+  "id": "SKoQwqazFsvbSRbxt",
+  "title": "EDGAR Filings Extractor",
+  "name": "edgar-filings-extractor",
+  "username": "quarry-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: edgar filings extractor.",
+  "categories": [
+   "BUSINESS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/quarry-tools/edgar-filings-extractor",
+  "stats": {
+   "totalBuilds": 36,
+   "totalRuns": 22148,
+   "totalUsers": 737,
+   "totalUsers7Days": 32,
+   "totalUsers30Days": 90,
+   "totalUsers90Days": 180,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 3,
+   "actorReviewRating": 4.6,
+   "bookmarkCount": 4,
+   "publicActorRunStats30Days": {
+    "ABORTED": 32,
+    "FAILED": 33,
+    "SUCCEEDED": 1503,
+    "TIMED-OUT": 14,
+    "TOTAL": 1582
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.003,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 3,
+  "actorReviewRating": 4.6,
+  "bookmarkCount": 4,
+  "badge": null
+ },
+ {
+  "id": "8DGQ3HTGz4PZTENBP",
+  "title": "SEC Filings API",
+  "name": "sec-filings-api",
+  "username": "fjord-dev",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: sec filings api.",
+  "categories": [
+   "BUSINESS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/fjord-dev/sec-filings-api",
+  "stats": {
+   "totalBuilds": 113,
+   "totalRuns": 9030,
+   "totalUsers": 231,
+   "totalUsers7Days": 14,
+   "totalUsers30Days": 40,
+   "totalUsers90Days": 93,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 2,
+   "publicActorRunStats30Days": {
+    "ABORTED": 13,
+    "FAILED": 5,
+    "SUCCEEDED": 626,
+    "TIMED-OUT": 1,
+    "TOTAL": 645
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 2,
+  "badge": null
+ },
+ {
+  "id": "qdAMPeTwcD85ENzRf",
+  "title": "Hacker News Scraper",
+  "name": "hacker-news-scraper",
+  "username": "kestrel-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: hacker news scraper.",
+  "categories": [
+   "NEWS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/kestrel-data/hacker-news-scraper",
+  "stats": {
+   "totalBuilds": 165,
+   "totalRuns": 55244,
+   "totalUsers": 1426,
+   "totalUsers7Days": 84,
+   "totalUsers30Days": 220,
+   "totalUsers90Days": 448,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 11,
+   "actorReviewRating": 4.7,
+   "bookmarkCount": 11,
+   "publicActorRunStats30Days": {
+    "ABORTED": 79,
+    "FAILED": 83,
+    "SUCCEEDED": 3749,
+    "TIMED-OUT": 35,
+    "TOTAL": 3946
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 11,
+  "actorReviewRating": 4.7,
+  "bookmarkCount": 11,
+  "badge": null
+ },
+ {
+  "id": "78zy37ryA2PfKD54y",
+  "title": "Hacker News Posts",
+  "name": "hacker-news-posts",
+  "username": "harbor-scrapers",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: hacker news posts.",
+  "categories": [
+   "NEWS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/harbor-scrapers/hacker-news-posts",
+  "stats": {
+   "totalBuilds": 41,
+   "totalRuns": 9870,
+   "totalUsers": 346,
+   "totalUsers7Days": 20,
+   "totalUsers30Days": 60,
+   "totalUsers90Days": 130,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 4,
+   "actorReviewRating": 4.8,
+   "bookmarkCount": 3,
+   "publicActorRunStats30Days": {
+    "ABORTED": 14,
+    "FAILED": 10,
+    "SUCCEEDED": 677,
+    "TIMED-OUT": 4,
+    "TOTAL": 705
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.001,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 4,
+  "actorReviewRating": 4.8,
+  "bookmarkCount": 3,
+  "badge": null
+ },
+ {
+  "id": "9hGdprNp97qJSJDnx",
+  "title": "Hacker News Top Stories",
+  "name": "hn-top-stories",
+  "username": "tidepool",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: hacker news top stories.",
+  "categories": [
+   "NEWS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/tidepool/hn-top-stories",
+  "stats": {
+   "totalBuilds": 154,
+   "totalRuns": 4634,
+   "totalUsers": 214,
+   "totalUsers7Days": 8,
+   "totalUsers30Days": 25,
+   "totalUsers90Days": 62,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 7,
+    "FAILED": 2,
+    "SUCCEEDED": 321,
+    "TIMED-OUT": 1,
+    "TOTAL": 331
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "ToKL32oqvWpqkUMNN",
+  "title": "Shopify Products Scraper",
+  "name": "shopify-products-scraper",
+  "username": "brightline-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: shopify products scraper.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/brightline-io/shopify-products-scraper",
+  "stats": {
+   "totalBuilds": 89,
+   "totalRuns": 361046,
+   "totalUsers": 13405,
+   "totalUsers7Days": 853,
+   "totalUsers30Days": 2100,
+   "totalUsers90Days": 4311,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 48,
+   "actorReviewRating": 4.3,
+   "bookmarkCount": 105,
+   "publicActorRunStats30Days": {
+    "ABORTED": 516,
+    "FAILED": 1986,
+    "SUCCEEDED": 22436,
+    "TIMED-OUT": 851,
+    "TOTAL": 25789
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.001,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 48,
+  "actorReviewRating": 4.3,
+  "bookmarkCount": 105,
+  "badge": null
+ },
+ {
+  "id": "t3WSJfTu9EZ9WVp6S",
+  "title": "Shopify Store Products",
+  "name": "shopify-store-products",
+  "username": "cobalt-crawl",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: shopify store products.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cobalt-crawl/shopify-store-products",
+  "stats": {
+   "totalBuilds": 181,
+   "totalRuns": 95088,
+   "totalUsers": 5209,
+   "totalUsers7Days": 241,
+   "totalUsers30Days": 700,
+   "totalUsers90Days": 1774,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 20,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 35,
+   "publicActorRunStats30Days": {
+    "ABORTED": 136,
+    "FAILED": 285,
+    "SUCCEEDED": 6248,
+    "TIMED-OUT": 123,
+    "TOTAL": 6792
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0009,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 20,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 35,
+  "badge": null
+ },
+ {
+  "id": "SA3FnYQRfEpjxkTkD",
+  "title": "Shopify Product Data",
+  "name": "shopify-product-data",
+  "username": "meridian-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: shopify product data.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/meridian-io/shopify-product-data",
+  "stats": {
+   "totalBuilds": 166,
+   "totalRuns": 81494,
+   "totalUsers": 1677,
+   "totalUsers7Days": 120,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 620,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 7,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 116,
+    "FAILED": 163,
+    "SUCCEEDED": 5472,
+    "TIMED-OUT": 70,
+    "TOTAL": 5821
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 7,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "K48iuowwzdGyK2oLa",
+  "title": "Shopify Catalog Scraper",
+  "name": "shopify-catalog-scraper",
+  "username": "parcel-bots",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: shopify catalog scraper.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/parcel-bots/shopify-catalog-scraper",
+  "stats": {
+   "totalBuilds": 127,
+   "totalRuns": 5194,
+   "totalUsers": 317,
+   "totalUsers7Days": 13,
+   "totalUsers30Days": 40,
+   "totalUsers90Days": 102,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 2,
+   "publicActorRunStats30Days": {
+    "ABORTED": 7,
+    "FAILED": 0,
+    "SUCCEEDED": 364,
+    "TIMED-OUT": 0,
+    "TOTAL": 371
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 2,
+  "badge": null
+ },
+ {
+  "id": "TPxQYhDugEeqBCnCD",
+  "title": "Trustpilot Reviews Scraper",
+  "name": "trustpilot-reviews-scraper",
+  "username": "sable-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: trustpilot reviews scraper.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/sable-data/trustpilot-reviews-scraper",
+  "stats": {
+   "totalBuilds": 37,
+   "totalRuns": 425096,
+   "totalUsers": 13965,
+   "totalUsers7Days": 629,
+   "totalUsers30Days": 1800,
+   "totalUsers90Days": 4439,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 41,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 90,
+   "publicActorRunStats30Days": {
+    "ABORTED": 607,
+    "FAILED": 1488,
+    "SUCCEEDED": 27632,
+    "TIMED-OUT": 637,
+    "TOTAL": 30364
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0008,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 41,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 90,
+  "badge": null
+ },
+ {
+  "id": "zywu5xsTnbfUJxVba",
+  "title": "Trustpilot Reviews",
+  "name": "trustpilot-reviews",
+  "username": "wren-automation",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: trustpilot reviews.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/wren-automation/trustpilot-reviews",
+  "stats": {
+   "totalBuilds": 40,
+   "totalRuns": 97174,
+   "totalUsers": 2428,
+   "totalUsers7Days": 148,
+   "totalUsers30Days": 450,
+   "totalUsers90Days": 922,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 9,
+   "actorReviewRating": 4.1,
+   "bookmarkCount": 22,
+   "publicActorRunStats30Days": {
+    "ABORTED": 139,
+    "FAILED": 437,
+    "SUCCEEDED": 6177,
+    "TIMED-OUT": 188,
+    "TOTAL": 6941
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.0005,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 9,
+  "actorReviewRating": 4.1,
+  "bookmarkCount": 22,
+  "badge": null
+ },
+ {
+  "id": "h8HedUE5VMUWUrzPf",
+  "title": "Trustpilot Company Reviews",
+  "name": "trustpilot-company-reviews",
+  "username": "orbit-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: trustpilot company reviews.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/orbit-tools/trustpilot-company-reviews",
+  "stats": {
+   "totalBuilds": 41,
+   "totalRuns": 41230,
+   "totalUsers": 1275,
+   "totalUsers7Days": 61,
+   "totalUsers30Days": 200,
+   "totalUsers90Days": 411,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 6,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 10,
+   "publicActorRunStats30Days": {
+    "ABORTED": 59,
+    "FAILED": 103,
+    "SUCCEEDED": 2739,
+    "TIMED-OUT": 44,
+    "TOTAL": 2945
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 6,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 10,
+  "badge": null
+ },
+ {
+  "id": "udXu6sxb8HF35qAGD",
+  "title": "Zillow Scraper",
+  "name": "zillow-scraper",
+  "username": "zephyr-dev",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: zillow scraper.",
+  "categories": [
+   "REAL_ESTATE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/zephyr-dev/zillow-scraper",
+  "stats": {
+   "totalBuilds": 99,
+   "totalRuns": 668822,
+   "totalUsers": 19646,
+   "totalUsers7Days": 1819,
+   "totalUsers30Days": 4200,
+   "totalUsers90Days": 9151,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 88,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 210,
+   "publicActorRunStats30Days": {
+    "ABORTED": 955,
+    "FAILED": 4347,
+    "SUCCEEDED": 40608,
+    "TIMED-OUT": 1863,
+    "TOTAL": 47773
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 88,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 210,
+  "badge": null
+ },
+ {
+  "id": "vBCqjZQmQKLvVUFVk",
+  "title": "Zillow Property Scraper",
+  "name": "zillow-property-scraper",
+  "username": "alder-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: zillow property scraper.",
+  "categories": [
+   "REAL_ESTATE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/alder-labs/zillow-property-scraper",
+  "stats": {
+   "totalBuilds": 48,
+   "totalRuns": 279258,
+   "totalUsers": 9420,
+   "totalUsers7Days": 367,
+   "totalUsers30Days": 1200,
+   "totalUsers90Days": 2974,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 24,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 60,
+   "publicActorRunStats30Days": {
+    "ABORTED": 399,
+    "FAILED": 1396,
+    "SUCCEEDED": 17553,
+    "TIMED-OUT": 599,
+    "TOTAL": 19947
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.002,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 24,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 60,
+  "badge": null
+ },
+ {
+  "id": "QxCzdaSkgBRmSWFaD",
+  "title": "Zillow Zestimate Scraper",
+  "name": "zillow-zestimate-scraper",
+  "username": "basalt-api",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: zillow zestimate scraper.",
+  "categories": [
+   "REAL_ESTATE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/basalt-api/zillow-zestimate-scraper",
+  "stats": {
+   "totalBuilds": 10,
+   "totalRuns": 52934,
+   "totalUsers": 1271,
+   "totalUsers7Days": 109,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 689,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 6,
+   "actorReviewRating": 3.5,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 76,
+    "FAILED": 529,
+    "SUCCEEDED": 2949,
+    "TIMED-OUT": 227,
+    "TOTAL": 3781
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 6,
+  "actorReviewRating": 3.5,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "ZAe9BWWDXFUpqdupJ",
+  "title": "Product Hunt Scraper",
+  "name": "product-hunt-scraper",
+  "username": "cinder-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: product hunt scraper.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cinder-io/product-hunt-scraper",
+  "stats": {
+   "totalBuilds": 29,
+   "totalRuns": 26236,
+   "totalUsers": 1293,
+   "totalUsers7Days": 53,
+   "totalUsers30Days": 150,
+   "totalUsers90Days": 354,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 8,
+   "actorReviewRating": 3.5,
+   "bookmarkCount": 7,
+   "publicActorRunStats30Days": {
+    "ABORTED": 37,
+    "FAILED": 289,
+    "SUCCEEDED": 1425,
+    "TIMED-OUT": 123,
+    "TOTAL": 1874
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.003,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 8,
+  "actorReviewRating": 3.5,
+  "bookmarkCount": 7,
+  "badge": null
+ },
+ {
+  "id": "todR45CvJ3Ha6cAZK",
+  "title": "Product Hunt Launches",
+  "name": "product-hunt-launches",
+  "username": "delta-fetch",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: product hunt launches.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/delta-fetch/product-hunt-launches",
+  "stats": {
+   "totalBuilds": 186,
+   "totalRuns": 4480,
+   "totalUsers": 204,
+   "totalUsers7Days": 13,
+   "totalUsers30Days": 35,
+   "totalUsers90Days": 76,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 6,
+    "FAILED": 11,
+    "SUCCEEDED": 298,
+    "TIMED-OUT": 5,
+    "TOTAL": 320
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "iKpEf3WuuVurnQhfM",
+  "title": "npm Package Downloads Scraper",
+  "name": "npm-package-downloads",
+  "username": "ember-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: npm package downloads scraper.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/ember-data/npm-package-downloads",
+  "stats": {
+   "totalBuilds": 121,
+   "totalRuns": 26250,
+   "totalUsers": 1002,
+   "totalUsers7Days": 39,
+   "totalUsers30Days": 120,
+   "totalUsers90Days": 260,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 4,
+   "actorReviewRating": 4.8,
+   "bookmarkCount": 6,
+   "publicActorRunStats30Days": {
+    "ABORTED": 38,
+    "FAILED": 158,
+    "SUCCEEDED": 1612,
+    "TIMED-OUT": 67,
+    "TOTAL": 1875
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0005,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 4,
+  "actorReviewRating": 4.8,
+  "bookmarkCount": 6,
+  "badge": null
+ },
+ {
+  "id": "2P5wvASQsAHst8rvy",
+  "title": "npm Download Stats",
+  "name": "npm-download-stats",
+  "username": "kestrel-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: npm download stats.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/kestrel-data/npm-download-stats",
+  "stats": {
+   "totalBuilds": 114,
+   "totalRuns": 8358,
+   "totalUsers": 326,
+   "totalUsers7Days": 15,
+   "totalUsers30Days": 40,
+   "totalUsers90Days": 83,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 2,
+   "publicActorRunStats30Days": {
+    "ABORTED": 12,
+    "FAILED": 4,
+    "SUCCEEDED": 579,
+    "TIMED-OUT": 2,
+    "TOTAL": 597
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 2,
+  "badge": null
+ },
+ {
+  "id": "nYgLC7Nd37dz4ZAEX",
+  "title": "PyPI Package Metadata Scraper",
+  "name": "pypi-package-metadata",
+  "username": "harbor-scrapers",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: pypi package metadata scraper.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/harbor-scrapers/pypi-package-metadata",
+  "stats": {
+   "totalBuilds": 175,
+   "totalRuns": 7546,
+   "totalUsers": 199,
+   "totalUsers7Days": 9,
+   "totalUsers30Days": 30,
+   "totalUsers90Days": 67,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 11,
+    "FAILED": 4,
+    "SUCCEEDED": 523,
+    "TIMED-OUT": 1,
+    "TOTAL": 539
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "LLxFYTX8af48BkYW2",
+  "title": "TED EU Tenders Scraper",
+  "name": "ted-eu-tenders-scraper",
+  "username": "tidepool",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: ted eu tenders scraper.",
+  "categories": [
+   "BUSINESS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/tidepool/ted-eu-tenders-scraper",
+  "stats": {
+   "totalBuilds": 66,
+   "totalRuns": 9842,
+   "totalUsers": 492,
+   "totalUsers7Days": 27,
+   "totalUsers30Days": 70,
+   "totalUsers90Days": 169,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 5,
+   "actorReviewRating": 3.2,
+   "bookmarkCount": 3,
+   "publicActorRunStats30Days": {
+    "ABORTED": 14,
+    "FAILED": 93,
+    "SUCCEEDED": 555,
+    "TIMED-OUT": 41,
+    "TOTAL": 703
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.004,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 5,
+  "actorReviewRating": 3.2,
+  "bookmarkCount": 3,
+  "badge": null
+ },
+ {
+  "id": "C3zufwfirws4SF29t",
+  "title": "EU Tenders",
+  "name": "eu-tenders",
+  "username": "brightline-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: eu tenders.",
+  "categories": [
+   "BUSINESS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/brightline-io/eu-tenders",
+  "stats": {
+   "totalBuilds": 67,
+   "totalRuns": 4634,
+   "totalUsers": 91,
+   "totalUsers7Days": 7,
+   "totalUsers30Days": 20,
+   "totalUsers90Days": 42,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 7,
+    "FAILED": 14,
+    "SUCCEEDED": 304,
+    "TIMED-OUT": 6,
+    "TOTAL": 331
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "KumAMJnFAmT9pHj3V",
+  "title": "Federal Register Documents Scraper",
+  "name": "federal-register-documents",
+  "username": "cobalt-crawl",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: federal register documents scraper.",
+  "categories": [
+   "NEWS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cobalt-crawl/federal-register-documents",
+  "stats": {
+   "totalBuilds": 119,
+   "totalRuns": 3150,
+   "totalUsers": 187,
+   "totalUsers7Days": 10,
+   "totalUsers30Days": 25,
+   "totalUsers90Days": 64,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 4,
+    "FAILED": 0,
+    "SUCCEEDED": 221,
+    "TIMED-OUT": 0,
+    "TOTAL": 225
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "qDzkc27phSwVRQ2YZ",
+  "title": "Booking.com Hotels Scraper",
+  "name": "booking-com-hotels",
+  "username": "meridian-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: booking.com hotels scraper.",
+  "categories": [
+   "TRAVEL"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/meridian-io/booking-com-hotels",
+  "stats": {
+   "totalBuilds": 23,
+   "totalRuns": 1343566,
+   "totalUsers": 27752,
+   "totalUsers7Days": 2603,
+   "totalUsers30Days": 6000,
+   "totalUsers90Days": 14885,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 130,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 300,
+   "publicActorRunStats30Days": {
+    "ABORTED": 1919,
+    "FAILED": 3359,
+    "SUCCEEDED": 89252,
+    "TIMED-OUT": 1439,
+    "TOTAL": 95969
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.003,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 130,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 300,
+  "badge": null
+ },
+ {
+  "id": "uephD24MrCTZm2TLE",
+  "title": "Booking Hotels Scraper",
+  "name": "booking-hotels-scraper",
+  "username": "parcel-bots",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: booking hotels scraper.",
+  "categories": [
+   "TRAVEL"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/parcel-bots/booking-hotels-scraper",
+  "stats": {
+   "totalBuilds": 187,
+   "totalRuns": 203854,
+   "totalUsers": 9582,
+   "totalUsers7Days": 649,
+   "totalUsers30Days": 1500,
+   "totalUsers90Days": 3420,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 31,
+   "actorReviewRating": 4.3,
+   "bookmarkCount": 75,
+   "publicActorRunStats30Days": {
+    "ABORTED": 291,
+    "FAILED": 612,
+    "SUCCEEDED": 13396,
+    "TIMED-OUT": 262,
+    "TOTAL": 14561
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.0025,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 31,
+  "actorReviewRating": 4.3,
+  "bookmarkCount": 75,
+  "badge": null
+ },
+ {
+  "id": "N2yGRYVb4rysEKMpy",
+  "title": "Booking.com Reviews",
+  "name": "booking-com-reviews",
+  "username": "sable-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: booking.com reviews.",
+  "categories": [
+   "TRAVEL"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/sable-data/booking-com-reviews",
+  "stats": {
+   "totalBuilds": 76,
+   "totalRuns": 190848,
+   "totalUsers": 3415,
+   "totalUsers7Days": 247,
+   "totalUsers30Days": 700,
+   "totalUsers90Days": 1599,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 15,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 35,
+   "publicActorRunStats30Days": {
+    "ABORTED": 273,
+    "FAILED": 763,
+    "SUCCEEDED": 12268,
+    "TIMED-OUT": 328,
+    "TOTAL": 13632
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 15,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 35,
+  "badge": null
+ },
+ {
+  "id": "ZxLkEMW5YLQXgbstT",
+  "title": "Booking.com Prices",
+  "name": "booking-com-prices",
+  "username": "wren-automation",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: booking.com prices.",
+  "categories": [
+   "TRAVEL"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/wren-automation/booking-com-prices",
+  "stats": {
+   "totalBuilds": 158,
+   "totalRuns": 40866,
+   "totalUsers": 2045,
+   "totalUsers7Days": 112,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 661,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 5,
+   "actorReviewRating": 4.6,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 58,
+    "FAILED": 82,
+    "SUCCEEDED": 2744,
+    "TIMED-OUT": 35,
+    "TOTAL": 2919
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 5,
+  "actorReviewRating": 4.6,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "VW3gJdnVKz89SvLYN",
+  "title": "YouTube Channel Scraper",
+  "name": "youtube-channel-scraper",
+  "username": "basalt-api",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: youtube channel scraper.",
+  "categories": [
+   "VIDEOS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/basalt-api/youtube-channel-scraper",
+  "stats": {
+   "totalBuilds": 132,
+   "totalRuns": 1245020,
+   "totalUsers": 32118,
+   "totalUsers7Days": 1854,
+   "totalUsers30Days": 5000,
+   "totalUsers90Days": 12139,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 70,
+   "actorReviewRating": 3.8,
+   "bookmarkCount": 250,
+   "publicActorRunStats30Days": {
+    "ABORTED": 1779,
+    "FAILED": 4980,
+    "SUCCEEDED": 80037,
+    "TIMED-OUT": 2134,
+    "TOTAL": 88930
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 70,
+  "actorReviewRating": 3.8,
+  "bookmarkCount": 250,
+  "badge": null
+ },
+ {
+  "id": "A5PkCThxfcSDiwWck",
+  "title": "YouTube Channel Videos",
+  "name": "youtube-channel-videos",
+  "username": "cinder-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: youtube channel videos.",
+  "categories": [
+   "VIDEOS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cinder-io/youtube-channel-videos",
+  "stats": {
+   "totalBuilds": 10,
+   "totalRuns": 301224,
+   "totalUsers": 8393,
+   "totalUsers7Days": 416,
+   "totalUsers30Days": 1100,
+   "totalUsers90Days": 2839,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 18,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 55,
+   "publicActorRunStats30Days": {
+    "ABORTED": 430,
+    "FAILED": 1054,
+    "SUCCEEDED": 19580,
+    "TIMED-OUT": 452,
+    "TOTAL": 21516
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.0015,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 18,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 55,
+  "badge": null
+ },
+ {
+  "id": "YbTcRALnZM7wDSXow",
+  "title": "Indeed Jobs Scraper",
+  "name": "indeed-jobs-scraper",
+  "username": "delta-fetch",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: indeed jobs scraper.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/delta-fetch/indeed-jobs-scraper",
+  "stats": {
+   "totalBuilds": 98,
+   "totalRuns": 699020,
+   "totalUsers": 30113,
+   "totalUsers7Days": 1142,
+   "totalUsers30Days": 3500,
+   "totalUsers90Days": 7680,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 60,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 175,
+   "publicActorRunStats30Days": {
+    "ABORTED": 999,
+    "FAILED": 5243,
+    "SUCCEEDED": 41441,
+    "TIMED-OUT": 2247,
+    "TOTAL": 49930
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 60,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 175,
+  "badge": null
+ },
+ {
+  "id": "XUGqyaAbUYKQy7zCZ",
+  "title": "Indeed Job Listings",
+  "name": "indeed-job-listings",
+  "username": "ember-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: indeed job listings.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/ember-data/indeed-job-listings",
+  "stats": {
+   "totalBuilds": 191,
+   "totalRuns": 163786,
+   "totalUsers": 6132,
+   "totalUsers7Days": 319,
+   "totalUsers30Days": 900,
+   "totalUsers90Days": 2139,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 14,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 45,
+   "publicActorRunStats30Days": {
+    "ABORTED": 234,
+    "FAILED": 983,
+    "SUCCEEDED": 10061,
+    "TIMED-OUT": 421,
+    "TOTAL": 11699
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.002,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 14,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 45,
+  "badge": null
+ },
+ {
+  "id": "JC8c4WLiFWPAf4XCs",
+  "title": "Indeed Jobs API",
+  "name": "indeed-jobs-api",
+  "username": "northwind-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: indeed jobs api.",
+  "categories": [
+   "JOBS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/northwind-data/indeed-jobs-api",
+  "stats": {
+   "totalBuilds": 152,
+   "totalRuns": 99526,
+   "totalUsers": 1619,
+   "totalUsers7Days": 161,
+   "totalUsers30Days": 400,
+   "totalUsers90Days": 866,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 8,
+   "actorReviewRating": 3.4,
+   "bookmarkCount": 20,
+   "publicActorRunStats30Days": {
+    "ABORTED": 142,
+    "FAILED": 995,
+    "SUCCEEDED": 5545,
+    "TIMED-OUT": 427,
+    "TOTAL": 7109
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 8,
+  "actorReviewRating": 3.4,
+  "bookmarkCount": 20,
+  "badge": null
+ },
+ {
+  "id": "c6YTF5PE8unmHMfxb",
+  "title": "Website Content Crawler",
+  "name": "website-content-crawler",
+  "username": "lumen-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: website content crawler.",
+  "categories": [
+   "AI",
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/lumen-labs/website-content-crawler",
+  "stats": {
+   "totalBuilds": 154,
+   "totalRuns": 278544,
+   "totalUsers": 14562,
+   "totalUsers7Days": 839,
+   "totalUsers30Days": 2200,
+   "totalUsers90Days": 5276,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 90,
+   "actorReviewRating": 4.7,
+   "bookmarkCount": 110,
+   "publicActorRunStats30Days": {
+    "ABORTED": 398,
+    "FAILED": 139,
+    "SUCCEEDED": 19299,
+    "TIMED-OUT": 60,
+    "TOTAL": 19896
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0005,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 90,
+  "actorReviewRating": 4.7,
+  "bookmarkCount": 110,
+  "badge": null
+ },
+ {
+  "id": "7X2HCjL5SdS6fAZaB",
+  "title": "Website Content Extractor",
+  "name": "website-content-extractor",
+  "username": "quarry-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: website content extractor.",
+  "categories": [
+   "AI"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/quarry-tools/website-content-extractor",
+  "stats": {
+   "totalBuilds": 89,
+   "totalRuns": 119630,
+   "totalUsers": 3429,
+   "totalUsers7Days": 222,
+   "totalUsers30Days": 500,
+   "totalUsers90Days": 1265,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 12,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 25,
+   "publicActorRunStats30Days": {
+    "ABORTED": 171,
+    "FAILED": 179,
+    "SUCCEEDED": 8118,
+    "TIMED-OUT": 77,
+    "TOTAL": 8545
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0004,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 12,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 25,
+  "badge": null
+ },
+ {
+  "id": "EPHJBXnHL96E3bt4b",
+  "title": "Website Content Scraper",
+  "name": "website-content-scraper",
+  "username": "kestrel-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: website content scraper.",
+  "categories": [
+   "AI"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/kestrel-data/website-content-scraper",
+  "stats": {
+   "totalBuilds": 115,
+   "totalRuns": 82698,
+   "totalUsers": 1902,
+   "totalUsers7Days": 100,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 617,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 6,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 118,
+    "FAILED": 207,
+    "SUCCEEDED": 5494,
+    "TIMED-OUT": 88,
+    "TOTAL": 5907
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 6,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "DYYbVmuFujgTW6yXN",
+  "title": "Sitemap URLs Scraper",
+  "name": "sitemap-urls-scraper",
+  "username": "harbor-scrapers",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: sitemap urls scraper.",
+  "categories": [
+   "SEO_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/harbor-scrapers/sitemap-urls-scraper",
+  "stats": {
+   "totalBuilds": 177,
+   "totalRuns": 105504,
+   "totalUsers": 4896,
+   "totalUsers7Days": 210,
+   "totalUsers30Days": 600,
+   "totalUsers90Days": 1430,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 14,
+   "actorReviewRating": 4.6,
+   "bookmarkCount": 30,
+   "publicActorRunStats30Days": {
+    "ABORTED": 151,
+    "FAILED": 106,
+    "SUCCEEDED": 7234,
+    "TIMED-OUT": 45,
+    "TOTAL": 7536
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 14,
+  "actorReviewRating": 4.6,
+  "bookmarkCount": 30,
+  "badge": null
+ },
+ {
+  "id": "Q57VcMBNqBDZ2TEUM",
+  "title": "Sitemap URL Extractor",
+  "name": "sitemap-url-extractor",
+  "username": "tidepool",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: sitemap url extractor.",
+  "categories": [
+   "SEO_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/tidepool/sitemap-url-extractor",
+  "stats": {
+   "totalBuilds": 78,
+   "totalRuns": 45948,
+   "totalUsers": 1898,
+   "totalUsers7Days": 130,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 691,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 7,
+   "actorReviewRating": 4.8,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 66,
+    "FAILED": 23,
+    "SUCCEEDED": 3183,
+    "TIMED-OUT": 10,
+    "TOTAL": 3282
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 7,
+  "actorReviewRating": 4.8,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "kVv4fPZVfAFcTAQU5",
+  "title": "Sitemap URLs",
+  "name": "sitemap-urls",
+  "username": "brightline-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: sitemap urls.",
+  "categories": [
+   "SEO_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/brightline-io/sitemap-urls",
+  "stats": {
+   "totalBuilds": 29,
+   "totalRuns": 20524,
+   "totalUsers": 944,
+   "totalUsers7Days": 62,
+   "totalUsers30Days": 150,
+   "totalUsers90Days": 323,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 3,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 7,
+   "publicActorRunStats30Days": {
+    "ABORTED": 29,
+    "FAILED": 31,
+    "SUCCEEDED": 1393,
+    "TIMED-OUT": 13,
+    "TOTAL": 1466
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 3,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 7,
+  "badge": null
+ },
+ {
+  "id": "EKzpBR8cWDZgkdYUJ",
+  "title": "WordPress Plugins Scraper",
+  "name": "wordpress-plugins-scraper",
+  "username": "cobalt-crawl",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: wordpress plugins scraper.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cobalt-crawl/wordpress-plugins-scraper",
+  "stats": {
+   "totalBuilds": 149,
+   "totalRuns": 15092,
+   "totalUsers": 443,
+   "totalUsers7Days": 25,
+   "totalUsers30Days": 85,
+   "totalUsers90Days": 208,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 3,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 4,
+   "publicActorRunStats30Days": {
+    "ABORTED": 22,
+    "FAILED": 83,
+    "SUCCEEDED": 937,
+    "TIMED-OUT": 36,
+    "TOTAL": 1078
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.002,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 3,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 4,
+  "badge": null
+ },
+ {
+  "id": "tHTmGcBzXqRPQHyE5",
+  "title": "WordPress Plugin Stats",
+  "name": "wordpress-plugin-stats",
+  "username": "meridian-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: wordpress plugin stats.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/meridian-io/wordpress-plugin-stats",
+  "stats": {
+   "totalBuilds": 124,
+   "totalRuns": 2968,
+   "totalUsers": 161,
+   "totalUsers7Days": 7,
+   "totalUsers30Days": 20,
+   "totalUsers90Days": 45,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 4,
+    "FAILED": 7,
+    "SUCCEEDED": 197,
+    "TIMED-OUT": 4,
+    "TOTAL": 212
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "f3GsVPpj7hXYN8uU9",
+  "title": "openFDA Drug Recalls",
+  "name": "openfda-drug-recalls",
+  "username": "parcel-bots",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: openfda drug recalls.",
+  "categories": [
+   "OTHER"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/parcel-bots/openfda-drug-recalls",
+  "stats": {
+   "totalBuilds": 139,
+   "totalRuns": 8232,
+   "totalUsers": 375,
+   "totalUsers7Days": 15,
+   "totalUsers30Days": 45,
+   "totalUsers90Days": 107,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 2,
+   "publicActorRunStats30Days": {
+    "ABORTED": 12,
+    "FAILED": 0,
+    "SUCCEEDED": 576,
+    "TIMED-OUT": 0,
+    "TOTAL": 588
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 2,
+  "badge": null
+ },
+ {
+  "id": "xKuP49SgLDnbkjQXy",
+  "title": "Steam Games Scraper",
+  "name": "steam-games-scraper",
+  "username": "sable-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: steam games scraper.",
+  "categories": [
+   "OTHER"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/sable-data/steam-games-scraper",
+  "stats": {
+   "totalBuilds": 83,
+   "totalRuns": 228858,
+   "totalUsers": 4820,
+   "totalUsers7Days": 353,
+   "totalUsers30Days": 900,
+   "totalUsers90Days": 2271,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 16,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 45,
+   "publicActorRunStats30Days": {
+    "ABORTED": 327,
+    "FAILED": 1030,
+    "SUCCEEDED": 14549,
+    "TIMED-OUT": 441,
+    "TOTAL": 16347
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 16,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 45,
+  "badge": null
+ },
+ {
+  "id": "9jSx5ftGkyWHDXoRb",
+  "title": "Steam Game Prices",
+  "name": "steam-game-prices",
+  "username": "wren-automation",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: steam game prices.",
+  "categories": [
+   "OTHER"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/wren-automation/steam-game-prices",
+  "stats": {
+   "totalBuilds": 192,
+   "totalRuns": 42728,
+   "totalUsers": 2368,
+   "totalUsers7Days": 110,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 687,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 5,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 61,
+    "FAILED": 128,
+    "SUCCEEDED": 2808,
+    "TIMED-OUT": 55,
+    "TOTAL": 3052
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 5,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "WQbv7zVhVG8jChzBA",
+  "title": "Steam Store Games",
+  "name": "steam-store-games",
+  "username": "orbit-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: steam store games.",
+  "categories": [
+   "OTHER"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/orbit-tools/steam-store-games",
+  "stats": {
+   "totalBuilds": 19,
+   "totalRuns": 13244,
+   "totalUsers": 499,
+   "totalUsers7Days": 38,
+   "totalUsers30Days": 100,
+   "totalUsers90Days": 241,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 2,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 5,
+   "publicActorRunStats30Days": {
+    "ABORTED": 19,
+    "FAILED": 99,
+    "SUCCEEDED": 785,
+    "TIMED-OUT": 43,
+    "TOTAL": 946
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 2,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 5,
+  "badge": null
+ },
+ {
+  "id": "2tk3JrhP65KrA4rJc",
+  "title": "App Store Reviews Scraper",
+  "name": "app-store-reviews-scraper",
+  "username": "zephyr-dev",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: app store reviews scraper.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/zephyr-dev/app-store-reviews-scraper",
+  "stats": {
+   "totalBuilds": 129,
+   "totalRuns": 195664,
+   "totalUsers": 9548,
+   "totalUsers7Days": 463,
+   "totalUsers30Days": 1300,
+   "totalUsers90Days": 2931,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 25,
+   "actorReviewRating": 4.1,
+   "bookmarkCount": 65,
+   "publicActorRunStats30Days": {
+    "ABORTED": 280,
+    "FAILED": 587,
+    "SUCCEEDED": 12857,
+    "TIMED-OUT": 252,
+    "TOTAL": 13976
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0005,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 25,
+  "actorReviewRating": 4.1,
+  "bookmarkCount": 65,
+  "badge": null
+ },
+ {
+  "id": "JTi4qyQ3KFf2ZFCC5",
+  "title": "Apple App Store Reviews",
+  "name": "apple-app-store-reviews",
+  "username": "alder-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: apple app store reviews.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/alder-labs/apple-app-store-reviews",
+  "stats": {
+   "totalBuilds": 84,
+   "totalRuns": 93688,
+   "totalUsers": 3246,
+   "totalUsers7Days": 138,
+   "totalUsers30Days": 400,
+   "totalUsers90Days": 1035,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 8,
+   "actorReviewRating": 4.3,
+   "bookmarkCount": 20,
+   "publicActorRunStats30Days": {
+    "ABORTED": 134,
+    "FAILED": 187,
+    "SUCCEEDED": 6290,
+    "TIMED-OUT": 81,
+    "TOTAL": 6692
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.0005,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 8,
+  "actorReviewRating": 4.3,
+  "bookmarkCount": 20,
+  "badge": null
+ },
+ {
+  "id": "Z8QMQgXc8KaYHjqCB",
+  "title": "App Store Review Scraper",
+  "name": "app-store-review-scraper",
+  "username": "basalt-api",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: app store review scraper.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/basalt-api/app-store-review-scraper",
+  "stats": {
+   "totalBuilds": 25,
+   "totalRuns": 69664,
+   "totalUsers": 1612,
+   "totalUsers7Days": 103,
+   "totalUsers30Days": 250,
+   "totalUsers90Days": 648,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 4,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 12,
+   "publicActorRunStats30Days": {
+    "ABORTED": 100,
+    "FAILED": 174,
+    "SUCCEEDED": 4627,
+    "TIMED-OUT": 75,
+    "TOTAL": 4976
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 4,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 12,
+  "badge": null
+ },
+ {
+  "id": "L4pnXHgKVzPs8CeNz",
+  "title": "Etsy Listings Scraper",
+  "name": "etsy-listings-scraper",
+  "username": "cinder-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: etsy listings scraper.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cinder-io/etsy-listings-scraper",
+  "stats": {
+   "totalBuilds": 44,
+   "totalRuns": 262808,
+   "totalUsers": 7733,
+   "totalUsers7Days": 448,
+   "totalUsers30Days": 1100,
+   "totalUsers90Days": 2226,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 20,
+   "actorReviewRating": 3.4,
+   "bookmarkCount": 55,
+   "publicActorRunStats30Days": {
+    "ABORTED": 375,
+    "FAILED": 2234,
+    "SUCCEEDED": 15206,
+    "TIMED-OUT": 957,
+    "TOTAL": 18772
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 20,
+  "actorReviewRating": 3.4,
+  "bookmarkCount": 55,
+  "badge": null
+ },
+ {
+  "id": "x5isVTP84dhE9Shbf",
+  "title": "Etsy Shop Listings",
+  "name": "etsy-shop-listings",
+  "username": "delta-fetch",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: etsy shop listings.",
+  "categories": [
+   "ECOMMERCE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/delta-fetch/etsy-shop-listings",
+  "stats": {
+   "totalBuilds": 77,
+   "totalRuns": 70672,
+   "totalUsers": 1910,
+   "totalUsers7Days": 119,
+   "totalUsers30Days": 300,
+   "totalUsers90Days": 710,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 6,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 15,
+   "publicActorRunStats30Days": {
+    "ABORTED": 101,
+    "FAILED": 353,
+    "SUCCEEDED": 4442,
+    "TIMED-OUT": 152,
+    "TOTAL": 5048
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 6,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 15,
+  "badge": null
+ },
+ {
+  "id": "Z6cez8atK5ibWsiSV",
+  "title": "Podcast Episodes Scraper",
+  "name": "podcast-episodes-scraper",
+  "username": "ember-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: podcast episodes scraper.",
+  "categories": [
+   "VIDEOS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/ember-data/podcast-episodes-scraper",
+  "stats": {
+   "totalBuilds": 174,
+   "totalRuns": 30114,
+   "totalUsers": 1016,
+   "totalUsers7Days": 48,
+   "totalUsers30Days": 140,
+   "totalUsers90Days": 306,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 7,
+   "actorReviewRating": 4.6,
+   "bookmarkCount": 7,
+   "publicActorRunStats30Days": {
+    "ABORTED": 43,
+    "FAILED": 60,
+    "SUCCEEDED": 2022,
+    "TIMED-OUT": 26,
+    "TOTAL": 2151
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0008,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 7,
+  "actorReviewRating": 4.6,
+  "bookmarkCount": 7,
+  "badge": null
+ },
+ {
+  "id": "aDY5YgWWP3zqwJRPh",
+  "title": "Podcast Episode Feed",
+  "name": "podcast-episode-feed",
+  "username": "northwind-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: podcast episode feed.",
+  "categories": [
+   "VIDEOS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/northwind-data/podcast-episode-feed",
+  "stats": {
+   "totalBuilds": 18,
+   "totalRuns": 7784,
+   "totalUsers": 239,
+   "totalUsers7Days": 10,
+   "totalUsers30Days": 30,
+   "totalUsers90Days": 60,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 1,
+   "publicActorRunStats30Days": {
+    "ABORTED": 11,
+    "FAILED": 8,
+    "SUCCEEDED": 534,
+    "TIMED-OUT": 3,
+    "TOTAL": 556
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 1,
+  "badge": null
+ },
+ {
+  "id": "fHrtuuFyHyKqMWoDG",
+  "title": "Google Trends Scraper",
+  "name": "google-trends-scraper",
+  "username": "lumen-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google trends scraper.",
+  "categories": [
+   "SEO_TOOLS",
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/lumen-labs/google-trends-scraper",
+  "stats": {
+   "totalBuilds": 92,
+   "totalRuns": 562940,
+   "totalUsers": 15600,
+   "totalUsers7Days": 823,
+   "totalUsers30Days": 2500,
+   "totalUsers90Days": 5935,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 45,
+   "actorReviewRating": 3.7,
+   "bookmarkCount": 125,
+   "publicActorRunStats30Days": {
+    "ABORTED": 804,
+    "FAILED": 5911,
+    "SUCCEEDED": 30962,
+    "TIMED-OUT": 2533,
+    "TOTAL": 40210
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.003,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 45,
+  "actorReviewRating": 3.7,
+  "bookmarkCount": 125,
+  "badge": null
+ },
+ {
+  "id": "ZcWuKQ7w286FEbcmT",
+  "title": "Google Trends Explorer",
+  "name": "google-trends-explorer",
+  "username": "quarry-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: google trends explorer.",
+  "categories": [
+   "SEO_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/quarry-tools/google-trends-explorer",
+  "stats": {
+   "totalBuilds": 39,
+   "totalRuns": 96992,
+   "totalUsers": 3578,
+   "totalUsers7Days": 208,
+   "totalUsers30Days": 600,
+   "totalUsers90Days": 1408,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 11,
+   "actorReviewRating": 3.3,
+   "bookmarkCount": 30,
+   "publicActorRunStats30Days": {
+    "ABORTED": 139,
+    "FAILED": 1212,
+    "SUCCEEDED": 5057,
+    "TIMED-OUT": 520,
+    "TOTAL": 6928
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.003,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 11,
+  "actorReviewRating": 3.3,
+  "bookmarkCount": 30,
+  "badge": null
+ },
+ {
+  "id": "F7qEzWauQZdwtELZW",
+  "title": "GitHub Repositories Scraper",
+  "name": "github-repositories-scraper",
+  "username": "harbor-scrapers",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: github repositories scraper.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/harbor-scrapers/github-repositories-scraper",
+  "stats": {
+   "totalBuilds": 145,
+   "totalRuns": 110754,
+   "totalUsers": 2263,
+   "totalUsers7Days": 136,
+   "totalUsers30Days": 400,
+   "totalUsers90Days": 876,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 8,
+   "actorReviewRating": 4.5,
+   "bookmarkCount": 20,
+   "publicActorRunStats30Days": {
+    "ABORTED": 158,
+    "FAILED": 277,
+    "SUCCEEDED": 7357,
+    "TIMED-OUT": 119,
+    "TOTAL": 7911
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 8,
+  "actorReviewRating": 4.5,
+  "bookmarkCount": 20,
+  "badge": null
+ },
+ {
+  "id": "ecwkFh7mKEZPvanu7",
+  "title": "GitHub Repository Search",
+  "name": "github-repository-search",
+  "username": "brightline-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: github repository search.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/brightline-io/github-repository-search",
+  "stats": {
+   "totalBuilds": 145,
+   "totalRuns": 22386,
+   "totalUsers": 1264,
+   "totalUsers7Days": 62,
+   "totalUsers30Days": 150,
+   "totalUsers90Days": 335,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 4,
+   "actorReviewRating": 4.4,
+   "bookmarkCount": 7,
+   "publicActorRunStats30Days": {
+    "ABORTED": 32,
+    "FAILED": 34,
+    "SUCCEEDED": 1519,
+    "TIMED-OUT": 14,
+    "TOTAL": 1599
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 4,
+  "actorReviewRating": 4.4,
+  "bookmarkCount": 7,
+  "badge": null
+ },
+ {
+  "id": "Nh6RJdroRV4TF86j6",
+  "title": "GitHub Repositories",
+  "name": "github-repositories",
+  "username": "cobalt-crawl",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: github repositories.",
+  "categories": [
+   "DEVELOPER_TOOLS"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/cobalt-crawl/github-repositories",
+  "stats": {
+   "totalBuilds": 132,
+   "totalRuns": 6790,
+   "totalUsers": 311,
+   "totalUsers7Days": 18,
+   "totalUsers30Days": 60,
+   "totalUsers90Days": 137,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 2,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 3,
+   "publicActorRunStats30Days": {
+    "ABORTED": 10,
+    "FAILED": 14,
+    "SUCCEEDED": 456,
+    "TIMED-OUT": 5,
+    "TOTAL": 485
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 2,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 3,
+  "badge": null
+ },
+ {
+  "id": "o5tNATPDnY8tDTKeY",
+  "title": "Weather Forecast Scraper",
+  "name": "weather-forecast-scraper",
+  "username": "meridian-io",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: weather forecast scraper.",
+  "categories": [
+   "OTHER"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/meridian-io/weather-forecast-scraper",
+  "stats": {
+   "totalBuilds": 133,
+   "totalRuns": 15106,
+   "totalUsers": 478,
+   "totalUsers7Days": 26,
+   "totalUsers30Days": 60,
+   "totalUsers90Days": 135,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 2,
+   "actorReviewRating": 4.0,
+   "bookmarkCount": 3,
+   "publicActorRunStats30Days": {
+    "ABORTED": 22,
+    "FAILED": 23,
+    "SUCCEEDED": 1025,
+    "TIMED-OUT": 9,
+    "TOTAL": 1079
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.0005,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 2,
+  "actorReviewRating": 4.0,
+  "bookmarkCount": 3,
+  "badge": null
+ },
+ {
+  "id": "P7amo4v6yGTQ8qFqm",
+  "title": "Weather Forecast API",
+  "name": "weather-forecast-api",
+  "username": "parcel-bots",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: weather forecast api.",
+  "categories": [
+   "OTHER"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/parcel-bots/weather-forecast-api",
+  "stats": {
+   "totalBuilds": 157,
+   "totalRuns": 2688,
+   "totalUsers": 102,
+   "totalUsers7Days": 4,
+   "totalUsers30Days": 15,
+   "totalUsers90Days": 38,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 0,
+   "actorReviewRating": 0,
+   "bookmarkCount": 0,
+   "publicActorRunStats30Days": {
+    "ABORTED": 4,
+    "FAILED": 0,
+    "SUCCEEDED": 188,
+    "TIMED-OUT": 0,
+    "TOTAL": 192
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 0,
+  "actorReviewRating": 0,
+  "bookmarkCount": 0,
+  "badge": null
+ },
+ {
+  "id": "RR7FPuAk5ZeLSxmVa",
+  "title": "Rightmove Scraper",
+  "name": "rightmove-scraper",
+  "username": "sable-data",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: rightmove scraper.",
+  "categories": [
+   "REAL_ESTATE"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/sable-data/rightmove-scraper",
+  "stats": {
+   "totalBuilds": 55,
+   "totalRuns": 178388,
+   "totalUsers": 7767,
+   "totalUsers7Days": 632,
+   "totalUsers30Days": 1500,
+   "totalUsers90Days": 3874,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 30,
+   "actorReviewRating": 3.9,
+   "bookmarkCount": 75,
+   "publicActorRunStats30Days": {
+    "ABORTED": 255,
+    "FAILED": 1249,
+    "SUCCEEDED": 10703,
+    "TIMED-OUT": 535,
+    "TOTAL": 12742
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.002,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 30,
+  "actorReviewRating": 3.9,
+  "bookmarkCount": 75,
+  "badge": null
+ },
+ {
+  "id": "cBptR8KMpbXuSchWd",
+  "title": "Yelp Reviews Scraper",
+  "name": "yelp-reviews-scraper",
+  "username": "orbit-tools",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: yelp reviews scraper.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/orbit-tools/yelp-reviews-scraper",
+  "stats": {
+   "totalBuilds": 45,
+   "totalRuns": 262444,
+   "totalUsers": 13268,
+   "totalUsers7Days": 487,
+   "totalUsers30Days": 1600,
+   "totalUsers90Days": 3915,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 30,
+   "actorReviewRating": 4.2,
+   "bookmarkCount": 80,
+   "publicActorRunStats30Days": {
+    "ABORTED": 375,
+    "FAILED": 1181,
+    "SUCCEEDED": 16684,
+    "TIMED-OUT": 506,
+    "TOTAL": 18746
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PAY_PER_EVENT",
+   "pricingPerEvent": {
+    "actorChargeEvents": {
+     "actor-start": {
+      "eventTitle": "Actor start",
+      "eventDescription": "Charged once when the run starts.",
+      "eventPriceUsd": 0.005,
+      "isOneTimeEvent": true
+     },
+     "result": {
+      "eventTitle": "Result",
+      "eventDescription": "Charged for each result.",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+     }
+    }
+   },
+   "minimalMaxTotalChargeUsd": 0.5,
+   "isPPEPlatformUsagePaidByUser": false,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 30,
+  "actorReviewRating": 4.2,
+  "bookmarkCount": 80,
+  "badge": null
+ },
+ {
+  "id": "nqs2TjGFeDrr2eKLb",
+  "title": "Yelp Business Reviews",
+  "name": "yelp-business-reviews",
+  "username": "zephyr-dev",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: yelp business reviews.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/zephyr-dev/yelp-business-reviews",
+  "stats": {
+   "totalBuilds": 189,
+   "totalRuns": 118594,
+   "totalUsers": 2533,
+   "totalUsers7Days": 177,
+   "totalUsers30Days": 500,
+   "totalUsers90Days": 1145,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 10,
+   "actorReviewRating": 4.1,
+   "bookmarkCount": 25,
+   "publicActorRunStats30Days": {
+    "ABORTED": 169,
+    "FAILED": 415,
+    "SUCCEEDED": 7709,
+    "TIMED-OUT": 178,
+    "TOTAL": 8471
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "PRICE_PER_DATASET_ITEM",
+   "unitName": "result",
+   "pricePerUnitUsd": 0.001,
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 10,
+  "actorReviewRating": 4.1,
+  "bookmarkCount": 25,
+  "badge": null
+ },
+ {
+  "id": "4ZngSacBuxU9i2cQX",
+  "title": "Yelp Reviews",
+  "name": "yelp-reviews",
+  "username": "alder-labs",
+  "userFullName": null,
+  "description": "Synthetic fixture Actor: yelp reviews.",
+  "categories": [
+   "MARKETING"
+  ],
+  "notice": "NONE",
+  "pictureUrl": null,
+  "userPictureUrl": null,
+  "url": "https://apify.com/alder-labs/yelp-reviews",
+  "stats": {
+   "totalBuilds": 49,
+   "totalRuns": 25648,
+   "totalUsers": 1421,
+   "totalUsers7Days": 68,
+   "totalUsers30Days": 200,
+   "totalUsers90Days": 473,
+   "totalMetamorphs": 0,
+   "lastRunStartedAt": "2026-10-23T21:36:00.000Z",
+   "actorReviewCount": 3,
+   "actorReviewRating": 4.3,
+   "bookmarkCount": 10,
+   "publicActorRunStats30Days": {
+    "ABORTED": 37,
+    "FAILED": 64,
+    "SUCCEEDED": 1703,
+    "TIMED-OUT": 28,
+    "TOTAL": 1832
+   }
+  },
+  "currentPricingInfo": {
+   "pricingModel": "FREE",
+   "apifyMarginPercentage": 0.2,
+   "createdAt": "2025-09-19T00:00:00.000Z",
+   "startedAt": "2025-10-09T00:00:00.000Z"
+  },
+  "isWhiteListedForAgenticPayments": true,
+  "actorReviewCount": 3,
+  "actorReviewRating": 4.3,
+  "bookmarkCount": 10,
+  "badge": null
+ }
+]
