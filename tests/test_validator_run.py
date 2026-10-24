@@ -5,7 +5,7 @@ from factory.scout.sources import FixtureSource
 from factory.validator.assessment import AssessmentError, FixtureAssessor
 from factory.validator.checks import CHECK_NAMES, PASS, UNKNOWN
 from factory.validator.robots import RobotsChecker, fixture_fetcher
-from factory.validator.run import validate
+from factory.validator.run import rank_for_issue, validate
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def run(scout_result, fixtures_dir, config, assessor=None):
 
 def test_every_candidate_gets_five_checks(scout_result, fixtures_dir, config):
     validations = run(scout_result, fixtures_dir, config)
-    assert len(validations) == 20
+    assert len(validations) == len(scout_result.candidates)
     for v in validations:
         assert [c.name for c in v.checks] == list(CHECK_NAMES)
         assert v.assessment_error is None
@@ -39,7 +39,8 @@ def test_sample_verdicts(scout_result, fixtures_dir, config):
     assert "personal data" in verdicts["trustpilot-review"].check("legality").reason
     assert "robots.txt disallows" in verdicts["google-trend"].check("legality").reason
     assert verdicts["shopify-product"].check("legality").status == UNKNOWN
-    assert verdicts["google-map"].check("competition").status != PASS
+    assert verdicts["sitemap-url"].check("competition").status != PASS
+    assert verdicts["openfda-drug-recall"].check("demand").status != PASS
 
 
 class BrokenAssessor:
@@ -56,3 +57,13 @@ def test_assessment_failures_leave_model_checks_unknown(scout_result, fixtures_d
             assert check.status == UNKNOWN
             assert "assessment failed: model declined" in check.reason
         assert v.check("demand").status in (PASS, "fail")  # data-only checks still run
+
+
+def test_rank_for_issue_puts_passing_candidates_first(scout_result, fixtures_dir, config):
+    ordered = rank_for_issue(run(scout_result, fixtures_dir, config))
+    assert [v.candidate.rank for v in ordered] == list(range(1, len(ordered) + 1))
+    verdicts = [v.verdict for v in ordered]
+    assert verdicts[:6] == ["PASS"] * 6 and "PASS" not in verdicts[6:]
+    passed = [v.passed for v in ordered[6:]]
+    assert passed == sorted(passed, reverse=True)
+    assert ordered[0].candidate.niche_id == "sec-edgar-filing"  # the passing candidate Scout ranked highest

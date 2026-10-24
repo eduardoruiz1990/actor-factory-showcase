@@ -35,42 +35,6 @@
     "confidence": "high",
     "model": "hand-written-sample"
   },
-  "linkedin-job": {
-    "target_site": "LinkedIn job search (guest pages)",
-    "target_domain": "www.linkedin.com",
-    "sample_urls": [
-      "https://www.linkedin.com/jobs/search?keywords=python&location=Berlin"
-    ],
-    "data_access": "public_html",
-    "login_required": "unclear",
-    "personal_data": "removable",
-    "personal_data_notes": "Job posts show the poster's name and profile link.",
-    "terms_allow_automated_access": "no",
-    "terms_notes": "The LinkedIn User Agreement forbids scraping and automated access.",
-    "approach": "browser",
-    "compute_units_per_1000_results": 2.0,
-    "proxy": "residential",
-    "residential_gb_per_1000_results": 0.5,
-    "official_api_or_feed": false,
-    "layout_change_frequency": "frequent",
-    "stability_notes": "Guest pages change often and rate-limit hard.",
-    "proposed_actor_name": "linkedin-jobs-scraper",
-    "pitch": "Collect LinkedIn job posts by keyword and location.",
-    "output_fields": [
-      "title",
-      "company",
-      "location",
-      "posted_at",
-      "url"
-    ],
-    "risks": [
-      "Login walls",
-      "Terms forbid scraping",
-      "Legal action history"
-    ],
-    "confidence": "high",
-    "model": "hand-written-sample"
-  },
   "google-trend": {
     "target_site": "Google Trends",
     "target_domain": "trends.google.com",
@@ -209,41 +173,6 @@
     "risks": [
       "Anti-bot",
       "Terms"
-    ],
-    "confidence": "high",
-    "model": "hand-written-sample"
-  },
-  "youtube-channel": {
-    "target_site": "YouTube channels",
-    "target_domain": "www.youtube.com",
-    "sample_urls": [
-      "https://www.youtube.com/@ExampleChannel/videos"
-    ],
-    "data_access": "public_html",
-    "login_required": "no",
-    "personal_data": "core",
-    "personal_data_notes": "Most channels are individual creators; channel data identifies them.",
-    "terms_allow_automated_access": "no",
-    "terms_notes": "YouTube's terms forbid automated access except through its API.",
-    "approach": "browser",
-    "compute_units_per_1000_results": 1.5,
-    "proxy": "datacenter",
-    "residential_gb_per_1000_results": 0.0,
-    "official_api_or_feed": false,
-    "layout_change_frequency": "frequent",
-    "stability_notes": "Page data structures change often.",
-    "proposed_actor_name": "youtube-channel-scraper",
-    "pitch": "Videos and stats for YouTube channels.",
-    "output_fields": [
-      "channel",
-      "video_title",
-      "views",
-      "published_at",
-      "url"
-    ],
-    "risks": [
-      "Terms",
-      "Personal data"
     ],
     "confidence": "high",
     "model": "hand-written-sample"
@@ -611,43 +540,6 @@
     "confidence": "high",
     "model": "hand-written-sample"
   },
-  "google-map": {
-    "target_site": "Google Maps",
-    "target_domain": "www.google.com",
-    "sample_urls": [
-      "https://www.google.com/maps/search/coffee+shops+in+Austin"
-    ],
-    "data_access": "public_html",
-    "login_required": "no",
-    "personal_data": "removable",
-    "personal_data_notes": "Listings include reviewer names and owner replies; some businesses are sole traders.",
-    "terms_allow_automated_access": "no",
-    "terms_notes": "Google Maps terms prohibit scraping Maps content.",
-    "approach": "browser",
-    "compute_units_per_1000_results": 3.0,
-    "proxy": "residential",
-    "residential_gb_per_1000_results": 1.0,
-    "official_api_or_feed": false,
-    "layout_change_frequency": "frequent",
-    "stability_notes": "Heavy client-side rendering that changes often.",
-    "proposed_actor_name": "google-maps-places",
-    "pitch": "Places from Google Maps searches.",
-    "output_fields": [
-      "name",
-      "address",
-      "rating",
-      "phone",
-      "website",
-      "url"
-    ],
-    "risks": [
-      "Crowded niche",
-      "Terms",
-      "Blocking"
-    ],
-    "confidence": "high",
-    "model": "hand-written-sample"
-  },
   "steam-game": {
     "target_site": "Steam store",
     "target_domain": "store.steampowered.com",
@@ -719,6 +611,536 @@
       "Idea-only demand so far"
     ],
     "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "booking-hotel": {
+    "target_site": "Booking.com hotel search",
+    "target_domain": "www.booking.com",
+    "sample_urls": [
+      "https://www.booking.com/searchresults.html?ss=Lisbon"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Hotel pages embed guest reviews with reviewer names and countries.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Booking.com's terms prohibit scraping and automated access.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.6,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Heavy anti-bot measures and frequent front-end changes.",
+    "proposed_actor_name": "booking-hotels-scraper",
+    "pitch": "Hotel prices and availability from Booking.com searches.",
+    "output_fields": [
+      "hotel",
+      "price",
+      "rating",
+      "address",
+      "url"
+    ],
+    "risks": [
+      "Terms",
+      "Blocking"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "booking-review": {
+    "target_site": "Booking.com reviews",
+    "target_domain": "www.booking.com",
+    "sample_urls": [
+      "https://www.booking.com/hotel/pt/example/reviews.html"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "core",
+    "personal_data_notes": "Reviews carry guest names and countries.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Booking.com's terms prohibit scraping.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.5,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Anti-bot measures.",
+    "proposed_actor_name": "booking-reviews",
+    "pitch": "Hotel reviews from Booking.com.",
+    "output_fields": [
+      "rating",
+      "text",
+      "date",
+      "reviewer"
+    ],
+    "risks": [
+      "Personal data",
+      "Terms"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "amazon-product": {
+    "target_site": "Amazon product pages",
+    "target_domain": "www.amazon.com",
+    "sample_urls": [
+      "https://www.amazon.com/dp/B000000000"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Product data only.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Amazon's conditions of use forbid robots and data mining.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 1.5,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.4,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Frequent layout tests and captchas.",
+    "proposed_actor_name": "amazon-products",
+    "pitch": "Amazon product details by ASIN.",
+    "output_fields": [
+      "asin",
+      "title",
+      "price",
+      "rating"
+    ],
+    "risks": [
+      "Terms",
+      "Captchas",
+      "Crowded niche"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "booking-price": {
+    "target_site": "Booking.com prices",
+    "target_domain": "www.booking.com",
+    "sample_urls": [
+      "https://www.booking.com/searchresults.html?ss=Porto"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Prices only.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Booking.com's terms prohibit scraping.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 2.0,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.6,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Anti-bot measures.",
+    "proposed_actor_name": "booking-prices",
+    "pitch": "Hotel prices from Booking.com.",
+    "output_fields": [
+      "hotel",
+      "date",
+      "price"
+    ],
+    "risks": [
+      "Terms"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "yelp-review": {
+    "target_site": "Yelp",
+    "target_domain": "www.yelp.com",
+    "sample_urls": [
+      "https://www.yelp.com/biz/example"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "core",
+    "personal_data_notes": "Reviews carry reviewer names and photos.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Yelp's terms forbid scraping.",
+    "approach": "browser",
+    "compute_units_per_1000_results": 1.5,
+    "proxy": "residential",
+    "residential_gb_per_1000_results": 0.4,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "frequent",
+    "stability_notes": "Anti-bot measures.",
+    "proposed_actor_name": "yelp-reviews",
+    "pitch": "Yelp business reviews.",
+    "output_fields": [
+      "rating",
+      "text",
+      "reviewer"
+    ],
+    "risks": [
+      "Personal data",
+      "Terms"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "podcast-episode": {
+    "target_site": "Podcast RSS feeds",
+    "target_domain": "feeds.example-podcast-host.com",
+    "sample_urls": [
+      "https://feeds.example-podcast-host.com/show.xml"
+    ],
+    "data_access": "public_feed",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Feeds name hosts and guests, often private individuals.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "RSS feeds are published for syndication.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "RSS is stable.",
+    "proposed_actor_name": "podcast-episodes",
+    "pitch": "Episodes from any podcast RSS feed.",
+    "output_fields": [
+      "show",
+      "title",
+      "published_at",
+      "duration",
+      "audio_url"
+    ],
+    "risks": [
+      "Host and guest names must be dropped"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "shopify-catalog": {
+    "target_site": "Shopify storefronts",
+    "target_domain": "example-store.myshopify.com",
+    "sample_urls": [
+      "https://example-store.myshopify.com/products.json"
+    ],
+    "data_access": "public_feed",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Catalogue data only.",
+    "terms_allow_automated_access": "unclear",
+    "terms_notes": "Each store's own terms apply.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.08,
+    "proxy": "datacenter",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "rare",
+    "stability_notes": "products.json is stable.",
+    "proposed_actor_name": "shopify-catalog",
+    "pitch": "A Shopify store's catalogue.",
+    "output_fields": [
+      "title",
+      "price",
+      "variants"
+    ],
+    "risks": [
+      "Terms vary per store"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "sitemap-url": {
+    "target_site": "Website sitemaps",
+    "target_domain": "www.example.org",
+    "sample_urls": [
+      "https://www.example.org/sitemap.xml"
+    ],
+    "data_access": "public_feed",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "URLs only.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "Sitemaps are published for crawlers.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.05,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "The sitemap protocol is stable.",
+    "proposed_actor_name": "sitemap-urls",
+    "pitch": "Every URL in a site's sitemaps.",
+    "output_fields": [
+      "url",
+      "lastmod"
+    ],
+    "risks": [
+      "Crowded, mostly free niche"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "weather-forecast": {
+    "target_site": "National weather service API",
+    "target_domain": "api.weather.example",
+    "sample_urls": [
+      "https://api.weather.example/forecast?lat=1&lon=1"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Forecast data only.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "The source's terms allow non-commercial use only.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned API.",
+    "proposed_actor_name": "weather-forecast",
+    "pitch": "Forecasts for any location.",
+    "output_fields": [
+      "date",
+      "temperature"
+    ],
+    "risks": [
+      "Non-commercial terms"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "github-repository": {
+    "target_site": "GitHub REST API",
+    "target_domain": "api.github.com",
+    "sample_urls": [
+      "https://api.github.com/search/repositories?q=topic:scraping"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Repository owners are often individual users.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The API terms allow use within rate limits.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.03,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned API.",
+    "proposed_actor_name": "github-repositories",
+    "pitch": "Repositories matching a search.",
+    "output_fields": [
+      "full_name",
+      "stars",
+      "language"
+    ],
+    "risks": [
+      "Owner usernames must be dropped",
+      "Low rate limit without a token"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "court-opinion-courtlistener": {
+    "target_site": "CourtListener",
+    "target_domain": "www.courtlistener.com",
+    "sample_urls": [
+      "https://www.courtlistener.com/api/rest/v4/opinions/"
+    ],
+    "data_access": "official_api",
+    "login_required": "yes",
+    "personal_data": "core",
+    "personal_data_notes": "Opinions name parties and judges, many of them private individuals.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The REST API is offered for reuse.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.03,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned API.",
+    "proposed_actor_name": "court-opinions",
+    "pitch": "New court opinions by court and date.",
+    "output_fields": [
+      "court",
+      "case_name",
+      "date_filed"
+    ],
+    "risks": [
+      "Personal data",
+      "API needs an account token"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "openfda-drug-recall": {
+    "target_site": "openFDA",
+    "target_domain": "api.fda.gov",
+    "sample_urls": [
+      "https://api.fda.gov/drug/enforcement.json?limit=100"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Recalls by company and product.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "openFDA data is public domain.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned public API.",
+    "proposed_actor_name": "openfda-drug-recalls",
+    "pitch": "FDA drug recalls by date, company and class.",
+    "output_fields": [
+      "recall_number",
+      "firm",
+      "product",
+      "classification",
+      "report_date"
+    ],
+    "risks": [
+      "Small demand"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "hacker-news": {
+    "target_site": "Hacker News API",
+    "target_domain": "hacker-news.firebaseio.com",
+    "sample_urls": [
+      "https://hacker-news.firebaseio.com/v0/topstories.json"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "removable",
+    "personal_data_notes": "Items carry usernames.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The official API is public.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Official API.",
+    "proposed_actor_name": "hacker-news-stories",
+    "pitch": "Top Hacker News stories.",
+    "output_fields": [
+      "title",
+      "url",
+      "score"
+    ],
+    "risks": [
+      "Usernames must be dropped",
+      "Free alternatives"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "hacker-news-who-is-hiring-parser": {
+    "target_site": "Hacker News Who is Hiring",
+    "target_domain": "hacker-news.firebaseio.com",
+    "sample_urls": [
+      "https://hacker-news.firebaseio.com/v0/item/1.json"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "core",
+    "personal_data_notes": "Posts are written by individuals and often include their names and emails.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "The official API is public.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.03,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Official API.",
+    "proposed_actor_name": "hn-hiring",
+    "pitch": "Structured jobs from Who is Hiring.",
+    "output_fields": [
+      "company",
+      "role",
+      "location",
+      "remote"
+    ],
+    "risks": [
+      "Personal data in posts"
+    ],
+    "confidence": "medium",
+    "model": "hand-written-sample"
+  },
+  "federal-register-document": {
+    "target_site": "Federal Register API",
+    "target_domain": "www.federalregister.gov",
+    "sample_urls": [
+      "https://www.federalregister.gov/api/v1/documents.json"
+    ],
+    "data_access": "official_api",
+    "login_required": "no",
+    "personal_data": "none",
+    "personal_data_notes": "Agency documents.",
+    "terms_allow_automated_access": "yes",
+    "terms_notes": "US government data in the public domain.",
+    "approach": "official_api",
+    "compute_units_per_1000_results": 0.02,
+    "proxy": "none",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": true,
+    "layout_change_frequency": "rare",
+    "stability_notes": "Versioned API.",
+    "proposed_actor_name": "federal-register",
+    "pitch": "New Federal Register documents by agency.",
+    "output_fields": [
+      "title",
+      "agency",
+      "type",
+      "publication_date"
+    ],
+    "risks": [
+      "Small demand"
+    ],
+    "confidence": "high",
+    "model": "hand-written-sample"
+  },
+  "app-store-review": {
+    "target_site": "Apple App Store reviews",
+    "target_domain": "apps.apple.com",
+    "sample_urls": [
+      "https://apps.apple.com/us/app/example/id123456789?see-all=reviews"
+    ],
+    "data_access": "public_html",
+    "login_required": "no",
+    "personal_data": "core",
+    "personal_data_notes": "Reviews carry reviewer nicknames.",
+    "terms_allow_automated_access": "no",
+    "terms_notes": "Apple's terms forbid automated collection of App Store content.",
+    "approach": "http",
+    "compute_units_per_1000_results": 0.2,
+    "proxy": "datacenter",
+    "residential_gb_per_1000_results": 0.0,
+    "official_api_or_feed": false,
+    "layout_change_frequency": "occasional",
+    "stability_notes": "Review pages change a few times a year.",
+    "proposed_actor_name": "app-store-reviews",
+    "pitch": "Reviews of any App Store app.",
+    "output_fields": [
+      "rating",
+      "title",
+      "text",
+      "date"
+    ],
+    "risks": [
+      "Personal data",
+      "Terms"
+    ],
+    "confidence": "high",
     "model": "hand-written-sample"
   }
 }

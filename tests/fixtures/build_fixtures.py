@@ -5,7 +5,8 @@
 The development sandbox cannot reach api.apify.com or apify.com, so these
 fixtures are synthetic: every Actor, username and number below is invented.
 Their shape follows Apify's OpenAPI spec (StoreActor, ActorStats,
-CurrentPricingInfo, Actor and the pricing-info variants). Replace them with
+CurrentPricingInfo, Actor and the pricing-info variants) and the real Ideas
+export and idea pages captured on 2026-10-24. Replace them with
 real captures from the Scout workflow's `scout-output` artifact (raw/) once
 it has run in GitHub Actions; see tests/fixtures/README.md.
 """
@@ -140,23 +141,26 @@ ACTORS = [
     ("alder-labs", "yelp-reviews", "Yelp Reviews", ["MARKETING"], 200, 0.05, 4.3, 3, 50, ("free",)),
 ]
 
-UNDER_MAINTENANCE = {"fjord-dev/google-maps-email-extractor"}
-NO_DETAIL = {"quarry-tools/google-maps-reviews-scraper"}  # detail lookup fails: build date unknown
+NO_IDEA_PAGE = {"wikipedia-pageviews-by-article"}  # its page is missing: upvotes unknown
 
-# (slug, title, description, upvotes, status)
+UNDER_MAINTENANCE = {"fjord-dev/google-maps-email-extractor"}
+NO_DETAIL = {"cobalt-crawl/shopify-store-products"}  # detail lookup fails: build date unknown
+
+# (slug, title, description, upvotes, status). Only "Open to develop" ideas appear in the export,
+# which is what the real endpoint returns (status=toDevelop); the others are left out on purpose.
 IDEAS = [
     ("pypi-package-metadata-scraper", "PyPI package metadata scraper",
      "Package name, versions, release dates, licence and dependencies for a list of PyPI packages.", 31, "Open to develop"),
     ("ted-eu-tenders-monitor", "TED EU tenders monitor",
      "Daily list of new EU public tenders from TED filtered by CPV code and country.", 9, "Open to develop"),
     ("federal-grant-opportunities-grants-gov", "Federal grant opportunities from Grants.gov",
-     "Open US federal grant opportunities with agency, deadline, award ceiling and eligibility.", 96, "New"),
+     "Open US federal grant opportunities with agency, deadline, award ceiling and eligibility.", 96, "Open to develop"),
     ("court-opinions-courtlistener", "Court opinions from CourtListener",
      "New court opinions by court and date, with parties and judges.", 7, "Open to develop"),
     ("hacker-news-who-is-hiring-parser", "Hacker News Who is Hiring parser",
      "Parse the monthly Who is Hiring thread into structured job posts.", 3, "Open to develop"),
     ("wikipedia-pageviews-by-article", "Wikipedia pageviews by article",
-     "Daily pageviews for a list of Wikipedia articles.", 2, "New"),
+     "Daily pageviews for a list of Wikipedia articles.", 2, "Open to develop"),
     ("shopify-app-store-reviews", "Shopify app store reviews",
      "Reviews of apps in the Shopify App Store.", 5, "In progress"),
     ("instagram-follower-export", "Instagram follower export",
@@ -257,30 +261,27 @@ def build() -> None:
             "taggedBuilds": {"latest": {"buildId": actor_id(slug + "build"), "buildNumber": "0.1.42", "finishedAt": build_at}},
         }}
 
-    ideas = [
-        {"id": actor_id(slug), "slug": slug, "title": title, "description": description,
-         "upvotes": upvotes, "status": status, "createdAt": iso(30 + upvotes)}
-        for slug, title, description, upvotes, status in IDEAS
+    open_ideas = [i for i in IDEAS if i[4] == "Open to develop"]
+    export = [
+        {"title": title, "description": description, "categories": ["AUTOMATION"], "url": f"https://apify.com/ideas/{slug}"}
+        for slug, title, description, upvotes, status in open_ideas
     ]
-    next_data = {"props": {"pageProps": {"ideas": ideas, "totalCount": len(ideas)}},
-                 "page": "/ideas", "query": {}, "buildId": "synthetic-fixture"}
-    cards = "\n".join(
-        f'    <a href="/ideas/{i["slug"]}"><h3>{i["title"]}</h3><span>{i["upvotes"]}</span><span>{i["status"]}</span></a>'
-        for i in ideas
-    )
-    html = (
-        "<!DOCTYPE html>\n<html lang=\"en\">\n<head><meta charset=\"utf-8\"><title>Actor ideas | Apify</title></head>\n"
-        "<body>\n  <!-- Synthetic fixture: structure assumed, not captured from apify.com/ideas -->\n"
-        f"  <div id=\"__next\">\n{cards}\n  </div>\n"
-        f"  <script id=\"__NEXT_DATA__\" type=\"application/json\">{json.dumps(next_data)}</script>\n"
-        "</body>\n</html>\n"
-    )
+    # The upvote element as it appears on a real idea page (see apify/idea_page_real_snippet.html).
+    pages = {
+        f"https://apify.com/ideas/{slug}": (
+            f'<html><body><h1>{title}</h1><button aria-label="Upvote this idea"><span data-test="upvotes" '
+            f'class="Upvotes__count" aria-label="{upvotes} upvotes">{upvotes}</span></button></body></html>'
+        )
+        for slug, title, description, upvotes, status in open_ideas
+        if slug not in NO_IDEA_PAGE
+    }
 
     OUT.mkdir(exist_ok=True)
     (OUT / "store_actors.json").write_text(json.dumps(items, indent=1) + "\n", encoding="utf-8")
     (OUT / "actor_details.json").write_text(json.dumps(details, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-    (OUT / "ideas.html").write_text(html, encoding="utf-8")
-    print(f"{len(items)} Actors, {len(details)} details, {len(ideas)} ideas -> {OUT}")
+    (OUT / "ideas_export.json").write_text(json.dumps(export, indent=1) + "\n", encoding="utf-8")
+    (OUT / "idea_pages.json").write_text(json.dumps(pages, indent=1) + "\n", encoding="utf-8")
+    print(f"{len(items)} Actors, {len(details)} details, {len(export)} ideas -> {OUT}")
 
 
 if __name__ == "__main__":

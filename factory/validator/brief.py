@@ -22,7 +22,8 @@ def verdict_labels(validations: list[Validation]) -> dict[str, str]:
     }
 
 
-def render_brief(validations: list[Validation], config: dict[str, Any], week: str) -> str:
+def render_brief(validations: list[Validation], config: dict[str, Any], week: str, assessed: int | None = None) -> str:
+    """`validations` are the candidates the issue lists; `assessed` is how many were validated in all."""
     # Passing candidates keep Scout's order (opportunity score).
     passing = sorted((v for v in validations if v.verdict == "PASS"), key=lambda v: v.candidate.rank)
     failing = [v for v in validations if v.verdict != "PASS"]
@@ -33,7 +34,9 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
         BRIEF_MARKER,
         f"## Validator brief — week {week}",
         "",
-        f"**{len(passing)} of {len(validations)} candidates pass all five checks.** "
+        f"**{len(passing)} of {len(validations)} listed candidates pass all five checks**"
+        + (f" ({assessed} assessed; the issue lists the best {len(validations)})" if assessed and assessed > len(validations) else "")
+        + ". "
         f"Facts assessed by `{model}`"
         + (f" (served by {', '.join(f'`{m}`' for m in served)})" if served and served != [model] else "")
         + "; pass/fail decided by the thresholds in `config.yaml`. "

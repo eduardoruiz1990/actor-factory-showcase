@@ -1,0 +1,50 @@
+[
+ {
+  "title": "PyPI package metadata scraper",
+  "description": "Package name, versions, release dates, licence and dependencies for a list of PyPI packages.",
+  "categories": [
+   "AUTOMATION"
+  ],
+  "url": "https://apify.com/ideas/pypi-package-metadata-scraper"
+ },
+ {
+  "title": "TED EU tenders monitor",
+  "description": "Daily list of new EU public tenders from TED filtered by CPV code and country.",
+  "categories": [
+   "AUTOMATION"
+  ],
+  "url": "https://apify.com/ideas/ted-eu-tenders-monitor"
+ },
+ {
+  "title": "Federal grant opportunities from Grants.gov",
+  "description": "Open US federal grant opportunities with agency, deadline, award ceiling and eligibility.",
+  "categories": [
+   "AUTOMATION"
+  ],
+  "url": "https://apify.com/ideas/federal-grant-opportunities-grants-gov"
+ },
+ {
+  "title": "Court opinions from CourtListener",
+  "description": "New court opinions by court and date, with parties and judges.",
+  "categories": [
+   "AUTOMATION"
+  ],
+  "url": "https://apify.com/ideas/court-opinions-courtlistener"
+ },
+ {
+  "title": "Hacker News Who is Hiring parser",
+  "description": "Parse the monthly Who is Hiring thread into structured job posts.",
+  "categories": [
+   "AUTOMATION"
+  ],
+  "url": "https://apify.com/ideas/hacker-news-who-is-hiring-parser"
+ },
+ {
+  "title": "Wikipedia pageviews by article",
+  "description": "Daily pageviews for a list of Wikipedia articles.",
+  "categories": [
+   "AUTOMATION"
+  ],
+  "url": "https://apify.com/ideas/wikipedia-pageviews-by-article"
+ }
+]

@@ -1,0 +1,35 @@
+[
+ {
+  "title": "Bniconnectglobal scraper",
+  "description": "Extract lead data from Bniconnectglobal by searching and filtering by category like job title or field to help with targeted outreach to warm leads.\n\n## How does the Bniconnectglobal scraper work?\n\n1. Input parameters such as:\n    - Search keywords or URL\n    - Filter by category (job title, industry, field)\n2. Run the Actor\n3. Export results\n4. Integrate and schedule the Actor for ongoing lead monitoring\n\n## Bniconnectglobal scraper API\n\nThe Bniconnectglobal scraper API lets you pull lead info such as names, job titles, contact details, and company data into workflows using JavaScript, Node.js, Python, or curl.\n\n## Use cases of the Bniconnectglobal scraper\n\nUse the Bniconnectglobal scraper to collect warm leads from your BNI group database for outreach campaigns. Perfect for sales teams and networkers who want to automate lead generation and follow-ups.",
+  "categories": [
+   "BUSINESS",
+   "LEAD_GENERATION",
+   "AUTOMATION",
+   "MARKETING"
+  ],
+  "url": "https://apify.com/ideas/Bniconnectglobal-scraper"
+ },
+ {
+  "title": "BuzzSumo Scraper",
+  "description": "Scrape information from BuzzSsumo.com - a cloud-based monitoring platform for content opportunities. Find approaching trends and sell this data to other marketers and businesses. Export scraped data into HTML, JSON, CSV, Excel, XML, or RSS.",
+  "categories": [
+   "MARKETING",
+   "AUTOMATION",
+   "BUSINESS",
+   "DEVELOPER_TOOLS"
+  ],
+  "url": "https://apify.com/ideas/buzzsumo-scraper"
+ },
+ {
+  "title": "Flipkey Scraper",
+  "description": "Scrape data from Flipkey - an online vacation rental marketplace. Extract listings, their prices, reviews, amenities, locations, and much more! Export this information into a dataset in formats such as HTML, JSON, CSV, Excel, or XML.",
+  "categories": [
+   "TRAVEL",
+   "AUTOMATION",
+   "BUSINESS",
+   "DEVELOPER_TOOLS"
+  ],
+  "url": "https://apify.com/ideas/flipkey-scraper"
+ }
+]

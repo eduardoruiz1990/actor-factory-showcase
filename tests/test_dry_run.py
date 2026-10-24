@@ -16,7 +16,7 @@ def test_dry_run_builds_the_issue_with_twenty_scored_candidates(tmp_path):
     assert all(row.rstrip(" |").split("|")[-1].strip().startswith(("5/5", "4/5", "3/5", "2/5", "1/5", "0/5")) for row in rows)
 
     validations = json.loads((tmp_path / "validation.json").read_text(encoding="utf-8"))
-    assert len(validations) == 20
+    assert len(validations) == 33  # every candidate Scout shortlisted, not only the 20 listed
     assert all(len(v["checks"]) == 5 for v in validations)
     assert all(v["assessment_error"] is None for v in validations)
 

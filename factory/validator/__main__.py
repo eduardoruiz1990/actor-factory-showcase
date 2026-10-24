@@ -9,6 +9,7 @@ weekly issue (from --issue or --out/issue.json) and updates the issue body.
 """
 
 import argparse
+import dataclasses
 import json
 import logging
 from datetime import datetime
@@ -24,7 +25,7 @@ from factory.scout.run import ScoutResult
 from factory.validator.assessment import Assessor, ClaudeAssessor, FixtureAssessor
 from factory.validator.brief import BRIEF_MARKER, render_brief, verdict_labels
 from factory.validator.robots import RobotsChecker, fixture_fetcher, live_fetcher
-from factory.validator.run import validate
+from factory.validator.run import rank_for_issue, validate
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -52,11 +53,13 @@ def main(argv: list[str] | None = None) -> int:
             assessor = ClaudeAssessor(anthropic.Anthropic(max_retries=4), config["validator"])
             fetch = live_fetcher(http)
         robots = RobotsChecker(fetch, config["validator"]["legality"]["robots_user_agent"])
-        validations = validate(result.candidates, assessor, robots, config)
+        validations = rank_for_issue(validate(result.candidates, assessor, robots, config))
+        shown = validations[: int(config["scout"]["candidates_per_week"])]
 
         week = week_key(datetime.fromisoformat(result.collected_at))
-        brief = render_brief(validations, config, week)
-        body = render_issue_body(result, config, verdicts=verdict_labels(validations))
+        brief = render_brief(shown, config, week, assessed=len(validations))
+        listed_result = dataclasses.replace(result, candidates=[v.candidate for v in shown])
+        body = render_issue_body(listed_result, config, verdicts=verdict_labels(shown))
         (args.out / "validation.json").write_text(
             json.dumps([v.to_dict() for v in validations], indent=2), encoding="utf-8"
         )

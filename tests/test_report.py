@@ -16,9 +16,9 @@ def table_rows(body):
     return [line for line in body.splitlines() if line.startswith("| ") and not line.startswith("| #")]
 
 
-def test_title_and_week(result, as_of):
+def test_title_and_week(result, config, as_of):
     assert week_key(as_of) == "2026-W43"
-    assert issue_title(result) == "Scout 2026-W43: 20 candidate niches"
+    assert issue_title(result, config) == "Scout 2026-W43: 20 candidate niches"
 
 
 def test_body_lists_twenty_candidates_with_their_numbers(result, config):

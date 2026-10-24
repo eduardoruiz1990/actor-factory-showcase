@@ -86,7 +86,7 @@ def test_weaknesses_raise_the_score(config):
 
 
 def test_idea_only_demand_uses_upvote_weight(config):
-    [niche] = attach_ideas([], [Idea("Grants from Grants.gov", "u", 12, "new")], STOP, 0.5, {"new"})
+    [niche] = attach_ideas([], [Idea("Grants from Grants.gov", "u", 12, "open_to_develop")], STOP, 0.5, {"open_to_develop"})
     candidate = build_candidate(niche, NOW, config)
     assert candidate.leader is None
     assert candidate.open_idea_upvotes == 12

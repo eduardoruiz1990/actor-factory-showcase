@@ -45,6 +45,17 @@ class Validation:
         }
 
 
+def rank_for_issue(validations: list[Validation]) -> list[Validation]:
+    """Order all validations for the issue and renumber their ranks from 1.
+
+    Candidates passing all five checks come first, then by checks passed, then by Scout's order.
+    """
+    ordered = sorted(validations, key=lambda v: (v.verdict != "PASS", -v.passed, v.candidate.rank))
+    for position, validation in enumerate(ordered, start=1):
+        validation.candidate.rank = position
+    return ordered
+
+
 def validate(
     candidates: list[Candidate], assessor: Assessor, robots: RobotsChecker, config: dict[str, Any]
 ) -> list[Validation]:
