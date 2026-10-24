@@ -1,0 +1,34 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "url": { "type": "string" },
+            "title": { "type": ["string", "null"] },
+            "description": { "type": ["string", "null"] },
+            "language": { "type": ["string", "null"] },
+            "fetchedAt": { "type": "string" }
+        },
+        "required": ["url", "fetchedAt"]
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["url", "title", "description", "language", "fetchedAt"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "url": { "label": "URL", "format": "link" },
+                    "title": { "label": "Title", "format": "text" },
+                    "description": { "label": "Description", "format": "text" },
+                    "language": { "label": "Language", "format": "text" },
+                    "fetchedAt": { "label": "Fetched at", "format": "date" }
+                }
+            }
+        }
+    }
+}

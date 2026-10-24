@@ -137,14 +137,7 @@ def check_cost(c: Candidate, a: Assessment | None, cfg: dict[str, Any], apify_cf
         proxy_gb = max(a.residential_gb_per_1000_results, float(cfg["min_residential_gb_per_1000"]))
     cost = compute_units * float(apify_cfg["compute_unit_usd"]) + proxy_gb * float(apify_cfg["residential_proxy_usd_per_gb"])
 
-    leader_price = c.leader.price_per_1000_usd if c.leader else None
-    if leader_price:
-        share_of_leader = float(cfg["planned_price_share_of_leader"])
-        planned = leader_price * share_of_leader
-        basis = f"{share_of_leader:.0%} of the leader's ${leader_price:.2f}"
-    else:
-        planned = float(cfg["default_price_per_1000_usd"])
-        basis = "default price; the leader is free or unpriced" if c.leader else "default price"
+    planned, basis = planned_price_per_1000(c, cfg)
     share = cost / planned
     limit = float(cfg["max_share_of_price"])
     usage = f"{compute_units:.2f} CU" + (f" + {proxy_gb:.2f} GB residential proxy" if proxy_gb else "")
@@ -154,6 +147,16 @@ def check_cost(c: Candidate, a: Assessment | None, cfg: dict[str, Any], apify_cf
     )
     short = f"platform cost {share:.0%} of the planned {_usd(planned)} per 1,000 results"
     return CheckResult("cost", PASS if share < limit else FAIL, reason, short=short)
+
+
+def planned_price_per_1000(c: Candidate, cfg: dict[str, Any]) -> tuple[float, str]:
+    """The price per 1,000 results a new Actor would charge in this niche, and how it was chosen (Q5)."""
+    leader_price = c.leader.price_per_1000_usd if c.leader else None
+    if leader_price:
+        share_of_leader = float(cfg["planned_price_share_of_leader"])
+        return leader_price * share_of_leader, f"{share_of_leader:.0%} of the leader's ${leader_price:.2f}"
+    basis = "default price; the leader is free or unpriced" if c.leader else "default price"
+    return float(cfg["default_price_per_1000_usd"]), basis
 
 
 def check_stability(a: Assessment | None, cfg: dict[str, Any]) -> CheckResult:

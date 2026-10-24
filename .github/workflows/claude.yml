@@ -1,0 +1,128 @@
+name: Builder
+
+# Builds an Actor with the Claude Code GitHub Action (docs/BUILDER.md, QUESTIONS Q1):
+#   1. You add the `go` label to a weekly Scout issue. The `ask` job replies with the passing niche ids.
+#   2. You comment `/build <niche-id>`. The `build` job checks the niche passed all five Validator checks,
+#      copies templates/python-actor to actors/<name>/ on a new branch, and lets Claude build it.
+#   3. Claude opens a pull request. It never merges; you do.
+# Only the repository owner can trigger either job.
+# Needs: the Claude GitHub App installed on the repository, and the ANTHROPIC_API_KEY secret.
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: builder-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  ask:
+    if: >-
+      github.event_name == 'issues' && github.event.label.name == 'go' &&
+      contains(github.event.issue.labels.*.name, 'scout') &&
+      github.event.sender.login == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: pip install -e .
+      - name: Ask which candidate to build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m factory.builder.prepare --issue ${{ github.event.issue.number }} --ask
+
+  build:
+    if: >-
+      github.event_name == 'issue_comment' && !github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/build ') &&
+      github.event.comment.user.login == github.repository_owner &&
+      contains(github.event.issue.labels.*.name, 'go') &&
+      contains(github.event.issue.labels.*.name, 'scout')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install
+        run: |
+          pip install -e ".[dev]"
+          npm install -g apify-cli@1.10.0
+
+      - name: Check the request and write the build brief
+        id: prepare
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMAND: ${{ github.event.comment.body }}
+        run: |
+          python -m factory.builder.prepare --issue ${{ github.event.issue.number }} --command "$COMMAND" --out out/build
+          python -c "
+          import json
+          p = json.load(open('out/build/build.json'))
+          for key in ('actor_name', 'branch', 'model', 'max_turns'):
+              print(f'{key}={p[key]}')
+          " >> "$GITHUB_OUTPUT"
+
+      - name: Copy the template to actors/<name>/
+        env:
+          NAME: ${{ steps.prepare.outputs.actor_name }}
+          BRANCH: ${{ steps.prepare.outputs.branch }}
+        run: |
+          git checkout -b "$BRANCH"
+          cp -r templates/python-actor "actors/$NAME"
+          sed -i "s/\"name\": \"my-actor\"/\"name\": \"$NAME\"/" "actors/$NAME/.actor/actor.json"
+
+      - name: Build the Actor with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Build the Apify Actor described in out/build/brief.md. Follow docs/BUILDER.md exactly and
+            CLAUDE.md's rules. The Actor name is `${{ steps.prepare.outputs.actor_name }}`; the template is
+            already copied to actors/${{ steps.prepare.outputs.actor_name }}/ and the branch
+            `${{ steps.prepare.outputs.branch }}` is checked out. This build comes from Scout issue
+            #${{ github.event.issue.number }}. Change files only inside that Actor's folder, run its tests and
+            `apify validate-schema` until they pass, then commit, push the branch, open the pull request
+            against main with `gh pr create`, and comment the PR link on the issue. Never merge.
+          claude_args: |
+            --model ${{ steps.prepare.outputs.model }}
+            --max-turns ${{ steps.prepare.outputs.max_turns }}
+            --allowedTools "Read,Write,Edit,MultiEdit,Glob,Grep,LS,WebFetch,WebSearch,Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(find:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(python:*),Bash(python3:*),Bash(pip:*),Bash(pip3:*),Bash(pytest:*),Bash(apify validate-schema:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*),Bash(git push -u origin ${{ steps.prepare.outputs.branch }}),Bash(git push origin ${{ steps.prepare.outputs.branch }}),Bash(gh pr create:*),Bash(gh issue comment:*)"
+            --disallowedTools "Bash(gh pr merge:*),Bash(git push --force:*),Bash(git push -f:*),Bash(apify push:*),Bash(apify login:*)"
+
+      - name: Report a failed build on the issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --repo "${{ github.repository }}" \
+            --body "<!-- factory:builder -->
+          The Builder run failed before a pull request was ready: $RUN_URL"

@@ -1,0 +1,32 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "Public pages to read. The Actor skips any URL that the site's robots.txt disallows.",
+            "editor": "requestListSources",
+            "prefill": [{ "url": "https://apify.com/" }]
+        },
+        "maxResults": {
+            "title": "Maximum results",
+            "type": "integer",
+            "description": "Stop after this many results. Each result is charged once.",
+            "default": 100,
+            "minimum": 1,
+            "maximum": 100000
+        },
+        "maxRequestsPerSecond": {
+            "title": "Maximum requests per second",
+            "type": "number",
+            "description": "Polite rate limit per website. Keep it low; the Actor also honours Retry-After and backs off on errors.",
+            "default": 1,
+            "minimum": 0.1,
+            "maximum": 5
+        }
+    },
+    "required": ["startUrls"]
+}

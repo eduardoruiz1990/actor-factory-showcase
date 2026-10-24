@@ -72,6 +72,24 @@ class GitHubClient:
     def get_issue(self, number: int) -> dict[str, Any]:
         return self._call("GET", f"/repos/{self._repo}/issues/{number}").json()
 
+    def find_issue(self, title: str, label: str, state: str = "all") -> dict[str, Any] | None:
+        """The most recent issue with this exact title and label, open or closed by default."""
+        issues = self._call(
+            "GET", f"/repos/{self._repo}/issues",
+            params={"state": state, "labels": label, "per_page": 100, "sort": "created", "direction": "desc"},
+        ).json()
+        return next((i for i in issues if i.get("title") == title and "pull_request" not in i), None)
+
+    def list_comments(self, number: int) -> list[dict[str, Any]]:
+        return self._call(
+            "GET", f"/repos/{self._repo}/issues/{number}/comments", params={"per_page": 100},
+        ).json()
+
+    def add_comment(self, number: int, body: str) -> dict[str, Any]:
+        return self._call(
+            "POST", f"/repos/{self._repo}/issues/{number}/comments", json={"body": body}, ok=(201,),
+        ).json()
+
     def upsert_comment(self, number: int, marker: str, body: str) -> dict[str, Any]:
         """Edit the comment containing `marker` if there is one, else add a comment."""
         comments = self._call(

@@ -1,7 +1,8 @@
 name: Tests
 
-# Runs the test suite and the offline dry run on every pull request (including
-# the Builder's and Fixer's) and on pushes to main. Needs no secrets.
+# Runs the factory's tests and the offline dry run, tests the Actor template and every Actor in its own
+# environment, and on Builder branches (build/*) checks that only one actors/<name>/ folder changed.
+# Runs on every pull request (including the Builder's and Fixer's) and on pushes to main. Needs no secrets.
 
 on:
   pull_request:
@@ -32,3 +33,52 @@ jobs:
 
       - name: Dry run on sample data
         run: python -m factory.dry_run --out out/dry-run
+
+  actors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install the Apify CLI
+        run: npm install -g apify-cli@1.10.0
+
+      - name: Test the template and every Actor
+        env:
+          APIFY_CLI_DISABLE_TELEMETRY: "1"
+        run: |
+          for dir in templates/python-actor actors/*/; do
+            [ -f "$dir/requirements-dev.txt" ] || continue
+            echo "::group::$dir"
+            venv="/tmp/venv-$(basename "$dir")"
+            python -m venv "$venv"
+            "$venv/bin/pip" install -q -r "$dir/requirements-dev.txt"
+            (cd "$dir" && "$venv/bin/pytest" && apify validate-schema)
+            echo "::endgroup::"
+          done
+
+  scope:
+    if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'build/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Only one actors/<name>/ folder may change
+        run: |
+          pip install -e .
+          python -m factory.builder.scope --base "origin/${{ github.base_ref }}"
