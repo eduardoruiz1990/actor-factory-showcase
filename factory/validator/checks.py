@@ -174,6 +174,25 @@ def check_stability(a: Assessment | None, cfg: dict[str, Any]) -> CheckResult:
     )
 
 
+def terms_review_reason(a: Assessment | None, robots: RobotsResult | None, cfg: dict[str, Any]) -> str | None:
+    """Why a candidate needs the owner's review of its terms, or None when it does not qualify (Q17).
+
+    It qualifies only when unclear terms are the sole open point: an official API or public feed, no
+    login, no personal data at all, robots.txt allowing the sample URLs, and terms that neither forbid
+    the use nor were shown to allow it with a cited source.
+    """
+    if not cfg.get("review_unclear_terms") or a is None:
+        return None
+    if a.data_access not in cfg["review_access"] or a.login_required != "no" or a.personal_data != "none":
+        return None
+    if robots is None or robots.allowed is not True:
+        return None
+    sourced_yes = a.terms_allow_automated_access == "yes" and _is_http_url(a.terms_source_url) and a.terms_quote.strip()
+    if a.terms_allow_automated_access == "no" or sourced_yes:
+        return None
+    return a.terms_notes or "the terms do not settle commercial reuse"
+
+
 def evaluate(
     c: Candidate, a: Assessment | None, robots: RobotsResult | None, config: dict[str, Any]
 ) -> list[CheckResult]:

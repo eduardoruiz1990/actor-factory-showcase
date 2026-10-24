@@ -28,7 +28,7 @@ You are building one paid Actor for the Apify Store, in a GitHub Actions run sta
 6. **`.actor/pricing.json`**: set `pricePer1000Usd` on `apify-default-dataset-item` to the price in the brief. Results are charged per item pushed to the dataset; add no other per-result event.
 7. **`.actor/listing.json`**: one or two Store categories, an SEO title of at most 60 characters, and an SEO description of at most 155.
 8. **`README.md`**: fill in every TODO of the Store README skeleton, in the same section order.
-   - Name the source, and link the terms the brief cites.
+   - Name the source, and link the terms the brief cites. If the brief says the owner reviewed the terms (`terms-reviewed`), link them and describe the use plainly, without claiming the terms explicitly allow it.
    - Give real input and output examples.
    - State the price.
 9. **Tests in `actors/<name>/tests/`**: keep the template's tests passing, and add tests for the parsing.

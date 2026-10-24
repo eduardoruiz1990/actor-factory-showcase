@@ -7,7 +7,7 @@ from typing import Any
 
 from factory.scout.models import Candidate
 from factory.validator.assessment import Assessment, AssessmentError, Assessor
-from factory.validator.checks import PASS, CheckResult, evaluate
+from factory.validator.checks import PASS, UNKNOWN, CheckResult, evaluate, terms_review_reason
 from factory.validator.robots import RobotsChecker, RobotsResult
 
 log = logging.getLogger(__name__)
@@ -20,6 +20,7 @@ class Validation:
     assessment: Assessment | None
     assessment_error: str | None
     robots: RobotsResult | None
+    review_reason: str | None = None  # set when only unclear terms stand between this candidate and a pass
 
     @property
     def passed(self) -> int:
@@ -27,7 +28,9 @@ class Validation:
 
     @property
     def verdict(self) -> str:
-        return "PASS" if self.passed == len(self.checks) else "FAIL"
+        if self.passed == len(self.checks):
+            return "PASS"
+        return "REVIEW" if self.review_reason else "FAIL"
 
     def check(self, name: str) -> CheckResult:
         return next(c for c in self.checks if c.name == name)
@@ -43,15 +46,18 @@ class Validation:
             "assessment": self.assessment.to_dict() if self.assessment else None,
             "assessment_error": self.assessment_error,
             "robots": self.robots.to_dict() if self.robots else None,
+            "review_reason": self.review_reason,
         }
 
 
 def rank_for_issue(validations: list[Validation]) -> list[Validation]:
     """Order all validations for the issue and renumber their ranks from 1.
 
-    Candidates passing all five checks come first, then by checks passed, then by Scout's order.
+    Candidates passing all five checks come first, then those waiting for the owner's review of their
+    terms, then the rest by checks passed; ties keep Scout's order.
     """
-    ordered = sorted(validations, key=lambda v: (v.verdict != "PASS", -v.passed, v.candidate.rank))
+    order = {"PASS": 0, "REVIEW": 1}
+    ordered = sorted(validations, key=lambda v: (order.get(v.verdict, 2), -v.passed, v.candidate.rank))
     for position, validation in enumerate(ordered, start=1):
         validation.candidate.rank = position
     return ordered
@@ -75,7 +81,11 @@ def validate(
                 CheckResult(c.name, c.status, f"assessment failed: {error}") if c.reason == "no assessment" else c
                 for c in checks
             ]
-        results.append(Validation(candidate, checks, assessment, error, robots_result))
+        review = None
+        others_pass = all(c.status == PASS for c in checks if c.name != "legality")
+        if others_pass and next(c for c in checks if c.name == "legality").status == UNKNOWN:
+            review = terms_review_reason(assessment, robots_result, config["validator"]["legality"])
+        results.append(Validation(candidate, checks, assessment, error, robots_result, review))
     return results
 
 

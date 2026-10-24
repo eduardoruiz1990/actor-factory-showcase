@@ -1,5 +1,13 @@
 # Changelog
 
+## 🔎 REVIEW verdict for unclear terms (2026-10-25, branch `phase-2-review`)
+
+- **What it is:** a candidate that passes every other rule, but whose terms neither forbid nor clearly allow reuse, is marked 🔎 REVIEW (QUESTIONS Q17). The rules: official API or public feed, no login, no personal data, robots.txt allowing it.
+- **In the brief:** REVIEW candidates get their own section with the terms passage and a ready-to-paste command. They rank right after passing candidates in the issue.
+- **In the Builder:** a REVIEW candidate builds only with `/build <niche-id> terms-reviewed`. The flag cannot rescue a failing candidate. The brief tells Claude not to claim in the README that the terms explicitly allow the use.
+- **On the 2026-10-24 rehearsal data:** Greenhouse Jobs API and Sitemap Extractor become REVIEW. Everything else is unchanged.
+- **Brief note:** its closing note now explains the `go` + `/build` flow (the Builder exists since Phase 2).
+
 ## Phase 2, part 1: Builder and Publisher infrastructure (2026-10-25, branch `phase-2`)
 
 Everything that does not depend on which niche passes. The first three Actors wait for Scout candidates that pass all five checks.

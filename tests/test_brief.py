@@ -29,7 +29,8 @@ def test_brief_scores_every_candidate(validations, config):
     assert brief.startswith(BRIEF_MARKER)
     rows = [l for l in brief.splitlines() if l.startswith("| ") and not l.startswith("| #")]
     assert len(rows) == 20
-    assert "**6 of 20 listed candidates pass all five checks** (33 assessed; the issue lists the best 20)." in brief
+    assert ("**6 of 20 listed candidates pass all five checks, 1 needs your review of its terms** "
+            "(33 assessed; the issue lists the best 20).") in brief
     assert "`claude-sonnet-5-5`" in brief
 
 
@@ -46,7 +47,7 @@ def test_best_picks_follow_scout_rank_and_list_reasons(validations, config):
     assert picks.index("#1 SEC EDGAR") < picks.index("#2 Greenhouse") < picks.index("#3 TED")
     assert "Also passing: #4 npm Package Downloads Scraper, #5 Lever Jobs Scraper, #6 Federal grant" in picks
     others = brief[brief.index("### Why the others"):]
-    assert "**#7 Product Hunt Scraper** — Legality: needs a login" in others
+    assert "**#8 Product Hunt Scraper** — Legality: needs a login" in others
 
 
 def test_no_passing_candidates(validations, config):
@@ -58,7 +59,7 @@ def test_no_passing_candidates(validations, config):
 def test_hidden_data_round_trips(validations, config):
     data = parse_hidden_data(render_brief(validations, config, "2026-W43", assessed=ASSESSED))
     assert len(data) == 20
-    assert {d["verdict"] for d in data} == {"PASS", "FAIL"}
+    assert {d["verdict"] for d in data} == {"PASS", "REVIEW", "FAIL"}
     assert data[0]["assessment"]["proposed_actor_name"]
 
 
@@ -80,3 +81,12 @@ def test_verdict_labels(validations):
     labels = verdict_labels(validations)
     assert labels["greenhouse-job"] == "5/5 ✅ PASS"
     assert labels["trustpilot-review"].endswith("❌")
+
+
+def test_review_candidates_get_their_own_section_and_build_command(validations, config):
+    brief = render_brief(validations, config, "2026-W43", assessed=ASSESSED)
+    section = brief[brief.index("### 🔎 Needs your review"):brief.index("### Why the others")]
+    assert "**#7 Shopify Products Scraper** (example-store.myshopify.com)" in section
+    assert "`/build shopify-product terms-reviewed`" in section
+    assert "| 7 | Shopify Products Scraper | ✅ | ✅ | ❔ | ✅ | ✅ | 🔎 **REVIEW** |" in brief
+    assert verdict_labels(validations)["shopify-product"] == "4/5 🔎 REVIEW"

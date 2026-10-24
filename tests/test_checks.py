@@ -6,6 +6,7 @@ from factory.scout.models import ActorSummary, Candidate, Idea
 from factory.validator.assessment import Assessment
 from factory.validator.checks import (
     FAIL, PASS, UNKNOWN, check_competition, check_cost, check_demand, check_legality, check_stability, evaluate,
+    terms_review_reason,
 )
 from factory.validator.robots import RobotsResult
 
@@ -173,3 +174,34 @@ def test_evaluate_returns_the_five_checks_in_order(config):
 
 def test_check_results_serialise(config):
     json.dumps([c.to_dict() for c in evaluate(candidate(), None, None, config)])
+
+
+UNCLEAR = dict(terms_allow_automated_access="unclear", terms_source_url="", terms_quote="", terms_notes="No reuse clause.")
+
+
+def test_review_when_only_the_terms_are_unclear(config):
+    cfg = config["validator"]["legality"]
+    assert terms_review_reason(assessment(**UNCLEAR), ALLOWED, cfg) == "No reuse clause."
+    assert terms_review_reason(assessment(terms_source_url="", terms_quote=""), ALLOWED, cfg)  # yes, but unsourced
+
+
+@pytest.mark.parametrize(
+    ("overrides", "robots"),
+    [
+        ({"terms_allow_automated_access": "no"}, ALLOWED),
+        ({}, ALLOWED),  # a sourced yes passes outright; nothing to review
+        ({**UNCLEAR, "login_required": "unclear"}, ALLOWED),
+        ({**UNCLEAR, "personal_data": "removable"}, ALLOWED),
+        ({**UNCLEAR, "personal_data": "unclear"}, ALLOWED),
+        ({**UNCLEAR, "data_access": "public_html"}, ALLOWED),
+        (UNCLEAR, RobotsResult(None, "unreachable")),
+        (UNCLEAR, RobotsResult(False, "disallowed")),
+    ],
+)
+def test_no_review_for_anything_but_unclear_terms(config, overrides, robots):
+    assert terms_review_reason(assessment(**overrides), robots, config["validator"]["legality"]) is None
+
+
+def test_review_can_be_switched_off(config):
+    cfg = dict(config["validator"]["legality"], review_unclear_terms=False)
+    assert terms_review_reason(assessment(**UNCLEAR), ALLOWED, cfg) is None
