@@ -321,6 +321,14 @@ class FixtureAssessor:
     def __init__(self, path: Path) -> None:
         self._data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
 
+    @classmethod
+    def from_validations(cls, path: Path) -> "FixtureAssessor":
+        """Reuse the assessments of an earlier run's validation.json, so its facts are not paid for twice."""
+        assessor = cls.__new__(cls)
+        records = json.loads(path.read_text(encoding="utf-8"))
+        assessor._data = {r["niche_id"]: r["assessment"] for r in records if r.get("assessment")}
+        return assessor
+
     def assess(self, candidate: Candidate) -> Assessment:
         data = self._data.get(candidate.niche_id)
         if data is None:

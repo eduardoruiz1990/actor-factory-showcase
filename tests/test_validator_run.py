@@ -1,10 +1,12 @@
+import json
+
 import pytest
 
 from factory.scout.run import run_scout
 from factory.scout.sources import FixtureSource
 from factory.validator.assessment import AssessmentError, FixtureAssessor
 from factory.validator.checks import CHECK_NAMES, PASS, UNKNOWN
-from factory.validator.robots import RobotsChecker, fixture_fetcher
+from factory.validator.robots import RobotsChecker, SavedRobots, fixture_fetcher
 from factory.validator.run import rank_for_issue, validate
 
 
@@ -95,3 +97,11 @@ def test_assessments_run_in_parallel_and_keep_their_order(scout_result, fixtures
     validations = run(scout_result, fixtures_dir, config, assessor=assessor)
     assert assessor.peak == config["validator"]["concurrency"]
     assert [v.candidate.niche_id for v in validations] == [c.niche_id for c in scout_result.candidates]
+
+
+def test_reuse_serves_an_earlier_runs_assessments(scout_result, fixtures_dir, config, tmp_path):
+    first = run(scout_result, fixtures_dir, config)
+    saved = tmp_path / "validation.json"
+    saved.write_text(json.dumps([v.to_dict() for v in first]), encoding="utf-8")
+    again = validate(scout_result.candidates, FixtureAssessor.from_validations(saved), SavedRobots(saved), config)
+    assert [v.to_dict() for v in again] == [v.to_dict() for v in first]
