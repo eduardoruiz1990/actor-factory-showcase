@@ -65,12 +65,18 @@ def test_hidden_data_round_trips(validations, config):
     assert data[0]["assessment"]["proposed_actor_name"]
 
 
-def test_size_guard_drops_assessments_then_all_hidden_data(validations, config, monkeypatch):
-    from factory.validator.brief import _hidden_data
+def test_size_guard_drops_failing_assessments_then_all_then_the_hidden_data(validations, config, monkeypatch):
+    from factory.validator.brief import BUILDABLE, NONE, _hidden_data
 
     full = render_brief(validations, config, "2026-W43", assessed=ASSESSED)
-    slim = len(visible(full)) + len(_hidden_data(validations, with_assessments=False)) + 10
-    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", slim)
+    buildable = len(visible(full)) + len(_hidden_data(validations, BUILDABLE)) + 10
+    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", buildable)
+    data = parse_hidden_data(render_brief(validations, config, "2026-W43", assessed=ASSESSED))
+    # The Builder still finds what it needs for every PASS and REVIEW candidate.
+    assert all((d["assessment"] is not None) == (d["verdict"] in ("PASS", "REVIEW")) for d in data)
+    assert any(d["verdict"] == "REVIEW" for d in data)
+    bare = len(visible(full)) + len(_hidden_data(validations, NONE)) + 10
+    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", bare)
     data = parse_hidden_data(render_brief(validations, config, "2026-W43", assessed=ASSESSED))
     assert data and all(d["assessment"] is None for d in data)
     monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", 1_000)

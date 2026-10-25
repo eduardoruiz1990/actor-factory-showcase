@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from factory.scout.run import run_scout
@@ -95,3 +97,13 @@ def test_assessments_run_in_parallel_and_keep_their_order(scout_result, fixtures
     validations = run(scout_result, fixtures_dir, config, assessor=assessor)
     assert assessor.peak == config["validator"]["concurrency"]
     assert [v.candidate.niche_id for v in validations] == [c.niche_id for c in scout_result.candidates]
+
+
+def test_reuse_serves_an_earlier_runs_assessments(scout_result, fixtures_dir, config, tmp_path):
+    first = run(scout_result, fixtures_dir, config)
+    saved = tmp_path / "validation.json"
+    saved.write_text(json.dumps([v.to_dict() for v in first]), encoding="utf-8")
+    reused = FixtureAssessor.from_validations(saved)
+    for v in first:
+        if v.assessment:
+            assert reused.assess(v.candidate) == v.assessment

@@ -1,5 +1,12 @@
 # Changelog
 
+## 🩹 Builder could not build live candidates (2026-10-25, branch `brief-keeps-buildable`)
+
+- **Bug:** a live brief with 40 assessments is too long for one comment. The size guard then dropped every assessment from the hidden data, including those of PASS and REVIEW candidates. `/build greenhouse-job terms-reviewed` on issue #8 was refused with "the brief has no assessment details". The rehearsal used smaller sample data, so it did not show.
+- **Fix:** the guard now drops failing candidates' assessments first, and drops those of PASS and REVIEW candidates only if the brief still does not fit.
+- **`--reuse <validation.json>`:** the Validator can re-apply the checks to an earlier run's assessments without calling Claude again. Week 43's brief was re-posted this way, with the same facts and verdicts.
+- **Tests:** 236 pass.
+
 ## 🎯 More niches that can pass (2026-10-25, branch `sourcing-and-q6`)
 
 Week 43's live run (issue #8) found no PASS or REVIEW candidate. These changes follow your decisions on that result.

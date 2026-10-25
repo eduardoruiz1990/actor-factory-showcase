@@ -15,6 +15,7 @@ REVIEW_ICON = "🔎"
 VERDICT_LABELS = {"PASS": "✅ PASS", "REVIEW": f"{REVIEW_ICON} REVIEW"}
 DETAILED_PICKS = 3
 MAX_BODY_CHARS = 60_000  # GitHub's limit is 65,536
+ALL, BUILDABLE, NONE = "all", "buildable", "none"  # which assessments the hidden data keeps
 
 
 def verdict_labels(validations: list[Validation]) -> dict[str, str]:
@@ -118,10 +119,12 @@ def render_brief(
     body = "\n".join(lines)
     if blocked:
         body += _hidden_json(HARD_FAILS_MARKER, blocked)  # small, and Scout needs it: never dropped
-    data = _hidden_data(validations, with_assessments=True)
-    if len(body) + len(data) > MAX_BODY_CHARS:
-        data = _hidden_data(validations, with_assessments=False)
-    if len(body) + len(data) > MAX_BODY_CHARS:
+    # The Builder needs the assessments of PASS and REVIEW candidates, so those are dropped last.
+    for keep in (ALL, BUILDABLE, NONE):
+        data = _hidden_data(validations, keep)
+        if len(body) + len(data) <= MAX_BODY_CHARS:
+            break
+    else:
         data = ""  # the visible brief matters more than the machine copy
     return body + data + "\n"
 
@@ -157,10 +160,11 @@ def parse_hidden_data(body: str) -> list[dict[str, Any]] | None:
     return json.loads(body[start + len(DATA_MARKER) + 6 : end])
 
 
-def _hidden_data(validations: list[Validation], with_assessments: bool) -> str:
+def _hidden_data(validations: list[Validation], keep: str = ALL) -> str:
+    """The machine copy of the listed validations, with all, only the buildable, or no assessments."""
     records = [v.to_dict() for v in validations]
-    if not with_assessments:
-        for record in records:
+    for record in records:
+        if keep == NONE or (keep == BUILDABLE and record["verdict"] not in VERDICT_LABELS):
             record["assessment"] = None
     return _hidden_json(DATA_MARKER, records)
 
