@@ -1,0 +1,21 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "greenhouse-jobs-scraper",
+    "title": "Greenhouse Jobs Scraper",
+    "description": "Get every open job from any company's Greenhouse job board, with departments, offices, locations and full descriptions, as clean JSON from the official Job Board API.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-start",
+        "generatedBy": "Actor Factory Builder (Claude Code)"
+    },
+    "minMemoryMbytes": 256,
+    "maxMemoryMbytes": 1024,
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}

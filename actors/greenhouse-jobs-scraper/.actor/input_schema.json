@@ -1,0 +1,52 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Greenhouse jobs input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "boardTokens": {
+            "title": "Greenhouse board tokens or URLs",
+            "type": "array",
+            "description": "Companies to read, by Greenhouse board token (the part after boards.greenhouse.io/, for example \"airbnb\") or by any job board URL. Each board is one request.",
+            "editor": "stringList",
+            "prefill": ["airbnb"]
+        },
+        "includeContent": {
+            "title": "Include full job descriptions",
+            "type": "boolean",
+            "description": "Return each job's description (HTML and plain text) with its departments and offices. Turn off for a lighter list of titles, locations and links only.",
+            "default": true
+        },
+        "titleKeywords": {
+            "title": "Title keywords",
+            "type": "array",
+            "description": "Keep only jobs whose title contains at least one of these words (not case-sensitive). Leave empty for every job.",
+            "editor": "stringList",
+            "default": []
+        },
+        "locationKeywords": {
+            "title": "Location keywords",
+            "type": "array",
+            "description": "Keep only jobs whose location or office contains at least one of these words, for example \"Remote\" or \"London\" (not case-sensitive). Leave empty for every location.",
+            "editor": "stringList",
+            "default": []
+        },
+        "maxResults": {
+            "title": "Maximum results",
+            "type": "integer",
+            "description": "Stop after this many jobs. Each job is charged once.",
+            "default": 1000,
+            "minimum": 1,
+            "maximum": 100000
+        },
+        "maxRequestsPerSecond": {
+            "title": "Maximum requests per second",
+            "type": "number",
+            "description": "Polite rate limit for the Greenhouse API. Keep it low; the Actor also honours Retry-After and backs off on errors.",
+            "default": 1,
+            "minimum": 0.1,
+            "maximum": 5
+        }
+    },
+    "required": ["boardTokens"]
+}
