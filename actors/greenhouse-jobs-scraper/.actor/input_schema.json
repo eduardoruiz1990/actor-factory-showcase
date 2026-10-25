@@ -9,7 +9,8 @@
             "type": "array",
             "description": "Companies to read, by Greenhouse board token (the part after boards.greenhouse.io/, for example \"airbnb\") or by any job board URL. Each board is one request.",
             "editor": "stringList",
-            "prefill": ["airbnb"]
+            "prefill": ["airbnb", "discord"],
+            "default": ["airbnb", "discord"]
         },
         "includeContent": {
             "title": "Include full job descriptions",
