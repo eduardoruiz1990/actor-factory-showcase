@@ -8,6 +8,7 @@ check pass on missing information: 404/410 means no restrictions; other 4xx,
 """
 
 import ipaddress
+import json
 import logging
 import re
 from collections.abc import Callable
@@ -164,3 +165,18 @@ def fixture_fetcher(robots_dir: Path) -> RobotsFetcher:
         return None, ""
 
     return fetch
+
+
+class SavedRobots:
+    """Serves the robots.txt results of an earlier run's validation.json, so a re-render matches that run."""
+
+    def __init__(self, path: Path) -> None:
+        records = json.loads(path.read_text(encoding="utf-8"))
+        self._results = {
+            tuple(r["assessment"]["sample_urls"]): RobotsResult(**r["robots"])
+            for r in records if r.get("assessment") and r.get("robots")
+        }
+
+    def check(self, urls: list[str], fallback_domain: str = "") -> RobotsResult:
+        return self._results.get(tuple(urls), RobotsResult(None, "robots.txt result not in the reused run"))
+

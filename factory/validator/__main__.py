@@ -2,7 +2,7 @@
 
     python -m factory.validator --scout out/scout.json --fixtures tests/fixtures --dry-run
     python -m factory.validator --scout out/scout.json            # live: Claude API, posts the brief
-    python -m factory.validator --scout out/scout.json --reuse old/validation.json   # same facts, no Claude calls
+    python -m factory.validator --scout out/scout.json --reuse old/validation.json   # same facts, no fetching
 
 Writes validation.json, brief.md and the updated issue_body.md (with a Checks
 column) to --out. Without --dry-run it posts the brief as a comment on the
@@ -26,7 +26,7 @@ from factory.scout.report import render_issue_body, week_key
 from factory.scout.run import ScoutResult
 from factory.validator.assessment import Assessor, ClaudeAssessor, FixtureAssessor
 from factory.validator.brief import BRIEF_MARKER, render_brief, verdict_labels
-from factory.validator.robots import RobotsChecker, fixture_fetcher, live_fetcher
+from factory.validator.robots import RobotsChecker, SavedRobots, fixture_fetcher, live_fetcher
 from factory.validator.run import rank_for_issue, validate
 
 
@@ -39,7 +39,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=Path, default=Path("out"), help="output directory (default: out)")
     parser.add_argument("--issue", type=int, help="weekly issue number (default: read --out/issue.json)")
     parser.add_argument("--reuse", type=Path,
-                        help="validation.json of an earlier run: reuse its assessments instead of asking Claude again")
+                        help="validation.json of an earlier run: reuse its assessments and robots.txt results "
+                             "instead of fetching them again")
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
@@ -51,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
         assessor: Assessor
         if args.reuse:
             assessor = FixtureAssessor.from_validations(args.reuse)
-            fetch = live_fetcher(http)
+            robots = SavedRobots(args.reuse)
         elif args.fixtures:
             assessor = FixtureAssessor(args.fixtures / "validator" / "assessments.json")
             fetch = fixture_fetcher(args.fixtures / "robots")
@@ -59,7 +60,8 @@ def main(argv: list[str] | None = None) -> int:
             # Reads ANTHROPIC_API_KEY; the SDK retries 429 and 5xx with back-off.
             assessor = ClaudeAssessor(anthropic.Anthropic(max_retries=4), config["validator"])
             fetch = live_fetcher(http)
-        robots = RobotsChecker(fetch, config["validator"]["legality"]["robots_user_agent"])
+        if not args.reuse:
+            robots = RobotsChecker(fetch, config["validator"]["legality"]["robots_user_agent"])
         validations = rank_for_issue(validate(result.candidates, assessor, robots, config))
         shown = validations[: int(config["scout"]["candidates_per_week"])]
 
