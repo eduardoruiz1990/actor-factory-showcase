@@ -7,6 +7,10 @@ You are building one paid Actor for the Apify Store, in a GitHub Actions run sta
 - The workflow has already created the branch and copied `templates/python-actor/` to `actors/<name>/`. The brief gives `<name>`.
 - Change files **only** inside `actors/<name>/`. A check on the pull request fails if anything else changes.
 - Never merge, never push to `main`, never force-push, and never run `apify push`. The owner merges, and the Publisher deploys.
+- Your shell commands are limited to an allowed list. These forms get blocked, so avoid them:
+  - **`git -C <path>`:** run git from the repository root instead.
+  - **Here-documents (`python - <<EOF`):** write throwaway scripts to a file, then run `python <file>`.
+  - **Shell loops:** do the loop in Python.
 
 ## What to build
 

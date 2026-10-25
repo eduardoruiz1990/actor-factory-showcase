@@ -115,7 +115,7 @@ jobs:
           claude_args: |
             --model ${{ steps.prepare.outputs.model }}
             --max-turns ${{ steps.prepare.outputs.max_turns }}
-            --allowedTools "Read,Write,Edit,MultiEdit,Glob,Grep,LS,WebFetch,WebSearch,Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(find:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(python:*),Bash(python3:*),Bash(pip:*),Bash(pip3:*),Bash(pytest:*),Bash(apify validate-schema:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*),Bash(git push -u origin ${{ steps.prepare.outputs.branch }}),Bash(git push origin ${{ steps.prepare.outputs.branch }}),Bash(gh pr create:*),Bash(gh issue comment:*)"
+            --allowedTools "Read,Write,Edit,MultiEdit,Glob,Grep,LS,WebFetch,WebSearch,Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(find:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(rm:*),Bash(python:*),Bash(python3:*),Bash(PYTHONPATH=. python:*),Bash(PYTHONPATH=. python3:*),Bash(pip:*),Bash(pip3:*),Bash(pytest:*),Bash(apify validate-schema:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git reset:*),Bash(git commit:*),Bash(git push -u origin ${{ steps.prepare.outputs.branch }}),Bash(git push origin ${{ steps.prepare.outputs.branch }}),Bash(gh pr create:*),Bash(gh issue view:*),Bash(gh issue comment:*)"
             --disallowedTools "Bash(gh pr merge:*),Bash(git push --force:*),Bash(git push -f:*),Bash(apify push:*),Bash(apify login:*)"
 
       # Claude's full transcript (tool calls, results, permission denials, cost) for diagnosing a build.
