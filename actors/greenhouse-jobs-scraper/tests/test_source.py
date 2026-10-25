@@ -182,3 +182,11 @@ def test_board_token(value, token):
 def test_html_to_text_keeps_every_block_once():
     text = html_to_text('<div>Intro<ul><li><p>One</p></li><li>Two<br>lines</li></ul></div><p>A&nbsp;&nbsp;b</p>')
     assert text.splitlines() == ['Intro', 'One', 'Two', 'lines', 'A b']
+
+
+def test_default_input_is_light_and_survives_one_board_leaving():
+    # Apify Store runs the Actor daily with its default input and expects results within 5 minutes.
+    schema = json.loads((Path(__file__).parents[1] / '.actor' / 'input_schema.json').read_text())
+    boards = schema['properties']['boardTokens']
+    assert boards['default'] == boards['prefill'] and len(boards['default']) >= 2
+    assert Settings.from_input({'boardTokens': boards['default']}).board_tokens == boards['default']
