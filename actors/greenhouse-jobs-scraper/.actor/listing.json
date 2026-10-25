@@ -1,0 +1,6 @@
+{
+    "_comment": "Actor Factory convention, not read by Apify. The Publisher prints these for the owner to paste into Apify Console > Publishing. Categories use Apify Store category names (for example JOBS, BUSINESS, DEVELOPER_TOOLS, ECOMMERCE).",
+    "categories": ["JOBS", "AUTOMATION"],
+    "seoTitle": "Greenhouse Jobs Scraper: all jobs from any Greenhouse board",
+    "seoDescription": "Export every open job from any company's Greenhouse board: title, location, department, office, URL and full description, as JSON, CSV or Excel."
+}

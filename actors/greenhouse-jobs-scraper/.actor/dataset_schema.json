@@ -1,0 +1,50 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "board_token": { "type": "string" },
+            "company": { "type": ["string", "null"] },
+            "job_id": { "type": "integer" },
+            "internal_job_id": { "type": ["integer", "null"] },
+            "requisition_id": { "type": ["string", "null"] },
+            "title": { "type": ["string", "null"] },
+            "location": { "type": ["string", "null"] },
+            "department": { "type": ["string", "null"] },
+            "departments": { "type": "array", "items": { "type": "string" } },
+            "office": { "type": ["string", "null"] },
+            "offices": { "type": "array", "items": { "type": "string" } },
+            "absolute_url": { "type": ["string", "null"] },
+            "language": { "type": ["string", "null"] },
+            "updated_at": { "type": ["string", "null"] },
+            "first_published": { "type": ["string", "null"] },
+            "content": { "type": ["string", "null"] },
+            "content_text": { "type": ["string", "null"] },
+            "fetched_at": { "type": "string" }
+        },
+        "required": ["board_token", "job_id", "fetched_at"]
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["company", "title", "location", "department", "office", "absolute_url", "first_published", "updated_at"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "company": { "label": "Company", "format": "text" },
+                    "title": { "label": "Job title", "format": "text" },
+                    "location": { "label": "Location", "format": "text" },
+                    "department": { "label": "Department", "format": "text" },
+                    "office": { "label": "Office", "format": "text" },
+                    "absolute_url": { "label": "Job URL", "format": "link" },
+                    "first_published": { "label": "First published", "format": "date" },
+                    "updated_at": { "label": "Updated", "format": "date" }
+                }
+            }
+        }
+    }
+}
