@@ -1,5 +1,19 @@
 # Changelog
 
+## 🎯 More niches that can pass (2026-10-25, branch `sourcing-and-q6`)
+
+Week 43's live run (issue #8) found no PASS or REVIEW candidate. These changes follow your decisions on that result.
+
+- **Q6 decided: removable personal data is allowed.** `allow_removable_personal_data` is now `true`, and such candidates can PASS or be REVIEW. Examples are a recruiter's name inside a job post, or author fields in package metadata.
+  - The build brief tells the Builder to leave those fields out and add them to `EXTRA_FORBIDDEN_KEYS`.
+  - Core personal data and logins still always fail.
+  - On the sample data, PyPI and WordPress now pass. On week 43's data, Greenhouse would have been 🔎 REVIEW.
+- **Platform exclusions (Q18):** `scout.exclude.platforms` leaves out Google, Amazon, ChatGPT, Perplexity, Copilot, G2, Indeed, Glassdoor and other platforms whose terms forbid scraping, that need a login, or that disallow search pages in robots.txt.
+- **Memory of hard failures (Q18):** niches that failed Legality for a login, core personal data, terms that forbid the use, or robots.txt are skipped for 12 weeks (`scout.history.skip_hard_fails_weeks`).
+  - Each Validator brief carries the list as hidden JSON, and Scout reads it back from the weekly issues.
+  - The brief says how many niches were added that week, and the issue's Data line says how many were skipped.
+- **Tests:** 235 pass. New tests cover the memory, the platform list, the Q6 switch and the Builder's personal-data instruction.
+
 ## 🧪 Real fixtures for Builder builds (2026-10-25, branch `builder-fixtures`)
 
 - **Why:** in the Builder rehearsal (issue #5, PR #6) Claude could not save raw API responses. 6 of its commands were blocked, and it rebuilt the fixture from WebFetch's summary instead.

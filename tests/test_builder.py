@@ -100,6 +100,14 @@ def test_brief_carries_what_the_builder_needs(week, config, tmp_path):
         assert expected in brief
 
 
+def test_brief_asks_to_strip_removable_personal_data(week, config, tmp_path):
+    issue, comments = week
+    plan = plan_build(issue, comments, "pypi-package-metadata", config, tmp_path)
+    assert plan["record"]["assessment"]["personal_data"] == "removable"
+    assert "`EXTRA_FORBIDDEN_KEYS`" in render_brief(plan)
+    assert "`EXTRA_FORBIDDEN_KEYS`" not in render_brief(plan_build(issue, comments, "sec-edgar-filing", config, tmp_path))
+
+
 def test_ask_lists_passing_candidates(week):
     _, comments = week
     message = ask_message(comments)

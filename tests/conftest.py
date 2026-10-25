@@ -12,7 +12,11 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 @pytest.fixture(scope="session")
 def base_config():
-    return load_config()
+    config = load_config()
+    # The sample data predates the platform list (Q18) and uses platform niches (Google Trends,
+    # Trustpilot, ...) to exercise the Validator's rules, so tests keep them; test_scout_run covers the list.
+    config["scout"]["exclude"]["platforms"] = []
+    return config
 
 
 @pytest.fixture

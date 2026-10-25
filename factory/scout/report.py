@@ -46,7 +46,9 @@ def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dic
         intro,
         "",
         f"**Data:** {result.actors_seen:,} Store Actors from {result.store_queries} queries · "
-        f"{result.niches_total:,} niches, {result.niches_excluded:,} left out by `scout.exclude` · "
+        f"{result.niches_total:,} niches, {result.niches_excluded:,} left out by `scout.exclude`"
+        + (f", {result.niches_blocked:,} skipped after failing Legality in recent weeks" if result.niches_blocked else "")
+        + " · "
         f"{result.ideas_parsed} open ideas · "
         f"{result.details_fetched} Actor detail lookups · collected {_when(result.collected_at)}",
         "",

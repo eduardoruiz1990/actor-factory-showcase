@@ -49,7 +49,19 @@ scout:
        "influencer", "apollo", "zoominfo", "employee",
        "playwright", "puppeteer", "cheerio", "selenium", "browser", "web", "website", "rag",
        "hello", "example"]
+    # Big platforms whose terms forbid scraping, that need a login, or whose robots.txt
+    # disallows their search pages (W43 Validator results, Q18). Matched like title_words.
+    platforms:
+      ["google", "amazon", "chatgpt", "openai", "perplexity", "copilot", "bing", "yandex", "baidu", "naver",
+       "semrush", "ahref", "similarweb", "g2", "capterra", "trustpilot", "yelp", "tripadvisor",
+       "indeed", "glassdoor", "idealista", "zillow", "ebay", "walmart", "aliexpress", "alibaba", "taobao",
+       "temu", "shein", "mercadolivre", "mercadolibre", "flashscore", "sofascore"]
     categories: ["SOCIAL_MEDIA", "LEAD_GENERATION"]
+  # Niches that failed Legality for a reason no build can fix (login, personal data as
+  # the product, terms that forbid the use, robots.txt) are skipped for this many weeks,
+  # read back from past weekly issues (Q18).
+  history:
+    skip_hard_fails_weeks: 12
   store:
     sort_by: popularity
     page_size: 1000            # API maximum per request
@@ -145,9 +157,10 @@ validator:
     leader_failure_rate_above: 0.10
     leader_rating_below: 4.0
   legality:
-    # When false, data that holds personal data the Actor could strip still
-    # fails Legality (conservative, Q6).
-    allow_removable_personal_data: false
+    # Personal data the Actor can strip (a recruiter's name inside a job post) does not
+    # block Legality; the Actor must leave it out. Personal data that is the value itself
+    # always fails. Owner decision 2026-10-25 (Q6).
+    allow_removable_personal_data: true
     # "Terms allow it" only counts when the assessment cites the page and quotes
     # the deciding sentence (Q9); otherwise the terms count as unclear.
     require_terms_source: true

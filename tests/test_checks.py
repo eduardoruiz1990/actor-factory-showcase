@@ -6,7 +6,7 @@ from factory.scout.models import ActorSummary, Candidate, Idea
 from factory.validator.assessment import Assessment
 from factory.validator.checks import (
     FAIL, PASS, UNKNOWN, check_competition, check_cost, check_demand, check_legality, check_stability, evaluate,
-    terms_review_reason,
+    hard_legality_fail, terms_review_reason,
 )
 from factory.validator.robots import RobotsResult
 
@@ -84,7 +84,7 @@ def test_legality_passes_only_when_everything_is_clear(config):
         ({"data_access": "requires_login", "login_required": "no"}, ALLOWED, FAIL),
         ({"login_required": "unclear"}, ALLOWED, UNKNOWN),
         ({"personal_data": "core"}, ALLOWED, FAIL),
-        ({"personal_data": "removable"}, ALLOWED, FAIL),
+        ({"personal_data": "removable"}, ALLOWED, PASS),  # Q6: the Actor strips it
         ({"personal_data": "unclear"}, ALLOWED, UNKNOWN),
         ({"terms_allow_automated_access": "no"}, ALLOWED, FAIL),
         ({"terms_allow_automated_access": "unclear"}, ALLOWED, UNKNOWN),
@@ -191,7 +191,6 @@ def test_review_when_only_the_terms_are_unclear(config):
         ({"terms_allow_automated_access": "no"}, ALLOWED),
         ({}, ALLOWED),  # a sourced yes passes outright; nothing to review
         ({**UNCLEAR, "login_required": "unclear"}, ALLOWED),
-        ({**UNCLEAR, "personal_data": "removable"}, ALLOWED),
         ({**UNCLEAR, "personal_data": "unclear"}, ALLOWED),
         ({**UNCLEAR, "data_access": "public_html"}, ALLOWED),
         (UNCLEAR, RobotsResult(None, "unreachable")),
@@ -200,6 +199,32 @@ def test_review_when_only_the_terms_are_unclear(config):
 )
 def test_no_review_for_anything_but_unclear_terms(config, overrides, robots):
     assert terms_review_reason(assessment(**overrides), robots, config["validator"]["legality"]) is None
+
+
+def test_removable_personal_data_follows_q6(config):
+    strict = dict(config["validator"]["legality"], allow_removable_personal_data=False)
+    removable = assessment(personal_data="removable")
+    assert check_legality(removable, ALLOWED, strict).status == FAIL
+    assert terms_review_reason(assessment(**UNCLEAR, personal_data="removable"), ALLOWED, strict) is None
+    allowed = config["validator"]["legality"]
+    assert check_legality(removable, ALLOWED, allowed).reason.startswith(
+        "official API, no login, personal data stripped by the Actor")
+    assert terms_review_reason(assessment(**UNCLEAR, personal_data="removable"), ALLOWED, allowed)
+
+
+@pytest.mark.parametrize(
+    ("reason", "hard"),
+    [
+        ("needs a login; terms unclear", "needs a login"),
+        ("terms unclear; terms forbid automated access or reuse", "terms forbid automated access or reuse"),
+        ("the data is personal data", "the data is personal data"),
+        ("robots.txt disallows /search on x.com", "robots.txt disallows /search on x.com"),
+        ("the source mixes in personal data; terms unclear", None),
+        ("terms unclear; no public URL to check", None),
+    ],
+)
+def test_hard_legality_fails(reason, hard):
+    assert hard_legality_fail(reason) == hard
 
 
 def test_review_can_be_switched_off(config):

@@ -40,9 +40,14 @@ The Ideas page loads its list in the browser, so its HTML holds no ideas, and th
 - The **planned price** is **80% of the niche leader's price** per 1,000 results, on the assumption that a new Actor must undercut the leader. When the leader is free or has no per-result price, the planned price is a **$2.00 default**.
 - Apify's 20% commission is not counted as platform cost, because the spec says "platform cost". If the 30% should include it, the limit becomes stricter.
 
-### Q6. Personal data the Actor could leave out (assumed)
+### Q6. Personal data the Actor could leave out (resolved 2026-10-25: allowed)
 
-The spec says Legality never passes when the data contains personal data. The model separates `core` personal data (profiles, reviews with their authors) from `removable` personal data: the source contains some, but the useful output works without it, such as author fields in PyPI metadata. **Both fail** by default (`validator.legality.allow_removable_personal_data: false`). Set the flag to `true` if you accept Actors that strip those fields. `core` personal data and data behind a login fail either way, because code enforces those rules.
+The spec says Legality never passes when the data contains personal data. The model separates `core` personal data (profiles, reviews with their authors) from `removable` personal data: the source contains some, but the useful output works without it, such as author fields in PyPI metadata or a recruiter's name inside a job post.
+
+- **Your decision (2026-10-25):** removable personal data no longer blocks Legality (`validator.legality.allow_removable_personal_data: true`), and it can reach PASS. Until then both kinds failed, which ruled out Greenhouse in week 43.
+- **Still enforced:** the Actor must output none of it. The build brief tells the Builder to leave those fields out and add their names to `EXTRA_FORBIDDEN_KEYS`, and every item passes through the privacy guard.
+- **Unchanged:** `core` personal data and data behind a login fail either way, because code enforces those rules.
+- **To go back:** set the flag to `false`.
 
 ### Q7. Your Apify username (resolved 2026-10-24)
 
@@ -113,7 +118,7 @@ On the first live data, every strong candidate failed only because Claude found 
 - **Other checks:** Demand, Competition, Cost and Stability pass.
 - **Access:** the data comes from an official API or public feed (`validator.legality.review_access`).
 - **Login:** none is needed. "Unclear" does not count.
-- **Personal data:** the data holds none at all. "Removable" does not count.
+- **Personal data:** none, or only removable personal data while Q6 allows it.
 - **robots.txt:** it allows the sample URLs.
 - **Terms:** they neither forbid the use nor were shown to allow it with a cited passage.
 
@@ -126,3 +131,18 @@ The brief lists REVIEW candidates in their own section, with the passage and lin
 In the Actor's README, the Builder links the terms and does not claim they explicitly allow the use. To go back to the strict rule, set `validator.legality.review_unclear_terms: false`.
 
 On the 2026-10-24 rehearsal data, this turned 2 of 40 candidates into REVIEW: Greenhouse Jobs API and Sitemap Extractor.
+
+### Q18. Niches that can never pass (resolved 2026-10-25)
+
+In week 43, 31 of the 40 assessed niches were scrapers of big platforms (Google, Amazon, ChatGPT, G2, Indeed and others) that the Validator rejects every week. Two changes free the Validator's slots for niches it has not ruled out:
+
+- **Platform list:** `scout.exclude.platforms` lists those platforms. It is matched like `title_words`.
+- **Memory:** a niche that failed Legality for a reason no build can fix is skipped for `scout.history.skip_hard_fails_weeks` (12) weeks. Those reasons are:
+  - it needs a login
+  - its data is personal data
+  - its terms forbid the use
+  - robots.txt disallows it
+- **Where the memory lives:** each Validator brief carries the list as hidden JSON (`factory:validator-hard-fails`): that week's failures plus the ones still active, each dated. Scout reads the weekly issues of the last 12 weeks (titles starting "Scout "). If GitHub cannot be read, nothing is skipped and the run warns.
+- **What doesn't count:** "unclear" answers, removable personal data and Cost or Stability failures. A niche that failed only for those comes back the next week.
+- **To give a niche another chance:** remove its entry from the latest brief's hidden list, or set the weeks to 0.
+

@@ -24,12 +24,16 @@ class ScoutResult:
     store_queries: int = 0
     niches_total: int = 0
     niches_excluded: int = 0
+    niches_blocked: int = 0  # skipped after a hard Legality failure in recent weeks (Q18)
     ideas_parsed: int = 0
     ideas_open: int = 0
     details_fetched: int = 0
     skipped_own_niches: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     watcher_summary: str | None = None  # Markdown from the latest Watcher run (Phase 3)
+    # Every niche still blocked by a hard Legality failure: {niche_id: {"reason", "since"}}. The Validator
+    # adds this week's failures and writes the list back into its brief (Q18).
+    blocked_niches: dict[str, dict[str, str]] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         data = {k: v for k, v in self.__dict__.items() if k != "candidates"}
@@ -43,7 +47,10 @@ class ScoutResult:
         return cls(**values)
 
 
-def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> ScoutResult:
+def run_scout(
+    source: ScoutSource, config: dict[str, Any], now: datetime, blocked: dict[str, dict[str, str]] | None = None
+) -> ScoutResult:
+    """`blocked` holds niches that failed Legality for a hard reason in recent weeks; they are skipped."""
     scout_cfg = config["scout"]
     warnings: list[str] = []
 
@@ -55,7 +62,8 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
 
     clustering = scout_cfg["clustering"]
     exclude = scout_cfg["exclude"]
-    for key, words in (("clustering.stopwords", clustering["stopwords"]), ("exclude.title_words", exclude["title_words"])):
+    for key, words in (("clustering.stopwords", clustering["stopwords"]), ("exclude.title_words", exclude["title_words"]),
+                       ("exclude.platforms", exclude.get("platforms") or [])):
         if not all(isinstance(w, str) for w in words):
             raise ValueError(f"scout.{key} must all be quoted strings in config.yaml")
     to_validate = int(scout_cfg["candidates_to_validate"])
@@ -72,6 +80,9 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
     niches = [n for n in niches if n.id not in skipped_own]
     total = len(niches)
     niches = [n for n in niches if not is_excluded(n, exclude)]
+    blocked = blocked or {}
+    after_exclude = len(niches)
+    niches = [n for n in niches if n.id not in blocked]
 
     min_demand = float(scout_cfg["ranking"]["min_demand"])
     first_pass = rank([c for c in (build_candidate(n, now, config) for n in niches) if c.demand >= min_demand])
@@ -93,12 +104,14 @@ def run_scout(source: ScoutSource, config: dict[str, Any], now: datetime) -> Sco
         actors_seen=len(actors),
         store_queries=queries,
         niches_total=total,
-        niches_excluded=total - len(niches),
+        niches_excluded=total - after_exclude,
+        niches_blocked=after_exclude - len(niches),
         ideas_parsed=len(ideas),
         ideas_open=sum(1 for i in ideas if i.status in open_statuses),
         details_fetched=fetched,
         skipped_own_niches=skipped_own,
         warnings=warnings,
+        blocked_niches=dict(blocked),
     )
 
 

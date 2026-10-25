@@ -8,6 +8,7 @@ from factory.validator.run import Validation
 
 BRIEF_MARKER = "<!-- factory:validator v1 -->"
 DATA_MARKER = "factory:validator-data"
+HARD_FAILS_MARKER = "factory:validator-hard-fails"
 ICONS = {PASS: "✅", FAIL: "❌"}
 UNKNOWN_ICON = "❔"
 REVIEW_ICON = "🔎"
@@ -24,8 +25,14 @@ def verdict_labels(validations: list[Validation]) -> dict[str, str]:
     }
 
 
-def render_brief(validations: list[Validation], config: dict[str, Any], week: str, assessed: int | None = None) -> str:
-    """`validations` are the candidates the issue lists; `assessed` is how many were validated in all."""
+def render_brief(
+    validations: list[Validation], config: dict[str, Any], week: str, assessed: int | None = None,
+    blocked: dict[str, dict[str, str]] | None = None, newly_blocked: int = 0,
+) -> str:
+    """`validations` are the candidates the issue lists; `assessed` is how many were validated in all.
+
+    `blocked` holds every niche Scout should keep skipping (Q18), `newly_blocked` how many of them are new.
+    """
     # Passing candidates keep Scout's order (opportunity score).
     passing = sorted((v for v in validations if v.verdict == "PASS"), key=lambda v: v.candidate.rank)
     review = sorted((v for v in validations if v.verdict == "REVIEW"), key=lambda v: v.candidate.rank)
@@ -72,9 +79,9 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
         lines += [
             f"### {REVIEW_ICON} Needs your review: terms",
             "",
-            "Clean on everything else: official API or public feed, no login, no personal data, robots.txt allows "
-            "it. The terms neither forbid automated reuse nor clearly allow it. Read them; if you are satisfied, "
-            "comment the command shown (Q17).",
+            "Clean on everything else: official API or public feed, no login, no personal data the Actor cannot "
+            "strip, robots.txt allows it. The terms neither forbid automated reuse nor clearly allow it. Read them; "
+            "if you are satisfied, comment the command shown (Q17).",
             "",
         ]
         for v in review:
@@ -94,6 +101,14 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
             lines.append(f"- **#{v.candidate.rank} {v.candidate.label}** — {reasons}")
         lines.append("")
 
+    if newly_blocked:
+        weeks = config["scout"]["history"]["skip_hard_fails_weeks"]
+        lines += [
+            f"{newly_blocked} of the assessed niches failed Legality for a reason no build can fix (login, personal "
+            f"data as the product, terms that forbid the use, or robots.txt). Scout skips them for {weeks} weeks.",
+            "",
+        ]
+
     lines += [
         "**Decision for you:** to build a candidate, add the `go` label to this issue, then comment "
         "`/build <niche-id>` (or `/build <niche-id> terms-reviewed` for a 🔎 REVIEW candidate). "
@@ -101,6 +116,8 @@ def render_brief(validations: list[Validation], config: dict[str, Any], week: st
         "",
     ]
     body = "\n".join(lines)
+    if blocked:
+        body += _hidden_json(HARD_FAILS_MARKER, blocked)  # small, and Scout needs it: never dropped
     data = _hidden_data(validations, with_assessments=True)
     if len(body) + len(data) > MAX_BODY_CHARS:
         data = _hidden_data(validations, with_assessments=False)
@@ -145,6 +162,10 @@ def _hidden_data(validations: list[Validation], with_assessments: bool) -> str:
     if not with_assessments:
         for record in records:
             record["assessment"] = None
-    payload = json.dumps(records, separators=(",", ":"), sort_keys=True)
+    return _hidden_json(DATA_MARKER, records)
+
+
+def _hidden_json(marker: str, value: Any) -> str:
+    payload = json.dumps(value, separators=(",", ":"), sort_keys=True)
     # Escape ">" so the JSON can never close the HTML comment early.
-    return f"<!-- {DATA_MARKER} {payload.replace('>', '\\u003e')} -->"
+    return f"<!-- {marker} {payload.replace('>', '\\u003e')} -->"

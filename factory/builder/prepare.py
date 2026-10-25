@@ -151,6 +151,11 @@ def render_brief(plan: dict[str, Any]) -> str:
                      "link the terms page and describe the use plainly; do not claim the terms explicitly allow it.")
     lines += [
         f"- **Personal data:** {a['personal_data']}. {a['personal_data_notes']}",
+    ]
+    if a.get("personal_data") == "removable":
+        lines.append("  - The source mixes in personal data. Leave those fields out of the output, add their names to "
+                     "`EXTRA_FORBIDDEN_KEYS` in `privacy.py`, and test that they never reach the dataset.")
+    lines += [
         f"- **Stability:** {a['stability_notes']}",
         f"- **Risks:** {'; '.join(a['risks']) or 'none listed'}",
         f"- **robots.txt:** {(plan['record'].get('robots') or {}).get('detail', 'not checked')}",

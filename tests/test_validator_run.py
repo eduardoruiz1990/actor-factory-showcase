@@ -33,6 +33,8 @@ def test_sample_verdicts(scout_result, fixtures_dir, config):
     assert passing == {
         "sec-edgar-filing", "greenhouse-job", "ted-eu-tender", "npm-package-download", "lever-job",
         "federal-grant-opportunity-gov",
+        # Author fields only: personal data the Actor strips, allowed since Q6 was decided.
+        "wordpress-plugin", "pypi-package-metadata",
     }
     # Hard rules and robots.txt in action:
     assert verdicts["product-hunt"].check("legality").reason.startswith("needs a login")
@@ -63,7 +65,7 @@ def test_rank_for_issue_puts_passing_candidates_first(scout_result, fixtures_dir
     ordered = rank_for_issue(run(scout_result, fixtures_dir, config))
     assert [v.candidate.rank for v in ordered] == list(range(1, len(ordered) + 1))
     verdicts = [v.verdict for v in ordered]
-    assert verdicts[:6] == ["PASS"] * 6 and "PASS" not in verdicts[6:]
+    assert verdicts[:8] == ["PASS"] * 8 and "PASS" not in verdicts[8:]
     passed = [v.passed for v in ordered[6:]]
     assert passed == sorted(passed, reverse=True)
     assert ordered[0].candidate.niche_id == "sec-edgar-filing"  # the passing candidate Scout ranked highest
