@@ -1,5 +1,16 @@
 # Changelog
 
+## 🔧 Smoother Builder runs (2026-10-25, branch `builder-tools`)
+
+- **Why:** the first live build (issue #8, PR #11) hit 12 blocked commands. Each was harmless, and Claude worked around them, at the cost of extra turns.
+- **Newly allowed:**
+  - `rm`
+  - `git reset`
+  - `gh issue view` (read-only)
+  - `PYTHONPATH=. python`
+- **Still blocked:** `git -C <path>`, because it would slip past the push and force-push rules. `docs/BUILDER.md` now tells Claude to run git from the repository root, to write throwaway scripts to files instead of here-documents, and to loop in Python rather than in the shell.
+- **Unchanged safety net:** the scope check still fails any PR that changes or deletes a file outside `actors/<name>/`.
+
 ## 🩹 Builder could not build live candidates (2026-10-25, branch `brief-keeps-buildable`)
 
 - **Bug:** a live brief with 40 assessments is too long for one comment. The size guard then dropped every assessment from the hidden data, including those of PASS and REVIEW candidates. `/build greenhouse-job terms-reviewed` on issue #8 was refused with "the brief has no assessment details". The rehearsal used smaller sample data, so it did not show.

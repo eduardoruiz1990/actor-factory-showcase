@@ -47,6 +47,10 @@ def test_builder_workflow_is_owner_only_and_never_merges():
         assert forbidden in text.split("--disallowedTools", 1)[1]
     allowed = text.split("--allowedTools", 1)[1].split("\n", 1)[0]
     assert "gh pr merge" not in allowed and "Bash(git:*)" not in allowed and "Bash(gh:*)" not in allowed
+    # `git -C <path> push ...` would slip past the push and force-push rules, so it stays blocked.
+    assert "git -C" not in allowed
+    for needed in ("Bash(rm:*)", "Bash(git reset:*)", "Bash(gh issue view:*)", "Bash(PYTHONPATH=. python:*)"):
+        assert needed in allowed  # blocked in the first live build (issue #8), each harmless
 
 
 def test_publisher_runs_only_after_merges_to_main():
