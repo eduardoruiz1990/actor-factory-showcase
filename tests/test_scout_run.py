@@ -1,6 +1,8 @@
 import httpx
 import pytest
 
+from factory.common.config import load_config
+from factory.scout.report import render_issue_body
 from factory.scout.run import ScoutResult, run_scout
 from factory.scout.sources import FixtureSource
 
@@ -38,6 +40,23 @@ def test_niches_that_can_never_pass_are_excluded(source, config, as_of):
     ids = {c.niche_id for c in result.candidates}
     assert not ids & {"linkedin-job", "youtube-channel", "google-map", "instagram-profile", "website-content"}
     assert result.niches_excluded == 5
+
+
+def test_platform_niches_are_excluded(source, config, as_of):
+    # conftest turns the platform list off for the sample data; turn the real one back on.
+    config["scout"]["exclude"]["platforms"] = load_config()["scout"]["exclude"]["platforms"]
+    result = run_scout(source, config, as_of)
+    assert not any(k in ("google", "amazon", "trustpilot") for c in result.candidates for k in c.keywords)
+    assert result.niches_excluded > 5
+
+
+def test_recently_blocked_niches_are_skipped(source, config, as_of):
+    blocked = {"product-hunt": {"reason": "needs a login", "since": "2026-10-18"}, "gone": {"reason": "x", "since": "x"}}
+    result = run_scout(source, config, as_of, blocked)
+    assert "product-hunt" not in {c.niche_id for c in result.candidates}
+    assert result.niches_blocked == 1
+    assert result.blocked_niches == blocked  # carried forward for the Validator to write back
+    assert "1 skipped after failing Legality in recent weeks" in render_issue_body(result, config)
 
 
 def test_inconsistent_pool_sizes_are_rejected(source, config, as_of):

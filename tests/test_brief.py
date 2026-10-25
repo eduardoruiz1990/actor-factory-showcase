@@ -1,5 +1,6 @@
 import pytest
 
+from factory.scout.history import parse_hard_fails
 from factory.scout.run import run_scout
 from factory.scout.sources import FixtureSource
 from factory.validator.assessment import FixtureAssessor
@@ -29,7 +30,7 @@ def test_brief_scores_every_candidate(validations, config):
     assert brief.startswith(BRIEF_MARKER)
     rows = [l for l in brief.splitlines() if l.startswith("| ") and not l.startswith("| #")]
     assert len(rows) == 20
-    assert ("**6 of 20 listed candidates pass all five checks, 1 needs your review of its terms** "
+    assert ("**8 of 20 listed candidates pass all five checks, 1 needs your review of its terms** "
             "(33 assessed; the issue lists the best 20).") in brief
     assert "`claude-sonnet-5-5`" in brief
 
@@ -45,9 +46,10 @@ def test_best_picks_follow_scout_rank_and_list_reasons(validations, config):
     brief = render_brief(validations, config, "2026-W43", assessed=ASSESSED)
     picks = brief[brief.index("### Best picks"):brief.index("### Why the others")]
     assert picks.index("#1 SEC EDGAR") < picks.index("#2 Greenhouse") < picks.index("#3 TED")
-    assert "Also passing: #4 npm Package Downloads Scraper, #5 Lever Jobs Scraper, #6 Federal grant" in picks
+    assert ("Also passing: #4 npm Package Downloads Scraper, #5 Lever Jobs Scraper, #6 WordPress Plugins Scraper, "
+            "#7 PyPI Package Metadata Scraper, #8 Federal grant") in picks
     others = brief[brief.index("### Why the others"):]
-    assert "**#8 Product Hunt Scraper** — Legality: needs a login" in others
+    assert "**#10 Product Hunt Scraper** — Legality: needs a login" in others
 
 
 def test_no_passing_candidates(validations, config):
@@ -86,7 +88,19 @@ def test_verdict_labels(validations):
 def test_review_candidates_get_their_own_section_and_build_command(validations, config):
     brief = render_brief(validations, config, "2026-W43", assessed=ASSESSED)
     section = brief[brief.index("### 🔎 Needs your review"):brief.index("### Why the others")]
-    assert "**#7 Shopify Products Scraper** (example-store.myshopify.com)" in section
+    assert "**#9 Shopify Products Scraper** (example-store.myshopify.com)" in section
     assert "`/build shopify-product terms-reviewed`" in section
-    assert "| 7 | Shopify Products Scraper | ✅ | ✅ | ❔ | ✅ | ✅ | 🔎 **REVIEW** |" in brief
+    assert "| 9 | Shopify Products Scraper | ✅ | ✅ | ❔ | ✅ | ✅ | 🔎 **REVIEW** |" in brief
     assert verdict_labels(validations)["shopify-product"] == "4/5 🔎 REVIEW"
+
+
+def test_hard_fails_are_announced_and_kept_through_the_size_guard(validations, config, monkeypatch):
+    blocked = {"product-hunt": {"reason": "needs a login", "since": "2026-10-25"}}
+    brief = render_brief(validations, config, "2026-W43", assessed=ASSESSED, blocked=blocked, newly_blocked=1)
+    assert "1 of the assessed niches failed Legality for a reason no build can fix" in brief
+    assert "Scout skips them for 12 weeks" in brief
+    assert parse_hard_fails(brief) == blocked
+    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", 1_000)
+    small = render_brief(validations, config, "2026-W43", assessed=ASSESSED, blocked=blocked)
+    assert parse_hidden_data(small) is None and parse_hard_fails(small) == blocked
+    assert parse_hard_fails(render_brief(validations, config, "2026-W43", assessed=ASSESSED)) is None

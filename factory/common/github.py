@@ -80,6 +80,15 @@ class GitHubClient:
         ).json()
         return next((i for i in issues if i.get("title") == title and "pull_request" not in i), None)
 
+    def list_issues(self, label: str, since: str, state: str = "all") -> list[dict[str, Any]]:
+        """Issues with this label updated since the ISO timestamp, newest first (pull requests left out)."""
+        issues = self._call(
+            "GET", f"/repos/{self._repo}/issues",
+            params={"state": state, "labels": label, "since": since, "per_page": 100, "sort": "created",
+                    "direction": "desc"},
+        ).json()
+        return [i for i in issues if "pull_request" not in i]
+
     def list_comments(self, number: int) -> list[dict[str, Any]]:
         return self._call(
             "GET", f"/repos/{self._repo}/issues/{number}/comments", params={"per_page": 100},

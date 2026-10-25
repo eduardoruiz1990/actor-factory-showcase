@@ -82,24 +82,42 @@ def check_competition(c: Candidate, cfg: dict[str, Any]) -> CheckResult:
     )
 
 
+# Legality failures that no change on our side can fix. Scout skips niches that failed with one of
+# these for scout.history.skip_hard_fails_weeks (Q18).
+NEEDS_LOGIN = "needs a login"
+CORE_PERSONAL_DATA = "the data is personal data"
+TERMS_FORBID = "terms forbid automated access or reuse"
+ROBOTS_DISALLOW = "robots.txt disallows"
+HARD_LEGALITY_FAILS = (NEEDS_LOGIN, CORE_PERSONAL_DATA, TERMS_FORBID, ROBOTS_DISALLOW)
+
+
+def hard_legality_fail(reason: str) -> str | None:
+    """The first hard failure named in a Legality reason, or None."""
+    for part in reason.split("; "):
+        if part.startswith(HARD_LEGALITY_FAILS):
+            return part
+    return None
+
+
 def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[str, Any]) -> CheckResult:
     if a is None:
         return CheckResult("legality", UNKNOWN, "no assessment")
     fails: list[str] = []
     unknowns: list[str] = []
-    # Hard rules: data behind a login, or personal data, never passes.
+    # Hard rules: data behind a login, or personal data that is the value itself, never passes.
+    # Personal data the Actor can strip passes only when the owner allows it (Q6).
     if a.login_required == "yes" or a.data_access == "requires_login":
-        fails.append("needs a login")
+        fails.append(NEEDS_LOGIN)
     elif a.login_required != "no":
         unknowns.append("login requirement unclear")
     if a.personal_data == "core":
-        fails.append("the data is personal data")
+        fails.append(CORE_PERSONAL_DATA)
     elif a.personal_data == "removable" and not cfg["allow_removable_personal_data"]:
         fails.append("the source mixes in personal data")
     elif a.personal_data == "unclear":
         unknowns.append("personal data unclear")
     if a.terms_allow_automated_access == "no":
-        fails.append("terms forbid automated access or reuse")
+        fails.append(TERMS_FORBID)
     elif a.terms_allow_automated_access != "yes":
         unknowns.append("terms unclear")
     elif cfg["require_terms_source"] and not (_is_http_url(a.terms_source_url) and a.terms_quote.strip()):
@@ -116,9 +134,10 @@ def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[
         return CheckResult("legality", UNKNOWN, "; ".join(unknowns))
     access = ACCESS_LABELS.get(a.data_access, a.data_access)
     source = f" ({urlsplit(a.terms_source_url).netloc})" if _is_http_url(a.terms_source_url) else ""
+    personal = "personal data stripped by the Actor" if a.personal_data == "removable" else "no personal data"
     return CheckResult(
         "legality", PASS,
-        f"{access}, no login, no personal data, terms allow it{source}; {robots.detail}",
+        f"{access}, no login, {personal}, terms allow it{source}; {robots.detail}",
     )
 
 
@@ -178,12 +197,14 @@ def terms_review_reason(a: Assessment | None, robots: RobotsResult | None, cfg: 
     """Why a candidate needs the owner's review of its terms, or None when it does not qualify (Q17).
 
     It qualifies only when unclear terms are the sole open point: an official API or public feed, no
-    login, no personal data at all, robots.txt allowing the sample URLs, and terms that neither forbid
+    login, no personal data (or only data the Actor strips, when Q6 allows it), robots.txt allowing the
+    sample URLs, and terms that neither forbid
     the use nor were shown to allow it with a cited source.
     """
     if not cfg.get("review_unclear_terms") or a is None:
         return None
-    if a.data_access not in cfg["review_access"] or a.login_required != "no" or a.personal_data != "none":
+    personal_ok = ("none", "removable") if cfg["allow_removable_personal_data"] else ("none",)
+    if a.data_access not in cfg["review_access"] or a.login_required != "no" or a.personal_data not in personal_ok:
         return None
     if robots is None or robots.allowed is not True:
         return None

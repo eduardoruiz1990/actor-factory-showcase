@@ -128,8 +128,8 @@ def attach_ideas(
 
 
 def is_excluded(niche: Niche, exclude_cfg: dict[str, Any]) -> bool:
-    """True when the niche can never pass: a listed title word, or a leader in a listed category."""
-    if set(niche.keywords) & set(exclude_cfg["title_words"]):
+    """True when the niche can never pass: a listed title word or platform, or a leader in a listed category."""
+    if set(niche.keywords) & (set(exclude_cfg["title_words"]) | set(exclude_cfg.get("platforms") or [])):
         return True
     return bool(niche.leader and set(niche.leader.categories) & set(exclude_cfg["categories"]))
 

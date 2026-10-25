@@ -90,3 +90,9 @@ def test_from_env_requires_token_and_repo(monkeypatch):
     monkeypatch.delenv("GITHUB_REPOSITORY", raising=False)
     with pytest.raises(GitHubError):
         GitHubClient.from_env(PoliteClient(user_agent="t"))
+
+
+def test_list_issues_sends_since_and_leaves_out_pull_requests(github):
+    client, fake = github
+    fake.issues = [{"number": 2, "title": "PR", "pull_request": {}}, {"number": 1, "title": "Scout 2026-W43"}]
+    assert [i["number"] for i in client.list_issues("scout", "2026-08-02T05:17:00+00:00")] == [1]

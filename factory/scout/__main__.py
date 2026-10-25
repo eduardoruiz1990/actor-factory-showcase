@@ -16,9 +16,12 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
+import httpx
+
 from factory.common.config import load_config
-from factory.common.github import GitHubClient
+from factory.common.github import GitHubClient, GitHubError
 from factory.common.http import PoliteClient
+from factory.scout.history import load_blocked
 from factory.scout.report import issue_title, render_issue_body
 from factory.scout.run import run_scout
 from factory.scout.sources import FixtureSource, LiveSource
@@ -53,7 +56,8 @@ def main(argv: list[str] | None = None) -> int:
                 apify_token=os.environ.get("APIFY_TOKEN") or None,
                 raw_dir=args.out / "raw",
             )
-        result = run_scout(source, config, now)
+        blocked = {} if args.fixtures else read_blocked(http, config, now)
+        result = run_scout(source, config, now, blocked)
 
         if args.watcher_summary and args.watcher_summary.exists():
             result.watcher_summary = args.watcher_summary.read_text(encoding="utf-8")
@@ -83,6 +87,19 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(f"Issue #{issue['number']}: {issue['html_url']}")
     return 0
+
+
+def read_blocked(http: PoliteClient, config: dict, now: datetime) -> dict[str, dict[str, str]]:
+    """Niches to skip after a hard Legality failure in recent weekly issues (Q18); empty if GitHub is unavailable."""
+    try:
+        github = GitHubClient.from_env(http)
+        blocked = load_blocked(github, config["github"]["scout_label"], now,
+                               int(config["scout"]["history"]["skip_hard_fails_weeks"]))
+    except (GitHubError, httpx.HTTPError) as exc:
+        print(f"::warning title=Scout::Past Legality failures not read, so none are skipped: {exc}")
+        return {}
+    print(f"Skipping {len(blocked)} niches that failed Legality for a hard reason in recent weeks")
+    return blocked
 
 
 if __name__ == "__main__":
