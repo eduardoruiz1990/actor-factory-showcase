@@ -1,10 +1,15 @@
 # Changelog
 
-## 🩹 Job boards typed on one line (2026-10-26, branch `board-list-input`)
+## 🩹 Greenhouse salaries and job boards typed on one line (2026-10-26, branch `board-list-input`)
 
-- **Why:** a first Console run of the Greenhouse & Lever Actor had `airbnb, lever:zoox` typed as one list entry. The Actor read it as a single unknown board, found nothing and exited with code 1.
-- **Fix:** each `boardTokens` entry is split on commas, semicolons and line breaks; board tokens and URLs never contain them. Not on spaces, so a typed company name such as "Acme Corp" stays one invalid entry instead of becoming two other companies' boards. A plain string instead of a list also works. The input description says so.
-- **Tests:** one new Actor test.
+- **Greenhouse salaries:** the Actor now adds `pay_transparency=true` to the same Greenhouse request, so it costs no extra requests.
+  - Each job's first pay range fills `salary_min`, `salary_max` and `salary_currency`.
+  - `salary_interval` is read from the range's name, for example "Mexico Monthly Pay Range". It stays `null` when the name does not say, as with a bare "Pay Range".
+  - Coverage: 152 of 187 Airbnb jobs and 44 of 47 Discord jobs now carry a salary. Stripe publishes none.
+  - Tests use a real fixture, `airbnb_jobs_pay.json`, saved with `tests.fetch_fixture`.
+- **Boards on one line:** a first Console run of the Greenhouse & Lever Actor had `airbnb, lever:zoox` typed as one list entry. The Actor read it as a single unknown board, found nothing and exited with code 1.
+  Each `boardTokens` entry is now split on commas, semicolons and line breaks; board tokens and URLs never contain them. Not on spaces, so a typed company name such as "Acme Corp" stays one invalid entry instead of becoming two other companies' boards. A plain string instead of a list also works. The input description says so.
+- **Tests:** 85 Actor tests (2 new).
 
 ## 🧩 Greenhouse & Lever Jobs Scraper (2026-10-26, branch `ats-lever`)
 

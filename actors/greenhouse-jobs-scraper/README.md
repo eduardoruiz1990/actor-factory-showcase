@@ -14,7 +14,8 @@ hiring, for which roles, where and for how much.
 - Accept board tokens or URLs: `airbnb`, `https://boards.greenhouse.io/airbnb`,
   `https://job-boards.greenhouse.io/airbnb/jobs/123`, `lever:zoox`, `https://jobs.lever.co/zoox`, and EU-hosted Lever
   boards (`lever-eu:<company>` or `https://jobs.eu.lever.co/<company>`)
-- Return salary ranges (minimum, maximum, currency, interval), employment type and workplace type from Lever boards
+- Return salary ranges (minimum, maximum, currency, interval) from both platforms, wherever the company publishes
+  pay ranges, plus employment type and workplace type from Lever boards
 - Return the full description as HTML and as plain text, with every department and office
 - Filter by title keywords (for example "engineer", "data") and location keywords (for example "Remote", "London")
 - Turn descriptions off for a fast, light list of titles, locations and links
@@ -49,14 +50,14 @@ One result per open job. Every job has the same fields; a field a platform does 
 | `content_text` | Full job description as plain text, one paragraph or bullet per line |
 | `employment_type` | For example `Full-time` or `Permanent` (Lever) |
 | `workplace_type` | `onsite`, `hybrid` or `remote` (Lever) |
-| `salary_min`, `salary_max` | Salary range, when the company publishes one (Lever) |
-| `salary_currency` | For example `USD` (Lever) |
-| `salary_interval` | For example `per-year-salary` (Lever) |
+| `salary_min`, `salary_max` | Salary range, when the company publishes one (both platforms) |
+| `salary_currency` | For example `USD` |
+| `salary_interval` | `per-year-salary`, `per-month-salary`, `per-hour-wage` and so on, or `null` when the board does not say |
 | `fetched_at` | When the Actor read the job (UTC) |
 
 With **Include full job descriptions** off, `content` and `content_text` are empty (and, on Greenhouse, the
 departments and offices too). The Actor does not return the companies' custom application questions or custom
-metadata fields. E-mail addresses and phone numbers that appear in a description are replaced with `[removed]`.
+metadata fields. When a Greenhouse job lists one pay range per country, the salary fields hold the first one. E-mail addresses and phone numbers that appear in a description are replaced with `[removed]`.
 
 ## How much does it cost?
 

@@ -1,7 +1,7 @@
 """Company job boards on Greenhouse and Lever: every open job, read from each platform's official public API.
 
 One request per board:
-- Greenhouse: GET boards-api.greenhouse.io/v1/boards/<token>/jobs?content=true
+- Greenhouse: GET boards-api.greenhouse.io/v1/boards/<token>/jobs?content=true&pay_transparency=true
 - Lever: GET api.lever.co/v0/postings/<site>?mode=json (api.eu.lever.co for EU-hosted boards)
 Both APIs are public and need no key; Lever's documentation says published postings
 "may be scraped by third parties". Every URL is still checked against the API host's
@@ -154,7 +154,7 @@ async def iter_items(settings: Settings, http: PoliteClient, robots: RobotsCache
             jobs = await _fetch(f'{LEVER_API[platform]}/{quote(site)}?mode=json', 'Lever', site, http, robots,
                                 lambda data: parse_lever_jobs(site, data, settings.include_content))
         else:
-            url = f'{API}/{quote(key)}/jobs' + ('?content=true' if settings.include_content else '')
+            url = f'{API}/{quote(key)}/jobs?' + ('content=true&' if settings.include_content else '') + 'pay_transparency=true'
             jobs = await _fetch(url, 'Greenhouse', key, http, robots, lambda data: parse_jobs(key, data))
             if jobs and any(job['company'] is None for job in jobs):
                 company = await board_name(key, http, robots)
@@ -236,16 +236,35 @@ def parse_job(token: str, job: dict[str, Any], fetched_at: str) -> dict[str, Any
         'first_published': _text(job.get('first_published')),
         'content': content_html,
         'content_text': html_to_text(content_html) if content_html else None,
-        **_NO_LEVER_FIELDS,
+        'employment_type': None,
+        'workplace_type': None,
+        **_greenhouse_salary(job.get('pay_input_ranges')),
         'fetched_at': fetched_at,
     }
 
 
-# Fields only Lever publishes; Greenhouse items carry them as null so every item has the same shape.
-_NO_LEVER_FIELDS: dict[str, Any] = {
-    'employment_type': None, 'workplace_type': None,
-    'salary_min': None, 'salary_max': None, 'salary_currency': None, 'salary_interval': None,
-}
+# Greenhouse names each pay range freely ("Pay Range", "Mexico Monthly Pay Range"); the interval is read from that
+# name in Lever's words, and left null when the name does not say.
+_INTERVALS = [('hour', 'per-hour-wage'), ('dai', 'per-day-wage'), ('day', 'per-day-wage'),
+              ('month', 'per-month-salary'), ('annual', 'per-year-salary'), ('year', 'per-year-salary')]
+
+
+def _greenhouse_salary(ranges: Any) -> dict[str, Any]:
+    """The job's first pay range (a job may list one per country), from the board's pay transparency data."""
+    first = ranges[0] if isinstance(ranges, list) and ranges and isinstance(ranges[0], dict) else {}
+    title = str(first.get('title') or '').lower()
+    return {
+        'salary_min': _from_cents(first.get('min_cents')),
+        'salary_max': _from_cents(first.get('max_cents')),
+        'salary_currency': _text(first.get('currency_type')),
+        'salary_interval': next((interval for word, interval in _INTERVALS if word in title), None),
+    }
+
+
+def _from_cents(value: Any) -> int | float | None:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return None
+    return value // 100 if isinstance(value, int) and value % 100 == 0 else value / 100
 
 
 def parse_lever_jobs(site: str, data: Any, include_content: bool = True) -> list[dict[str, Any]]:
