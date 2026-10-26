@@ -1,0 +1,198 @@
+{
+  "jobs": [
+    {
+      "absolute_url": "https://careers.airbnb.com/positions/8231416?gh_jid=8231416",
+      "data_compliance": [
+        {
+          "type": "gdpr",
+          "requires_consent": false,
+          "requires_processing_consent": false,
+          "requires_retention_consent": false,
+          "retention_period": null,
+          "demographic_data_consent_applies": false
+        }
+      ],
+      "internal_job_id": 3562002,
+      "location": {
+        "name": "United States "
+      },
+      "metadata": [
+        {
+          "id": 9245691,
+          "name": "Is this job part of ACC?",
+          "value": false,
+          "value_type": "yes_no"
+        },
+        {
+          "id": 10216612,
+          "name": "Workplace Type",
+          "value": "Remote",
+          "value_type": "single_select"
+        }
+      ],
+      "id": 8231416,
+      "updated_at": "2026-09-29T20:00:54-04:00",
+      "requisition_id": "ONE",
+      "title": "Associate Principal, Procurement Innovation Supplier Programs",
+      "pay_input_ranges": [
+        {
+          "min_cents": 10200000,
+          "max_cents": 12000000,
+          "currency_type": "USD",
+          "title": "Pay Range",
+          "blurb": "<p><span style=\"font-size: 16px;\"><strong><span style=\"font-family: arial, helvetica, sans-serif; color: rgb(0, 0, 0);\">How We'll Take Care of You:</span></strong></span></p>\n<p class=\"p1\"><span style=\"font-size: 16px;\">Our job titles may span more than one career level. The actual base pay is dependent upon many factors, such as: training, transferable skills, work experience, business needs and market demands. The base pay range is subject to change and may be modified in the future. This role may also be eligible for bonus, equity, benefits, and Employee Travel Credits. &nbsp;</span></p>"
+        }
+      ],
+      "company_name": "Airbnb",
+      "first_published": "2026-09-24T18:17:39-04:00",
+      "language": "en",
+      "application_deadline": null
+    },
+    {
+      "absolute_url": "https://careers.airbnb.com/positions/8241468?gh_jid=8241468",
+      "data_compliance": [
+        {
+          "type": "gdpr",
+          "requires_consent": false,
+          "requires_processing_consent": false,
+          "requires_retention_consent": false,
+          "retention_period": null,
+          "demographic_data_consent_applies": false
+        }
+      ],
+      "internal_job_id": 3566035,
+      "location": {
+        "name": "France, Italy"
+      },
+      "metadata": [
+        {
+          "id": 9245691,
+          "name": "Is this job part of ACC?",
+          "value": false,
+          "value_type": "yes_no"
+        },
+        {
+          "id": 10216612,
+          "name": "Workplace Type",
+          "value": "Remote",
+          "value_type": "single_select"
+        }
+      ],
+      "id": 8241468,
+      "updated_at": "2026-10-12T14:02:19-04:00",
+      "requisition_id": "ONE",
+      "title": "Senior Demand Generation Specialist, Hotels (12M FTC)",
+      "pay_input_ranges": [
+        {
+          "min_cents": 7400000,
+          "max_cents": 9200000,
+          "currency_type": "EUR",
+          "title": "France Annual Pay Range",
+          "blurb": "<p><span style=\"font-size: 16px;\"><strong><span style=\"font-family: arial, helvetica, sans-serif; color: rgb(0, 0, 0);\">How We'll Take Care of You:</span></strong></span></p>\n<p><span style=\"font-size: 16px;\">The actual base pay is dependent upon many factors, such as: training, transferable skills, work experience, business needs and market demands. The base pay range shown below is annualized, is subject to change and may be modified in the future. This role may also be eligible for bonus, benefits, and Employee Travel Credits.</span></p>"
+        },
+        {
+          "min_cents": 6500000,
+          "max_cents": 8000000,
+          "currency_type": "EUR",
+          "title": "Italy Annual Pay Range",
+          "blurb": "<p><span style=\"font-size: 16px;\"><strong><span style=\"font-family: arial, helvetica, sans-serif; color: rgb(0, 0, 0);\">How We'll Take Care of You:</span></strong></span></p>\n<p><span style=\"font-size: 16px;\">The actual base pay is dependent upon many factors, such as: training, transferable skills, work experience, business needs and market demands. The base pay range shown below is annualized, is subject to change and may be modified in the future. This role may also be eligible for bonus, benefits, and Employee Travel Credits.</span></p>"
+        }
+      ],
+      "company_name": "Airbnb",
+      "first_published": "2026-09-30T08:12:47-04:00",
+      "language": "en",
+      "application_deadline": null
+    },
+    {
+      "absolute_url": "https://careers.airbnb.com/positions/8178505?gh_jid=8178505",
+      "data_compliance": [
+        {
+          "type": "gdpr",
+          "requires_consent": false,
+          "requires_processing_consent": false,
+          "requires_retention_consent": false,
+          "retention_period": null,
+          "demographic_data_consent_applies": false
+        }
+      ],
+      "internal_job_id": 3539237,
+      "location": {
+        "name": "Mexico City, Mexico"
+      },
+      "metadata": [
+        {
+          "id": 9245691,
+          "name": "Is this job part of ACC?",
+          "value": false,
+          "value_type": "yes_no"
+        },
+        {
+          "id": 10216612,
+          "name": "Workplace Type",
+          "value": "Remote",
+          "value_type": "single_select"
+        }
+      ],
+      "id": 8178505,
+      "updated_at": "2026-09-29T20:00:54-04:00",
+      "requisition_id": "MULTI",
+      "title": "Market Associate",
+      "pay_input_ranges": [
+        {
+          "min_cents": 4350000,
+          "max_cents": 4833300,
+          "currency_type": "MXN",
+          "title": "Mexico Monthly Pay Range",
+          "blurb": "<p><span style=\"font-size: 16px;\"><strong><span style=\"font-family: arial, helvetica, sans-serif; color: rgb(0, 0, 0);\">How We'll Take Care of You:</span></strong></span></p>\n<p>Our job titles may span more than one career level. The actual base pay is dependent upon many factors, such as: training, transferable skills, work experience, business needs and market demands. The base pay range shown below is monthly, is subject to change and may be modified in the future. This role may also be eligible for bonus, equity, benefits, and Employee Travel Credits.&nbsp;&nbsp;</p>"
+        }
+      ],
+      "company_name": "Airbnb",
+      "first_published": "2026-09-08T09:20:36-04:00",
+      "language": "en",
+      "application_deadline": null
+    },
+    {
+      "absolute_url": "https://careers.airbnb.com/positions/7789554?gh_jid=7789554",
+      "data_compliance": [
+        {
+          "type": "gdpr",
+          "requires_consent": false,
+          "requires_processing_consent": false,
+          "requires_retention_consent": false,
+          "retention_period": null,
+          "demographic_data_consent_applies": false
+        }
+      ],
+      "internal_job_id": 3407102,
+      "location": {
+        "name": "Tokyo, Japan"
+      },
+      "metadata": [
+        {
+          "id": 9245691,
+          "name": "Is this job part of ACC?",
+          "value": false,
+          "value_type": "yes_no"
+        },
+        {
+          "id": 10216612,
+          "name": "Workplace Type",
+          "value": "Hybrid",
+          "value_type": "single_select"
+        }
+      ],
+      "id": 7789554,
+      "updated_at": "2026-09-29T20:00:54-04:00",
+      "requisition_id": "ONE",
+      "title": "Associate Legal Counsel, Japan",
+      "pay_input_ranges": [],
+      "company_name": "Airbnb",
+      "first_published": "2026-04-13T04:49:05-04:00",
+      "language": "en",
+      "application_deadline": null
+    }
+  ],
+  "meta": {
+    "total": 4
+  }
+}

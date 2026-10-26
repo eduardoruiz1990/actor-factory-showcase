@@ -98,7 +98,7 @@ def test_output_carries_no_metadata_or_compliance_blocks():
 
 def test_empty_board():
     assert parse_jobs('acme', {'jobs': [], 'meta': {'total': 0}}) == []
-    items, _ = collect(settings(boardTokens=['acme']), {**ROBOTS, '/v1/boards/acme/jobs?content=true': httpx2.Response(200, json={'jobs': [], 'meta': {'total': 0}})})
+    items, _ = collect(settings(boardTokens=['acme']), {**ROBOTS, '/v1/boards/acme/jobs?content=true&pay_transparency=true': httpx2.Response(200, json={'jobs': [], 'meta': {'total': 0}})})
     assert items == []
 
 
@@ -120,25 +120,41 @@ def test_malformed_entries_are_skipped_and_odd_values_tolerated():
 def test_fetches_one_request_per_board_and_continues_after_bad_boards():
     routes = {
         **ROBOTS,
-        '/v1/boards/airbnb/jobs?content=true': httpx2.Response(200, json={'jobs': [JOB], 'meta': {'total': 1}}),
-        '/v1/boards/broken/jobs?content=true': httpx2.Response(200, text='<html>not json</html>'),
-        '/v1/boards/down/jobs?content=true': httpx2.Response(500),
+        '/v1/boards/airbnb/jobs?content=true&pay_transparency=true': httpx2.Response(200, json={'jobs': [JOB], 'meta': {'total': 1}}),
+        '/v1/boards/broken/jobs?content=true&pay_transparency=true': httpx2.Response(200, text='<html>not json</html>'),
+        '/v1/boards/down/jobs?content=true&pay_transparency=true': httpx2.Response(500),
     }
     items, seen = collect(settings(boardTokens=['missing', 'broken', 'down', 'airbnb']), routes)
     assert [i['job_id'] for i in items] == [7789554]
     assert seen.count('/robots.txt') == 1
-    assert seen.count('/v1/boards/airbnb/jobs?content=true') == 1
+    assert seen.count('/v1/boards/airbnb/jobs?content=true&pay_transparency=true') == 1
 
 
 def test_include_content_false_asks_for_the_light_list():
-    routes = {**ROBOTS, '/v1/boards/airbnb/jobs': httpx2.Response(200, json=JOBS)}
+    routes = {**ROBOTS, '/v1/boards/airbnb/jobs?pay_transparency=true': httpx2.Response(200, json=JOBS)}
     items, seen = collect(settings(includeContent=False), routes)
-    assert len(items) == 4 and '/v1/boards/airbnb/jobs' in seen
+    assert len(items) == 4 and '/v1/boards/airbnb/jobs?pay_transparency=true' in seen
+
+
+def test_greenhouse_pay_ranges_fill_the_salary_fields():
+    # Real Airbnb jobs: a plain range, one range per country, a monthly range, and a job without a range.
+    pay = json.loads((FIXTURES / 'airbnb_jobs_pay.json').read_text())
+    items = parse_jobs('airbnb', pay)
+    assert all(set(i) == FIELDS for i in items)
+    salaries = [(i['salary_min'], i['salary_max'], i['salary_currency'], i['salary_interval']) for i in items]
+    assert salaries == [
+        (102000, 120000, 'USD', None),
+        (74000, 92000, 'EUR', 'per-year-salary'),
+        (43500, 48333, 'MXN', 'per-month-salary'),
+        (None, None, None, None),
+    ]
+    odd = parse_jobs('acme', {'jobs': [{'id': 1, 'pay_input_ranges': [{'min_cents': 1234567, 'max_cents': True}]}]})
+    assert (odd[0]['salary_min'], odd[0]['salary_max'], odd[0]['salary_currency']) == (12345.67, None, None)
 
 
 def test_company_falls_back_to_the_board_name():
     job = {k: v for k, v in JOB.items() if k != 'company_name'}
-    routes = {**ROBOTS, '/v1/boards/airbnb/jobs?content=true': httpx2.Response(200, json={'jobs': [job]}),
+    routes = {**ROBOTS, '/v1/boards/airbnb/jobs?content=true&pay_transparency=true': httpx2.Response(200, json={'jobs': [job]}),
               '/v1/boards/airbnb': httpx2.Response(200, json=BOARD)}
     items, _ = collect(settings(), routes)
     assert items[0]['company'] == 'Airbnb'
@@ -146,14 +162,14 @@ def test_company_falls_back_to_the_board_name():
 
 def test_robots_disallow_means_no_api_request():
     routes = {'/robots.txt': httpx2.Response(200, text='User-agent: *\nDisallow: /v1/\n'),
-              '/v1/boards/airbnb/jobs?content=true': httpx2.Response(200, json={'jobs': [JOB]})}
+              '/v1/boards/airbnb/jobs?content=true&pay_transparency=true': httpx2.Response(200, json={'jobs': [JOB]})}
     items, seen = collect(settings(), routes)
     assert items == [] and seen == ['/robots.txt']
 
 
 def test_unreadable_robots_means_no_api_request():
     routes = {'/robots.txt': httpx2.Response(503),
-              '/v1/boards/airbnb/jobs?content=true': httpx2.Response(200, json={'jobs': [JOB]})}
+              '/v1/boards/airbnb/jobs?content=true&pay_transparency=true': httpx2.Response(200, json={'jobs': [JOB]})}
     items, seen = collect(settings(), routes)
     assert items == [] and set(seen) == {'/robots.txt'}
 
