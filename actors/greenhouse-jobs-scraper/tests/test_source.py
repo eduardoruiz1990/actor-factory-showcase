@@ -200,6 +200,15 @@ def test_default_input_is_light_and_survives_one_board_leaving():
     assert Settings.from_input({'boardTokens': boards['default']}).board_tokens == boards['default']
 
 
+def test_several_boards_on_one_line_are_split():
+    # A first run on the Store had 'airbnb, lever:zoox' typed as one entry and found no board.
+    s = Settings.from_input({'boardTokens': ['airbnb, lever:zoox', 'stripe;  https://jobs.lever.co/palantir\nairbnb']})
+    assert s.board_tokens == ['airbnb', 'lever:zoox', 'stripe', 'lever:palantir']
+    assert Settings.from_input({'boardTokens': 'airbnb,lever:zoox'}).board_tokens == ['airbnb', 'lever:zoox']
+    assert Settings.from_input({'boardTokens': ['Acme Corp, airbnb']}).board_tokens == ['airbnb']
+    assert Settings.from_input({'boardTokens': [{'url': 'https://boards.greenhouse.io/airbnb'}]}).board_tokens == ['airbnb']
+
+
 def test_parses_real_lever_postings_with_salary():
     items = parse_lever_jobs('zoox', ZOOX)
     assert len(items) == 2 and all(set(i) == FIELDS for i in items)

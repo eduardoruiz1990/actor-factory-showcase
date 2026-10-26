@@ -50,8 +50,8 @@ class Settings:
     @classmethod
     def from_input(cls, actor_input: dict[str, Any]) -> Settings:
         tokens: list[str] = []
-        for raw in actor_input.get('boardTokens') or []:
-            token = board_key(raw.get('url') if isinstance(raw, dict) else raw)
+        for raw in _board_entries(actor_input.get('boardTokens')):
+            token = board_key(raw)
             if token is None:
                 Actor.log.warning(f'{raw!r} is not a Greenhouse or Lever board token or URL; skipped')
             elif token not in tokens:
@@ -68,6 +68,25 @@ class Settings:
             title_keywords=_keywords(actor_input.get('titleKeywords')),
             location_keywords=_keywords(actor_input.get('locationKeywords')),
         )
+
+
+def _board_entries(value: Any) -> list[Any]:
+    """Boards typed several to a line ('airbnb, lever:zoox') are split on commas, semicolons and line breaks.
+
+    Not on spaces: 'Acme Corp' must stay one (invalid) entry, not become the boards 'acme' and 'corp'.
+    """
+    if isinstance(value, str | dict):
+        value = [value]
+    if not isinstance(value, list):
+        return []
+    entries: list[Any] = []
+    for raw in value:
+        raw = raw.get('url') if isinstance(raw, dict) else raw
+        if isinstance(raw, str):
+            entries += [part for part in re.split(r'[,;\n]+', raw) if part]
+        else:
+            entries.append(raw)
+    return entries
 
 
 def board_key(value: Any) -> str | None:

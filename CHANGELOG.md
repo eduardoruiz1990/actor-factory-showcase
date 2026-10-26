@@ -1,5 +1,11 @@
 # Changelog
 
+## 🩹 Job boards typed on one line (2026-10-26, branch `board-list-input`)
+
+- **Why:** a first Console run of the Greenhouse & Lever Actor had `airbnb, lever:zoox` typed as one list entry. The Actor read it as a single unknown board, found nothing and exited with code 1.
+- **Fix:** each `boardTokens` entry is split on commas, semicolons and line breaks; board tokens and URLs never contain them. Not on spaces, so a typed company name such as "Acme Corp" stays one invalid entry instead of becoming two other companies' boards. A plain string instead of a list also works. The input description says so.
+- **Tests:** one new Actor test.
+
 ## 🧩 Greenhouse & Lever Jobs Scraper (2026-10-26, branch `ats-lever`)
 
 - **Why:** "Greenhouse jobs" is crowded on the Store (about 25 Actors, 10 with nearly the same name). The Actors with real traction cover several applicant tracking systems.
