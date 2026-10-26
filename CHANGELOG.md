@@ -1,5 +1,20 @@
 # Changelog
 
+## 🧩 Greenhouse & Lever Jobs Scraper (2026-10-26, branch `ats-lever`)
+
+- **Why:** "Greenhouse jobs" is crowded on the Store (about 25 Actors, 10 with nearly the same name). The Actors with real traction cover several applicant tracking systems.
+- **Lever support** in `actors/greenhouse-jobs-scraper`:
+  - Input: `lever:<company>`, `lever-eu:<company>`, or any `jobs.lever.co` / `jobs.eu.lever.co` URL, mixed freely with Greenhouse boards.
+  - Source: one request per board to Lever's public Postings API. Lever's docs say published postings "may be scraped by third parties". Its robots.txt allows crawling with a 1-second delay.
+  - New output fields `platform`, `employment_type`, `workplace_type`, and `salary_min`, `salary_max`, `salary_currency`, `salary_interval`. Greenhouse jobs carry them as `null`, and every existing field is unchanged.
+- **Rate limit:** capped at 1 request per second (was up to 5) to honour Lever's crawl delay.
+- **Store text:**
+  - Title: "Greenhouse & Lever Jobs Scraper". The SEO title and description are updated, and the README is rewritten.
+  - The default input is `airbnb` plus `lever:zoox`, so Apify's daily test covers both platforms.
+  - Same price: $1.60 per 1,000 jobs.
+- **Not added:** Ashby. Its API answers robots.txt with 401, which the factory's strict robots rule treats as "skip" (Q19).
+- **Tests:** 83 Actor tests, against real Lever fixtures saved with `tests.fetch_fixture`. A live check returned 775 jobs from 4 boards in 16 s, 219 of them with salaries.
+
 ## 🔧 Smoother Builder runs (2026-10-25, branch `builder-tools`)
 
 - **Why:** the first live build (issue #8, PR #11) hit 12 blocked commands. Each was harmless, and Claude worked around them, at the cost of extra turns.

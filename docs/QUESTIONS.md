@@ -146,3 +146,12 @@ In week 43, 31 of the 40 assessed niches were scrapers of big platforms (Google,
 - **What doesn't count:** "unclear" answers, removable personal data and Cost or Stability failures. A niche that failed only for those comes back the next week.
 - **To give a niche another chance:** remove its entry from the latest brief's hidden list, or set the weeks to 0.
 
+### Q19. A robots.txt that answers 401 or 403 (open, conservative choice: skip the site)
+
+Ashby's public job posting API (`api.ashbyhq.com`) answers `/robots.txt` with **401 Unauthorized** instead of publishing a file. Ashby was checked on 2026-10-26 as a third platform for the Greenhouse & Lever Actor.
+
+- **RFC 9309 (§2.3.1.3):** a robots.txt that is "unavailable" (any 4xx) means a crawler *may* access the site.
+- **The template's `robots.py` is stricter:** only 404 and 410 count as "no robots.txt". Any other status, including 401 and 403, means the whole site is skipped. The rule is "never fetch a page you cannot show you are allowed to".
+- **Conservative choice:** keep the strict rule, so the Actor does not support Ashby.
+- **To decide:** if you accept RFC 9309's reading for 401 and 403, `robots.py` changes in the template and in each Actor, and Ashby can be added. 5xx and network errors would still skip the site.
+

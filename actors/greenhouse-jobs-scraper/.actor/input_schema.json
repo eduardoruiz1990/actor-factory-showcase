@@ -1,16 +1,22 @@
 {
     "$schema": "https://apify.com/schemas/v1/input.ide.json",
-    "title": "Greenhouse jobs input",
+    "title": "Job boards input",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
         "boardTokens": {
-            "title": "Greenhouse board tokens or URLs",
+            "title": "Job boards (Greenhouse or Lever)",
             "type": "array",
-            "description": "Companies to read, by Greenhouse board token (the part after boards.greenhouse.io/, for example \"airbnb\") or by any job board URL. Each board is one request.",
+            "description": "Companies to read. Greenhouse: a board token (the part after boards.greenhouse.io/, for example \"airbnb\") or any Greenhouse job board URL. Lever: \"lever:<company>\" (for example \"lever:zoox\") or any jobs.lever.co URL; use \"lever-eu:<company>\" or a jobs.eu.lever.co URL for EU-hosted boards. Each board is one request.",
             "editor": "stringList",
-            "prefill": ["airbnb", "discord"],
-            "default": ["airbnb", "discord"]
+            "prefill": [
+                "airbnb",
+                "lever:zoox"
+            ],
+            "default": [
+                "airbnb",
+                "lever:zoox"
+            ]
         },
         "includeContent": {
             "title": "Include full job descriptions",
@@ -43,11 +49,13 @@
         "maxRequestsPerSecond": {
             "title": "Maximum requests per second",
             "type": "number",
-            "description": "Polite rate limit for the Greenhouse API. Keep it low; the Actor also honours Retry-After and backs off on errors.",
+            "description": "Polite rate limit for the job board APIs. At most 1 request per second, which is what Lever's robots.txt asks for; the Actor also honours Retry-After and backs off on errors.",
             "default": 1,
             "minimum": 0.1,
-            "maximum": 5
+            "maximum": 1
         }
     },
-    "required": ["boardTokens"]
+    "required": [
+        "boardTokens"
+    ]
 }

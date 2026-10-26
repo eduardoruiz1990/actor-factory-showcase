@@ -1,10 +1,12 @@
-"""Parsing and fetching for the Greenhouse Job Board API, offline against saved responses.
+"""Parsing and fetching for the Greenhouse and Lever job board APIs, offline against saved responses.
 
-Fixtures (fetched with tests.fetch_fixture from boards-api.greenhouse.io):
-- airbnb_jobs.json: /v1/boards/airbnb/jobs, trimmed to four jobs.
+Fixtures (fetched with tests.fetch_fixture):
+- airbnb_jobs.json: boards-api.greenhouse.io /v1/boards/airbnb/jobs, trimmed to four jobs.
 - airbnb_job.json: /v1/boards/airbnb/jobs/7789554, one job with content, departments and offices,
   the same shape as each job in /jobs?content=true.
 - airbnb_board.json: /v1/boards/airbnb.
+- lever_zoox.json: api.lever.co /v0/postings/zoox?mode=json&limit=2, postings with a salary range.
+- lever_spotify.json: /v0/postings/spotify?mode=json&limit=1, a posting without one.
 """
 
 import asyncio
@@ -17,16 +19,21 @@ import pytest
 from my_actor.polite import PoliteClient
 from my_actor.privacy import clean
 from my_actor.robots import RobotsCache
-from my_actor.source import Settings, board_token, html_to_text, iter_items, matches, parse_job, parse_jobs
+from my_actor.source import (
+    Settings, board_key, board_token, html_to_text, iter_items, matches, parse_job, parse_jobs, parse_lever_jobs,
+)
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 JOBS = json.loads((FIXTURES / 'airbnb_jobs.json').read_text())
 JOB = json.loads((FIXTURES / 'airbnb_job.json').read_text())
 BOARD = json.loads((FIXTURES / 'airbnb_board.json').read_text())
+ZOOX = json.loads((FIXTURES / 'lever_zoox.json').read_text())
+SPOTIFY = json.loads((FIXTURES / 'lever_spotify.json').read_text())
 FIELDS = {
-    'board_token', 'company', 'job_id', 'internal_job_id', 'requisition_id', 'title', 'location', 'department',
-    'departments', 'office', 'offices', 'absolute_url', 'language', 'updated_at', 'first_published', 'content',
-    'content_text', 'fetched_at',
+    'platform', 'board_token', 'company', 'job_id', 'internal_job_id', 'requisition_id', 'title', 'location',
+    'department', 'departments', 'office', 'offices', 'absolute_url', 'language', 'updated_at', 'first_published',
+    'content', 'content_text', 'employment_type', 'workplace_type', 'salary_min', 'salary_max', 'salary_currency',
+    'salary_interval', 'fetched_at',
 }
 
 
@@ -62,6 +69,7 @@ def test_parses_a_real_job_with_content():
     item = parse_job('airbnb', JOB, '2026-10-25T00:00:00+00:00')
     assert set(item) == FIELDS
     assert item['company'] == 'Airbnb' and item['job_id'] == 7789554 and item['requisition_id'] == 'ONE'
+    assert item['platform'] == 'greenhouse' and item['salary_min'] is None and item['employment_type'] is None
     assert item['title'] == 'Associate Legal Counsel, Japan' and item['location'] == 'Tokyo, Japan'
     assert item['department'] == 'Legal' and item['departments'] == ['Legal']
     assert item['office'] == 'Tokyo, Japan' and item['offices'] == ['Tokyo, Japan']
@@ -190,3 +198,86 @@ def test_default_input_is_light_and_survives_one_board_leaving():
     boards = schema['properties']['boardTokens']
     assert boards['default'] == boards['prefill'] and len(boards['default']) >= 2
     assert Settings.from_input({'boardTokens': boards['default']}).board_tokens == boards['default']
+
+
+def test_parses_real_lever_postings_with_salary():
+    items = parse_lever_jobs('zoox', ZOOX)
+    assert len(items) == 2 and all(set(i) == FIELDS for i in items)
+    item = items[0]
+    assert item['platform'] == 'lever' and item['board_token'] == 'zoox' and item['company'] is None
+    assert item['job_id'] == ZOOX[0]['id'] and item['title'] == ZOOX[0]['text']
+    assert item['location'] == 'Foster City, CA' and item['offices'] == ['Foster City, CA']
+    assert item['departments'] == ['Executive Office'] and item['department'] == 'Executive Office'  # team == department
+    assert item['employment_type'] == 'Full-time' and item['workplace_type'] == ZOOX[0]['workplaceType']
+    assert (item['salary_min'], item['salary_currency'], item['salary_interval']) == (
+        ZOOX[0]['salaryRange']['min'], 'USD', 'per-year-salary')
+    assert item['absolute_url'] == ZOOX[0]['hostedUrl']
+    assert item['first_published'].endswith('+00:00') and item['first_published'][:4] >= '2020'
+    assert item['content'].count('<h3>') == len(ZOOX[0]['lists'])
+    assert '<' not in item['content_text'] and ZOOX[0]['lists'][0]['text'].strip() in item['content_text'].splitlines()
+    assert items[1]['departments'] == ['Product, Features & Homologation', 'Product and Experience']
+    assert clean(item) == item  # nothing in a real posting trips the privacy guard
+
+
+def test_parses_a_real_lever_posting_without_salary():
+    [item] = parse_lever_jobs('spotify', SPOTIFY)
+    assert item['salary_min'] is item['salary_max'] is item['salary_currency'] is None
+    assert item['employment_type'] == 'Permanent' and item['location'] == 'New York, NY'
+
+
+@pytest.mark.parametrize('data', [None, {'ok': False, 'error': 'Document not found'}, 'nope'])
+def test_malformed_lever_response_is_rejected(data):
+    with pytest.raises(ValueError):
+        parse_lever_jobs('acme', data)
+
+
+def test_lever_odd_values_are_tolerated():
+    data = ['x', {'text': 'no id'}, {'id': 'a1', 'text': ' T ', 'categories': 'bad', 'createdAt': 'soon',
+                                     'salaryRange': {'min': 'lots'}, 'lists': ['bad', {'text': 'Do', 'content': '<li>x</li>'}]}]
+    [item] = parse_lever_jobs('acme', data)
+    assert item['job_id'] == 'a1' and item['title'] == 'T' and item['location'] is None and item['offices'] == []
+    assert item['first_published'] is None and item['salary_min'] is None
+    assert item['content_text'].splitlines() == ['Do', 'x']
+
+
+def test_fetches_lever_boards_politely_with_their_own_robots():
+    routes = {**ROBOTS, '/v0/postings/zoox?mode=json': httpx2.Response(200, json=ZOOX),
+              '/v0/postings/empty?mode=json': httpx2.Response(200, json=[]),
+              '/v0/postings/gone?mode=json': httpx2.Response(404, json={'ok': False, 'error': 'Document not found'})}
+    items, seen = collect(settings(boardTokens=['lever:gone', 'lever:empty', 'https://jobs.lever.co/zoox']), routes)
+    assert [i['title'] for i in items] == [p['text'] for p in ZOOX]
+    assert seen.count('/robots.txt') == 1 and seen.count('/v0/postings/zoox?mode=json') == 1
+
+
+def test_lever_include_content_false_drops_the_description():
+    routes = {**ROBOTS, '/v0/postings/zoox?mode=json': httpx2.Response(200, json=ZOOX)}
+    items, _ = collect(settings(boardTokens=['lever:zoox'], includeContent=False), routes)
+    assert len(items) == 2 and all(i['content'] is None and i['content_text'] is None for i in items)
+    assert items[0]['salary_min'] is not None  # the light list keeps everything else
+
+
+def test_lever_robots_disallow_means_no_api_request():
+    routes = {'/robots.txt': httpx2.Response(200, text='User-agent: *\nDisallow: /v0/\n'),
+              '/v0/postings/zoox?mode=json': httpx2.Response(200, json=ZOOX)}
+    items, seen = collect(settings(boardTokens=['lever:zoox']), routes)
+    assert items == [] and seen == ['/robots.txt']
+
+
+@pytest.mark.parametrize(('value', 'key'), [
+    ('airbnb', 'airbnb'),
+    ('greenhouse:Airbnb', 'airbnb'),
+    ('lever:Palantir', 'lever:palantir'),
+    ('lever-eu:acme', 'lever-eu:acme'),
+    ('https://jobs.lever.co/palantir', 'lever:palantir'),
+    ('https://jobs.lever.co/palantir/6ed76ce8-4156-4b60-b120-403538bd66cd/apply', 'lever:palantir'),
+    ('jobs.eu.lever.co/acme', 'lever-eu:acme'),
+    ('https://api.lever.co/v0/postings/zoox?mode=json', 'lever:zoox'),
+    ('https://boards.greenhouse.io/airbnb', 'airbnb'),
+    ('lever:', None),
+    ('lever:not a site', None),
+    ('https://jobs.lever.co/', None),
+    ('https://lever.co.evil.example/x', None),
+    ('workday:acme', None),
+])
+def test_board_key(value, key):
+    assert board_key(value) == key
