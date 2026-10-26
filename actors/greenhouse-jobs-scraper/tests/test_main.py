@@ -70,6 +70,6 @@ def test_settings_validation():
         Settings.from_input({'boardTokens': ['  ', 'not a token!']})
     s = Settings.from_input({'boardTokens': [' Airbnb ', 'https://boards.greenhouse.io/airbnb', 'stripe'],
                              'maxRequestsPerSecond': 50, 'titleKeywords': 'Engineer, data '})
-    assert s.board_tokens == ['airbnb', 'stripe'] and s.max_requests_per_second == 5.0 and s.max_results == 1000
+    assert s.board_tokens == ['airbnb', 'stripe'] and s.max_requests_per_second == 1.0 and s.max_results == 1000
     assert s.include_content is True and s.title_keywords == ['engineer', 'data'] and s.location_keywords == []
     assert Settings.from_input({'boardTokens': ['a'], 'includeContent': False}).include_content is False

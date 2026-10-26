@@ -2,9 +2,9 @@
     "$schema": "https://apify.com/schemas/v1/actor.ide.json",
     "actorSpecification": 1,
     "name": "greenhouse-jobs-scraper",
-    "title": "Greenhouse Jobs Scraper",
-    "description": "Get every open job from any company's Greenhouse job board, with departments, offices, locations and full descriptions, as clean JSON from the official Job Board API.",
-    "version": "0.1",
+    "title": "Greenhouse & Lever Jobs Scraper",
+    "description": "Get every open job from any company's Greenhouse or Lever job board, with departments, locations, salary ranges and full descriptions, as clean JSON from the official public APIs.",
+    "version": "0.2",
     "buildTag": "latest",
     "meta": {
         "templateId": "python-start",
