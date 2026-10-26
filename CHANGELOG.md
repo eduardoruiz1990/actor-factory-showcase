@@ -1,6 +1,6 @@
 # Changelog
 
-## 🩹 Greenhouse salaries and job boards typed on one line (2026-10-26, branch `board-list-input`)
+## 🩹 Greenhouse salaries and job boards typed on one line (2026-10-26, branches `board-list-input` and `greenhouse-salaries`)
 
 - **Greenhouse salaries:** the Actor now adds `pay_transparency=true` to the same Greenhouse request, so it costs no extra requests.
   - Each job's first pay range fills `salary_min`, `salary_max` and `salary_currency`.
