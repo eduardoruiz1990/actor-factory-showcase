@@ -1,4 +1,4 @@
-"""Parsing and fetching for the Greenhouse and Lever job board APIs, offline against saved responses.
+"""Parsing and fetching for the Greenhouse, Lever and Ashby job board APIs, offline against saved responses.
 
 Fixtures (fetched with tests.fetch_fixture):
 - airbnb_jobs.json: boards-api.greenhouse.io /v1/boards/airbnb/jobs, trimmed to four jobs.
@@ -7,6 +7,8 @@ Fixtures (fetched with tests.fetch_fixture):
 - airbnb_board.json: /v1/boards/airbnb.
 - lever_zoox.json: api.lever.co /v0/postings/zoox?mode=json&limit=2, postings with a salary range.
 - lever_spotify.json: /v0/postings/spotify?mode=json&limit=1, a posting without one.
+- ashby_warp.json: api.ashbyhq.com /posting-api/job-board/warp?includeCompensation=true, trimmed to three
+  jobs: two that show a salary on the posting, one that does not. Investor names blanked.
 """
 
 import asyncio
@@ -20,7 +22,8 @@ from my_actor.polite import PoliteClient
 from my_actor.privacy import clean
 from my_actor.robots import RobotsCache
 from my_actor.source import (
-    Settings, board_key, board_token, html_to_text, iter_items, matches, parse_job, parse_jobs, parse_lever_jobs,
+    Settings, board_key, board_token, html_to_text, iter_items, matches, parse_ashby_jobs, parse_job, parse_jobs,
+    parse_lever_jobs,
 )
 
 FIXTURES = Path(__file__).parent / 'fixtures'
@@ -29,6 +32,7 @@ JOB = json.loads((FIXTURES / 'airbnb_job.json').read_text())
 BOARD = json.loads((FIXTURES / 'airbnb_board.json').read_text())
 ZOOX = json.loads((FIXTURES / 'lever_zoox.json').read_text())
 SPOTIFY = json.loads((FIXTURES / 'lever_spotify.json').read_text())
+WARP = json.loads((FIXTURES / 'ashby_warp.json').read_text())
 FIELDS = {
     'platform', 'board_token', 'company', 'job_id', 'internal_job_id', 'requisition_id', 'title', 'location',
     'department', 'departments', 'office', 'offices', 'absolute_url', 'language', 'updated_at', 'first_published',
@@ -288,6 +292,51 @@ def test_lever_robots_disallow_means_no_api_request():
     assert items == [] and seen == ['/robots.txt']
 
 
+def test_parses_real_ashby_jobs_with_the_salary_the_posting_shows():
+    items = parse_ashby_jobs('warp', WARP)
+    assert len(items) == 3 and all(set(i) == FIELDS for i in items)
+    first = items[0]
+    assert first['platform'] == 'ashby' and first['board_token'] == 'warp' and first['company'] is None
+    assert first['job_id'] == '8fa78ab4-b9bf-4856-995a-f0c930aefa2e'
+    assert first['title'] == 'Sales Development Representative' and first['location'] == 'New York'
+    assert first['absolute_url'] == 'https://jobs.ashbyhq.com/warp/8fa78ab4-b9bf-4856-995a-f0c930aefa2e'
+    assert first['updated_at'] == '2025-10-10T16:31:25.268+00:00' and first['first_published'] is None
+    assert (first['employment_type'], first['workplace_type']) == ('Full-time', 'onsite')
+    assert (first['salary_min'], first['salary_max'], first['salary_currency'], first['salary_interval']) == (
+        105000, 140000, 'USD', 'per-year-salary')
+    assert first['content'].startswith('<') and first['content_text'] and '[name removed]' in first['content_text']
+    assert items[1]['salary_min'] == 160000
+    hidden = items[2]  # the company does not show pay on this posting
+    assert hidden['title'] == 'Applied AI Engineer' and hidden['salary_min'] is None and hidden['salary_interval'] is None
+
+
+def test_ashby_hidden_pay_unlisted_jobs_and_locations():
+    job = dict(WARP['jobs'][0], shouldDisplayCompensationOnJobPostings=False,
+               secondaryLocations=[{'location': 'Remote'}, {'location': 'New York'}, {}], team='Growth')
+    unlisted = dict(WARP['jobs'][1], isListed=False)
+    [item] = parse_ashby_jobs('warp', {'jobs': [job, unlisted, {'title': 'no id'}]})
+    assert item['salary_min'] is None  # Ashby sent a salary, but the company keeps it off the posting
+    assert item['offices'] == ['New York', 'Remote'] and item['departments'] == [job['department'], 'Growth']
+    [light] = parse_ashby_jobs('warp', WARP, include_content=False)[:1]
+    assert light['content'] is None and light['content_text'] is None and light['salary_min'] == 105000
+
+
+@pytest.mark.parametrize('data', [[], {'jobs': 'x'}, 'oops'])
+def test_malformed_ashby_response_is_rejected(data):
+    with pytest.raises(ValueError):
+        parse_ashby_jobs('acme', data)
+
+
+def test_fetches_ashby_boards_although_its_robots_txt_answers_401():
+    # Ashby's API answers /robots.txt with 401: RFC 9309 reads that as no robots.txt (Q19).
+    routes = {'/robots.txt': httpx2.Response(401),
+              '/posting-api/job-board/warp?includeCompensation=true': httpx2.Response(200, json=WARP),
+              '/posting-api/job-board/gone?includeCompensation=true': httpx2.Response(404, text='Not Found')}
+    items, seen = collect(settings(boardTokens=['ashby:gone', 'https://jobs.ashbyhq.com/Warp']), routes)
+    assert [i['title'] for i in items] == [j['title'] for j in WARP['jobs']]
+    assert seen.count('/robots.txt') == 1
+
+
 @pytest.mark.parametrize(('value', 'key'), [
     ('airbnb', 'airbnb'),
     ('greenhouse:Airbnb', 'airbnb'),
@@ -298,6 +347,11 @@ def test_lever_robots_disallow_means_no_api_request():
     ('jobs.eu.lever.co/acme', 'lever-eu:acme'),
     ('https://api.lever.co/v0/postings/zoox?mode=json', 'lever:zoox'),
     ('https://boards.greenhouse.io/airbnb', 'airbnb'),
+    ('ashby:Ramp', 'ashby:ramp'),
+    ('https://jobs.ashbyhq.com/Warp', 'ashby:warp'),
+    ('https://jobs.ashbyhq.com/warp/8fa78ab4-b9bf-4856-995a-f0c930aefa2e/application', 'ashby:warp'),
+    ('https://api.ashbyhq.com/posting-api/job-board/warp?includeCompensation=true', 'ashby:warp'),
+    ('https://jobs.ashbyhq.com/', None),
     ('lever:', None),
     ('lever:not a site', None),
     ('https://jobs.lever.co/', None),

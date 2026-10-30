@@ -9,7 +9,8 @@
                 "type": "string",
                 "enum": [
                     "greenhouse",
-                    "lever"
+                    "lever",
+                    "ashby"
                 ]
             },
             "board_token": {

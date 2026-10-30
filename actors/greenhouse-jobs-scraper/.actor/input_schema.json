@@ -5,17 +5,19 @@
     "schemaVersion": 1,
     "properties": {
         "boardTokens": {
-            "title": "Job boards (Greenhouse or Lever)",
+            "title": "Job boards (Greenhouse, Lever or Ashby)",
             "type": "array",
-            "description": "Companies to read. Greenhouse: a board token (the part after boards.greenhouse.io/, for example \"airbnb\") or any Greenhouse job board URL. Lever: \"lever:<company>\" (for example \"lever:zoox\") or any jobs.lever.co URL; use \"lever-eu:<company>\" or a jobs.eu.lever.co URL for EU-hosted boards. Put one board per line (several on a line, separated by commas, also work). Each board is one request.",
+            "description": "Companies to read. Greenhouse: a board token (the part after boards.greenhouse.io/, for example \"airbnb\") or any Greenhouse job board URL. Lever: \"lever:<company>\" (for example \"lever:zoox\") or any jobs.lever.co URL; use \"lever-eu:<company>\" or a jobs.eu.lever.co URL for EU-hosted boards. Ashby: \"ashby:<company>\" (for example \"ashby:ramp\") or any jobs.ashbyhq.com URL. Put one board per line (several on a line, separated by commas, also work). Each board is one request.",
             "editor": "stringList",
             "prefill": [
                 "airbnb",
-                "lever:zoox"
+                "lever:zoox",
+                "ashby:warp"
             ],
             "default": [
                 "airbnb",
-                "lever:zoox"
+                "lever:zoox",
+                "ashby:warp"
             ]
         },
         "includeContent": {

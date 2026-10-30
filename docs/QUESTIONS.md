@@ -156,7 +156,8 @@ Ashby's public job posting API (`api.ashbyhq.com`) answers `/robots.txt` with **
 - **To decide:** if you accept RFC 9309's reading for 401 and 403, `robots.py` changes in the template and in each Actor, and Ashby can be added. 5xx and network errors would still skip the site.
 - **Decision (owner, 2026-10-30):** follow RFC 9309. Any 4xx answer to `/robots.txt` means there is no robots.txt, so nothing is disallowed. 429, 5xx and network errors still mean "unreachable", so the site is skipped.
   - The rule applies in the Actor template's `robots.py`, in `actors/greenhouse-jobs-scraper`, and in the Validator's robots check.
-  - Ashby's terms are a separate question. Its API docs describe it only as a way to fill a company's own careers page, and say nothing about third-party use. Ashby is added only after the owner reviews those terms.
+  - Ashby's terms are a separate question. Its API docs describe it only as a way to fill a company's own careers page, and say nothing about third-party use.
+  - **Owner decision on Ashby's terms (2026-10-30):** reviewed and accepted, as a REVIEW-style approval (Q17). Ashby boards were added to the Greenhouse & Lever Actor. As conservative limits, the Actor returns a salary only when the company shows pay on its posting (`shouldDisplayCompensationOnJobPostings`), and it leaves out jobs marked `isListed: false`.
 
 
 ### Q20. Crowded niches, generic tools and a twice-weekly Scout (resolved 2026-10-30: owner approved)
