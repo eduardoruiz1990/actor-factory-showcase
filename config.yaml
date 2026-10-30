@@ -62,7 +62,8 @@ scout:
       ["integration", "connector", "n8n", "zapier", "make", "pinecone", "downloader", "universal",
        "bypass", "bypasser", "unblocker", "unblock", "captcha", "proxy", "runner", "nodejs", "python",
        "javascript", "phantomjs", "legacy", "traffic", "generator", "sitemap", "commerce", "ecommerce",
-       "multi", "any", "generic", "url", "html", "markdown", "pdf", "screenshot"]
+       "multi", "any", "generic", "url", "html", "markdown", "pdf", "screenshot",
+       "scrapeunblocker", "superscraper", "camoufox", "jsdom", "sandbox", "llm", "claude"]
     categories: ["SOCIAL_MEDIA", "LEAD_GENERATION"]
   # Niches that failed Legality for a reason no build can fix (login, personal data as
   # the product, terms that forbid the use, robots.txt) are skipped for this many weeks,
