@@ -181,3 +181,20 @@ The owner approved three changes. The thresholds live in `config.yaml`.
   - A PASS or REVIEW niche can still be built from the issue that listed it.
   - Validator spend roughly doubles, since there are two runs of up to 40 assessments a week.
 - **Not changed:** `docs/SPEC.md` still says weekly. This entry records the owner's change.
+
+### Q21. More ATS platforms for the jobs Actor (resolved 2026-10-31: Workable and Personio added)
+
+The 2026-10-30 Scout run found nothing buildable: 28 of 40 niches failed Legality for good, and the rest had little demand. Open-data niches proved just as crowded, for example SEC EDGAR with 76 same-name Actors and 134 users in total. The owner chose to win the jobs niche instead. There, the most-used Actors (85–136 users a month) each cover four or more ATS platforms, while single-platform Actors stay around 10 users.
+
+Five platforms were checked on 2026-10-31:
+
+| Platform | Result | Reason |
+|---|---|---|
+| Workable | Added | Workable's help centre documents a no-key public endpoint, `www.workable.com/api/accounts/<account>?details=true`. It redirects to `apply.workable.com/api/v1/widget/accounts/<account>`, whose robots.txt allows everything. The feed has no salaries. |
+| Personio | Added | Personio's developer docs describe the XML feed at `<company>.jobs.personio.com/xml`. robots.txt allows everything for hosted companies; for names it does not host, it answers `Disallow: /` and the Actor skips them. The feed includes salary ranges where published. |
+| SmartRecruiters | Not added | `api.smartrecruiters.com/robots.txt` disallows every crawler except LinkedInBot. |
+| Recruitee | Not added | Its docs say the Careers Site API needs a company-issued token from 10 February 2027, so a third-party Actor would stop working. |
+| Teamtailor | Not added | The API needs the company's own key. |
+| Workday | Not added | The career sites use an internal, undocumented API. W43 already failed it on Cost and Stability. |
+
+Workable's and Personio's docs describe these feeds for publishing a company's own jobs, and say nothing either way about third-party use. The owner reviewed this and approved both on 2026-10-31, as for Ashby (Q19).

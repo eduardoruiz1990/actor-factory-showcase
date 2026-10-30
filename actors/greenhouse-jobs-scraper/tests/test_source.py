@@ -1,4 +1,4 @@
-"""Parsing and fetching for the Greenhouse, Lever and Ashby job board APIs, offline against saved responses.
+"""Parsing and fetching for the Greenhouse, Lever, Ashby, Workable and Personio job feeds, offline against saved responses.
 
 Fixtures (fetched with tests.fetch_fixture):
 - airbnb_jobs.json: boards-api.greenhouse.io /v1/boards/airbnb/jobs, trimmed to four jobs.
@@ -9,6 +9,8 @@ Fixtures (fetched with tests.fetch_fixture):
 - lever_spotify.json: /v0/postings/spotify?mode=json&limit=1, a posting without one.
 - ashby_warp.json: api.ashbyhq.com /posting-api/job-board/warp?includeCompensation=true, trimmed to three
   jobs: two that show a salary on the posting, one that does not. Investor names blanked.
+- workable_blueground.json: apply.workable.com /api/v1/widget/accounts/blueground?details=true, trimmed to two jobs.
+- personio_tado.xml: tado.jobs.personio.com /xml, two positions, one with a salary range.
 """
 
 import asyncio
@@ -23,7 +25,7 @@ from my_actor.privacy import clean
 from my_actor.robots import RobotsCache
 from my_actor.source import (
     Settings, board_key, board_token, html_to_text, iter_items, matches, parse_ashby_jobs, parse_job, parse_jobs,
-    parse_lever_jobs,
+    parse_lever_jobs, parse_personio_jobs, parse_workable_jobs,
 )
 
 FIXTURES = Path(__file__).parent / 'fixtures'
@@ -33,6 +35,8 @@ BOARD = json.loads((FIXTURES / 'airbnb_board.json').read_text())
 ZOOX = json.loads((FIXTURES / 'lever_zoox.json').read_text())
 SPOTIFY = json.loads((FIXTURES / 'lever_spotify.json').read_text())
 WARP = json.loads((FIXTURES / 'ashby_warp.json').read_text())
+BLUEGROUND = json.loads((FIXTURES / 'workable_blueground.json').read_text())
+TADO = (FIXTURES / 'personio_tado.xml').read_text()
 FIELDS = {
     'platform', 'board_token', 'company', 'job_id', 'internal_job_id', 'requisition_id', 'title', 'location',
     'department', 'departments', 'office', 'offices', 'absolute_url', 'language', 'updated_at', 'first_published',
@@ -337,6 +341,74 @@ def test_fetches_ashby_boards_although_its_robots_txt_answers_401():
     assert seen.count('/robots.txt') == 1
 
 
+def test_parses_real_workable_jobs():
+    items = parse_workable_jobs('blueground', BLUEGROUND)
+    assert len(items) == 2 and all(set(i) == FIELDS for i in items)
+    first = items[0]
+    assert (first['platform'], first['board_token'], first['company']) == ('workable', 'blueground', 'Blueground')
+    assert first['job_id'] == '186545F8C1' and first['absolute_url'] == 'https://apply.workable.com/j/186545F8C1'
+    assert first['location'] == 'Athens, Attica, Greece' and first['department'] == 'Shared Services'
+    assert first['first_published'] == '2026-02-12' and first['employment_type'] == 'Full-time'
+    assert first['content'].startswith('<') and 'Blueground' in first['content_text']
+    assert items[1]['location'] == 'Vienna, Austria'  # a region that repeats the city is not repeated
+    assert all(i['salary_min'] is None for i in items)  # Workable's public feed has no pay data
+    remote = parse_workable_jobs('acme', {'name': 'Acme', 'jobs': [dict(BLUEGROUND['jobs'][0], telecommuting=True,
+                                                                         locations=[{'city': 'Lisbon', 'hidden': True}])]})
+    assert remote[0]['workplace_type'] == 'remote' and remote[0]['offices'] == ['Athens, Attica, Greece']
+    light = parse_workable_jobs('blueground', BLUEGROUND, include_content=False)
+    assert all(i['content'] is None and i['content_text'] is None for i in light)
+
+
+def test_parses_a_real_personio_feed_with_a_salary_range():
+    items = parse_personio_jobs('tado', TADO)
+    assert len(items) == 2 and all(set(i) == FIELDS for i in items)
+    lead, student = items
+    assert (lead['platform'], lead['board_token'], lead['company']) == ('personio', 'tado', 'tado GmbH')
+    assert lead['job_id'] == 2502124 and lead['absolute_url'] == 'https://tado.jobs.personio.com/job/2502124'
+    assert lead['title'] == 'Team Lead Accounting (m/f/d)' and lead['location'] == 'Germany - Munich'
+    assert (lead['salary_min'], lead['salary_max'], lead['salary_currency'], lead['salary_interval']) == (
+        80000, 100000, 'EUR', 'per-year-salary')
+    assert lead['first_published'] == '2026-01-22T09:48:25+00:00' and lead['employment_type'] == 'Full-time'
+    assert lead['content'] is None  # this position has no description
+    assert student['employment_type'] == 'Part-time' and student['salary_min'] is None
+    assert student['content'].startswith('<h3>Was erwartet dich bei uns</h3>') and 'Accounting' in student['content_text']
+
+
+def test_personio_offices_odd_values_and_light_list():
+    feed = (
+        '<workzag-jobs><position><id>7</id><name>Engineer</name><office>Berlin</office>'
+        '<additionalOffices><office>Remote</office><office>Berlin</office></additionalOffices>'
+        '<schedule>weird</schedule><employmentType>working_student</employmentType>'
+        '<salaryInformation><min>n/a</min><max>4500.50</max><currencyCode>EUR</currencyCode><type>monthly</type>'
+        '</salaryInformation></position><position><name>no id</name></position></workzag-jobs>'
+    )
+    [item] = parse_personio_jobs('acme', feed)
+    assert item['offices'] == ['Berlin', 'Remote'] and item['employment_type'] == 'Working student'
+    assert (item['salary_min'], item['salary_max'], item['salary_interval']) == (None, 4500.5, 'per-month-salary')
+    assert all(i['content'] is None for i in parse_personio_jobs('tado', TADO, include_content=False))
+
+
+@pytest.mark.parametrize('text', ['', '<html>not a feed</html>', '<workzag-jobs><position>', None,
+                                  '<!DOCTYPE x [<!ENTITY e SYSTEM "file:///etc/passwd">]><workzag-jobs>&e;</workzag-jobs>'])
+def test_malformed_personio_feed_is_rejected(text):
+    with pytest.raises(ValueError):
+        parse_personio_jobs('acme', text)
+
+
+@pytest.mark.parametrize('data', [[], {'jobs': 'x'}, 'oops'])
+def test_malformed_workable_response_is_rejected(data):
+    with pytest.raises(ValueError):
+        parse_workable_jobs('acme', data)
+
+
+def test_fetches_workable_and_personio_boards():
+    routes = {**ROBOTS, '/api/v1/widget/accounts/blueground?details=true': httpx2.Response(200, json=BLUEGROUND),
+              '/xml': httpx2.Response(200, text=TADO, headers={'content-type': 'text/xml'})}
+    items, seen = collect(settings(boardTokens=['https://apply.workable.com/blueground/', 'personio:tado']), routes)
+    assert [i['platform'] for i in items] == ['workable', 'workable', 'personio', 'personio']
+    assert seen.count('/xml') == 1
+
+
 @pytest.mark.parametrize(('value', 'key'), [
     ('airbnb', 'airbnb'),
     ('greenhouse:Airbnb', 'airbnb'),
@@ -352,6 +424,16 @@ def test_fetches_ashby_boards_although_its_robots_txt_answers_401():
     ('https://jobs.ashbyhq.com/warp/8fa78ab4-b9bf-4856-995a-f0c930aefa2e/application', 'ashby:warp'),
     ('https://api.ashbyhq.com/posting-api/job-board/warp?includeCompensation=true', 'ashby:warp'),
     ('https://jobs.ashbyhq.com/', None),
+    ('workable:Blueground', 'workable:blueground'),
+    ('https://apply.workable.com/blueground/', 'workable:blueground'),
+    ('https://apply.workable.com/blueground/j/186545F8C1/', 'workable:blueground'),
+    ('https://www.workable.com/api/accounts/blueground?details=true', 'workable:blueground'),
+    ('https://blueground.workable.com', 'workable:blueground'),
+    ('https://apply.workable.com/j/186545F8C1', None),  # a job link without the account name
+    ('personio:tado', 'personio:tado'),
+    ('https://tado.jobs.personio.de/job/2502124', 'personio:tado'),
+    ('https://tado.jobs.personio.com/', 'personio:tado'),
+    ('https://jobs.personio.com/', None),
     ('lever:', None),
     ('lever:not a site', None),
     ('https://jobs.lever.co/', None),

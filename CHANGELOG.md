@@ -1,5 +1,19 @@
 # Changelog
 
+## 🧩 Workable and Personio in the jobs Actor (2026-10-31, branch `ats-workable-personio`)
+
+- **Why:** the 2026-10-30 Scout run found nothing buildable, and the owner chose to win the jobs niche. Buyers there choose breadth: the most-used Actors cover four or more ATS platforms (Q21).
+- **Change** in `actors/greenhouse-jobs-scraper`:
+  - Workable: `workable:<account>` or `apply.workable.com/<account>` URLs. The Actor reads the public jobs endpoint Workable documents, which gives company name, location, department, description and remote flag. There are no salaries.
+  - Personio: `personio:<company>` or `<company>.jobs.personio.com` / `.de` URLs. The Actor reads the documented XML feed, which gives company, offices, department, description and the salary range where published.
+  - The XML is parsed with the standard library and no external entities are resolved.
+  - Checked and not added: SmartRecruiters (robots.txt blocks crawlers), Recruitee (token required from February 2027), Teamtailor (needs a key) and Workday (internal API).
+- **Store text:**
+  - Title: "ATS Jobs Scraper: Greenhouse, Lever, Ashby & More". SEO title: "ATS Jobs API: Greenhouse, Lever, Ashby, Workable, Personio".
+  - The README has a platform table. Version 0.4.
+  - The default input covers all five platforms.
+- **Tests:** 118 Actor tests (22 new), with real fixtures (Blueground on Workable, tado on Personio). A live check returned 474 jobs from 7 boards in 12 s.
+
 ## 🧩 Ashby boards in the jobs Actor (2026-10-30, branch `ashby-boards`)
 
 - **Why:** the owner accepted RFC 9309 for robots.txt (Q19) and reviewed Ashby's terms. Most competing multi-ATS Actors already cover Ashby, which is popular with fast-growing tech companies.
