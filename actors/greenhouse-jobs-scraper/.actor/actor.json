@@ -4,7 +4,7 @@
     "name": "greenhouse-jobs-scraper",
     "title": "ATS Jobs Scraper: Greenhouse, Lever, Ashby & More",
     "description": "Get every open job from any company's Greenhouse, Lever, Ashby, Workable or Personio job board, with departments, locations, salary ranges and full descriptions, as clean JSON from each platform's public feed.",
-    "version": "0.4",
+    "version": "0.5",
     "buildTag": "latest",
     "meta": {
         "templateId": "python-start",

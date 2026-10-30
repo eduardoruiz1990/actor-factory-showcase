@@ -44,6 +44,18 @@
             "editor": "stringList",
             "default": []
         },
+        "onlyNew": {
+            "title": "Only new jobs",
+            "type": "boolean",
+            "description": "Return, and charge for, only jobs that earlier runs with the same boards and keywords have not returned yet. Turn it on and schedule the Actor (for example daily) to get a feed of newly posted jobs; a run with no new jobs charges no results. The first run returns every open job.",
+            "default": false
+        },
+        "monitorName": {
+            "title": "Monitor name",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Optional, for \"Only new jobs\". Runs with the same name share one memory of returned jobs, even when you add or remove boards. Without a name, the memory follows the boards and keywords."
+        },
         "maxResults": {
             "title": "Maximum results",
             "type": "integer",

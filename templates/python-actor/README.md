@@ -15,6 +15,7 @@ keywords a buyer would search for in the first two sentences.
 
 - TODO The main capability (for example "Get every open job from any company's Greenhouse board")
 - TODO Filters or options a buyer cares about
+- **Only new results:** schedule it with **Only new results** on, and each run returns and charges only what is new since the last run
 - Polite by design: it respects robots.txt and rate limits, and retries with back-off
 - No personal data: names, e-mail addresses and phone numbers are never stored
 - Export to JSON, CSV, Excel or HTML, or connect through the Apify API, integrations and MCP
@@ -25,6 +26,12 @@ keywords a buyer would search for in the first two sentences.
 |---|---|
 | `url` | TODO |
 | `title` | TODO |
+
+## Get a feed of new results
+
+Turn on **Only new results** and [schedule the Actor](https://docs.apify.com/platform/schedules). The first run
+returns everything; after that, each run returns and charges only results earlier runs did not return. A run with
+nothing new charges no results. TODO Say what "new" means for this source (for example "newly posted jobs").
 
 ## How much does it cost?
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## 🔁 "Only new results" for every Actor (2026-10-31, branch `only-new-items`)
+
+- **Why:** the jobs Actor has no repeat users. Scheduled runs that return only what is new turn one-off users into daily runs, which is recurring revenue, and repeat runs are what Store ranking rewards.
+- **Template** (every future Actor):
+  - New `seen.py`. It remembers returned items in a named key-value store in the user's account, which survives between runs.
+  - `main.py` skips items an earlier run with the same search returned. They are neither pushed nor charged.
+  - Input fields `onlyNew` and `monitorName`. `source.py` gets `item_key()` and `Settings.state_key`.
+  - A run that stops early (maximum results or spending limit) keeps the items it did not reach for the next run. Only a complete run forgets items that disappeared.
+  - The README has a "feed of new results" section, and `docs/BUILDER.md` tells the Builder to keep the feature.
+- **Jobs Actor:**
+  - "Only new jobs" uses a job key of platform, board and job ID. The memory follows the boards and keywords, or the user's monitor name.
+  - The README has a new section, "Get a daily feed of new jobs".
+- **Tests:** the template's tests (33) and the jobs Actor's tests (120) include end-to-end runs in sequence that share local storage, as scheduled runs do.
+
 ## 🧰 Tool lane: Actors that process the user's data (2026-10-31, branch `tool-lane`)
 
 - **Why:** the owner asked to look beyond scraping. Tools have real demand: PDF extraction (492 users a month), website audits (308–371), OCR (312), URL and link checks (166–188). The Validator could not judge them, because it needs a target site's terms (Q24). Data validation and review on their own have almost no demand.

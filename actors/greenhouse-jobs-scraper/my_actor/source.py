@@ -34,6 +34,7 @@ from bs4 import BeautifulSoup
 
 from .polite import PoliteClient
 from .robots import RobotsCache
+from .seen import state_key
 
 API = 'https://boards-api.greenhouse.io/v1/boards'
 # Lever's robots.txt asks for a 1-second crawl delay; one rate for every host keeps the rule simple.
@@ -56,6 +57,8 @@ class Settings:
     include_content: bool = True
     title_keywords: list[str] = field(default_factory=list)
     location_keywords: list[str] = field(default_factory=list)
+    only_new: bool = False
+    state_key: str = ''  # which earlier runs count as "the same search" for only_new
 
     @classmethod
     def from_input(cls, actor_input: dict[str, Any]) -> Settings:
@@ -70,14 +73,26 @@ class Settings:
             raise ValueError('Input needs at least one board in "boardTokens" (for example "airbnb", "lever:palantir" or "ashby:ramp").')
         max_results = int(actor_input.get('maxResults') or 1000)
         rate = float(actor_input.get('maxRequestsPerSecond') or 1)
+        title_keywords = _keywords(actor_input.get('titleKeywords'))
+        location_keywords = _keywords(actor_input.get('locationKeywords'))
+        # Runs with the same monitor name, or else the same boards and filters, share one memory of returned jobs.
+        identity = (actor_input.get('monitorName') or '').strip() or {
+            'boards': sorted(tokens), 'titles': sorted(title_keywords), 'locations': sorted(location_keywords)}
         return cls(
             board_tokens=tokens,
             max_results=max(1, max_results),
             max_requests_per_second=min(max(rate, 0.1), MAX_RATE),
             include_content=actor_input.get('includeContent', True) is not False,
-            title_keywords=_keywords(actor_input.get('titleKeywords')),
-            location_keywords=_keywords(actor_input.get('locationKeywords')),
+            title_keywords=title_keywords,
+            location_keywords=location_keywords,
+            only_new=actor_input.get('onlyNew') is True,
+            state_key=state_key(identity),
         )
+
+
+def item_key(item: dict[str, Any]) -> str:
+    """The same job in every run gets the same key: platform, board and the platform's job ID."""
+    return f"{item['platform']}:{item['board_token']}:{item['job_id']}"
 
 
 def _board_entries(value: Any) -> list[Any]:

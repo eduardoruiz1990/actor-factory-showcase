@@ -3,7 +3,9 @@
 The Builder replaces this file for each Actor. The example reads public pages
 and returns their title, description and language. Keep the contract:
 iter_items() yields plain dicts, fetches only through `http`, and asks
-`robots` before every URL it fetches from a website. (An official API with its
+`robots` before every URL it fetches from a website. item_key() names a result
+stably across runs, and Settings carries only_new and state_key for the
+"Only new results" mode. (An official API with its
 own terms and no robots.txt may skip the robots check; say so in the README.)
 """
 
@@ -19,6 +21,7 @@ from bs4 import BeautifulSoup
 
 from .polite import PoliteClient
 from .robots import RobotsCache
+from .seen import state_key
 
 
 @dataclass
@@ -26,6 +29,8 @@ class Settings:
     start_urls: list[str]
     max_results: int
     max_requests_per_second: float
+    only_new: bool = False
+    state_key: str = ''  # which earlier runs count as "the same search" for only_new
 
     @classmethod
     def from_input(cls, actor_input: dict[str, Any]) -> Settings:
@@ -35,7 +40,15 @@ class Settings:
             raise ValueError('Input needs at least one start URL in "startUrls".')
         max_results = int(actor_input.get('maxResults') or 100)
         rate = float(actor_input.get('maxRequestsPerSecond') or 1)
-        return cls(start_urls=urls, max_results=max(1, max_results), max_requests_per_second=min(max(rate, 0.1), 5.0))
+        # Runs with the same monitor name, or else the same URLs, share one memory of returned results.
+        identity = (actor_input.get('monitorName') or '').strip() or sorted(set(urls))
+        return cls(start_urls=urls, max_results=max(1, max_results), max_requests_per_second=min(max(rate, 0.1), 5.0),
+                   only_new=actor_input.get('onlyNew') is True, state_key=state_key(identity))
+
+
+def item_key(item: dict[str, Any]) -> str:
+    """The same result in every run gets the same key: here, the page URL."""
+    return str(item['url'])
 
 
 async def iter_items(settings: Settings, http: PoliteClient, robots: RobotsCache) -> AsyncIterator[dict[str, Any]]:

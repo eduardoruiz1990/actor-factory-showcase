@@ -9,7 +9,23 @@
             "type": "array",
             "description": "Public pages to read. The Actor skips any URL that the site's robots.txt disallows.",
             "editor": "requestListSources",
-            "prefill": [{ "url": "https://apify.com/" }]
+            "prefill": [
+                {
+                    "url": "https://apify.com/"
+                }
+            ]
+        },
+        "onlyNew": {
+            "title": "Only new results",
+            "type": "boolean",
+            "description": "Return, and charge for, only results that earlier runs with the same search have not returned yet. Turn it on and schedule the Actor (for example daily) to get a feed of new results; a run with nothing new charges no results. The first run returns everything.",
+            "default": false
+        },
+        "monitorName": {
+            "title": "Monitor name",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Optional, for \"Only new results\". Runs with the same name share one memory of returned results, even when their other input changes. Without a name, the memory follows the search itself."
         },
         "maxResults": {
             "title": "Maximum results",
@@ -28,5 +44,7 @@
             "maximum": 5
         }
     },
-    "required": ["startUrls"]
+    "required": [
+        "startUrls"
+    ]
 }

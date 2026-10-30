@@ -25,7 +25,7 @@ from my_actor.privacy import clean
 from my_actor.robots import RobotsCache
 from my_actor.source import (
     Settings, board_key, board_token, html_to_text, iter_items, matches, parse_ashby_jobs, parse_job, parse_jobs,
-    parse_lever_jobs, parse_personio_jobs, parse_workable_jobs,
+    item_key, parse_lever_jobs, parse_personio_jobs, parse_workable_jobs,
 )
 
 FIXTURES = Path(__file__).parent / 'fixtures'
@@ -222,6 +222,16 @@ def test_default_input_is_light_and_survives_one_board_leaving():
     boards = schema['properties']['boardTokens']
     assert boards['default'] == boards['prefill'] and len(boards['default']) >= 2
     assert Settings.from_input({'boardTokens': boards['default']}).board_tokens == boards['default']
+
+
+def test_only_new_memory_follows_the_search_or_the_monitor_name():
+    a = Settings.from_input({'boardTokens': ['airbnb', 'lever:zoox'], 'titleKeywords': ['Engineer'], 'onlyNew': True})
+    b = Settings.from_input({'boardTokens': ['https://jobs.lever.co/zoox', 'airbnb'], 'titleKeywords': 'engineer'})
+    assert a.only_new and not b.only_new and a.state_key == b.state_key
+    assert a.state_key != Settings.from_input({'boardTokens': ['airbnb']}).state_key
+    named = [Settings.from_input({'boardTokens': [board], 'monitorName': ' Daily feed '}) for board in ('airbnb', 'ashby:ramp')]
+    assert named[0].state_key == named[1].state_key
+    assert item_key(parse_ashby_jobs('warp', WARP)[0]) == 'ashby:warp:8fa78ab4-b9bf-4856-995a-f0c930aefa2e'
 
 
 def test_several_boards_on_one_line_are_split():
