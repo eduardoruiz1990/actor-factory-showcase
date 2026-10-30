@@ -1,7 +1,7 @@
 name: Publisher
 
-# After you merge an Actor pull request, deploy every changed Actor with `apify push`, then prepare its
-# Store listing. For an Actor that is not public yet, it opens the issue "Publish <name>" with the
+# After you merge an Actor pull request, deploy every changed Actor with `apify push`, then set its
+# Store listing (title, description, SEO text, categories) through the Apify API. For an Actor that is not public yet, it opens the issue "Publish <name>" with the
 # listing text and the monetization values. You publish it once in Apify Console (QUESTIONS Q14).
 
 on:

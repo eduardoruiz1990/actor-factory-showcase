@@ -3,9 +3,11 @@
     python -m factory.publisher changed --before <sha> --after <sha>   # print changed Actor names
     python -m factory.publisher listing <name> [--build-url URL]       # open or update its publish issue
 
-The listing step asks the Apify API whether the Actor is already public. If it
-is, nothing is opened: the push was an update. Otherwise it opens (or updates)
-the issue "Publish <name>" with the listing text and pricing to enter.
+The listing step sets the Actor's Store listing (title, description, SEO text,
+categories) from actor.json and listing.json through the Apify API; `apify push`
+does not. Then it asks whether the Actor is already public. If it is, nothing is
+opened: the push was an update. Otherwise it opens (or updates) the issue
+"Publish <name>" with the listing text and pricing to enter.
 """
 
 import argparse
@@ -17,7 +19,7 @@ from pathlib import Path
 from factory.common.config import REPO_ROOT, load_config
 from factory.common.github import GitHubClient
 from factory.common.http import PoliteClient
-from factory.publisher.listing import changed_actors, load_actor, render_listing
+from factory.publisher.listing import changed_actors, load_actor, render_listing, store_fields
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -42,7 +44,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     owner = config["owner"]["apify_username"]
-    body = render_listing(args.name, owner, load_actor(REPO_ROOT / "actors" / args.name), args.build_url)
+    data = load_actor(REPO_ROOT / "actors" / args.name)
+    body = render_listing(args.name, owner, data, args.build_url)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         Path(summary).open("a", encoding="utf-8").write(body + "\n")
@@ -52,8 +55,12 @@ def main(argv: list[str] | None = None) -> int:
 
     with PoliteClient.from_config(config) as http:
         token = os.environ.get("APIFY_TOKEN", "")
-        detail = http.get(f"{config['apify']['api_base']}/acts/{owner}~{args.name}",
-                          headers={"Authorization": f"Bearer {token}"})
+        url = f"{config['apify']['api_base']}/acts/{owner}~{args.name}"
+        fields, unknown = store_fields(data, config["scout"]["store"]["categories"])
+        for category in unknown:
+            print(f"::warning title=Publisher::{args.name}: {category} is not an Apify Store category; left out")
+        sync_listing(http, url, token, fields)
+        detail = http.get(url, headers={"Authorization": f"Bearer {token}"})
         if detail.status_code == 200 and (detail.json().get("data") or {}).get("isPublic"):
             print(f"{args.name} is already public; no publish issue needed.")
             return 0
@@ -65,6 +72,19 @@ def main(argv: list[str] | None = None) -> int:
         issue = github.update_issue(existing["number"], body=body) if existing else github.create_issue(title, body, [label])
         print(f"Publish issue #{issue['number']}: {issue['html_url']}")
     return 0
+
+
+def sync_listing(http: PoliteClient, url: str, token: str, fields: dict) -> bool:
+    """Set the Store listing fields; only the fields sent change. A failure is a warning: the deploy itself worked."""
+    if not fields:
+        return False
+    response = http.request("PUT", url, json=fields, headers={"Authorization": f"Bearer {token}"})
+    if response.status_code != 200:
+        print(f"::warning title=Publisher::Store listing not updated (HTTP {response.status_code}): "
+              f"{response.text[:200]}")
+        return False
+    print(f"Store listing updated: {', '.join(sorted(fields))}")
+    return True
 
 
 if __name__ == "__main__":
