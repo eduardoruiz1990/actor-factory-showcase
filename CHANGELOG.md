@@ -1,5 +1,14 @@
 # Changelog
 
+## 🤖 robots.txt: a 4xx answer means "no robots.txt" (2026-10-30, branch `robots-4xx-ashby`)
+
+- **Why:** owner decision on Q19. Ashby's API answers `/robots.txt` with 401, and the old rule skipped such sites. RFC 9309 (§2.3.1.3) treats any 4xx answer as "unavailable", which means crawlers may access the site.
+- **Change:** in the Actor template, in `actors/greenhouse-jobs-scraper` and in the Validator's robots check:
+  - Any 4xx answer except 429 means no restrictions.
+  - 429, 5xx and network errors still mean "unreachable": the Actor skips the site, and the Validator's Legality check stays unknown.
+- **Not added yet:** Ashby. Its API docs describe the API only for a company's own careers page, with nothing about third-party use, so its terms wait for the owner's review.
+- **Tests:** 250 factory tests (2 new), the template's and the Greenhouse Actor's robots tests now cover 401, 403 and 429.
+
 ## 🏷️ Publisher sets the Store listing (2026-10-30, branch `publisher-sync-listing`)
 
 - **Why:** `apify push` deploys code but leaves the Store listing alone. The owner had to paste the title, description, SEO text and categories into Apify Console by hand. The Greenhouse & Lever Actor still had no category, so it did not appear in the Jobs category.

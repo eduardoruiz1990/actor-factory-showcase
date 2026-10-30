@@ -2,9 +2,9 @@
 
 Implements RFC 9309 matching, including the `*` and `$` wildcards that
 Python's urllib.robotparser ignores: the longest matching rule wins, and Allow
-wins a tie. Status handling follows RFC 9309 except where that would let a
-check pass on missing information: 404/410 means no restrictions; other 4xx,
-5xx and network errors leave the result unknown, which never passes Legality.
+wins a tie. Status handling follows RFC 9309: any 4xx (404, but also 401 or 403
+from an API that publishes no file) means no robots.txt, so no restrictions (Q19).
+429, 5xx and network errors leave the result unknown, which never passes Legality.
 """
 
 import ipaddress
@@ -110,8 +110,8 @@ class RobotsChecker:
         for url in targets:
             parts = urlsplit(url)
             status, robots = self._robots(f"{parts.scheme or 'https'}://{parts.netloc}")
-            if status in (404, 410):
-                notes.append(f"{parts.netloc} has no robots.txt")
+            if status is not None and 400 <= status < 500 and status != 429:
+                notes.append(f"{parts.netloc} has no robots.txt" + ("" if status in (404, 410) else f" (HTTP {status})"))
                 continue
             if robots is None:
                 reason = "unreachable" if status is None else f"HTTP {status}"

@@ -67,7 +67,15 @@ def test_404_means_no_restrictions():
     assert result.allowed is True and "no robots.txt" in result.detail
 
 
-@pytest.mark.parametrize("status", [None, 403, 500, 503])
+@pytest.mark.parametrize("status", [401, 403])
+def test_other_4xx_means_no_robots_txt(status):
+    # RFC 9309 2.3.1.3 (Q19): Ashby's API answers /robots.txt with 401.
+    robots, _ = checker({"https://api.x.com": (status, "")})
+    result = robots.check(["https://api.x.com/v1/jobs"])
+    assert result.allowed is True and f"has no robots.txt (HTTP {status})" in result.detail
+
+
+@pytest.mark.parametrize("status", [None, 429, 500, 503])
 def test_unreadable_robots_is_unknown(status):
     robots, _ = checker({"https://x.com": (status, "")})
     assert robots.check(["https://x.com/a"]).allowed is None
