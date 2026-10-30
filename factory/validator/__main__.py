@@ -22,7 +22,7 @@ from factory.common.config import load_config
 from factory.common.github import GitHubClient
 from factory.common.http import PoliteClient
 from factory.scout.history import hard_fails
-from factory.scout.report import render_issue_body, week_key
+from factory.scout.report import render_issue_body, run_key
 from factory.scout.run import ScoutResult
 from factory.validator.assessment import Assessor, ClaudeAssessor, FixtureAssessor
 from factory.validator.brief import BRIEF_MARKER, render_brief, verdict_labels
@@ -65,11 +65,11 @@ def main(argv: list[str] | None = None) -> int:
         validations = rank_for_issue(validate(result.candidates, assessor, robots, config))
         shown = validations[: int(config["scout"]["candidates_per_week"])]
 
-        week = week_key(datetime.fromisoformat(result.collected_at))
+        run = run_key(datetime.fromisoformat(result.collected_at))
         new_blocked = hard_fails([v.to_dict() for v in validations], result.collected_at[:10])
         blocked = {**result.blocked_niches, **new_blocked}
-        brief = render_brief(shown, config, week, assessed=len(validations), blocked=blocked,
-                             newly_blocked=len(new_blocked))
+        brief = render_brief(shown, config, run, assessed=len(validations), blocked=blocked,
+                             newly_blocked=len(new_blocked), assessed_ids=[v.candidate.niche_id for v in validations])
         listed_result = dataclasses.replace(result, candidates=[v.candidate for v in shown])
         body = render_issue_body(listed_result, config, verdicts=verdict_labels(shown))
         (args.out / "validation.json").write_text(

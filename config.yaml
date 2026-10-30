@@ -30,14 +30,14 @@ http:
   backoff_max_seconds: 60.0
 
 scout:
-  # The weekly issue lists this many niches...
+  # Each Scout issue (Sundays and Wednesdays, Q20) lists this many niches...
   candidates_per_week: 20
   # ...chosen from this many: the Validator assesses them all (one Claude call each)
   # and the issue keeps the best after validation (Q13).
   candidates_to_validate: 40
   # Niches that can never pass, left out before ranking (Q13). A niche is excluded
-  # when one of its title keywords (singular, lower case) is listed, or when its
-  # leading Actor is in a listed Store category.
+  # when one of its title keywords is listed (lower case; plurals match the singular),
+  # or when its leading Actor is in a listed Store category.
   exclude:
     # Social networks and people data: personal data, login walls or terms that forbid scraping.
     # Generic scraping tools and templates: platform utilities, not niches.
@@ -56,12 +56,29 @@ scout:
        "semrush", "ahref", "similarweb", "g2", "capterra", "trustpilot", "yelp", "tripadvisor",
        "indeed", "glassdoor", "idealista", "zillow", "ebay", "walmart", "aliexpress", "alibaba", "taobao",
        "temu", "shein", "mercadolivre", "mercadolibre", "flashscore", "sofascore"]
+    # Generic tools with no single target site: there are no terms or robots.txt to check, so they
+    # never get past Legality (W43: integrations, downloaders, bypassers, runners). Matched like title_words (Q20).
+    generic_tools:
+      ["integration", "connector", "n8n", "zapier", "make", "pinecone", "downloader", "universal",
+       "bypass", "bypasser", "unblocker", "unblock", "captcha", "proxy", "runner", "nodejs", "python",
+       "javascript", "phantomjs", "legacy", "traffic", "generator", "sitemap", "commerce", "ecommerce",
+       "multi", "any", "generic", "url", "html", "markdown", "pdf", "screenshot"]
     categories: ["SOCIAL_MEDIA", "LEAD_GENERATION"]
   # Niches that failed Legality for a reason no build can fix (login, personal data as
   # the product, terms that forbid the use, robots.txt) are skipped for this many weeks,
   # read back from past weekly issues (Q18).
   history:
     skip_hard_fails_weeks: 12
+    # Every niche the Validator assessed is skipped for this many days, whatever its result, so
+    # the second run of the week brings new niches instead of paying to assess the same ones (Q20).
+    # A PASS or REVIEW niche can still be built from the issue that listed it.
+    skip_assessed_days: 28
+  # How crowded a niche is on the Store, from one Store search per niche (Q20). The best
+  # `pool` niches by first-pass score are searched; the ones with more same-name Actors than
+  # validator.competition.max_same_name_actors are left out before validation.
+  store_search:
+    pool: 200
+    limit: 100  # results read per search (the API maximum per page)
   store:
     sort_by: popularity
     page_size: 1000            # API maximum per request
@@ -153,6 +170,10 @@ validator:
     min_users_30d: 50
     min_idea_upvotes: 1
   competition:
+    # Store Actors whose title holds every niche keyword. Above this, a new Actor is buried among
+    # clones in Store search: "greenhouse job" had 86 when guayox/greenhouse-jobs-scraper launched
+    # and it ranked outside the top 100. Open niches in W43 had 1 to 34 (Q20).
+    max_same_name_actors: 15
     fewer_than_maintained_alternatives: 3
     leader_failure_rate_above: 0.10
     leader_rating_below: 4.0

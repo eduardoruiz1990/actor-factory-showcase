@@ -91,6 +91,8 @@ class Candidate:
     weaknesses: list[str]
     demand: float
     score: float
+    # Store Actors whose title holds every niche keyword, from a Store search (Q20); None when not counted.
+    same_name_actors: int | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

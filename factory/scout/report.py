@@ -1,4 +1,4 @@
-"""Render the weekly Scout issue (title and Markdown body)."""
+"""Render the Scout issue (title and Markdown body); Scout runs twice a week (Q20)."""
 
 import json
 from datetime import datetime, timezone
@@ -12,14 +12,14 @@ DATA_MARKER = "factory:scout-data"
 MAX_BODY_CHARS = 60_000  # GitHub's limit is 65,536
 
 
-def week_key(now: datetime) -> str:
-    year, week, _ = now.isocalendar()
-    return f"{year}-W{week:02d}"
+def run_key(now: datetime) -> str:
+    """The run's date names its issue: two runs in one ISO week must not share (and overwrite) an issue."""
+    return now.date().isoformat()
 
 
 def issue_title(result: ScoutResult, config: dict[str, Any]) -> str:
-    week = week_key(datetime.fromisoformat(result.collected_at))
-    return f"Scout {week}: {len(listed(result, config))} candidate niches"
+    key = run_key(datetime.fromisoformat(result.collected_at))
+    return f"Scout {key}: {len(listed(result, config))} candidate niches"
 
 
 def listed(result: ScoutResult, config: dict[str, Any]) -> list[Candidate]:
@@ -29,7 +29,7 @@ def listed(result: ScoutResult, config: dict[str, Any]) -> list[Candidate]:
 
 def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dict[str, str] | None = None) -> str:
     """`verdicts` maps niche_id to a short Validator result such as "5/5 PASS"."""
-    week = week_key(datetime.fromisoformat(result.collected_at))
+    key = run_key(datetime.fromisoformat(result.collected_at))
     shown = listed(result, config)
     if verdicts:
         intro = (f"The {len(shown)} best candidate niches after validation: candidates that pass all five checks "
@@ -41,13 +41,16 @@ def render_issue_body(result: ScoutResult, config: dict[str, Any], verdicts: dic
                  "then keeps the best here and posts a brief below.")
     lines = [
         ISSUE_MARKER,
-        f"## Scout — week {week}",
+        f"## Scout — {key}",
         "",
         intro,
         "",
         f"**Data:** {result.actors_seen:,} Store Actors from {result.store_queries} queries · "
         f"{result.niches_total:,} niches, {result.niches_excluded:,} left out by `scout.exclude`"
         + (f", {result.niches_blocked:,} skipped after failing Legality in recent weeks" if result.niches_blocked else "")
+        + (f", {result.niches_recent:,} assessed recently" if result.niches_recent else "")
+        + (f", {result.niches_crowded:,} of {result.store_searches:,} searched left out as crowded on the Store"
+           if result.store_searches else "")
         + " · "
         f"{result.ideas_parsed} open ideas · "
         f"{result.details_fetched} Actor detail lookups · collected {_when(result.collected_at)}",

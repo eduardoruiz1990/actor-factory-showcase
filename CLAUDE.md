@@ -14,7 +14,7 @@ The Actor Factory: agents that find, build, publish and maintain paid Actors on 
 
 ```
 factory/common/     config loader, PoliteClient (rate limit + retries), GitHub client
-factory/scout/      weekly Store + Ideas scan -> 20 candidate niches -> weekly issue
+factory/scout/      twice-weekly Store + Ideas scan -> 20 candidate niches -> one issue per run (Q20)
 factory/validator/  five checks per candidate (claude-sonnet-5-5 + code rules) -> brief comment
 factory/builder/    prepares a build brief (refuses non-passing niches) and checks a Builder PR's scope
 factory/publisher/  finds changed Actors after a merge and writes their Store listing and pricing issue
@@ -25,7 +25,7 @@ templates/python-actor/  the Actor template every build starts from (official Ap
 actors/<name>/      one folder per Actor, built by the Builder
 tests/              pytest suite; tests/fixtures/ holds saved sample responses
 config.yaml         every threshold the agents apply
-.github/workflows/  scout.yml (weekly), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher); watcher.yml and digest.yml come in later phases
+.github/workflows/  scout.yml (Sundays and Wednesdays), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher); watcher.yml and digest.yml come in later phases
 docs/BUILDER.md     what every Actor build must deliver (the Builder's definition of done)
 ```
 
@@ -56,7 +56,7 @@ python tests/fixtures/build_fixtures.py              # regenerate the synthetic 
 - Python 3.12, standard library first. Runtime dependencies are `anthropic`, `httpx` and `pyyaml`; add one only when it clearly earns its place.
 - Dataclasses and plain functions; no frameworks. Keep modules small and readable.
 - All outbound HTTP goes through `factory.common.http.PoliteClient` so rate limits and retries apply everywhere.
-- GitHub writes are idempotent: the weekly issue is found by title and label; bot comments are found by a hidden `<!-- factory:... -->` marker and edited, not duplicated.
+- GitHub writes are idempotent: each Scout issue (named by run date) is found by title and label; bot comments are found by a hidden `<!-- factory:... -->` marker and edited, not duplicated.
 - Machine-readable hand-offs travel as hidden JSON in issue bodies and comments (`factory:scout-data`, `factory:validator-data`), with `>` escaped so the comment cannot be closed early.
 - Tests run offline against `tests/fixtures/`. A new network call needs a fixture and a test.
 - The Validator calls Claude through the official `anthropic` SDK with structured output (`output_config.format`) and the server-side web search and fetch tools for reading terms. The model reports facts with their source; `checks.py` decides pass or fail.
@@ -69,6 +69,6 @@ The development sandbox blocks `api.apify.com` and `apify.com`. Code that needs 
 
 These run as the Claude Code GitHub Action (`claude.yml`, added in Phase 2):
 
-- Builder: triggered by the `go` label on a weekly Scout issue. It opens a pull request adding `actors/<name>/`, based on the official Apify Python template, with code, tests, input schema, a Store README and pay-per-event pricing per result.
+- Builder: triggered by the `go` label on a Scout issue. It opens a pull request adding `actors/<name>/`, based on the official Apify Python template, with code, tests, input schema, a Store README and pay-per-event pricing per result.
 - Fixer: triggered by a `broken` issue. It opens a pull request whose first change is a test that reproduces the failure.
 - Both open pull requests only. Neither merges, deploys or publishes.

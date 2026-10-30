@@ -188,7 +188,7 @@ def ask_message(comments: list[dict[str, Any]]) -> str:
     passing, review = ids_by_verdict(comments, "PASS"), ids_by_verdict(comments, "REVIEW")
     if not passing and not review:
         return (f"{MARKER}\nNo candidate in this week's brief passed all five checks or is waiting for your review, "
-                "so there is nothing to build. Remove the `go` label, or wait for next week's Scout run.")
+                "so there is nothing to build. Remove the `go` label, or wait for the next Scout run.")
     parts = [f"{MARKER}\nWhich candidate should I build?"]
     if passing:
         parts.append(f"Passed all five checks: {', '.join(f'`{i}`' for i in passing)}; comment `/build <niche-id>`.")

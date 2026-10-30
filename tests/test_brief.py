@@ -1,6 +1,6 @@
 import pytest
 
-from factory.scout.history import parse_hard_fails
+from factory.scout.history import parse_assessed, parse_hard_fails
 from factory.scout.run import run_scout
 from factory.scout.sources import FixtureSource
 from factory.validator.assessment import FixtureAssessor
@@ -98,6 +98,14 @@ def test_review_candidates_get_their_own_section_and_build_command(validations, 
     assert "`/build shopify-product terms-reviewed`" in section
     assert "| 9 | Shopify Products Scraper | ✅ | ✅ | ❔ | ✅ | ✅ | 🔎 **REVIEW** |" in brief
     assert verdict_labels(validations)["shopify-product"] == "4/5 🔎 REVIEW"
+
+
+def test_assessed_niches_are_listed_and_kept_through_the_size_guard(validations, config, monkeypatch):
+    ids = ["b-niche", "a-niche", "b-niche"]
+    assert parse_assessed(render_brief(validations, config, "2026-11-04", assessed_ids=ids)) == ["a-niche", "b-niche"]
+    monkeypatch.setattr("factory.validator.brief.MAX_BODY_CHARS", 1_000)
+    assert parse_assessed(render_brief(validations, config, "2026-11-04", assessed_ids=ids)) == ["a-niche", "b-niche"]
+    assert parse_assessed(render_brief(validations, config, "2026-11-04")) is None
 
 
 def test_hard_fails_are_announced_and_kept_through_the_size_guard(validations, config, monkeypatch):

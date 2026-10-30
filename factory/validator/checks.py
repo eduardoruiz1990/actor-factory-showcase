@@ -61,7 +61,18 @@ def check_competition(c: Candidate, cfg: dict[str, Any]) -> CheckResult:
     fewer_than = int(cfg["fewer_than_maintained_alternatives"])
     fail_above = float(cfg["leader_failure_rate_above"])
     rating_below = float(cfg["leader_rating_below"])
+    max_same = int(cfg["max_same_name_actors"])
     plus = "+" if c.maintained_unknown else ""
+    # A new Actor among many same-name clones is buried in Store search, however weak the leader (Q20).
+    if c.same_name_actors is None:
+        return CheckResult("competition", FAIL, "same-name Actors on the Store not counted (unknown counts as a fail)",
+                           short="same-name Actors on the Store not counted")
+    if c.same_name_actors > max_same:
+        return CheckResult(
+            "competition", FAIL,
+            f"{c.same_name_actors} Store Actors share the niche's name (> {max_same}); a new one would be buried",
+            short=f"{c.same_name_actors} same-name Actors on the Store",
+        )
     if c.maintained_alternatives < fewer_than:
         count = c.maintained_alternatives
         label = "no maintained alternative" if count == 0 else _plural(count, "maintained alternative")

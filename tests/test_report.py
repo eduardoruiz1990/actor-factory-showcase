@@ -1,7 +1,7 @@
 import pytest
 
 from factory.scout.report import (
-    ISSUE_MARKER, MAX_BODY_CHARS, issue_title, parse_hidden_data, render_issue_body, week_key,
+    ISSUE_MARKER, MAX_BODY_CHARS, issue_title, parse_hidden_data, render_issue_body, run_key,
 )
 from factory.scout.run import run_scout
 from factory.scout.sources import FixtureSource
@@ -16,9 +16,10 @@ def table_rows(body):
     return [line for line in body.splitlines() if line.startswith("| ") and not line.startswith("| #")]
 
 
-def test_title_and_week(result, config, as_of):
-    assert week_key(as_of) == "2026-W43"
-    assert issue_title(result, config) == "Scout 2026-W43: 20 candidate niches"
+def test_title_is_named_by_the_run_date(result, config, as_of):
+    # Two runs a week can fall in one ISO week (Wednesday and the next Sunday), so the date names the issue.
+    assert run_key(as_of) == "2026-10-24"
+    assert issue_title(result, config) == "Scout 2026-10-24: 20 candidate niches"
 
 
 def test_body_lists_twenty_candidates_with_their_numbers(result, config):

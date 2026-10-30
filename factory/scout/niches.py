@@ -71,6 +71,7 @@ class Niche:
     keywords: tuple[str, ...]  # the founding Actor's (or idea's) keywords
     actors: list[ActorRecord] = field(default_factory=list)  # sorted: leader first
     ideas: list[Idea] = field(default_factory=list)
+    same_name_actors: int | None = None  # from a Store search; None until searched
 
     @property
     def id(self) -> str:
@@ -128,10 +129,22 @@ def attach_ideas(
 
 
 def is_excluded(niche: Niche, exclude_cfg: dict[str, Any]) -> bool:
-    """True when the niche can never pass: a listed title word or platform, or a leader in a listed category."""
-    if set(niche.keywords) & (set(exclude_cfg["title_words"]) | set(exclude_cfg.get("platforms") or [])):
+    """True when the niche can never pass: a listed title word, platform or generic tool, or a leader in a listed category."""
+    listed = [*exclude_cfg["title_words"], *(exclude_cfg.get("platforms") or []), *(exclude_cfg.get("generic_tools") or [])]
+    # Niche keywords are singular ("threads" -> "thread"), so the listed words are compared the same way.
+    if set(niche.keywords) & {_singular(w.lower()) for w in listed}:
         return True
     return bool(niche.leader and set(niche.leader.categories) & set(exclude_cfg["categories"]))
+
+
+def same_name_actors(items: list[dict[str, Any]], niche_keywords: tuple[str, ...], stopwords: set[str],
+                     owner: str = "") -> int:
+    """Store search results whose whole title holds every niche keyword: the clones a new Actor competes with."""
+    wanted = set(niche_keywords)
+    return sum(
+        1 for item in items
+        if item.get("username") != owner and wanted <= set(_keywords(str(item.get("title") or ""), stopwords))
+    )
 
 
 def days_since(iso: str | None, now: datetime) -> int | None:
@@ -218,6 +231,7 @@ def build_candidate(niche: Niche, now: datetime, config: dict[str, Any]) -> Cand
         weaknesses=weaknesses,
         demand=demand,
         score=round(score, 3),
+        same_name_actors=niche.same_name_actors,
     )
 
 

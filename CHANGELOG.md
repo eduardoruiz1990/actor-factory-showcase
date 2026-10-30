@@ -1,5 +1,21 @@
 # Changelog
 
+## 🎯 Scout: skip crowded niches and generic tools, run twice a week (2026-10-30, branch `scout-sharper`)
+
+- **Why:** five days after launch, the Greenhouse & Lever Actor had no outside users and ranked outside the top 100 in Store search. Its niche has 86 same-name Actors, which Scout's title clustering did not see. W43 also spent many assessments on generic tools that can never pass Legality. See Q20.
+- **Crowded niches:**
+  - Scout runs one Store search per niche for the best 200 niches. It counts Actors whose title holds every niche keyword, and leaves out niches with more than `validator.competition.max_same_name_actors` (15).
+  - The Validator's Competition check also fails those niches, and fails niches whose count is unknown.
+  - The issue's Data line shows how many niches were left out.
+- **Generic tools:**
+  - New `scout.exclude.generic_tools` list: integrations, downloaders, bypassers, runners, sitemap and similar.
+  - Excluded words now match plurals. "threads" and "onlyfans" had never matched.
+- **Twice a week:**
+  - `scout.yml` runs on Sundays and Wednesdays.
+  - Issues are named by date (`Scout 2026-11-04: …`), so two runs in one ISO week never share an issue.
+  - Every brief lists the niches it assessed, and Scout skips them for `scout.history.skip_assessed_days` (28) days, so the second run brings new niches.
+- **Tests:** 245 factory tests (9 new). A live dry run checked the Store search.
+
 ## 🩹 Greenhouse salaries and job boards typed on one line (2026-10-26, branches `board-list-input` and `greenhouse-salaries`)
 
 - **Greenhouse salaries:** the Actor now adds `pay_transparency=true` to the same Greenhouse request, so it costs no extra requests.
