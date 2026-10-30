@@ -1,15 +1,17 @@
-"""Company job boards on Greenhouse and Lever: every open job, read from each platform's official public API.
+"""Company job boards on Greenhouse, Lever and Ashby: every open job, read from each platform's official public API.
 
 One request per board:
 - Greenhouse: GET boards-api.greenhouse.io/v1/boards/<token>/jobs?content=true&pay_transparency=true
 - Lever: GET api.lever.co/v0/postings/<site>?mode=json (api.eu.lever.co for EU-hosted boards)
-Both APIs are public and need no key; Lever's documentation says published postings
-"may be scraped by third parties". Every URL is still checked against the API host's
-robots.txt before it is fetched. Keep the contract: iter_items() yields plain dicts and
-fetches only through `http`.
+- Ashby: GET api.ashbyhq.com/posting-api/job-board/<name>?includeCompensation=true
+The APIs are public and need no key; Lever's documentation says published postings
+"may be scraped by third parties". Ashby's documentation does not address third-party use;
+the owner reviewed that and approved it (QUESTIONS Q19). Every URL is still checked against
+the API host's robots.txt before it is fetched (Ashby's answers 401, which RFC 9309 reads as
+"no robots.txt"). Keep the contract: iter_items() yields plain dicts and fetches only through `http`.
 
 A board is a key in Settings.board_tokens: a plain token is a Greenhouse board ("airbnb"),
-"lever:<site>" and "lever-eu:<site>" are Lever boards.
+"lever:<site>" and "lever-eu:<site>" are Lever boards, "ashby:<name>" an Ashby board.
 """
 
 from __future__ import annotations
@@ -32,6 +34,7 @@ API = 'https://boards-api.greenhouse.io/v1/boards'
 # Lever's robots.txt asks for a 1-second crawl delay; one rate for every host keeps the rule simple.
 MAX_RATE = 1.0
 LEVER_API = {'lever': 'https://api.lever.co/v0/postings', 'lever-eu': 'https://api.eu.lever.co/v0/postings'}
+ASHBY_API = 'https://api.ashbyhq.com/posting-api/job-board'
 # Board pages people copy from the browser: boards.greenhouse.io/<token>, job-boards.greenhouse.io/<token>,
 # job-boards.eu.greenhouse.io/<token>, boards-api.greenhouse.io/v1/boards/<token>/..., or ?for=<token>.
 _TOKEN = re.compile(r'^[A-Za-z0-9_.-]+$')
@@ -53,11 +56,11 @@ class Settings:
         for raw in _board_entries(actor_input.get('boardTokens')):
             token = board_key(raw)
             if token is None:
-                Actor.log.warning(f'{raw!r} is not a Greenhouse or Lever board token or URL; skipped')
+                Actor.log.warning(f'{raw!r} is not a Greenhouse, Lever or Ashby board token or URL; skipped')
             elif token not in tokens:
                 tokens.append(token)
         if not tokens:
-            raise ValueError('Input needs at least one board in "boardTokens" (for example "airbnb" or "lever:palantir").')
+            raise ValueError('Input needs at least one board in "boardTokens" (for example "airbnb", "lever:palantir" or "ashby:ramp").')
         max_results = int(actor_input.get('maxResults') or 1000)
         rate = float(actor_input.get('maxRequestsPerSecond') or 1)
         return cls(
@@ -98,7 +101,7 @@ def board_key(value: Any) -> str | None:
     prefix = prefix.lower()
     if prefix == 'greenhouse' and not rest.startswith('//'):
         return board_token(rest)
-    if prefix in LEVER_API and not rest.startswith('//'):
+    if (prefix in LEVER_API or prefix == 'ashby') and not rest.startswith('//'):
         site = rest.strip().lower()
         return f'{prefix}:{site}' if _TOKEN.match(site) else None
     if '/' in value or '.' in value:
@@ -112,6 +115,12 @@ def board_key(value: Any) -> str | None:
                 path = path[2:]
             site = path[0].lower() if path else ''
             return f'{lever}:{site}' if _TOKEN.match(site) else None
+        if host in ('jobs.ashbyhq.com', 'api.ashbyhq.com'):
+            path = [p for p in parts.path.split('/') if p]
+            if path[:2] == ['posting-api', 'job-board']:
+                path = path[2:]
+            name = path[0].lower() if path else ''  # Ashby board names are not case-sensitive
+            return f'ashby:{name}' if _TOKEN.match(name) else None
     return board_token(value)
 
 
@@ -153,6 +162,9 @@ async def iter_items(settings: Settings, http: PoliteClient, robots: RobotsCache
         if platform in LEVER_API:
             jobs = await _fetch(f'{LEVER_API[platform]}/{quote(site)}?mode=json', 'Lever', site, http, robots,
                                 lambda data: parse_lever_jobs(site, data, settings.include_content))
+        elif platform == 'ashby':
+            jobs = await _fetch(f'{ASHBY_API}/{quote(site)}?includeCompensation=true', 'Ashby', site, http, robots,
+                                lambda data: parse_ashby_jobs(site, data, settings.include_content))
         else:
             url = f'{API}/{quote(key)}/jobs?' + ('content=true&' if settings.include_content else '') + 'pay_transparency=true'
             jobs = await _fetch(url, 'Greenhouse', key, http, robots, lambda data: parse_jobs(key, data))
@@ -311,6 +323,77 @@ def parse_lever_job(site: str, posting: dict[str, Any], fetched_at: str, include
         'salary_interval': _text(salary.get('interval')),
         'fetched_at': fetched_at,
     }
+
+
+def parse_ashby_jobs(name: str, data: Any, include_content: bool = True) -> list[dict[str, Any]]:
+    """The Ashby job board response as output items. Raises ValueError when it is not one.
+
+    Jobs marked isListed=false are left out: Ashby says they "should only be available via direct link".
+    """
+    if not isinstance(data, dict) or not isinstance(data.get('jobs'), list):
+        raise ValueError('no "jobs" list')
+    fetched_at = datetime.now(UTC).isoformat(timespec='seconds')
+    return [parse_ashby_job(name, job, fetched_at, include_content) for job in data['jobs']
+            if isinstance(job, dict) and job.get('id') and job.get('isListed', True) is not False]
+
+
+_ASHBY_EMPLOYMENT = {'FullTime': 'Full-time', 'PartTime': 'Part-time', 'Intern': 'Intern', 'Contract': 'Contract',
+                     'Temporary': 'Temporary'}
+_ASHBY_INTERVALS = {'1 YEAR': 'per-year-salary', '1 MONTH': 'per-month-salary', '1 WEEK': 'per-week-salary',
+                    '1 DAY': 'per-day-wage', '1 HOUR': 'per-hour-wage'}
+
+
+def parse_ashby_job(name: str, job: dict[str, Any], fetched_at: str, include_content: bool = True) -> dict[str, Any]:
+    location = _text(job.get('location'))
+    secondary = [_text(s.get('location')) for s in job.get('secondaryLocations') or [] if isinstance(s, dict)]
+    offices = list(dict.fromkeys(t for t in (location, *secondary) if t))
+    departments = list(dict.fromkeys(t for t in (_text(job.get('department')), _text(job.get('team'))) if t))
+    content = job.get('descriptionHtml')
+    content_html = content if include_content and isinstance(content, str) and content.strip() else None
+    workplace = _text(job.get('workplaceType'))
+    return {
+        'platform': 'ashby',
+        'board_token': name,
+        'company': None,  # Ashby's public API does not publish the company's display name
+        'job_id': _text(job.get('id')),
+        'internal_job_id': None,
+        'requisition_id': None,
+        'title': _text(job.get('title')),
+        'location': location,
+        'department': departments[0] if departments else None,
+        'departments': departments,
+        'office': location,
+        'offices': offices,
+        'absolute_url': _text(job.get('jobUrl')),
+        'language': None,
+        'updated_at': _text(job.get('publishedAt')),  # Ashby: "when the job was last published"
+        'first_published': None,
+        'content': content_html,
+        'content_text': html_to_text(content_html) if content_html else None,
+        'employment_type': _ASHBY_EMPLOYMENT.get(job.get('employmentType'), _text(job.get('employmentType'))),
+        'workplace_type': workplace.lower() if workplace else None,
+        **_ashby_salary(job),
+        'fetched_at': fetched_at,
+    }
+
+
+def _ashby_salary(job: dict[str, Any]) -> dict[str, Any]:
+    """The salary range from Ashby's compensation summary, only when the company shows pay on its job posting."""
+    salary: dict[str, Any] = {}
+    compensation = job.get('compensation') if isinstance(job.get('compensation'), dict) else {}
+    if job.get('shouldDisplayCompensationOnJobPostings') is True:
+        salary = next((c for c in compensation.get('summaryComponents') or []
+                       if isinstance(c, dict) and c.get('compensationType') == 'Salary'), {})
+    return {
+        'salary_min': _number(salary.get('minValue')),
+        'salary_max': _number(salary.get('maxValue')),
+        'salary_currency': _text(salary.get('currencyCode')),
+        'salary_interval': _ASHBY_INTERVALS.get(salary.get('interval')) if salary else None,
+    }
+
+
+def _number(value: Any) -> int | float | None:
+    return value if isinstance(value, (int, float)) and not isinstance(value, bool) else None
 
 
 def _lever_html(posting: dict[str, Any]) -> str | None:

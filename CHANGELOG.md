@@ -1,5 +1,20 @@
 # Changelog
 
+## 🧩 Ashby boards in the jobs Actor (2026-10-30, branch `ashby-boards`)
+
+- **Why:** the owner accepted RFC 9309 for robots.txt (Q19) and reviewed Ashby's terms. Most competing multi-ATS Actors already cover Ashby, which is popular with fast-growing tech companies.
+- **Change** in `actors/greenhouse-jobs-scraper`:
+  - Input: `ashby:<company>` boards, or any `jobs.ashbyhq.com` or `api.ashbyhq.com/posting-api/job-board/` URL. Board names are not case-sensitive.
+  - Source: one request per board to `api.ashbyhq.com/posting-api/job-board/<name>?includeCompensation=true`.
+  - Output: the same fields as the other platforms. Employment type is readable (`Full-time`), and workplace type is `onsite`, `remote` or `hybrid`.
+  - The salary range comes from Ashby's compensation summary, and only when the company shows pay on its posting.
+  - Jobs the company keeps off its board list (`isListed: false`) are left out.
+- **Store text:**
+  - Title: "Greenhouse, Lever & Ashby Jobs Scraper". The description, SEO text and README are updated; the Publisher now sets these on deploy.
+  - Version 0.3.
+  - The default input adds `ashby:warp`, so Apify's daily test covers all three platforms.
+- **Tests:** 96 Actor tests (11 new), with a real Warp fixture saved with `tests.fetch_fixture`; investor names are blanked. A live check returned 618 jobs from 4 boards: Airbnb 201 (164 with salary), Zoox 227 (211), Warp 20 (18) and Ramp 170 (163).
+
 ## 🤖 robots.txt: a 4xx answer means "no robots.txt" (2026-10-30, branch `robots-4xx-ashby`)
 
 - **Why:** owner decision on Q19. Ashby's API answers `/robots.txt` with 401, and the old rule skipped such sites. RFC 9309 (§2.3.1.3) treats any 4xx answer as "unavailable", which means crawlers may access the site.
