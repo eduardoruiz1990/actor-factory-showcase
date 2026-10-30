@@ -5,19 +5,23 @@
     "schemaVersion": 1,
     "properties": {
         "boardTokens": {
-            "title": "Job boards (Greenhouse, Lever or Ashby)",
+            "title": "Job boards (Greenhouse, Lever, Ashby, Workable or Personio)",
             "type": "array",
-            "description": "Companies to read. Greenhouse: a board token (the part after boards.greenhouse.io/, for example \"airbnb\") or any Greenhouse job board URL. Lever: \"lever:<company>\" (for example \"lever:zoox\") or any jobs.lever.co URL; use \"lever-eu:<company>\" or a jobs.eu.lever.co URL for EU-hosted boards. Ashby: \"ashby:<company>\" (for example \"ashby:ramp\") or any jobs.ashbyhq.com URL. Put one board per line (several on a line, separated by commas, also work). Each board is one request.",
+            "description": "Companies to read. Greenhouse: a board token (the part after boards.greenhouse.io/, for example \"airbnb\") or any Greenhouse job board URL. Lever: \"lever:<company>\" (for example \"lever:zoox\") or any jobs.lever.co URL; use \"lever-eu:<company>\" or a jobs.eu.lever.co URL for EU-hosted boards. Ashby: \"ashby:<company>\" (for example \"ashby:ramp\") or any jobs.ashbyhq.com URL. Workable: \"workable:<account>\" (for example \"workable:blueground\") or any apply.workable.com URL. Personio: \"personio:<company>\" (for example \"personio:tado\") or any jobs.personio.com or jobs.personio.de URL. Put one board per line (several on a line, separated by commas, also work). Each board is one request.",
             "editor": "stringList",
             "prefill": [
                 "airbnb",
                 "lever:zoox",
-                "ashby:warp"
+                "ashby:warp",
+                "workable:blueground",
+                "personio:ottonova"
             ],
             "default": [
                 "airbnb",
                 "lever:zoox",
-                "ashby:warp"
+                "ashby:warp",
+                "workable:blueground",
+                "personio:ottonova"
             ]
         },
         "includeContent": {

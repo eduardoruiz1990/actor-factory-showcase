@@ -4,6 +4,6 @@
         "JOBS",
         "AUTOMATION"
     ],
-    "seoTitle": "Greenhouse, Lever & Ashby Jobs Scraper: jobs with salaries",
-    "seoDescription": "Export every open job from any company's Greenhouse, Lever or Ashby board: title, location, department, salary range, URL and description, as JSON or CSV."
+    "seoTitle": "ATS Jobs API: Greenhouse, Lever, Ashby, Workable, Personio",
+    "seoDescription": "Every open job from any company's Greenhouse, Lever, Ashby, Workable or Personio board, with salary ranges, as JSON or CSV. One run, five ATS."
 }

@@ -1,21 +1,21 @@
-# Greenhouse, Lever & Ashby Jobs Scraper: every open job, with salary ranges
+# ATS Jobs Scraper: every open job from Greenhouse, Lever, Ashby, Workable and Personio, with salary ranges
 
-Get every open job from any company that hires through **Greenhouse**, **Lever** or **Ashby**, three of the most widely
-used applicant tracking systems (ATS), the last one popular with fast-growing tech companies. You get the job title, location, department, office, job URL, posting date, the full
-job description and, where the company publishes it, the **salary range**, as clean JSON, CSV or Excel. Give it board
-tokens (such as `airbnb`, `lever:zoox` or `ashby:ramp`) or job board URLs, and it reads them from each platform's official public
-job board API. Recruiters, job boards, job aggregators, HR-tech teams and market researchers use it to track who is
+Get every open job from any company that hires through **Greenhouse**, **Lever**, **Ashby**, **Workable** or
+**Personio**, five of the most widely used applicant tracking systems (ATS): US and European tech companies, scale-ups
+and thousands of small and mid-sized businesses. You get the job title, company, location, department, office, job
+URL, posting date, the full job description and, where the company publishes it, the **salary range**, as clean JSON,
+CSV or Excel. Give it board names (such as `airbnb`, `lever:zoox`, `ashby:ramp`, `workable:blueground` or
+`personio:tado`) or job board URLs, and it reads each platform's public job feed. Recruiters, job boards, job aggregators, HR-tech teams and market researchers use it to track who is
 hiring, for which roles, where and for how much.
 
 ## What can this Actor do?
 
-- Get every open job from any company's Greenhouse, Lever or Ashby board, with one API request per company
-- Mix the platforms in one run, with the same output fields for every job
-- Accept board tokens or URLs: `airbnb`, `https://boards.greenhouse.io/airbnb`,
-  `https://job-boards.greenhouse.io/airbnb/jobs/123`, `lever:zoox`, `https://jobs.lever.co/zoox`, and EU-hosted Lever
-  boards (`lever-eu:<company>` or `https://jobs.eu.lever.co/<company>`), `ashby:ramp` and `https://jobs.ashbyhq.com/ramp`
-- Return salary ranges (minimum, maximum, currency, interval) from all three platforms, wherever the company publishes
-  pay ranges, plus employment type and workplace type from Lever and Ashby boards
+- Get every open job from any company's Greenhouse, Lever, Ashby, Workable or Personio board, with one request per
+  company
+- Mix the five platforms in one run, with the same output fields for every job
+- Accept board names or the URLs you copy from a careers page (see the table below)
+- Return salary ranges (minimum, maximum, currency, interval) from Greenhouse, Lever, Ashby and Personio, wherever the
+  company publishes pay ranges, plus employment type and workplace type
 - Return the full description as HTML and as plain text, with every department and office
 - Filter by title keywords (for example "engineer", "data") and location keywords (for example "Remote", "London")
 - Turn descriptions off for a fast, light list of titles, locations and links
@@ -28,29 +28,37 @@ hiring, for which roles, where and for how much.
 
 One result per open job. Every job has the same fields; a field a platform does not publish is `null`.
 
+| Platform | Enter | Salary ranges | Company name |
+|---|---|---|---|
+| Greenhouse | `airbnb` or a `boards.greenhouse.io` / `job-boards.greenhouse.io` URL | Where published | Yes |
+| Lever | `lever:zoox` or a `jobs.lever.co` URL (`lever-eu:` for EU boards) | Where published | No (use `board_token`) |
+| Ashby | `ashby:ramp` or a `jobs.ashbyhq.com` URL | Where shown on the posting | No (use `board_token`) |
+| Workable | `workable:blueground` or an `apply.workable.com/<account>` URL | Not in the public feed | Yes |
+| Personio | `personio:tado` or a `<company>.jobs.personio.com` / `.de` URL | Where published | Yes |
+
 | Field | Description |
 |---|---|
-| `platform` | `greenhouse`, `lever` or `ashby` |
+| `platform` | `greenhouse`, `lever`, `ashby`, `workable` or `personio` |
 | `board_token` | The board the job came from, for example `airbnb` or `zoox` |
-| `company` | Company name as shown on a Greenhouse board (Lever's and Ashby's APIs do not publish it; use `board_token`) |
-| `job_id` | The platform's job ID: a number on Greenhouse, an ID string on Lever and Ashby (stable across runs) |
+| `company` | Company name, from Greenhouse, Workable and Personio (Lever's and Ashby's feeds do not publish it; use `board_token`) |
+| `job_id` | The platform's job ID: a number on Greenhouse and Personio, an ID string elsewhere (stable across runs) |
 | `internal_job_id` | Greenhouse internal job ID, shared by posts of the same job |
-| `requisition_id` | The company's own requisition ID, when it sets one (Greenhouse) |
+| `requisition_id` | The company's own requisition ID, when it sets one (Greenhouse, Workable) |
 | `title` | Job title |
 | `location` | Location text of the posting, for example `Tokyo, Japan` or `Remote - US` |
 | `department` | First department or team of the job |
-| `departments` | All departments (Greenhouse), or the department and team (Lever, Ashby) |
+| `departments` | All departments (Greenhouse), the department and team (Lever, Ashby), or the department |
 | `office` | First office of the job |
 | `offices` | All offices or locations of the job |
 | `absolute_url` | Link to the job posting where candidates apply |
 | `language` | Language code of the posting, for example `en` (Greenhouse) |
 | `updated_at` | When the posting was last updated (Greenhouse, ISO 8601 with time zone) |
-| `first_published` | When the posting was first published (ISO 8601 with time zone) |
+| `first_published` | When the posting was first published (ISO 8601; a date only on Workable) |
 | `content` | Full job description as HTML |
 | `content_text` | Full job description as plain text, one paragraph or bullet per line |
-| `employment_type` | For example `Full-time` or `Intern` (Lever, Ashby) |
-| `workplace_type` | `onsite`, `hybrid` or `remote` (Lever, Ashby) |
-| `salary_min`, `salary_max` | Salary range, when the company publishes one (all three platforms) |
+| `employment_type` | For example `Full-time`, `Part-time` or `Intern` |
+| `workplace_type` | `onsite`, `hybrid` or `remote` (Lever, Ashby; `remote` on Workable) |
+| `salary_min`, `salary_max` | Salary range, when the company publishes one (all platforms but Workable) |
 | `salary_currency` | For example `USD` |
 | `salary_interval` | `per-year-salary`, `per-month-salary`, `per-hour-wage` and so on, or `null` when the board does not say |
 | `fetched_at` | When the Actor read the job (UTC) |
@@ -68,13 +76,13 @@ $1.60, whichever platform they come from. Set a maximum cost per run and the Act
 ## How to use it
 
 1. Click **Try for free**.
-2. Enter one or more job boards: a Greenhouse board token or URL, a Lever board as `lever:<company>` or its
-   `jobs.lever.co` URL, or an Ashby board as `ashby:<company>` or its `jobs.ashbyhq.com` URL.
+2. Enter one or more job boards: a board name such as `airbnb`, `lever:zoox`, `ashby:ramp`, `workable:blueground` or
+   `personio:tado`, or a job board URL from the company's careers page.
 3. Click **Start** and download the results when the run finishes.
 
 ## Input
 
-- **Job boards** (`boardTokens`, required): the companies to read, on Greenhouse, Lever or Ashby.
+- **Job boards** (`boardTokens`, required): the companies to read, on Greenhouse, Lever, Ashby, Workable or Personio.
 - **Include full job descriptions** (`includeContent`, default `true`): descriptions, plus departments and offices
   on Greenhouse.
 - **Title keywords** (`titleKeywords`): keep jobs whose title contains any of these words.
@@ -84,7 +92,8 @@ $1.60, whichever platform they come from. Set a maximum cost per run and the Act
 
 ```json
 {
-    "boardTokens": ["airbnb", "https://job-boards.greenhouse.io/stripe", "lever:zoox", "https://jobs.lever.co/palantir", "ashby:ramp"],
+    "boardTokens": ["airbnb", "https://job-boards.greenhouse.io/stripe", "lever:zoox", "https://jobs.lever.co/palantir", "ashby:ramp",
+                    "workable:blueground", "personio:tado"],
     "includeContent": true,
     "titleKeywords": ["engineer", "counsel"],
     "locationKeywords": ["California", "Remote"],
@@ -162,7 +171,7 @@ A Greenhouse job:
 
 Call the Actor from your code with the [Apify API](https://docs.apify.com/api/v2), or from an AI agent through
 [Apify's MCP server](https://mcp.apify.com). A typical automated use is a daily scheduled run over a list of
-companies on all three platforms that feeds new `job_id`s into a job board, a CRM, a salary benchmark or a hiring-signals
+companies on all five platforms that feeds new `job_id`s into a job board, a CRM, a salary benchmark or a hiring-signals
 dashboard.
 
 ## FAQ
@@ -182,6 +191,14 @@ each company's public job board:
   Its documentation does not address third-party use either way. Its API answers `/robots.txt` with "401", which
   the robots.txt standard (RFC 9309) treats as "no robots.txt". The Actor returns a salary only when the company
   shows pay on its job posting, and leaves out jobs the company keeps off its board list.
+- **Workable:** the public jobs endpoint described in Workable's help centre
+  ([Using the Workable API to create a careers page](https://help.workable.com/hc/en-us/articles/115012771647)),
+  which lists a company's published jobs without a key. Its robots.txt allows crawling.
+- **Personio:** the XML job feed described in Personio's
+  [developer documentation](https://developer.personio.de/docs/retrieving-open-job-positions)
+  (`<company>.jobs.personio.com/xml`). Its robots.txt allows crawling.
+
+Ashby's, Workable's and Personio's documentation does not address third-party use either way.
 
 The Actor only reads open job postings, needs no login, checks each API's robots.txt before each request, keeps to a
 polite request rate, and stores no personal data. Check that your own use of the job postings suits your purpose and
@@ -194,10 +211,13 @@ jurisdiction.
   the company name.
 - If it goes to `jobs.lever.co/<company>/...`, paste the URL or enter `lever:<company>`.
 - If it goes to `jobs.ashbyhq.com/<company>/...`, paste the URL or enter `ashby:<company>`.
+- If it goes to `apply.workable.com/<account>/...`, paste the URL or enter `workable:<account>`.
+- If it goes to `<company>.jobs.personio.com/...` or `.de`, paste the URL or enter `personio:<company>`.
 
 **A board returned no jobs.** Either the company has no open jobs or the token is wrong; the run log says
-"No Greenhouse board called ...", "No Lever board called ..." or "No Ashby board called ..." for an unknown board.
-Only companies that use Greenhouse, Lever or Ashby are covered.
+"No Greenhouse board called ..." (or Lever, Ashby, Workable) for an unknown board. For an unknown Personio company
+it says that robots.txt does not allow the feed, because Personio blocks crawling on company names it does not host.
+Only companies that use one of the five platforms are covered.
 
 **Why is `company` empty for Lever and Ashby jobs?** Their public APIs do not include the company's display name.
 Every job carries its `board_token` (for example `zoox` or `ramp`), which identifies the company.
