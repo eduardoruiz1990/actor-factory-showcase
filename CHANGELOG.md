@@ -1,5 +1,12 @@
 # Changelog
 
+## 🎯 Scout assesses 80 niches per run (2026-10-31, branch `scout-assess-80`)
+
+- **Why:** the 2026-10-30 run assessed 40 niches and none passed. Most failures are legal and cannot be fixed, so more assessments mean more chances of a pass (Q22).
+- **Change:** `scout.candidates_to_validate` goes from 40 to 80, `details.niche_pool` from 50 to 100, and `store_search.pool` from 200 to 250.
+- **Cost:** about twice the Validator spend per run. The run should take about 25 minutes instead of 14.
+- **Tests:** 250 factory tests.
+
 ## 🧩 Workable and Personio in the jobs Actor (2026-10-31, branch `ats-workable-personio`)
 
 - **Why:** the 2026-10-30 Scout run found nothing buildable, and the owner chose to win the jobs niche. Buyers there choose breadth: the most-used Actors cover four or more ATS platforms (Q21).
