@@ -1,9 +1,10 @@
 """robots.txt: fetched once per site, matched with RFC 9309 rules (including * and $).
 
 Python's urllib.robotparser ignores the wildcards, so the matcher is written here.
-When robots.txt cannot be read (anything but 200, 404 or 410, or a network
-error), the Actor treats the whole site as disallowed: it never fetches a page
-it cannot show it is allowed to.
+Status handling follows RFC 9309: a 4xx answer (404, but also 401 or 403 from an
+API that publishes no file) means there is no robots.txt, so nothing is
+disallowed (Q19). 429, 5xx and network errors mean robots.txt is unreachable, and
+the Actor treats the whole site as disallowed.
 """
 
 from __future__ import annotations
@@ -105,7 +106,7 @@ class RobotsCache:
             return None
         if response.status_code == 200:
             return RobotsTxt(response.text)
-        if response.status_code in (404, 410):
-            return RobotsTxt('')
+        if 400 <= response.status_code < 500 and response.status_code != 429:
+            return RobotsTxt('')  # RFC 9309 2.3.1.3: robots.txt is unavailable, so nothing is disallowed
         Actor.log.warning(f'robots.txt for {origin} returned {response.status_code}; skipping the site')
         return None

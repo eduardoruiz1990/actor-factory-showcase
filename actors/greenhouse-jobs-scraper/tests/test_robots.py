@@ -52,21 +52,24 @@ def cache(handler):
     return RobotsCache(http)
 
 
-def test_404_allows_and_errors_disallow():
+def test_4xx_allows_and_errors_disallow():
+    # RFC 9309: a 4xx robots.txt (404, or 401/403 from an API without one) is unavailable, so nothing is disallowed
+    # (Q19). A 429, a 5xx or a network error makes it unreachable, so the whole site is skipped.
+    statuses = {'open.example': 404, 'locked.example': 401, 'denied.example': 403, 'busy.example': 429,
+                'down.example': 503}
+
     def handler(request):
-        if request.url.host == 'open.example':
-            return httpx2.Response(404)
-        if request.url.host == 'down.example':
-            return httpx2.Response(503)
+        if request.url.host in statuses:
+            return httpx2.Response(statuses[request.url.host])
         raise httpx2.ConnectError('boom', request=request)
 
     robots = cache(handler)
 
     async def run():
-        return (await robots.allowed('https://open.example/a'), await robots.allowed('https://down.example/a'),
-                await robots.allowed('https://gone.example/a'), await robots.allowed('ftp://open.example/a'))
+        hosts = ['open', 'locked', 'denied', 'busy', 'down', 'gone']
+        return [await robots.allowed(f'https://{h}.example/a') for h in hosts] + [await robots.allowed('ftp://open.example/a')]
 
-    assert asyncio.run(run()) == (True, False, False, False)
+    assert asyncio.run(run()) == [True, True, True, False, False, False, False]
 
 
 def test_robots_is_fetched_once_per_site():
