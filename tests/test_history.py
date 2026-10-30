@@ -81,6 +81,11 @@ def test_niches_assessed_in_recent_issues_are_remembered():
     }
     blocked, recent = load_history(StubGitHub(issues, comments), "scout", NOW, 12, 28)
     assert set(blocked) == {"semrush-seo"} and recent == {"kalshi", "semrush-seo"}
+    # A brief from before Q20 has no assessed list: the candidates in its hidden data count instead.
+    issues[1]["created_at"] = "2026-10-25T07:58:00Z"
+    comments[8] = [{"body": "older brief <!-- " + DATA_MARKER + " " + _hidden_data_from(RECORDS[:2]) + " -->"}]
+    recent = load_history(StubGitHub(issues, comments), "scout", NOW, 12, 28)[1]
+    assert recent == {"kalshi", "semrush-seo", "google-trend"}
     assert load_history(StubGitHub(issues, comments), "scout", NOW, 12, 0)[1] == set()
 
 

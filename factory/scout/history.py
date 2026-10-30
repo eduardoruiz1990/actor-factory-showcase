@@ -84,6 +84,9 @@ def load_history(
                 if found is None and f"<!-- {DATA_MARKER} " in body:
                     found = hard_fails(parse_hidden_data(body) or [], created)  # briefs from before Q18
                 assessed = parse_assessed(body) if is_recent else None
+                if is_recent and assessed is None and f"<!-- {DATA_MARKER} " in body:
+                    # Briefs from before Q20 list only the candidates they showed.
+                    assessed = [r.get("niche_id") for r in parse_hidden_data(body) or []]
             except (ValueError, KeyError, TypeError) as exc:
                 log.warning("Issue #%s: unreadable Validator data (%s)", issue["number"], exc)
                 continue
