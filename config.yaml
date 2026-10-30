@@ -33,8 +33,9 @@ scout:
   # Each Scout issue (Sundays and Wednesdays, Q20) lists this many niches...
   candidates_per_week: 20
   # ...chosen from this many: the Validator assesses them all (one Claude call each)
-  # and the issue keeps the best after validation (Q13).
-  candidates_to_validate: 40
+  # and the issue keeps the best after validation (Q13). Raised from 40 on 2026-10-31: most
+  # niches fail Legality for good, so more assessments mean more chances of a pass (Q22).
+  candidates_to_validate: 80
   # Niches that can never pass, left out before ranking (Q13). A niche is excluded
   # when one of its title keywords is listed (lower case; plurals match the singular),
   # or when its leading Actor is in a listed Store category.
@@ -78,7 +79,7 @@ scout:
   # `pool` niches by first-pass score are searched; the ones with more same-name Actors than
   # validator.competition.max_same_name_actors are left out before validation.
   store_search:
-    pool: 200
+    pool: 250  # about half the searched niches are crowded, and details.niche_pool must stay below this
     limit: 100  # results read per search (the API maximum per page)
   store:
     sort_by: popularity
@@ -109,7 +110,7 @@ scout:
     # The Store list has no last-update date, so Scout fetches Actor details
     # (GET /v2/acts/{id}) for the Actors of the best-ranked niches only.
     # Must be at least candidates_to_validate.
-    niche_pool: 50
+    niche_pool: 100
     actors_per_niche: 10
   # Run statuses counted as failures in the 30-day failure rate. ABORTED runs
   # are usually stopped by the user, so they are not counted.

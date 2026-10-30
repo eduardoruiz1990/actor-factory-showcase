@@ -198,3 +198,13 @@ Five platforms were checked on 2026-10-31:
 | Workday | Not added | The career sites use an internal, undocumented API. W43 already failed it on Cost and Stability. |
 
 Workable's and Personio's docs describe these feeds for publishing a company's own jobs, and say nothing either way about third-party use. The owner reviewed this and approved both on 2026-10-31, as for Ashby (Q19).
+
+### Q22. Assessing 80 niches per Scout run (resolved 2026-10-31: owner approved)
+
+The 2026-10-30 run assessed 40 niches and none passed: 28 failed Legality for a reason no build can fix, and most of the rest had too little demand. Since most failures are legal, the number of passes depends mainly on how many niches are assessed. The owner approved raising `scout.candidates_to_validate` from 40 to 80, with `details.niche_pool` at 100 and `store_search.pool` at 250 to keep the pools in order.
+
+- **Cost:** Validator spend roughly doubles per run, so with two runs a week it is about four times the original weekly plan.
+- **Duration:** the 2026-10-30 run took 14 minutes (Scout 8.5, Validator 5.6). With 80 niches it should take about 25 minutes, inside the workflow's 75-minute limit.
+- **Revisit** after a few runs. If the extra 40 niches rarely produce a PASS or REVIEW, lower the number again.
+
+Measured the same day: the owner had asked for spin-off Actors from the jobs engine. Store demand for job change monitors (39 users a month in total), hiring signals (146), salary benchmarks (11) and layoff trackers (32) is too small to build for.
