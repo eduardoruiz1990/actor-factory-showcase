@@ -134,7 +134,7 @@ def render_brief(plan: dict[str, Any]) -> str:
         "",
         f"- **Actor name:** `{plan['actor_name']}` (folder `actors/{plan['actor_name']}/`)",
         f"- **Pitch:** {a['pitch']}",
-        f"- **Source:** {a['target_site']} (`{a['target_domain']}`), access: {a['data_access']}, approach: {a['approach']}",
+        _source_line(a),
         f"- **Sample URLs:** {', '.join(a['sample_urls']) or 'none given'}",
         f"- **Output fields:** {', '.join(a['output_fields'])}",
         f"- **Price:** ${plan['price_per_1000_usd']:.2f} per 1,000 results ({plan['price_basis']}). "
@@ -155,6 +155,10 @@ def render_brief(plan: dict[str, Any]) -> str:
     if a.get("personal_data") == "removable":
         lines.append("  - The source mixes in personal data. Leave those fields out of the output, add their names to "
                      "`EXTRA_FORBIDDEN_KEYS` in `privacy.py`, and test that they never reach the dataset.")
+    if a.get("personal_data") == "user_supplied":
+        lines.append("  - The output returns the user's own input (Q24). Name the output fields that carry it in "
+                     "`USER_SUPPLIED_KEYS` in `privacy.py`, so the guard leaves their text unchanged. Only content the "
+                     "user supplied may go in those fields, never anything fetched from a third-party site; test it.")
     lines += [
         f"- **Stability:** {a['stability_notes']}",
         f"- **Risks:** {'; '.join(a['risks']) or 'none listed'}",
@@ -232,5 +236,16 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
+def _source_line(a: dict) -> str:
+    """Where the Actor's data comes from; a tool may read no site at all (Q24)."""
+    if a.get("kind") == "tool":
+        reach = {"none": "processes only the user's input (files, text, URLs of the user's own documents)",
+                 "user_websites": "checks websites the user names; check each URL with `robots.allowed()` first",
+                 "official_api": f"calls {a['target_site']} (`{a['target_domain']}`)"}.get(a.get("outside_service"), "")
+        return f"- **Source:** a tool that {reach}; approach: {a['approach']}"
+    return f"- **Source:** {a['target_site']} (`{a['target_domain']}`), access: {a['data_access']}, approach: {a['approach']}"
+
+
 if __name__ == "__main__":
     sys.exit(main())
+

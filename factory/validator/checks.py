@@ -110,9 +110,16 @@ def hard_legality_fail(reason: str) -> str | None:
     return None
 
 
+def is_site_free_tool(a: Assessment) -> bool:
+    """A tool that reads no single outside site: it processes the user's input or checks websites the user names (Q24)."""
+    return a.kind == "tool" and a.outside_service in ("none", "user_websites")
+
+
 def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[str, Any]) -> CheckResult:
     if a is None:
         return CheckResult("legality", UNKNOWN, "no assessment")
+    if is_site_free_tool(a):
+        return _check_tool_legality(a, cfg)
     fails: list[str] = []
     unknowns: list[str] = []
     # Hard rules: data behind a login, or personal data that is the value itself, never passes.
@@ -125,7 +132,7 @@ def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[
         fails.append(CORE_PERSONAL_DATA)
     elif a.personal_data == "removable" and not cfg["allow_removable_personal_data"]:
         fails.append("the source mixes in personal data")
-    elif a.personal_data == "unclear":
+    elif a.personal_data not in ("none", "removable"):  # "user_supplied" only fits a tool that reads no site
         unknowns.append("personal data unclear")
     if a.terms_allow_automated_access == "no":
         fails.append(TERMS_FORBID)
@@ -150,6 +157,39 @@ def check_legality(a: Assessment | None, robots: RobotsResult | None, cfg: dict[
         "legality", PASS,
         f"{access}, no login, {personal}, terms allow it{source}; {robots.detail}",
     )
+
+
+def _check_tool_legality(a: Assessment, cfg: dict[str, Any]) -> CheckResult:
+    """A tool that reads no single site has no site terms or robots.txt to check up front (Q24).
+
+    Hard rules still apply: no login, and no personal data collected from anyone but the user. A tool that
+    checks websites the user names must respect each site's robots.txt at run time, which the template does.
+    """
+    fails: list[str] = []
+    unknowns: list[str] = []
+    if a.login_required == "yes" or a.data_access == "requires_login":
+        fails.append(NEEDS_LOGIN)
+    elif a.login_required != "no":
+        unknowns.append("login requirement unclear")
+    user_data_ok = a.outside_service == "none" and cfg["allow_user_supplied_personal_data"]
+    if a.personal_data == "core":
+        fails.append(CORE_PERSONAL_DATA)
+    elif a.personal_data == "removable" and not cfg["allow_removable_personal_data"]:
+        fails.append("the source mixes in personal data")
+    elif a.personal_data == "user_supplied" and not user_data_ok:
+        fails.append("outputs personal data the user did not supply" if a.outside_service != "none"
+                     else "outputs the user's personal data, which the owner does not allow")
+    elif a.personal_data not in ("none", "removable", "user_supplied"):
+        unknowns.append("personal data unclear")
+    if fails:
+        return CheckResult("legality", FAIL, "; ".join(fails + unknowns), short="; ".join(fails[:2]))
+    if unknowns:
+        return CheckResult("legality", UNKNOWN, "; ".join(unknowns))
+    scope = ("processes only the user's input" if a.outside_service == "none"
+             else "checks websites the user names, respecting each site's robots.txt at run time")
+    personal = {"removable": "personal data stripped by the Actor",
+                "user_supplied": "returns only data the user supplied"}.get(a.personal_data, "no personal data")
+    return CheckResult("legality", PASS, f"tool: {scope}, no login, {personal}")
 
 
 def _is_http_url(value: str) -> bool:
@@ -192,6 +232,8 @@ def planned_price_per_1000(c: Candidate, cfg: dict[str, Any]) -> tuple[float, st
 def check_stability(a: Assessment | None, cfg: dict[str, Any]) -> CheckResult:
     if a is None:
         return CheckResult("stability", UNKNOWN, "no assessment")
+    if is_site_free_tool(a):
+        return CheckResult("stability", PASS, "tool: depends on no particular site's layout")
     if a.official_api_or_feed:
         return CheckResult("stability", PASS, f"official API or feed ({a.target_domain})")
     if a.layout_change_frequency in cfg["passing_layout_change"]:
@@ -212,7 +254,7 @@ def terms_review_reason(a: Assessment | None, robots: RobotsResult | None, cfg: 
     sample URLs, and terms that neither forbid
     the use nor were shown to allow it with a cited source.
     """
-    if not cfg.get("review_unclear_terms") or a is None:
+    if not cfg.get("review_unclear_terms") or a is None or is_site_free_tool(a):
         return None
     personal_ok = ("none", "removable") if cfg["allow_removable_personal_data"] else ("none",)
     if a.data_access not in cfg["review_access"] or a.login_required != "no" or a.personal_data not in personal_ok:
