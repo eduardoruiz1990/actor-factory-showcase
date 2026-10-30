@@ -3,8 +3,8 @@
 import json
 from datetime import datetime, timezone
 
-from factory.scout.history import active, hard_fails, load_blocked, parse_hard_fails
-from factory.validator.brief import DATA_MARKER, HARD_FAILS_MARKER, _hidden_json
+from factory.scout.history import active, hard_fails, load_blocked, load_history, parse_hard_fails
+from factory.validator.brief import ASSESSED_MARKER, DATA_MARKER, HARD_FAILS_MARKER, _hidden_json
 
 NOW = datetime(2026, 11, 1, 5, 17, tzinfo=timezone.utc)
 
@@ -65,6 +65,28 @@ def test_reads_the_hard_fails_list_and_older_briefs():
     assert set(blocked) == {"amazon-product", "google-trend", "semrush-seo"}  # not the rehearsal's "zz"
     assert blocked["semrush-seo"]["since"] == "2026-10-25"
     assert github.since.startswith("2026-08-09")
+
+
+def test_niches_assessed_in_recent_issues_are_remembered():
+    issues = [
+        {"number": 11, "title": "Scout 2026-10-28: 20 candidate niches", "created_at": "2026-10-28T05:20:00Z"},
+        {"number": 8, "title": "Scout 2026-W43: 20 candidate niches", "created_at": "2026-09-27T07:58:00Z"},
+        {"number": 5, "title": "Builder rehearsal: sample data", "created_at": "2026-10-30T23:26:50Z"},
+    ]
+    blocked_list = {"semrush-seo": {"reason": "needs a login", "since": "2026-10-28"}}
+    comments = {
+        11: [{"body": "brief" + _hidden_json(HARD_FAILS_MARKER, blocked_list) + _hidden_json(ASSESSED_MARKER, ["kalshi", "semrush-seo"])}],
+        8: [{"body": "brief" + _hidden_json(ASSESSED_MARKER, ["too-old"])}],  # 35 days before NOW
+        5: [{"body": "brief" + _hidden_json(ASSESSED_MARKER, ["rehearsal"])}],
+    }
+    blocked, recent = load_history(StubGitHub(issues, comments), "scout", NOW, 12, 28)
+    assert set(blocked) == {"semrush-seo"} and recent == {"kalshi", "semrush-seo"}
+    # A brief from before Q20 has no assessed list: the candidates in its hidden data count instead.
+    issues[1]["created_at"] = "2026-10-25T07:58:00Z"
+    comments[8] = [{"body": "older brief <!-- " + DATA_MARKER + " " + _hidden_data_from(RECORDS[:2]) + " -->"}]
+    recent = load_history(StubGitHub(issues, comments), "scout", NOW, 12, 28)[1]
+    assert recent == {"kalshi", "semrush-seo", "google-trend"}
+    assert load_history(StubGitHub(issues, comments), "scout", NOW, 12, 0)[1] == set()
 
 
 def test_unreadable_data_is_skipped():

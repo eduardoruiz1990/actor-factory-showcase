@@ -155,3 +155,25 @@ Ashby's public job posting API (`api.ashbyhq.com`) answers `/robots.txt` with **
 - **Conservative choice:** keep the strict rule, so the Actor does not support Ashby.
 - **To decide:** if you accept RFC 9309's reading for 401 and 403, `robots.py` changes in the template and in each Actor, and Ashby can be added. 5xx and network errors would still skip the site.
 
+
+### Q20. Crowded niches, generic tools and a twice-weekly Scout (resolved 2026-10-30: owner approved)
+
+Five days after launch, `guayox/greenhouse-jobs-scraper` had no users outside the owner. It ranked outside the top 100 in Store search for "greenhouse", "greenhouse jobs" and "lever jobs". The W43 Validator had passed Competition because Scout's title clustering found few rivals. The real Store search finds 86 Actors whose title holds "greenhouse" and "job", most of them recent clones with almost no users. A new Actor in such a niche is buried. W43 also spent many of its 40 assessments on generic tools (integrations, downloaders, bypassers, runners) that have no single target site, so they can never get past Legality.
+
+The owner approved three changes. The thresholds live in `config.yaml`.
+
+- **Same-name Actors (`validator.competition.max_same_name_actors: 15`):**
+  - Scout runs one Store search per niche for the best `scout.store_search.pool` niches. It counts the results whose whole title holds every niche keyword; the owner's own Actors are not counted.
+  - Niches above the limit are left out before validation. The Validator's Competition check also fails them, whatever the leader's weaknesses.
+  - A failed search counts as unknown, which is a fail.
+  - Measured on 2026-10-30, these were crowded: greenhouse job 86, wayback machine 87, sitemap 76, universal 60. These were open: fuel prices 1, PageSpeed audit 8, Kalshi weather 19, Idealo 34.
+  - The limit of 15 is a judgment call. Raise it if too few niches survive.
+- **Generic tools (`scout.exclude.generic_tools`):**
+  - Matched like the other exclusion lists.
+  - Listed words now match their plurals too. "threads" and "onlyfans" in `title_words` had never matched, because niche keywords are singular.
+- **Twice a week (Sundays and Wednesdays at 05:17 UTC):**
+  - Issues are named by date (`Scout 2026-11-04: 20 candidate niches`) instead of ISO week, because a Wednesday and the following Sunday share an ISO week.
+  - Every brief lists the niches it assessed (`factory:validator-assessed`). Scout skips them for `scout.history.skip_assessed_days` (28) days, so the Wednesday run brings new niches instead of paying to assess the same ones.
+  - A PASS or REVIEW niche can still be built from the issue that listed it.
+  - Validator spend roughly doubles, since there are two runs of up to 40 assessments a week.
+- **Not changed:** `docs/SPEC.md` still says weekly. This entry records the owner's change.

@@ -1,14 +1,14 @@
 name: Scout
 
-# Weekly. Scout reads the Apify Store and Ideas page and opens (or updates) the
-# week's candidates issue; the Validator then scores every candidate with
+# Twice a week (Q20). Scout reads the Apify Store and Ideas page and opens (or updates) the
+# run's candidates issue, named by date; the Validator then scores every candidate with
 # claude-sonnet-5-5 and posts its brief as a comment on that issue.
 # Both steps need network access to api.apify.com and apify.com, so they only
 # run here, not in the development sandbox (see docs/QUESTIONS.md).
 
 on:
   schedule:
-    - cron: "17 5 * * 0" # Sundays 05:17 UTC, ahead of Monday's digest
+    - cron: "17 5 * * 0,3" # Sundays and Wednesdays 05:17 UTC (Sunday's run lands ahead of Monday's digest)
   workflow_dispatch:
     inputs:
       dry_run:

@@ -16,6 +16,8 @@ def base_config():
     # The sample data predates the platform list (Q18) and uses platform niches (Google Trends,
     # Trustpilot, ...) to exercise the Validator's rules, so tests keep them; test_scout_run covers the list.
     config["scout"]["exclude"]["platforms"] = []
+    # Likewise generic tools (Sitemap URL extractor, ...); test_scout_run covers that list (Q20).
+    config["scout"]["exclude"]["generic_tools"] = []
     return config
 
 

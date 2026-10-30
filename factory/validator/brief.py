@@ -9,6 +9,7 @@ from factory.validator.run import Validation
 BRIEF_MARKER = "<!-- factory:validator v1 -->"
 DATA_MARKER = "factory:validator-data"
 HARD_FAILS_MARKER = "factory:validator-hard-fails"
+ASSESSED_MARKER = "factory:validator-assessed"
 ICONS = {PASS: "✅", FAIL: "❌"}
 UNKNOWN_ICON = "❔"
 REVIEW_ICON = "🔎"
@@ -27,12 +28,13 @@ def verdict_labels(validations: list[Validation]) -> dict[str, str]:
 
 
 def render_brief(
-    validations: list[Validation], config: dict[str, Any], week: str, assessed: int | None = None,
-    blocked: dict[str, dict[str, str]] | None = None, newly_blocked: int = 0,
+    validations: list[Validation], config: dict[str, Any], run: str, assessed: int | None = None,
+    blocked: dict[str, dict[str, str]] | None = None, newly_blocked: int = 0, assessed_ids: list[str] | None = None,
 ) -> str:
     """`validations` are the candidates the issue lists; `assessed` is how many were validated in all.
 
     `blocked` holds every niche Scout should keep skipping (Q18), `newly_blocked` how many of them are new.
+    `assessed_ids` are all the niches validated in this run, which Scout skips for a few weeks (Q20).
     """
     # Passing candidates keep Scout's order (opportunity score).
     passing = sorted((v for v in validations if v.verdict == "PASS"), key=lambda v: v.candidate.rank)
@@ -43,7 +45,7 @@ def render_brief(
 
     lines = [
         BRIEF_MARKER,
-        f"## Validator brief — week {week}",
+        f"## Validator brief — {run}",
         "",
         f"**{len(passing)} of {len(validations)} listed candidates pass all five checks"
         + (f", {len(review)} need{'s' if len(review) == 1 else ''} your review of {'its' if len(review) == 1 else 'their'} terms"
@@ -119,6 +121,8 @@ def render_brief(
     body = "\n".join(lines)
     if blocked:
         body += _hidden_json(HARD_FAILS_MARKER, blocked)  # small, and Scout needs it: never dropped
+    if assessed_ids:
+        body += _hidden_json(ASSESSED_MARKER, sorted(set(assessed_ids)))  # small, and Scout needs it: never dropped
     # The Builder needs the assessments of PASS and REVIEW candidates, so those are dropped last.
     for keep in (ALL, BUILDABLE, NONE):
         data = _hidden_data(validations, keep)

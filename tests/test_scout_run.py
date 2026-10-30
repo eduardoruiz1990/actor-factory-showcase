@@ -59,6 +59,58 @@ def test_recently_blocked_niches_are_skipped(source, config, as_of):
     assert "1 skipped after failing Legality in recent weeks" in render_issue_body(result, config)
 
 
+def test_generic_tool_niches_are_excluded(source, config, as_of):
+    # conftest turns the generic-tools list off for the sample data; turn the real one back on.
+    config["scout"]["exclude"]["generic_tools"] = load_config()["scout"]["exclude"]["generic_tools"]
+    result = run_scout(source, config, as_of)
+    assert "sitemap-url" not in {c.niche_id for c in result.candidates}
+    assert result.niches_excluded == 6
+
+
+def test_recently_assessed_niches_are_skipped(source, config, as_of):
+    result = run_scout(source, config, as_of, recent={"product-hunt", "not-a-niche"})
+    assert "product-hunt" not in {c.niche_id for c in result.candidates}
+    assert result.niches_recent == 1
+    assert "1 assessed recently" in render_issue_body(result, config)
+
+
+class CrowdedSource(FixtureSource):
+    """The live Store holds dozens of clones for some niches; the sample data has few."""
+
+    def __init__(self, fixtures_dir, clones, failing=()):
+        super().__init__(fixtures_dir)
+        self.clones, self.failing = clones, set(failing)
+
+    def store_search(self, query, limit):
+        if query in self.failing:
+            raise httpx.ConnectError("blocked")
+        page = super().store_search(query, limit)
+        title = self.clones.get(query)
+        if title:
+            page["items"] = page["items"] + [{"username": f"u{n}", "title": title} for n in range(30)]
+        return page
+
+
+def test_crowded_niches_are_left_out_before_validation(fixtures_dir, config, as_of):
+    first = run_scout(FixtureSource(fixtures_dir), config, as_of)
+    top = first.candidates[0]
+    assert top.same_name_actors is not None and top.same_name_actors <= 15
+    source = CrowdedSource(fixtures_dir, {" ".join(top.keywords): top.label})
+    result = run_scout(source, config, as_of)
+    assert top.niche_id not in {c.niche_id for c in result.candidates}
+    assert result.niches_crowded == 1 and result.store_searches == len(first.candidates)
+    assert sum(1 for kind, _ in source.requests if kind == "search") == result.store_searches
+    assert "1 of 33 searched left out as crowded on the Store" in render_issue_body(result, config)
+
+
+def test_a_failed_store_search_counts_as_unknown(fixtures_dir, config, as_of):
+    top = run_scout(FixtureSource(fixtures_dir), config, as_of).candidates[0]
+    result = run_scout(CrowdedSource(fixtures_dir, {}, failing={" ".join(top.keywords)}), config, as_of)
+    kept = next(c for c in result.candidates if c.niche_id == top.niche_id)
+    assert kept.same_name_actors is None
+    assert any("1 Store searches failed" in w for w in result.warnings)
+
+
 def test_inconsistent_pool_sizes_are_rejected(source, config, as_of):
     config["scout"]["details"]["niche_pool"] = 10
     with pytest.raises(ValueError, match="candidates_to_validate"):

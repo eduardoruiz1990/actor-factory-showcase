@@ -6,6 +6,9 @@ scout.history.skip_hard_fails_weeks weeks, so the Validator's slots go to
 niches it has not ruled out. Each Validator brief carries the list as hidden
 JSON (`factory:validator-hard-fails`): this week's hard failures plus the ones
 still active, each with the date it was found.
+
+Every niche a brief assessed, whatever its result, is listed too (`factory:validator-assessed`);
+Scout skips those for scout.history.skip_assessed_days days (Q20).
 """
 
 import json
@@ -14,7 +17,7 @@ from datetime import datetime, timedelta
 from typing import Any
 
 from factory.common.github import GitHubClient
-from factory.validator.brief import DATA_MARKER, HARD_FAILS_MARKER, parse_hidden_data
+from factory.validator.brief import ASSESSED_MARKER, DATA_MARKER, HARD_FAILS_MARKER, parse_hidden_data
 from factory.validator.checks import FAIL, hard_legality_fail
 
 log = logging.getLogger(__name__)
@@ -36,11 +39,19 @@ def hard_fails(records: list[dict[str, Any]], since: str) -> dict[str, dict[str,
 
 
 def parse_hard_fails(body: str) -> dict[str, dict[str, str]] | None:
-    start = body.find(f"<!-- {HARD_FAILS_MARKER} ")
+    return _hidden(body, HARD_FAILS_MARKER)
+
+
+def parse_assessed(body: str) -> list[str] | None:
+    return _hidden(body, ASSESSED_MARKER)
+
+
+def _hidden(body: str, marker: str) -> Any:
+    start = body.find(f"<!-- {marker} ")
     if start < 0:
         return None
     end = body.find(" -->", start)
-    return json.loads(body[start + len(HARD_FAILS_MARKER) + 6 : end])
+    return json.loads(body[start + len(marker) + 6 : end])
 
 
 def active(blocked: dict[str, dict[str, str]], now: datetime, weeks: int) -> dict[str, dict[str, str]]:
@@ -50,22 +61,37 @@ def active(blocked: dict[str, dict[str, str]], now: datetime, weeks: int) -> dic
 
 def load_blocked(github: GitHubClient, label: str, now: datetime, weeks: int) -> dict[str, dict[str, str]]:
     """Hard Legality failures from the weekly issues of the last `weeks` weeks that are still active."""
+    return load_history(github, label, now, weeks, 0)[0]
+
+
+def load_history(
+    github: GitHubClient, label: str, now: datetime, weeks: int, recent_days: int
+) -> tuple[dict[str, dict[str, str]], set[str]]:
+    """Hard Legality failures still active, and the niches assessed by issues opened in the last `recent_days` days."""
     since = (now - timedelta(weeks=weeks)).isoformat()
+    recent_since = (now - timedelta(days=recent_days)).isoformat()
     blocked: dict[str, dict[str, str]] = {}
+    recent: set[str] = set()
     for issue in github.list_issues(label, since):
         if not issue.get("title", "").startswith(WEEKLY_TITLE_PREFIX):
             continue
         created = issue["created_at"][:10]
+        is_recent = recent_days > 0 and issue["created_at"] >= recent_since
         for comment in github.list_comments(issue["number"]):
             body = comment.get("body") or ""
             try:
                 found = parse_hard_fails(body)
                 if found is None and f"<!-- {DATA_MARKER} " in body:
                     found = hard_fails(parse_hidden_data(body) or [], created)  # briefs from before Q18
+                assessed = parse_assessed(body) if is_recent else None
+                if is_recent and assessed is None and f"<!-- {DATA_MARKER} " in body:
+                    # Briefs from before Q20 list only the candidates they showed.
+                    assessed = [r.get("niche_id") for r in parse_hidden_data(body) or []]
             except (ValueError, KeyError, TypeError) as exc:
                 log.warning("Issue #%s: unreadable Validator data (%s)", issue["number"], exc)
                 continue
             for nid, entry in (found or {}).items():
                 if entry.get("since", "") > blocked.get(nid, {}).get("since", ""):
                     blocked[nid] = entry
-    return active(blocked, now, weeks)
+            recent.update(n for n in assessed or [] if isinstance(n, str))
+    return active(blocked, now, weeks), recent

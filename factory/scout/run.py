@@ -9,7 +9,9 @@ import httpx
 
 from factory.scout.ideas import parse_ideas_export, parse_upvotes
 from factory.scout.models import ActorRecord, Candidate, Idea
-from factory.scout.niches import Niche, attach_ideas, build_candidate, cluster_actors, is_excluded, rank
+from factory.scout.niches import (
+    Niche, attach_ideas, build_candidate, cluster_actors, is_excluded, rank, same_name_actors,
+)
 from factory.scout.sources import ScoutSource
 from factory.scout.store import apply_actor_detail, parse_store_item
 
@@ -25,6 +27,9 @@ class ScoutResult:
     niches_total: int = 0
     niches_excluded: int = 0
     niches_blocked: int = 0  # skipped after a hard Legality failure in recent weeks (Q18)
+    niches_recent: int = 0  # skipped because the Validator assessed them recently (Q20)
+    niches_crowded: int = 0  # left out because the Store has too many same-name Actors (Q20)
+    store_searches: int = 0
     ideas_parsed: int = 0
     ideas_open: int = 0
     details_fetched: int = 0
@@ -48,9 +53,11 @@ class ScoutResult:
 
 
 def run_scout(
-    source: ScoutSource, config: dict[str, Any], now: datetime, blocked: dict[str, dict[str, str]] | None = None
+    source: ScoutSource, config: dict[str, Any], now: datetime, blocked: dict[str, dict[str, str]] | None = None,
+    recent: set[str] | None = None,
 ) -> ScoutResult:
-    """`blocked` holds niches that failed Legality for a hard reason in recent weeks; they are skipped."""
+    """`blocked` holds niches that failed Legality for a hard reason in recent weeks, `recent` the niches the
+    Validator assessed in the last scout.history.skip_assessed_days days; both are skipped."""
     scout_cfg = config["scout"]
     warnings: list[str] = []
 
@@ -68,8 +75,10 @@ def run_scout(
             raise ValueError(f"scout.{key} must all be quoted strings in config.yaml")
     to_validate = int(scout_cfg["candidates_to_validate"])
     per_week = int(scout_cfg["candidates_per_week"])
-    if int(scout_cfg["details"]["niche_pool"]) < to_validate or to_validate < per_week:
-        raise ValueError("config.yaml needs candidates_per_week <= candidates_to_validate <= details.niche_pool")
+    search_cfg = scout_cfg["store_search"]
+    if not per_week <= to_validate <= int(scout_cfg["details"]["niche_pool"]) <= int(search_cfg["pool"]):
+        raise ValueError("config.yaml needs candidates_per_week <= candidates_to_validate <= details.niche_pool"
+                         " <= store_search.pool")
     stopwords = set(clustering["stopwords"])
     niches = cluster_actors(actors, stopwords, float(clustering["similarity_threshold"]))
     niches = attach_ideas(niches, ideas, stopwords, float(clustering["idea_match_threshold"]), open_statuses)
@@ -81,16 +90,26 @@ def run_scout(
     total = len(niches)
     niches = [n for n in niches if not is_excluded(n, exclude)]
     blocked = blocked or {}
+    recent = recent or set()
     after_exclude = len(niches)
     niches = [n for n in niches if n.id not in blocked]
+    after_blocked = len(niches)
+    niches = [n for n in niches if n.id not in recent]
 
     min_demand = float(scout_cfg["ranking"]["min_demand"])
     first_pass = rank([c for c in (build_candidate(n, now, config) for n in niches) if c.demand >= min_demand])
 
+    # A niche full of same-name clones buries a new Actor in Store search: count them for the best niches.
+    by_id = {n.id: n for n in niches}
+    searched = [by_id[c.niche_id] for c in first_pass[: int(search_cfg["pool"])]]
+    count_same_name(source, searched, int(search_cfg["limit"]), stopwords, owner, warnings)
+    max_same = int(config["validator"]["competition"]["max_same_name_actors"])
+    crowded = {n.id for n in searched if n.same_name_actors is not None and n.same_name_actors > max_same}
+    open_niches = [n for n in searched if n.id not in crowded]
+
     # The Store list has no update dates: look those up for the best niches only.
     details_cfg = scout_cfg["details"]
-    pool_ids = {c.niche_id for c in first_pass[: int(details_cfg["niche_pool"])]}
-    pool = [n for n in niches if n.id in pool_ids]
+    pool = open_niches[: int(details_cfg["niche_pool"])]
     fetched = fetch_details(source, pool, int(details_cfg["actors_per_niche"]), scout_cfg["failure_statuses"], warnings)
 
     final = rank([build_candidate(n, now, config) for n in pool])
@@ -105,7 +124,10 @@ def run_scout(
         store_queries=queries,
         niches_total=total,
         niches_excluded=total - after_exclude,
-        niches_blocked=after_exclude - len(niches),
+        niches_blocked=after_exclude - after_blocked,
+        niches_recent=after_blocked - len(niches),
+        niches_crowded=len(crowded),
+        store_searches=len(searched),
         ideas_parsed=len(ideas),
         ideas_open=sum(1 for i in ideas if i.status in open_statuses),
         details_fetched=fetched,
@@ -143,6 +165,24 @@ def fetch_store(source: ScoutSource, store_cfg: dict[str, Any], warnings: list[s
     if failed == len(queries):
         raise RuntimeError("Every Store query failed; see warnings: " + "; ".join(warnings))
     return list(seen.values()), len(queries)
+
+
+def count_same_name(
+    source: ScoutSource, niches: list[Niche], limit: int, stopwords: set[str], owner: str, warnings: list[str]
+) -> None:
+    """Set each niche's same_name_actors from one Store search; a failed search leaves it None (counted as unknown)."""
+    failed = 0
+    for niche in niches:
+        try:
+            page = source.store_search(" ".join(niche.keywords), limit)
+        except (httpx.HTTPError, KeyError, ValueError) as exc:
+            failed += 1
+            log.warning("Store search for %s failed: %s", niche.id, exc)
+            continue
+        niche.same_name_actors = same_name_actors(page.get("items") or [], niche.keywords, stopwords, owner)
+    if failed:
+        warnings.append(f"{failed} Store searches failed; those niches have an unknown count of same-name Actors"
+                        " and fail Competition.")
 
 
 def fetch_ideas(source: ScoutSource, max_pages: int, warnings: list[str]) -> list[Idea]:

@@ -48,7 +48,7 @@ def test_scout_opens_one_issue_per_week_and_validator_comments(tmp_path, fixture
     assert scout_cli.main(args) == 0  # a re-run in the same week updates instead of duplicating
     assert len(github.issues) == 1
     issue = github.issues[1]
-    assert issue["labels"] == ["scout"] and issue["title"] == "Scout 2026-W43: 20 candidate niches"
+    assert issue["labels"] == ["scout"] and issue["title"] == "Scout 2026-10-24: 20 candidate niches"
     assert json.loads((tmp_path / "issue.json").read_text())["number"] == 1
 
     assert validator_cli.main(["--scout", str(tmp_path / "scout.json"), "--fixtures", str(fixtures_dir), "--out", str(tmp_path)]) == 0

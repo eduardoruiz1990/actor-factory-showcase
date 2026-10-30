@@ -17,12 +17,12 @@ def test_dry_run_builds_the_issue_with_twenty_scored_candidates(tmp_path):
 
     validations = json.loads((tmp_path / "validation.json").read_text(encoding="utf-8"))
     # Every candidate Scout shortlisted, not only the 20 listed; the real config leaves out the
-    # platform niches (Google, Amazon, ...) the sample data holds.
-    assert len(validations) == 27
+    # platform niches (Google, Amazon, ...) and generic tools (Sitemap URL extractor) the sample data holds.
+    assert len(validations) == 26
     assert not any(v["niche_id"].startswith(("google-", "amazon-")) for v in validations)
     assert all(len(v["checks"]) == 5 for v in validations)
     assert all(v["assessment_error"] is None for v in validations)
 
     preview = (tmp_path / "issue_preview.md").read_text(encoding="utf-8")
-    assert preview.startswith("# Scout 2026-W43: 20 candidate niches")
-    assert "## Validator brief — week 2026-W43" in preview
+    assert preview.startswith("# Scout 2026-10-24: 20 candidate niches")
+    assert "## Validator brief — 2026-10-24" in preview

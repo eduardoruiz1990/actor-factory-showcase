@@ -20,6 +20,9 @@ class ScoutSource(Protocol):
     def store_page(self, *, category: str | None, offset: int, limit: int, sort_by: str) -> dict[str, Any]:
         """One page of GET /v2/store: the `data` object (total, offset, limit, count, items)."""
 
+    def store_search(self, query: str, limit: int) -> dict[str, Any]:
+        """The first page of GET /v2/store?search=<query>, most relevant first: the `data` object."""
+
     def actor_detail(self, actor_id: str) -> dict[str, Any] | None:
         """The `data` object of GET /v2/acts/{actorId}, or None when unavailable."""
 
@@ -54,6 +57,11 @@ class LiveSource:
         # The Store endpoint is public; no token is sent.
         payload = self._http.get_json(f"{self._api_base}/store", params=params)
         self._save(f"store/{category or 'all'}_{offset}.json", payload)
+        return payload["data"]
+
+    def store_search(self, query: str, limit: int) -> dict[str, Any]:
+        payload = self._http.get_json(f"{self._api_base}/store", params={"search": query, "limit": limit})
+        self._save(f"store_search/{'-'.join(query.split())}.json", payload)
         return payload["data"]
 
     def actor_detail(self, actor_id: str) -> dict[str, Any] | None:
@@ -123,6 +131,15 @@ class FixtureSource:
         items.sort(key=lambda i: -int((i.get("stats") or {}).get("totalUsers30Days") or 0))
         page = items[offset : offset + limit]
         return {"total": len(items), "offset": offset, "limit": limit, "desc": False, "count": len(page), "items": page}
+
+    def store_search(self, query: str, limit: int) -> dict[str, Any]:
+        """Items whose title or description holds every query word (the live search is fuzzier, never stricter)."""
+        self.requests.append(("search", query))
+        words = query.lower().split()
+        items = [i for i in self._items
+                 if all(w in f"{i.get('title') or ''} {i.get('description') or ''}".lower() for w in words)]
+        items.sort(key=lambda i: -int((i.get("stats") or {}).get("totalUsers30Days") or 0))
+        return {"total": len(items), "offset": 0, "limit": limit, "count": len(items[:limit]), "items": items[:limit]}
 
     def actor_detail(self, actor_id: str) -> dict[str, Any] | None:
         self.requests.append(("detail", actor_id))

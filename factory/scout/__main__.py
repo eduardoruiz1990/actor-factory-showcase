@@ -21,7 +21,7 @@ import httpx
 from factory.common.config import load_config
 from factory.common.github import GitHubClient, GitHubError
 from factory.common.http import PoliteClient
-from factory.scout.history import load_blocked
+from factory.scout.history import load_history
 from factory.scout.report import issue_title, render_issue_body
 from factory.scout.run import run_scout
 from factory.scout.sources import FixtureSource, LiveSource
@@ -56,8 +56,8 @@ def main(argv: list[str] | None = None) -> int:
                 apify_token=os.environ.get("APIFY_TOKEN") or None,
                 raw_dir=args.out / "raw",
             )
-        blocked = {} if args.fixtures else read_blocked(http, config, now)
-        result = run_scout(source, config, now, blocked)
+        blocked, recent = ({}, set()) if args.fixtures else read_history(http, config, now)
+        result = run_scout(source, config, now, blocked, recent)
 
         if args.watcher_summary and args.watcher_summary.exists():
             result.watcher_summary = args.watcher_summary.read_text(encoding="utf-8")
@@ -89,17 +89,19 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def read_blocked(http: PoliteClient, config: dict, now: datetime) -> dict[str, dict[str, str]]:
-    """Niches to skip after a hard Legality failure in recent weekly issues (Q18); empty if GitHub is unavailable."""
+def read_history(http: PoliteClient, config: dict, now: datetime) -> tuple[dict[str, dict[str, str]], set[str]]:
+    """Niches to skip: hard Legality failures (Q18) and recent assessments (Q20); none if GitHub is unavailable."""
+    history = config["scout"]["history"]
     try:
         github = GitHubClient.from_env(http)
-        blocked = load_blocked(github, config["github"]["scout_label"], now,
-                               int(config["scout"]["history"]["skip_hard_fails_weeks"]))
+        blocked, recent = load_history(github, config["github"]["scout_label"], now,
+                                       int(history["skip_hard_fails_weeks"]), int(history["skip_assessed_days"]))
     except (GitHubError, httpx.HTTPError) as exc:
-        print(f"::warning title=Scout::Past Legality failures not read, so none are skipped: {exc}")
-        return {}
-    print(f"Skipping {len(blocked)} niches that failed Legality for a hard reason in recent weeks")
-    return blocked
+        print(f"::warning title=Scout::Past Validator results not read, so no niche is skipped: {exc}")
+        return {}, set()
+    print(f"Skipping {len(blocked)} niches that failed Legality for a hard reason in recent weeks"
+          f" and {len(recent - set(blocked))} assessed in the last {history['skip_assessed_days']} days")
+    return blocked, recent
 
 
 if __name__ == "__main__":

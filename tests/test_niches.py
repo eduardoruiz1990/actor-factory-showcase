@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta, timezone
 
 from factory.scout.models import ActorRecord, Idea
-from factory.scout.niches import attach_ideas, build_candidate, cluster_actors, is_maintained, jaccard, keywords
+from factory.scout.niches import (
+    attach_ideas, build_candidate, cluster_actors, is_excluded, is_maintained, jaccard, keywords, same_name_actors,
+)
 
 NOW = datetime(2026, 10, 24, tzinfo=timezone.utc)
 STOP = {"scraper", "api", "the", "data", "from"}
@@ -91,3 +93,24 @@ def test_idea_only_demand_uses_upvote_weight(config):
     assert candidate.leader is None
     assert candidate.open_idea_upvotes == 12
     assert candidate.demand == 12 * config["scout"]["ranking"]["idea_upvote_user_equivalent"]
+
+
+def test_same_name_actors_counts_store_clones_by_whole_title():
+    items = [
+        {"username": "a", "title": "Greenhouse Jobs Scraper"},
+        {"username": "b", "title": "Career Page Jobs: Greenhouse, Lever & Ashby"},  # after the separator still counts
+        {"username": "c", "title": "Greenhouse Job Board API"},
+        {"username": "d", "title": "Lever Jobs Scraper"},  # not the niche
+        {"username": "me", "title": "Greenhouse & Lever Jobs Scraper"},  # your own Actor is not a rival
+    ]
+    assert same_name_actors(items, ("greenhouse", "job"), STOP, owner="me") == 3
+    assert same_name_actors([], ("greenhouse", "job"), STOP) == 0
+
+
+def test_excluded_words_match_plurals():
+    niche = cluster_actors([actor("u/t", "Threads Posts Scraper")], STOP, 0.5)[0]
+    assert niche.keywords == ("thread", "post")
+    cfg = {"title_words": ["threads"], "categories": []}
+    assert is_excluded(niche, cfg)
+    assert not is_excluded(niche, {"title_words": [], "generic_tools": ["sitemap"], "categories": []})
+    assert is_excluded(niche, {"title_words": [], "generic_tools": ["posts"], "categories": []})

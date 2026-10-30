@@ -24,7 +24,7 @@ def leader(**overrides):
 def candidate(**overrides):
     values = dict(rank=1, niche_id="x", label="X", keywords=["x"], users_7d=10, users_30d=100, users_90d=200,
                   actor_count=3, maintained_alternatives=3, maintained_unknown=0, leader=leader(), alternatives=[],
-                  ideas=[], open_idea_upvotes=0, weaknesses=[], demand=100, score=2.0)
+                  ideas=[], open_idea_upvotes=0, weaknesses=[], demand=100, score=2.0, same_name_actors=3)
     values.update(overrides)
     return Candidate(**values)
 
@@ -66,6 +66,16 @@ def test_demand(config, users, upvotes, status):
 def test_competition(config, maintained, fail, rating, status):
     c = candidate(maintained_alternatives=maintained, leader=leader(failure_rate=fail, rating=rating))
     assert check_competition(c, config["validator"]["competition"]).status == status
+
+
+def test_a_niche_full_of_same_name_actors_fails_whatever_the_leader(config):
+    cfg = config["validator"]["competition"]
+    weak_leader = leader(failure_rate=0.5, rating=2.0)
+    crowded = check_competition(candidate(maintained_alternatives=0, leader=weak_leader, same_name_actors=86), cfg)
+    assert crowded.status == FAIL and "86 Store Actors share the niche's name (> 15)" in crowded.reason
+    assert check_competition(candidate(maintained_alternatives=0, same_name_actors=15), cfg).status == PASS
+    unknown = check_competition(candidate(maintained_alternatives=0, same_name_actors=None), cfg)
+    assert unknown.status == FAIL and "not counted" in unknown.reason
 
 
 def test_competition_without_any_actor_passes(config):
