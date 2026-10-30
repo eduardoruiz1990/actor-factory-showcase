@@ -1,5 +1,5 @@
 {
-    "_comment": "Actor Factory convention, not read by Apify. The Publisher prints these for the owner to paste into Apify Console > Publishing. Categories use Apify Store category names (for example JOBS, BUSINESS, DEVELOPER_TOOLS, ECOMMERCE).",
+    "_comment": "Actor Factory convention, not read by Apify. After each deploy the Publisher sets these, with the title and description from actor.json, through the Apify API. Categories use Apify Store category names (for example JOBS, BUSINESS, DEVELOPER_TOOLS, ECOMMERCE).",
     "categories": [
         "JOBS",
         "AUTOMATION"

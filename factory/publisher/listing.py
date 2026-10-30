@@ -1,8 +1,10 @@
 """Find the Actors a merge changed and prepare their Store listing text.
 
-The Publisher workflow deploys each changed Actor with `apify push`; this
-module turns the Actor's files into the text and the monetization values the
-owner enters once in Apify Console before clicking Publish (QUESTIONS Q14).
+The Publisher workflow deploys each changed Actor with `apify push`, which does
+not touch the Store listing. This module turns the Actor's files into the listing
+fields the Publisher then sets through Apify's API (title, description, SEO text,
+categories), and into the monetization values the owner enters once in Apify
+Console before clicking Publish (QUESTIONS Q14).
 """
 
 import json
@@ -25,6 +27,22 @@ def load_actor(actor_dir: Path) -> dict[str, Any]:
     listing_path = actor_dir / ".actor" / "listing.json"
     listing = json.loads(listing_path.read_text(encoding="utf-8")) if listing_path.exists() else {}
     return {"actor": actor_json, "pricing": pricing, "listing": listing}
+
+
+def store_fields(data: dict[str, Any], known_categories: list[str]) -> tuple[dict[str, Any], list[str]]:
+    """The listing fields for Apify's Update Actor API, and any category Apify Store does not know (left out)."""
+    actor, listing = data["actor"], data["listing"]
+    fields: dict[str, Any] = {}
+    for key, value in (("title", actor.get("title")), ("description", actor.get("description")),
+                       ("seoTitle", (listing.get("seoTitle") or "")[:SEO_TITLE_MAX]),
+                       ("seoDescription", (listing.get("seoDescription") or "")[:SEO_DESCRIPTION_MAX])):
+        if isinstance(value, str) and value.strip():
+            fields[key] = value.strip()
+    categories = [c for c in listing.get("categories") or [] if isinstance(c, str)]
+    unknown = [c for c in categories if c not in known_categories]
+    if known := [c for c in categories if c in known_categories]:
+        fields["categories"] = known
+    return fields, unknown
 
 
 def render_listing(name: str, owner: str, data: dict[str, Any], build_url: str | None = None) -> str:

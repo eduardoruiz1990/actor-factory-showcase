@@ -1,5 +1,16 @@
 # Changelog
 
+## 🏷️ Publisher sets the Store listing (2026-10-30, branch `publisher-sync-listing`)
+
+- **Why:** `apify push` deploys code but leaves the Store listing alone. The owner had to paste the title, description, SEO text and categories into Apify Console by hand. The Greenhouse & Lever Actor still had no category, so it did not appear in the Jobs category.
+- **Change:** after each deploy, the Publisher sends the listing fields to Apify's Update Actor API (`PUT /v2/acts/<owner>~<name>`), which changes only the fields it is sent:
+  - `title` and `description` come from `actor.json`.
+  - `seoTitle`, `seoDescription` and `categories` come from `listing.json`.
+  - Categories Apify Store does not know, checked against `scout.store.categories`, are left out with a warning.
+  - A failed update is a warning, not a failed deploy.
+- **First use:** this PR edits the Greenhouse Actor's `listing.json` comment, so merging it runs the Publisher. That sets the Actor's categories to Jobs and Automation.
+- **Tests:** 248 factory tests (3 new).
+
 ## 🎯 Scout: skip crowded niches and generic tools, run twice a week (2026-10-30, branch `scout-sharper`)
 
 - **Why:** five days after launch, the Greenhouse & Lever Actor had no outside users and ranked outside the top 100 in Store search. Its niche has 86 same-name Actors, which Scout's title clustering did not see. W43 also spent many assessments on generic tools that can never pass Legality. See Q20.
