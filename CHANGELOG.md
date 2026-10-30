@@ -1,5 +1,10 @@
 # Changelog
 
+## 📝 Remote jobs Actor: checked, not built (2026-10-31, branch `q23-remote-jobs`)
+
+- **Why:** "remote jobs" has real Store demand, so the owner asked for a terms check of five remote job board APIs.
+- **Result:** only Jobicy's terms clearly allow redistribution. RemoteOK, Remotive, Himalayas and Arbeitnow forbid it or do not allow commercial use. A Jobicy-only Actor would lose on breadth to aggregators that cover 6–8 boards, so it was not built. Details and quotes are in QUESTIONS Q23.
+
 ## 🎯 Scout assesses 80 niches per run (2026-10-31, branch `scout-assess-80`)
 
 - **Why:** the 2026-10-30 run assessed 40 niches and none passed. Most failures are legal and cannot be fixed, so more assessments mean more chances of a pass (Q22).

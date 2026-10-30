@@ -208,3 +208,17 @@ The 2026-10-30 run assessed 40 niches and none passed: 28 failed Legality for a 
 - **Revisit** after a few runs. If the extra 40 niches rarely produce a PASS or REVIEW, lower the number again.
 
 Measured the same day: the owner had asked for spin-off Actors from the jobs engine. Store demand for job change monitors (39 users a month in total), hiring signals (146), salary benchmarks (11) and layoff trackers (32) is too small to build for.
+
+### Q23. A remote jobs Actor (decided 2026-10-31: not built, terms)
+
+"Remote jobs" has real Store demand: about 1,160 users a month in total, and the two leading Actors have 200 and 193. Several remote job boards publish free APIs, so the owner asked for a terms check before building an aggregator. The terms were read on 2026-10-31:
+
+| Source | Result | Deciding text |
+|---|---|---|
+| RemoteOK | Fails | robots.txt disallows crawlers. The API notice says "If you do not [link back] we'll have to suspend API access". |
+| Remotive | Fails | The API's legal notice says "Please do not submit Remotive jobs to third Party websites". |
+| Himalayas | Fails | API terms, clause 113(c) (himalayas.app/terms): "Show the jobs only on sites and apps you operate. Do not pass them on to third parties, such as other job boards, aggregators, job search engines…". An Apify Actor hands the jobs to its users. |
+| Arbeitnow | Fails, conservatively | Terms section 2 (arbeitnow.com/terms) forbids using "the materials for any commercial purpose" and mirroring them. Section 11 on the API grants no commercial right and says "We may revoke the permission to use API at any time." |
+| Jobicy | Passes | The API docs (jobicy.com/jobs-rss-feed) say: "You can store, cache, process, and redistribute job data as needed". They allow commercial use and aggregators, with credit to Jobicy, the Jobicy listing URL kept, and at most one sync per hour. |
+
+Only Jobicy is clearly allowed. A Jobicy-only Actor would compete with aggregators that cover 6–8 boards, so it would lose on breadth. Actors that mention Jobicy have 418 users a month in total, most of them going to one multi-board aggregator. **Decision:** not built. Revisit if more remote boards publish permissive API terms.
