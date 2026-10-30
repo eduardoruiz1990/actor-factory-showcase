@@ -10,6 +10,7 @@
   - A failed update is a warning, not a failed deploy.
 - **First use:** this PR edits the Greenhouse Actor's `listing.json` comment, so merging it runs the Publisher. That sets the Actor's categories to Jobs and Automation.
 - **Tests:** 248 factory tests (3 new).
+- **Generic tools:** the first live dry run of the sharper Scout (2026-10-30) still let some developer tools through, because their names are single made-up words: Scrapeunblocker, Superscraper, Camoufox, jsdom, AI code sandbox, Claude Code and Video LLM analyzer. Their words were added to `scout.exclude.generic_tools`. That run searched 200 niches, left out 89 as crowded, and kept 40 candidates with 1 to 15 same-name Actors each.
 
 ## 🎯 Scout: skip crowded niches and generic tools, run twice a week (2026-10-30, branch `scout-sharper`)
 
