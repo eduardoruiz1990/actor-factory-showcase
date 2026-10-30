@@ -240,3 +240,62 @@ def test_hard_legality_fails(reason, hard):
 def test_review_can_be_switched_off(config):
     cfg = dict(config["validator"]["legality"], review_unclear_terms=False)
     assert terms_review_reason(assessment(**UNCLEAR), ALLOWED, cfg) is None
+
+
+# Tool lane (Q24): tools that process the user's input or check websites the user names.
+PDF_TOOL = dict(kind="tool", outside_service="none", target_site="", target_domain="", sample_urls=[],
+                data_access="unknown", personal_data="user_supplied", terms_allow_automated_access="unclear",
+                terms_source_url="", terms_quote="", approach="http", official_api_or_feed=False,
+                layout_change_frequency="rare")
+
+
+def test_a_tool_that_processes_the_users_input_passes_without_site_terms(config):
+    cfg = config["validator"]
+    a = assessment(**PDF_TOOL)
+    legality = check_legality(a, None, cfg["legality"])  # no robots.txt to check
+    assert legality.status == PASS and legality.reason == (
+        "tool: processes only the user's input, no login, returns only data the user supplied")
+    assert check_stability(a, cfg["stability"]).status == PASS
+    assert terms_review_reason(a, None, cfg["legality"]) is None  # nothing for the owner to review
+
+
+def test_a_tool_that_checks_websites_the_user_names_respects_robots_at_run_time(config):
+    a = assessment(**{**PDF_TOOL, "outside_service": "user_websites", "personal_data": "none"})
+    result = check_legality(a, RobotsResult(None, "no public URL to check"), config["validator"]["legality"])
+    assert result.status == PASS and "respecting each site's robots.txt at run time" in result.reason
+
+
+@pytest.mark.parametrize(("overrides", "status", "reason"), [
+    ({"login_required": "yes"}, FAIL, "needs a login"),
+    ({"login_required": "unclear"}, UNKNOWN, "login requirement unclear"),
+    ({"personal_data": "core"}, FAIL, "the data is personal data"),
+    ({"personal_data": "unclear"}, UNKNOWN, "personal data unclear"),
+    # Personal data from websites is never the user's own, even when the user named the sites.
+    ({"outside_service": "user_websites"}, FAIL, "outputs personal data the user did not supply"),
+])
+def test_tool_hard_rules_still_apply(config, overrides, status, reason):
+    result = check_legality(assessment(**{**PDF_TOOL, **overrides}), None, config["validator"]["legality"])
+    assert result.status == status and reason in result.reason
+
+
+def test_the_owner_can_switch_off_user_supplied_personal_data(config):
+    cfg = {**config["validator"]["legality"], "allow_user_supplied_personal_data": False}
+    result = check_legality(assessment(**PDF_TOOL), None, cfg)
+    assert result.status == FAIL and "which the owner does not allow" in result.reason
+
+
+def test_a_tool_calling_an_outside_api_is_judged_like_a_scraper(config):
+    cfg = config["validator"]
+    api_tool = assessment(kind="tool", outside_service="official_api")  # e.g. a PageSpeed audit
+    assert check_legality(api_tool, ALLOWED, cfg["legality"]).status == PASS
+    forbidden = assessment(kind="tool", outside_service="official_api", terms_allow_automated_access="no")
+    assert check_legality(forbidden, ALLOWED, cfg["legality"]).status == FAIL
+    # "user_supplied" only fits a tool that reads no outside site.
+    assert check_legality(assessment(personal_data="user_supplied"), ALLOWED, cfg["legality"]).status == UNKNOWN
+
+
+def test_assessments_saved_before_the_tool_lane_load_as_scrapers():
+    data = assessment().to_dict()
+    del data["kind"], data["outside_service"]
+    loaded = Assessment.from_dict(data)
+    assert (loaded.kind, loaded.outside_service) == ("scraper", "")

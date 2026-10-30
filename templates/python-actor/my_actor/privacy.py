@@ -5,6 +5,11 @@ this guard is the last line of defence: every item passes through clean()
 before it is pushed. It drops fields whose names point at a person, and
 blanks e-mail addresses and international phone numbers found in any text.
 Add field names to EXTRA_FORBIDDEN_KEYS for a niche; never remove defaults.
+
+A tool that returns the user's own input (text read from the user's PDF) names
+the fields that carry it in USER_SUPPLIED_KEYS: their text passes unchanged,
+because the user supplied it (QUESTIONS Q24). Never put content fetched from a
+third-party site in those fields.
 """
 
 from __future__ import annotations
@@ -22,6 +27,8 @@ FORBIDDEN_KEYS = frozenset({
 })
 # Niche-specific additions go here.
 EXTRA_FORBIDDEN_KEYS: frozenset[str] = frozenset()
+# Tools only: output fields that hold the user's own input, left unchanged.
+USER_SUPPLIED_KEYS: frozenset[str] = frozenset()
 
 REDACTED = '[removed]'
 _EMAIL = re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}')
@@ -49,7 +56,7 @@ def clean(item: Any, removed: set[str] | None = None) -> Any:
                 if removed is not None:
                     removed.add(str(key))
                 continue
-            result[key] = clean(value, removed)
+            result[key] = value if normalise_key(str(key)) in USER_SUPPLIED_KEYS else clean(value, removed)
         return result
     if isinstance(item, list):
         return [clean(value, removed) for value in item]

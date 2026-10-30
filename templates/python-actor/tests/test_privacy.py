@@ -34,3 +34,10 @@ def test_keys_are_normalised():
 
 def test_non_text_values_pass_through():
     assert clean({'price': 9.99, 'inStock': True, 'tags': None}) == {'price': 9.99, 'inStock': True, 'tags': None}
+
+
+def test_user_supplied_fields_pass_unchanged_and_nothing_else_does(monkeypatch):
+    # A tool returning text from the user's own PDF keeps it as supplied (QUESTIONS Q24).
+    monkeypatch.setattr('my_actor.privacy.USER_SUPPLIED_KEYS', frozenset({'page_text'}))
+    item = {'pageText': 'Invoice for Jane Doe, jane@example.com', 'source_url': 'mailto:jane@example.com', 'email': 'x@y.z'}
+    assert clean(item) == {'pageText': 'Invoice for Jane Doe, jane@example.com', 'source_url': f'mailto:{REDACTED}'}

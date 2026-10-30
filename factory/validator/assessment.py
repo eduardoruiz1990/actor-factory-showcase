@@ -25,9 +25,11 @@ WEB_FETCH_TOOL = "web_fetch_20260209"
 
 SYSTEM_PROMPT = """\
 You assess candidate niches for a one-person business that builds paid Actors \
-(web data tools) for the Apify Store. Every Actor it ships must read public pages \
-or official APIs and feeds, need no login, output no personal data, respect \
-robots.txt and the site's terms, and use polite rate limits.
+for the Apify Store. Most are scrapers: they read public pages or official APIs and \
+feeds, need no login, output no personal data, respect robots.txt and the site's \
+terms, and use polite rate limits. Some are tools: they process data the user \
+supplies (files, text, or URLs of the user's own documents) or check websites the \
+user names (status, links, audits, technology), instead of collecting a site's data.
 
 Each request gives you one candidate niche as JSON: Store usage numbers, the \
 leading Actor's failure rate, rating and price, other Actors in the niche, and \
@@ -50,6 +52,20 @@ tool that reads any website), say so in terms_notes and answer "unclear" without
 searching.
 
 Fields:
+- kind: "scraper" if the Actor's value is data it collects from a particular site, \
+API or feed; "tool" if its value is processing what the user supplies or checking \
+websites the user names.
+- outside_service: for a tool, what it reaches beyond the user's input. "none": it \
+only processes the user's input, including files at URLs the user gives; it never \
+crawls or searches a site for content. "official_api": it calls a documented outside \
+API (such as a PageSpeed or DNS API); target_site is that API and its terms decide \
+terms_allow_automated_access. "user_websites": it requests websites the user names \
+to check them (status codes, links, technology, audits), without collecting their \
+content as the product. For a scraper, answer "official_api" when it reads an API or \
+feed and "user_websites" otherwise. For a tool with outside_service "none" or \
+"user_websites", there is no single site's terms to read: answer \
+terms_allow_automated_access "unclear" without searching, give target_site and \
+target_domain as "", and give no sample_urls.
 - target_site: the site or API the Actor would read. target_domain: its bare \
 hostname, such as "boards-api.greenhouse.io".
 - sample_urls: one to three concrete URLs the Actor would request. They are \
@@ -64,6 +80,9 @@ identifies a living person. "removable": the source mixes in personal data \
 (names, usernames, emails, phone numbers, photos, reviewer or author names) but \
 the output is still useful without it. "core": the personal data is the value \
 (profiles, followers, contacts, reviews with their authors, people search). \
+"user_supplied": a tool with outside_service "none" whose output is the user's own \
+input transformed (text read from their PDF, their spreadsheet cleaned), which may \
+hold personal data the user supplied but nothing collected from anyone else. \
 "unclear" if you cannot tell. Names and handles of private individuals are \
 personal data even when they are public. Company names, products, prices, job \
 posts without recruiter contacts, company filings and aggregate statistics are \
@@ -89,7 +108,7 @@ residential proxies are needed, otherwise 0.
 - official_api_or_feed: true if a documented public API or feed provides the \
 data.
 - layout_change_frequency: how often the source changes in ways that break \
-scrapers. rare: stable APIs, feeds, or simple sites unchanged for years. \
+scrapers; "rare" for a tool that reads no particular site's layout. rare: stable APIs, feeds, or simple sites unchanged for years. \
 occasional. frequent: large consumer sites with active anti-bot work and \
 regular redesigns. unknown. Explain briefly in stability_notes.
 - proposed_actor_name: a kebab-case Store name, such as \
@@ -104,6 +123,8 @@ Keep each notes field to one or two sentences."""
 ASSESSMENT_SCHEMA: dict[str, Any] = {
     "type": "object",
     "properties": {
+        "kind": {"type": "string", "enum": ["scraper", "tool"]},
+        "outside_service": {"type": "string", "enum": ["none", "official_api", "user_websites"]},
         "target_site": {"type": "string"},
         "target_domain": {"type": "string"},
         "sample_urls": {"type": "array", "items": {"type": "string"}},
@@ -112,7 +133,7 @@ ASSESSMENT_SCHEMA: dict[str, Any] = {
             "enum": ["official_api", "public_feed", "public_html", "requires_login", "unknown"],
         },
         "login_required": {"type": "string", "enum": ["yes", "no", "unclear"]},
-        "personal_data": {"type": "string", "enum": ["none", "removable", "core", "unclear"]},
+        "personal_data": {"type": "string", "enum": ["none", "removable", "core", "user_supplied", "unclear"]},
         "personal_data_notes": {"type": "string"},
         "terms_allow_automated_access": {"type": "string", "enum": ["yes", "no", "unclear"]},
         "terms_notes": {"type": "string"},
@@ -132,7 +153,7 @@ ASSESSMENT_SCHEMA: dict[str, Any] = {
         "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
     },
     "required": [
-        "target_site", "target_domain", "sample_urls", "data_access", "login_required",
+        "kind", "outside_service", "target_site", "target_domain", "sample_urls", "data_access", "login_required",
         "personal_data", "personal_data_notes", "terms_allow_automated_access", "terms_notes",
         "terms_source_url", "terms_quote",
         "approach", "compute_units_per_1000_results", "proxy", "residential_gb_per_1000_results",
@@ -141,6 +162,10 @@ ASSESSMENT_SCHEMA: dict[str, Any] = {
     ],
     "additionalProperties": False,
 }
+
+
+# Assessments saved before the tool lane (Q24) lack these fields; they were all scrapers.
+LEGACY_DEFAULTS: dict[str, str] = {"kind": "scraper", "outside_service": ""}
 
 
 class AssessmentError(RuntimeError):
@@ -172,12 +197,15 @@ class Assessment:
     output_fields: list[str] = field(default_factory=list)
     risks: list[str] = field(default_factory=list)
     confidence: str = "low"
+    kind: str = "scraper"
+    outside_service: str = ""
     model: str = ""  # the model that answered (a refusal fallback may differ from the configured one)
     web_searches: int = 0
     web_fetches: int = 0
 
     @classmethod
     def from_dict(cls, data: dict[str, Any], model: str = "") -> "Assessment":
+        data = {**LEGACY_DEFAULTS, **data}
         missing = [k for k in ASSESSMENT_SCHEMA["required"] if k not in data]
         if missing:
             raise AssessmentError(f"assessment is missing {', '.join(missing)}")

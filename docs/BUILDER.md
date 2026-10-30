@@ -59,6 +59,7 @@ apify validate-schema
 
 Also check:
 - No field in a pushed item holds personal data. That means names of private people, usernames, e-mail addresses, phone numbers, photos or profile links. The privacy guard backs this up, but it is not a substitute.
+  - The one exception is a tool whose brief says its output returns the user's own input (Q24). List the fields that carry that input in `USER_SUPPLIED_KEYS` in `privacy.py`. Only what the user supplied goes there, never content fetched from a third-party site.
 - Requests stay polite: the default rate is at most 1 request per second per site, and nothing bypasses the shared client.
 - The README states exactly what the Actor returns and what it costs.
 

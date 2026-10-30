@@ -1,5 +1,23 @@
 # Changelog
 
+## 🧰 Tool lane: Actors that process the user's data (2026-10-31, branch `tool-lane`)
+
+- **Why:** the owner asked to look beyond scraping. Tools have real demand: PDF extraction (492 users a month), website audits (308–371), OCR (312), URL and link checks (166–188). The Validator could not judge them, because it needs a target site's terms (Q24). Data validation and review on their own have almost no demand.
+- **Validator:**
+  - New facts: `kind` (scraper or tool) and `outside_service` (none, official_api, user_websites), plus a `user_supplied` value for `personal_data`.
+  - A tool that reads no single site passes Legality and Stability without site terms. Login and third-party personal data still fail.
+  - A tool that calls an outside API is judged like a scraper.
+  - Older saved assessments load as scrapers.
+- **Owner decision:** a tool may return the user's own input unchanged, personal data included (`allow_user_supplied_personal_data`). It names those fields in the template's new `USER_SUPPLIED_KEYS`, and the privacy guard leaves only them unchanged.
+- **Scout:** `generic_tools` keeps only what is never built: evasion, traffic generators, downloaders, account integrations, scraping and code infrastructure, and scrapers of "any" site. PDF, HTML, URL, screenshot and sitemap tools reach the Validator.
+- **Builder:** the brief describes tools and the `USER_SUPPLIED_KEYS` rule. `CLAUDE.md` and `docs/BUILDER.md` state the exception.
+- **Tests:** 260 factory tests (10 new) and 31 template tests (1 new).
+
+## 📝 Remote jobs Actor: checked, not built (2026-10-31, branch `q23-remote-jobs`)
+
+- **Why:** "remote jobs" has real Store demand, so the owner asked for a terms check of five remote job board APIs.
+- **Result:** only Jobicy's terms clearly allow redistribution. RemoteOK, Remotive, Himalayas and Arbeitnow forbid it or do not allow commercial use. A Jobicy-only Actor would lose on breadth to aggregators that cover 6–8 boards, so it was not built. Details and quotes are in QUESTIONS Q23.
+
 ## 🎯 Scout assesses 80 niches per run (2026-10-31, branch `scout-assess-80`)
 
 - **Why:** the 2026-10-30 run assessed 40 niches and none passed. Most failures are legal and cannot be fixed, so more assessments mean more chances of a pass (Q22).

@@ -59,12 +59,13 @@ def test_recently_blocked_niches_are_skipped(source, config, as_of):
     assert "1 skipped after failing Legality in recent weeks" in render_issue_body(result, config)
 
 
-def test_generic_tool_niches_are_excluded(source, config, as_of):
-    # conftest turns the generic-tools list off for the sample data; turn the real one back on.
+def test_tools_the_validator_can_judge_are_not_excluded(source, config, as_of):
+    # conftest turns the generic-tools list off for the sample data; turn the real one back on. A sitemap
+    # tool reads websites the user names, so it goes to the Validator's tool lane instead (Q24).
     config["scout"]["exclude"]["generic_tools"] = load_config()["scout"]["exclude"]["generic_tools"]
     result = run_scout(source, config, as_of)
-    assert "sitemap-url" not in {c.niche_id for c in result.candidates}
-    assert result.niches_excluded == 6
+    assert "sitemap-url" in {c.niche_id for c in result.candidates}
+    assert result.niches_excluded == 5
 
 
 def test_recently_assessed_niches_are_skipped(source, config, as_of):

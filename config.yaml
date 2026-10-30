@@ -57,13 +57,16 @@ scout:
        "semrush", "ahref", "similarweb", "g2", "capterra", "trustpilot", "yelp", "tripadvisor",
        "indeed", "glassdoor", "idealista", "zillow", "ebay", "walmart", "aliexpress", "alibaba", "taobao",
        "temu", "shein", "mercadolivre", "mercadolibre", "flashscore", "sofascore"]
-    # Generic tools with no single target site: there are no terms or robots.txt to check, so they
-    # never get past Legality (W43: integrations, downloaders, bypassers, runners). Matched like title_words (Q20).
+    # Tools the factory never builds (Q20, narrowed by Q24): anti-bot evasion, traffic generation,
+    # media downloaders, integrations that need the user's account, scraping and code infrastructure,
+    # and scrapers of "any" site. Tools that process the user's own data or check websites the user
+    # names (PDF, HTML, URL, screenshot, sitemap tools) go to the Validator's tool lane instead.
+    # Matched like title_words.
     generic_tools:
       ["integration", "connector", "n8n", "zapier", "make", "pinecone", "downloader", "universal",
        "bypass", "bypasser", "unblocker", "unblock", "captcha", "proxy", "runner", "nodejs", "python",
-       "javascript", "phantomjs", "legacy", "traffic", "generator", "sitemap", "commerce", "ecommerce",
-       "multi", "any", "generic", "url", "html", "markdown", "pdf", "screenshot",
+       "javascript", "phantomjs", "legacy", "traffic", "generator", "commerce", "ecommerce",
+       "multi", "any", "generic",
        "scrapeunblocker", "superscraper", "camoufox", "jsdom", "sandbox", "llm", "claude"]
     categories: ["SOCIAL_MEDIA", "LEAD_GENERATION"]
   # Niches that failed Legality for a reason no build can fix (login, personal data as
@@ -184,6 +187,10 @@ validator:
     # block Legality; the Actor must leave it out. Personal data that is the value itself
     # always fails. Owner decision 2026-10-25 (Q6).
     allow_removable_personal_data: true
+    # A tool that only processes the user's own input (text read from their PDF, their spreadsheet
+    # cleaned) may return it unchanged, personal data included; it still collects none from anyone
+    # else. Owner decision 2026-10-31 (Q24).
+    allow_user_supplied_personal_data: true
     # "Terms allow it" only counts when the assessment cites the page and quotes
     # the deciding sentence (Q9); otherwise the terms count as unclear.
     require_terms_source: true

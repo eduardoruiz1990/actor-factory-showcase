@@ -208,3 +208,46 @@ The 2026-10-30 run assessed 40 niches and none passed: 28 failed Legality for a 
 - **Revisit** after a few runs. If the extra 40 niches rarely produce a PASS or REVIEW, lower the number again.
 
 Measured the same day: the owner had asked for spin-off Actors from the jobs engine. Store demand for job change monitors (39 users a month in total), hiring signals (146), salary benchmarks (11) and layoff trackers (32) is too small to build for.
+
+### Q23. A remote jobs Actor (decided 2026-10-31: not built, terms)
+
+"Remote jobs" has real Store demand: about 1,160 users a month in total, and the two leading Actors have 200 and 193. Several remote job boards publish free APIs, so the owner asked for a terms check before building an aggregator. The terms were read on 2026-10-31:
+
+| Source | Result | Deciding text |
+|---|---|---|
+| RemoteOK | Fails | robots.txt disallows crawlers. The API notice says "If you do not [link back] we'll have to suspend API access". |
+| Remotive | Fails | The API's legal notice says "Please do not submit Remotive jobs to third Party websites". |
+| Himalayas | Fails | API terms, clause 113(c) (himalayas.app/terms): "Show the jobs only on sites and apps you operate. Do not pass them on to third parties, such as other job boards, aggregators, job search engines…". An Apify Actor hands the jobs to its users. |
+| Arbeitnow | Fails, conservatively | Terms section 2 (arbeitnow.com/terms) forbids using "the materials for any commercial purpose" and mirroring them. Section 11 on the API grants no commercial right and says "We may revoke the permission to use API at any time." |
+| Jobicy | Passes | The API docs (jobicy.com/jobs-rss-feed) say: "You can store, cache, process, and redistribute job data as needed". They allow commercial use and aggregators, with credit to Jobicy, the Jobicy listing URL kept, and at most one sync per hour. |
+
+Only Jobicy is clearly allowed. A Jobicy-only Actor would compete with aggregators that cover 6–8 boards, so it would lose on breadth. Actors that mention Jobicy have 418 users a month in total, most of them going to one multi-board aggregator. **Decision:** not built. Revisit if more remote boards publish permissive API terms.
+
+### Q24. A tool lane, and tools that return the user's own data (resolved 2026-10-31: owner approved both)
+
+The factory was built to find scraping niches. Its Legality check needs a target site whose terms and robots.txt it can read, so Actors that process the user's own data had no way to pass, and Q20 excluded them. Store demand was measured on 2026-10-31:
+
+- **Data validation, cleaning and dataset review:** almost no demand (1–35 users a month in total per type). Merging and deduplicating datasets has 323, but one Actor takes 254.
+- **Tools with demand:**
+  - PDF text extraction: 492 users a month, 84 same-name Actors.
+  - Website audits (Lighthouse, SEO): 308–371.
+  - OCR: 312.
+  - Domain availability: 188.
+  - URL status and broken links: 166–188.
+  - Website technology detection: 169.
+  These are as crowded as scraping niches. They are simpler legally, though, and no site redesign can break them.
+
+**Decision 1, the tool lane:**
+- The Validator reports `kind` (scraper or tool) and, for tools, `outside_service`:
+  - `none`: the tool processes only the user's input, including files at URLs the user gives.
+  - `official_api`: the tool calls a documented outside API.
+  - `user_websites`: the tool checks websites the user names.
+- A tool with `none` or `user_websites` passes Legality without a site's terms or a robots.txt check up front. A `user_websites` tool must check each site's robots.txt at run time, which the template does. Stability passes because the tool depends on no site's layout.
+- A tool that calls an outside API is judged like a scraper: that API's terms and robots.txt decide.
+- The hard rules stay for both lanes: no login, and no personal data collected from anyone but the user.
+- `scout.exclude.generic_tools` now lists only what the factory never builds: anti-bot evasion, traffic generators, media downloaders, account integrations, scraping and code infrastructure, and scrapers of "any" site. PDF, HTML, URL, screenshot and sitemap tools go to the tool lane.
+
+**Decision 2, the user's own data (`validator.legality.allow_user_supplied_personal_data: true`):**
+- A tool with `outside_service: none` may return the user's input unchanged, personal data included, for example the text of the user's own PDF.
+- Such an Actor names the fields that carry the input in the template's `USER_SUPPLIED_KEYS`, and the privacy guard leaves only those fields unchanged.
+- Personal data from websites, even websites the user named, is never treated as the user's own.

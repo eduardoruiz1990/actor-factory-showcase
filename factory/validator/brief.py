@@ -138,7 +138,10 @@ def _pick(v: Validation) -> list[str]:
     c = v.candidate
     header = f"**#{c.rank} {c.label}**"
     if a:
-        header += f" — proposed Actor `{a.proposed_actor_name}` ({a.target_domain}, confidence {a.confidence})"
+        where = a.target_domain or ("tool" if a.kind == "tool" else "no target site")
+        if a.kind == "tool" and a.target_domain:
+            where = f"tool using {a.target_domain}"
+        header += f" — proposed Actor `{a.proposed_actor_name}` ({where}, confidence {a.confidence})"
     lines = [header, ""]
     if a:
         lines += [a.pitch, "", f"Output: {', '.join(a.output_fields)}.", ""]
