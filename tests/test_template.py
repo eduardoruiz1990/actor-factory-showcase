@@ -67,3 +67,12 @@ def test_builder_is_told_to_fetch_fixtures_with_the_helper():
     transcript = next(s for s in steps if s.get("name") == "Keep the build transcript")
     assert transcript["if"] == "always()"
     assert "Bash(python:*)" in str(steps)  # the helper runs under the already-allowed python
+
+
+def test_the_mcp_server_shares_the_jobs_scrapers_tested_code():
+    # actors/ats-jobs-mcp-server is the jobs scraper plus an MCP server; a fix to one copy must reach the other.
+    actors = ROOT / "actors"
+    for module in ("source.py", "polite.py", "robots.py", "privacy.py", "seen.py"):
+        scraper = (actors / "greenhouse-jobs-scraper" / "my_actor" / module).read_text()
+        assert (actors / "ats-jobs-mcp-server" / "my_actor" / module).read_text() == scraper, module
+
