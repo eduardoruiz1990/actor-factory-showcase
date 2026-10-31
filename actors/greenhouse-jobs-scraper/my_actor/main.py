@@ -3,8 +3,8 @@
 Charging uses Apify's synthetic `apify-default-dataset-item` event: every item
 pushed to the default dataset is one charged result, and push_data() stops at
 the user's spending limit. With "Only new results" on, items an earlier run
-with the same input already returned are skipped and not charged (seen.py). This file rarely needs changes; the niche lives in
-source.py.
+with the same input already returned are skipped and not charged (seen.py).
+This file rarely needs changes; the niche lives in source.py.
 """
 
 from __future__ import annotations
