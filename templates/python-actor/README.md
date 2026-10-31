@@ -33,7 +33,7 @@ Turn on **Only new results** and [schedule the Actor](https://docs.apify.com/pla
 returns everything; after that, each run returns and charges only results earlier runs did not return. A run with
 nothing new charges no results. TODO Say what "new" means for this source (for example "newly posted jobs").
 
-## How much does it cost?
+## How much does it cost to TODO scrape <source>?
 
 You pay per result: TODO $X.XX per 1,000 results, plus a small fee per run that Apify sets. A run of 1,000
 results costs about TODO $X. Set a maximum cost per run and the Actor stops when it is reached.
@@ -69,6 +69,10 @@ TODO A short description of each input field. Example:
 
 Call the Actor from your code with the [Apify API](https://docs.apify.com/api/v2), or from an AI agent through
 [Apify's MCP server](https://mcp.apify.com). TODO one sentence on a typical automated use.
+
+## Related Actors
+
+- TODO Link the factory's other Actors in the same category or for the same users, one line each on when to use it.
 
 ## FAQ
 

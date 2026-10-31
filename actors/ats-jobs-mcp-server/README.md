@@ -6,7 +6,7 @@ from **Greenhouse**, **Lever**, **Ashby**, **Workable** or **Personio**, with **
 publishes them. Recruiters, sales teams tracking hiring signals, job seekers and market researchers use it to put
 hiring data straight into their AI workflows.
 
-## What can it do?
+## What can the ATS Jobs MCP Server do?
 
 - **Find a company's job board:** give a company name and it tries the five platforms for you (for example
   "notion" is on Ashby, "airbnb" on Greenhouse). Free: nothing is charged.
@@ -25,7 +25,7 @@ hiring data straight into their AI workflows.
 | `find_job_board` | `company` | the board (for example `ashby:notion`), its platform and the number of open jobs | No |
 | `search_jobs` | `companies`, `title_keywords`, `location_keywords`, `max_results` (default 25, at most 100), `include_descriptions` | the jobs found and the board used for each company | Per job returned |
 
-## How to connect
+## How to connect the ATS Jobs MCP Server to Claude, Cursor or another MCP client
 
 The server runs in Apify's Standby mode: it starts when your agent calls it and stops when idle. Its MCP endpoint
 is shown on the Actor's page in Apify Console, and has this form:
@@ -49,7 +49,7 @@ claude mcp add --transport http ats-jobs https://<your-apify-username>--ats-jobs
 You can also run the Actor normally from Apify Console or the API. A normal run reads the job boards in its input
 (for example `["airbnb", "lever:zoox", "ashby:warp"]`) and writes every open job to its dataset.
 
-## How much does it cost?
+## How much does the ATS Jobs MCP Server cost?
 
 You pay per job returned: $1.60 per 1,000 jobs, the same as a normal run. `find_job_board` is free. While the
 server runs in Standby mode you also pay Apify's platform usage for the run, as for every Standby Actor; it stops
@@ -85,6 +85,11 @@ and gets back, for each job (here a real answer):
     "job_id": "6fa4373f-2f5e-4fa3-9ce5-e662275ebba8"
 }
 ```
+
+## Related Actors
+
+- [ATS Jobs Scraper](https://apify.com/guayox/greenhouse-jobs-scraper): the same five job boards for bulk exports to JSON, CSV or Excel, and daily
+  feeds of only new jobs on a schedule.
 
 ## FAQ
 

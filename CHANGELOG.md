@@ -1,5 +1,16 @@
 # Changelog
 
+## 🔎 Store visibility: README headings, cross-links, icons (2026-10-31, branch `readme-visibility`)
+
+- **Why:** a week after launch, the jobs Actor ranked outside the top 100 for "ATS jobs", "Greenhouse jobs" and "Lever jobs". Its Actor quality score is 78/100. The README and reliability already rank in Apify's top 15% and 1%; the open items are an icon, Store discounts and a published task. Apify says search ranking correlates strongly with the quality score.
+- **Jobs Actor README:**
+  - New section "Supported job boards" with an H3 per platform ("Greenhouse jobs scraper", "Lever jobs scraper" and so on). Apify notes that H2 and H3 headings can show in Google results.
+  - The pricing heading is now a question.
+  - A "Related Actors" section links the MCP server.
+- **MCP server README:** headings name the Actor, and "Related Actors" links back to the scraper. Apify recommends Actors within a category, so the two lift each other.
+- **Template and `docs/BUILDER.md`:** a "Related Actors" section and rules for search-phrase headings, so every future Actor launches with them.
+- **Icons:** `docs/store-icons/` holds a 512×512 icon for each Actor, for the owner to upload in Apify Console.
+
 ## 🤖 ATS Jobs MCP Server, the second Actor (2026-10-31, branch `ats-jobs-mcp`)
 
 - **Why:** AI agents increasingly call Apify Actors as tools. MCP servers have about 890 users a month on the Store, and the goal names AI agents as a sales channel. A separate Actor gets its own "MCP" listing, counts toward Phase 2, and leaves the live jobs Actor's pricing alone.
