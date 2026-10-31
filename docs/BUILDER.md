@@ -20,7 +20,8 @@ You are building one paid Actor for the Apify Store, in a GitHub Actions run sta
    - Every request goes through the `PoliteClient` it is given, and every website URL is checked with `robots.allowed()` first.
 
    Prefer the official API or feed the brief names over HTML scraping.
-2. **Keep the shared modules as they are**: `polite.py` (rate limits, retries with back-off), `robots.py`, `privacy.py` (personal-data guard) and `main.py` (charging per result).
+2. **Keep the shared modules as they are**: `polite.py` (rate limits, retries with back-off), `robots.py`, `privacy.py` (personal-data guard), `seen.py` ("Only new results") and `main.py` (charging per result).
+   - Keep the `onlyNew` and `monitorName` input fields. In `source.py`, give `item_key()` a key that stays the same for the same result in every run (the source's own ID, never a position or a timestamp), and build `state_key` from the input that defines the search, as the template does. Describe the daily feed in the README.
    - If the niche has extra field names that point at a person, add them to `EXTRA_FORBIDDEN_KEYS` in `privacy.py`.
    - Change a shared module only if the brief makes it unavoidable, and explain why in the PR.
 3. **`.actor/input_schema.json`**:

@@ -24,9 +24,10 @@ PRICING = {
 }
 
 
-def run(storage, n, max_results=100, **env):
+def run(storage, n, max_results=100, only_new=False, **env):
     tokens = ['blocked-5', f'acme-{n}', 'missing']
-    settings = {'board_tokens': tokens, 'max_results': max_results, 'max_requests_per_second': 1}
+    settings = {'board_tokens': tokens, 'max_results': max_results, 'max_requests_per_second': 1,
+                'only_new': only_new, 'state_key': 'test-search'}
     clean_env = {k: v for k, v in os.environ.items() if not k.startswith(('APIFY_', 'ACTOR_', 'CRAWLEE_'))}
     clean_env.update(APIFY_LOCAL_STORAGE_DIR=str(storage), CRAWLEE_STORAGE_DIR=str(storage), **env)
     done = subprocess.run([sys.executable, '-m', 'tests.local_run', json.dumps(settings)], cwd=ROOT, env=clean_env,
@@ -61,6 +62,13 @@ def test_a_spending_limit_without_pay_per_event_does_not_stop_the_run(tmp_path):
     # Before monetization is set up the SDK reports the limit as reached on every push; results must still flow.
     assert run(tmp_path, 3, ACTOR_MAX_TOTAL_CHARGE_USD='0.025') == 3
     assert len(dataset_items(tmp_path)) == 3
+
+
+def test_only_new_returns_each_job_once_across_scheduled_runs(tmp_path):
+    assert run(tmp_path, 3, only_new=True, max_results=2) == 2  # stopped early: the third job stays new
+    assert run(tmp_path, 3, only_new=True) == 1
+    assert run(tmp_path, 3, only_new=True) == 0  # a daily run with no new jobs charges nothing per result
+    assert run(tmp_path, 3) == 3
 
 
 def test_settings_validation():

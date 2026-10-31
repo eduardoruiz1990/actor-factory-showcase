@@ -19,6 +19,7 @@ hiring, for which roles, where and for how much.
 - Return the full description as HTML and as plain text, with every department and office
 - Filter by title keywords (for example "engineer", "data") and location keywords (for example "Remote", "London")
 - Turn descriptions off for a fast, light list of titles, locations and links
+- **Get only new jobs:** schedule it daily with **Only new jobs** on, and each run returns and charges only jobs posted since the last run
 - Skip unknown boards and bad responses with a clear log message, and carry on with the rest
 - Polite by design: it respects robots.txt and rate limits, and retries with back-off
 - No personal data: names, e-mail addresses and phone numbers are never stored
@@ -67,6 +68,15 @@ With **Include full job descriptions** off, `content` and `content_text` are emp
 departments and offices too). The Actor does not return the companies' custom application questions or custom
 metadata fields. When a Greenhouse job lists one pay range per country, the salary fields hold the first one. E-mail addresses and phone numbers that appear in a description are replaced with `[removed]`.
 
+## Get a daily feed of new jobs
+
+Turn on **Only new jobs** and [schedule the Actor](https://docs.apify.com/platform/schedules), for example every
+morning. The first run returns every open job. After that, each run returns only jobs that were not there before, and
+you pay only for those: a day with no new jobs charges no results. The Actor remembers what it returned in your own
+Apify account. Runs with the same boards and keywords share that memory, or give them a **Monitor name** to keep one
+memory while you add or remove boards. A run that stops early (at **Maximum results** or your spending limit) keeps the
+jobs it did not reach for the next run.
+
 ## How much does it cost?
 
 You pay per result: $1.60 per 1,000 jobs, plus a small fee per run that Apify sets. A run of 1,000 jobs costs about
@@ -87,6 +97,8 @@ $1.60, whichever platform they come from. Set a maximum cost per run and the Act
   on Greenhouse.
 - **Title keywords** (`titleKeywords`): keep jobs whose title contains any of these words.
 - **Location keywords** (`locationKeywords`): keep jobs whose location or office contains any of these words.
+- **Only new jobs** (`onlyNew`, default `false`): return only jobs earlier runs with the same search did not return.
+- **Monitor name** (`monitorName`): optional name that keeps one memory of returned jobs across input changes.
 - **Maximum results** (`maxResults`, default 1,000): stop after this many jobs.
 - **Maximum requests per second** (`maxRequestsPerSecond`, default and maximum 1): polite rate limit.
 
