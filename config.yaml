@@ -229,6 +229,9 @@ publisher:
   # Seconds `apify push` waits for the platform build before the workflow moves on.
   push_wait_seconds: 900
   publish_label: "publish"
+  # Sanity range for prices the Publisher sets from pricing.json (USD per 1,000 results). Outside it the
+  # change is refused, so a typo cannot multiply a price. The Publisher only ever lowers prices.
+  price_per_1000_bounds: [0.1, 10.0]
 
 watcher:
   # Phase 3: open a "broken" issue when the 24-hour failure rate passes this.

@@ -1,5 +1,16 @@
 # Changelog
 
+## 💲 Publisher lowers prices from pricing.json; jobs Actor to $0.99 (2026-10-31, branch `publisher-pricing`)
+
+- **Why:** several career-site Actors charge $0.99–1.15 per 1,000 jobs. With no paying users yet, the owner chose to cut the jobs Actor from $1.60 to $0.99, and preferred a PR to the Console.
+- **New `factory/publisher/pricing.py`:** opt-in per Actor with `"managedByPublisher": true` in `pricing.json`. After each deploy, the Publisher compares the price with Apify's current pricing record.
+  - It sends Apify's pricing history unchanged plus one new record starting now.
+  - It only ever lowers prices, or updates titles and descriptions. Increases, new paid events and model changes are refused with a warning. Apify treats those as significant changes: 14 days' notice, once a month, and they can't be cancelled.
+  - Prices outside `publisher.price_per_1000_bounds` ($0.10–10 per 1,000, in `config.yaml`) are refused, so a typo can't multiply the price.
+  - A rejected update only warns, and the deploy still succeeds.
+- **Jobs Actor:** $0.99 per 1,000, with tier discounts of $0.89 (Bronze), $0.79 (Silver) and $0.69 (Gold, also Platinum and Diamond). The event description now reads "company job board". README and SEO description updated. The MCP server stays at $1.60 and is not managed.
+- **Tests:** 272 factory tests (7 new), run against the jobs Actor's real pricing history.
+
 ## 🏷️ Jobs Actor repositioned for "career site" searches (2026-10-31, branch `career-page-seo`)
 
 - **Why:** buyers search for "career site" and "career page" jobs, not "ATS". The biggest Actor in the space, "Career Site Job Listing API", has about 1,660 users a month, and a "Job Search Scraper – Direct from Company Career Pages" charges $5.00 per 1,000 to 140 users. Our jobs Actor did not appear for those searches.
