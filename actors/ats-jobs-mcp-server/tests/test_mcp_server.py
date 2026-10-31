@@ -101,6 +101,24 @@ def test_search_jobs_caps_results_and_can_include_short_descriptions(charged):
     assert 0 < len(found['jobs'][0]['description']) <= mcp_server.DESCRIPTION_CHARS + 1
 
 
+def test_search_jobs_ranks_jobs_by_the_skills_they_mention(charged):
+    server = build_server(fake_client(ROUTES, []))
+    found = call(server, 'search_jobs', companies=['zoox', 'warp'], skills=['Salesforce', 'LLM', 'Rust', ' llm '])
+    titles = [j['title'] for j in found['jobs']]
+    # Zoox was read first but mentions none of them; Warp's Account Executive mentions two, so it leads.
+    assert titles[0] == 'Account Executive'
+    assert set(titles[1:]) == {'Sales Development Representative', 'Applied AI Engineer'}
+    assert found['jobs'][0]['matched_skills'] == ['Salesforce', 'LLM']
+    assert found['jobs'][1]['matched_skills'] == ['LLM']
+    assert 'description' not in found['jobs'][0] and found['charged_results'] == len(charged) == 3
+
+
+def test_matched_skills_are_whole_words_and_not_case_sensitive():
+    job = {'title': 'Backend Engineer (Go)', 'content_text': 'Good knowledge of C++ and postgres is a plus.'}
+    assert mcp_server.matched_skills(job, ['go', 'C++', 'PostgreSQL', 'Postgres', 'C']) == ['go', 'C++', 'Postgres']
+    assert mcp_server.matched_skills({'title': 'Goalkeeper coach'}, ['Go']) == []
+
+
 def test_search_jobs_stops_at_the_spending_limit(charged):
     charged.limit = 1  # the second push is not charged: the user's limit is used up
     server = build_server(fake_client(ROUTES, []))

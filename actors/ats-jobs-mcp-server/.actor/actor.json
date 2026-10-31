@@ -2,9 +2,9 @@
     "$schema": "https://apify.com/schemas/v1/actor.ide.json",
     "actorSpecification": 1,
     "name": "ats-jobs-mcp-server",
-    "title": "ATS Jobs MCP Server: Greenhouse, Lever, Ashby & More",
-    "description": "MCP server for AI agents: find which job board a company uses and search its open jobs on Greenhouse, Lever, Ashby, Workable or Personio, with salary ranges. Works with Claude, Cursor and any MCP client.",
-    "version": "0.1",
+    "title": "Job Search MCP Server: Greenhouse, Lever, Ashby & More",
+    "description": "MCP server for AI agents: match a CV or skills to open jobs, check salary ranges, track competitor hiring and find which ATS a company uses, on Greenhouse, Lever, Ashby, Workable and Personio. Works with Claude, Cursor and any MCP client.",
+    "version": "0.2",
     "buildTag": "latest",
     "meta": {
         "templateId": "python-start",

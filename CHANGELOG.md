@@ -1,5 +1,21 @@
 # Changelog
 
+## 🎯 MCP server: CV matching and a use-case listing (2026-10-31, branch `mcp-skills-use-cases`)
+
+- **Why:** CV-to-jobs matching is a real need, but as a separate Actor it would have almost no buyers. The five Store Actors that do it have at most 4 monthly users, and job seekers use free consumer apps. Through our MCP server, the user's own AI assistant reads the CV and does the matching on its own subscription. We pay no AI cost and charge per job returned.
+- **`search_jobs` takes `skills`:**
+  - it keeps jobs whose title or description mentions at least one skill, ranked by how many, each with `matched_skills`;
+  - matching is whole-word and ignores case ("Go" is not "good", "C" is not "C++");
+  - with skills, it reads descriptions and every listed company before ranking;
+  - only the jobs returned are charged.
+- **Listing:**
+  - Title "Job Search MCP Server: Greenhouse, Lever, Ashby & More".
+  - New SEO title and description.
+  - The README gains a use-case table with ten uses (CV matching, salary research, competitor hiring, hiring signals, tech stack from job posts, ATS lookup and more), a "What it does not do" paragraph and a CV-matching section.
+  - Version 0.2. The jobs Actor's links use the new name.
+- **New `docs/seo/ats-jobs-mcp-server.md`:** target search phrases per use case, where each appears, and a results table with a 2026-10-31 baseline (1 user, 0 monthly, 0.0% success rate) and review dates.
+- **Tests:** 128 MCP Actor tests (2 new).
+
 ## 🚀 New Actors go live without the Console (2026-10-31, branch `publisher-auto-publish`)
 
 - **Why:** the owner wants every aspect of a new Actor set through the API (Q25).

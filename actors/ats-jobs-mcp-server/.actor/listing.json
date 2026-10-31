@@ -4,6 +4,6 @@
         "AGENTS",
         "JOBS"
     ],
-    "seoTitle": "ATS Jobs MCP Server: open jobs and salaries for AI agents",
-    "seoDescription": "MCP server that lets Claude, Cursor and other AI agents find any company's open jobs on Greenhouse, Lever, Ashby, Workable or Personio, with salaries."
+    "seoTitle": "Job Search MCP Server: CV matching, salaries, hiring data",
+    "seoDescription": "MCP server for Claude, Cursor & AI agents: match a CV to open jobs, compare salaries, track competitor hiring on Greenhouse, Lever, Ashby & more."
 }
