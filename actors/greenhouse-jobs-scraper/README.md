@@ -227,12 +227,12 @@ Call the Actor from your code with the [Apify API](https://docs.apify.com/api/v2
 companies on all five platforms that feeds new `job_id`s into a job board, a CRM, a salary benchmark or a hiring-signals
 dashboard.
 
-For AI agents there is a dedicated server: the [ATS Jobs MCP Server](https://apify.com/guayox/ats-jobs-mcp-server) gives Claude, Cursor and other
+For AI agents there is a dedicated server: the [Job Search MCP Server](https://apify.com/guayox/ats-jobs-mcp-server) gives Claude, Cursor and other
 MCP clients two tools, one that finds which job board a company uses and one that searches its open jobs.
 
 ## Related Actors
 
-- [ATS Jobs MCP Server](https://apify.com/guayox/ats-jobs-mcp-server): the same five job boards as tools for AI agents. Ask "is Notion hiring
+- [Job Search MCP Server](https://apify.com/guayox/ats-jobs-mcp-server): the same five job boards as tools for AI agents, including CV matching. Ask "is Notion hiring
   designers?" and the agent finds the board and the jobs, with salary ranges.
 
 ## FAQ

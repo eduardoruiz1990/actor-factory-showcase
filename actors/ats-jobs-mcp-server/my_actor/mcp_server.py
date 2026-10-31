@@ -1,7 +1,9 @@
 """The MCP server AI agents connect to when the Actor runs in Apify's Standby mode.
 
 Two tools: find_job_board (which of the five platforms a company hires through)
-and search_jobs (its open jobs, filtered). Plain company names are resolved by
+and search_jobs (its open jobs, filtered). With `skills` (for example the skills
+an agent read from a CV), search_jobs keeps the jobs whose title or description
+mentions at least one and ranks them by how many. Plain company names are resolved by
 trying each platform in turn, so an agent can ask for "notion" without knowing
 it uses Ashby. Every job search_jobs returns is also pushed to the run's dataset,
 which charges it with Apify's per-item event, exactly as a normal run does; the
@@ -29,6 +31,7 @@ from .polite import PoliteClient
 from .robots import RobotsCache
 
 MAX_RESULTS = 100  # per call, to keep answers within an agent's context
+MAX_SKILLS = 40
 DESCRIPTION_CHARS = 1500
 # Tried in this order for a plain company name.
 PLATFORM_PREFIXES = ('', 'lever:', 'ashby:', 'workable:', 'personio:')
@@ -40,7 +43,8 @@ _SUMMARY_FIELDS = (
 INSTRUCTIONS = (
     'Open jobs from company career boards on Greenhouse, Lever, Ashby, Workable and Personio, read from each '
     "platform's public job feed. Give company names (for example 'airbnb' or 'notion') or job board URLs; the server "
-    'finds which platform each company uses. Each job returned is charged as one result.'
+    'finds which platform each company uses. To match a CV or a list of skills to open jobs, pass the skills to '
+    'search_jobs; it ranks jobs by how many they mention. Each job returned is charged as one result.'
 )
 
 
@@ -71,6 +75,21 @@ async def resolve(company: str, http: PoliteClient, robots: RobotsCache,
     return None, []
 
 
+def matched_skills(job: dict[str, Any], skills: list[str]) -> list[str]:
+    """The skills the job's title or description mentions as whole words: "Go" is not "good", nor "C" "C++"."""
+    text = ' '.join(filter(None, [job.get('title'), job.get('content_text')]))
+    return [s for s in skills if re.search(rf'(?<![\w+#]){re.escape(s)}(?![\w+#])', text, re.IGNORECASE)]
+
+
+def unique_skills(skills: list[str]) -> list[str]:
+    """Each skill once, as first spelled (case aside), at most MAX_SKILLS."""
+    unique: dict[str, str] = {}
+    for skill in (s.strip() for s in skills):
+        if skill:
+            unique.setdefault(skill.lower(), skill)
+    return list(unique.values())[:MAX_SKILLS]
+
+
 def summary(job: dict[str, Any], include_description: bool) -> dict[str, Any]:
     result = {field: job.get(field) for field in _SUMMARY_FIELDS}
     if include_description:
@@ -81,7 +100,7 @@ def summary(job: dict[str, Any], include_description: bool) -> dict[str, Any]:
 
 def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer:
     """The MCP server; `client` makes the polite HTTP client for each tool call (tests pass a fake one)."""
-    server = MCPServer(name='ats-jobs', title='ATS Jobs', version='0.1', instructions=INSTRUCTIONS)
+    server = MCPServer(name='ats-jobs', title='ATS Jobs', version='0.2', instructions=INSTRUCTIONS)
 
     @server.custom_route('/', methods=['GET'], include_in_schema=False)
     async def ready(_request: Request) -> PlainTextResponse:
@@ -99,36 +118,43 @@ def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer
         return {'company': company, 'board': key, 'platform': jobs[0]['platform'], 'open_jobs': len(jobs)}
 
     @server.tool(description='Search the open jobs of one or more companies. Companies are names or job board '
-                             'URLs. Optional title and location keywords (any match, not case-sensitive). Returns '
-                             f'up to max_results jobs (at most {MAX_RESULTS}) with salary ranges where published; '
-                             'each job returned is charged as one result.')
+                             'URLs. Optional title and location keywords (any match, not case-sensitive). Optional '
+                             'skills, such as those listed on a CV: only jobs whose title or description mentions at '
+                             'least one are kept, best matches first, each with its matched_skills. Returns up to '
+                             f'max_results jobs (at most {MAX_RESULTS}) with salary ranges where published; each job '
+                             'returned is charged as one result.')
     async def search_jobs(companies: list[str], title_keywords: list[str] | None = None,
-                          location_keywords: list[str] | None = None, max_results: int = 25,
-                          include_descriptions: bool = False) -> dict[str, Any]:
+                          location_keywords: list[str] | None = None, skills: list[str] | None = None,
+                          max_results: int = 25, include_descriptions: bool = False) -> dict[str, Any]:
         limit = max(1, min(int(max_results), MAX_RESULTS))
         filters = source.Settings(board_tokens=['x'], max_results=limit, max_requests_per_second=1.0,
                                   title_keywords=[k.strip().lower() for k in title_keywords or [] if k.strip()],
                                   location_keywords=[k.strip().lower() for k in location_keywords or [] if k.strip()])
+        wanted = unique_skills(skills or [])
         boards: dict[str, str | None] = {}
-        jobs: list[dict[str, Any]] = []
-        stopped = False
+        found_jobs: list[dict[str, Any]] = []
         async with client() as http:
             robots = RobotsCache(http)
             for company in companies[:20]:
-                key, found = await resolve(company, http, robots, include_content=include_descriptions)
+                # Skills are matched against descriptions, so those are read whenever skills are given.
+                key, found = await resolve(company, http, robots, include_content=include_descriptions or bool(wanted))
                 boards[company] = key
-                for job in found:
-                    if len(jobs) >= limit:
-                        break
-                    if not source.matches(job, filters):
-                        continue
-                    job = privacy.clean(job)
-                    if not await _charge(job):
-                        stopped = True
-                        break
-                    jobs.append(summary(job, include_descriptions))
-                if stopped or len(jobs) >= limit:
+                found_jobs.extend(job for job in found if source.matches(job, filters))
+                # Without skills the first jobs found are the answer; with skills every company is read to rank them.
+                if not wanted and len(found_jobs) >= limit:
                     break
+        picked = [(job, []) for job in found_jobs]
+        if wanted:
+            ranked = sorted(((job, matched_skills(job, wanted)) for job in found_jobs), key=lambda pair: -len(pair[1]))
+            picked = [(job, matched) for job, matched in ranked if matched]
+        jobs: list[dict[str, Any]] = []
+        stopped = False
+        for job, matched in picked[:limit]:
+            job = privacy.clean(job)
+            if not await _charge(job):
+                stopped = True
+                break
+            jobs.append(summary(job, include_descriptions) | ({'matched_skills': matched} if wanted else {}))
         result: dict[str, Any] = {'boards': boards, 'jobs': jobs, 'charged_results': len(jobs)}
         if stopped:
             result['note'] = 'Stopped: the spending limit of this Actor run is used up.'
