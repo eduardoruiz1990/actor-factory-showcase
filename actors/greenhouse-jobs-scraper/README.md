@@ -1,7 +1,8 @@
-# ATS Jobs Scraper: every open job from Greenhouse, Lever, Ashby, Workable and Personio, with salary ranges
+# Career Site Jobs Scraper: every open job straight from company career sites, with salary ranges
 
-Get every open job from any company that hires through **Greenhouse**, **Lever**, **Ashby**, **Workable** or
-**Personio**, five of the most widely used applicant tracking systems (ATS): US and European tech companies, scale-ups
+Get every open job straight from company career sites: the Career Site Jobs Scraper reads any company that hires
+through **Greenhouse**, **Lever**, **Ashby**, **Workable** or **Personio**, five of the most widely used applicant
+tracking systems (ATS): US and European tech companies, scale-ups
 and thousands of small and mid-sized businesses. You get the job title, company, location, department, office, job
 URL, posting date, the full job description and, where the company publishes it, the **salary range**, as clean JSON,
 CSV or Excel. Give it board names (such as `airbnb`, `lever:zoox`, `ashby:ramp`, `workable:blueground` or
@@ -25,9 +26,16 @@ hiring, for which roles, where and for how much.
 - No personal data: names, e-mail addresses and phone numbers are never stored
 - Export to JSON, CSV, Excel or HTML, or connect through the Apify API, integrations and MCP
 
+## Jobs straight from company career pages
+
+Every job comes from the company's own career site, read live from its ATS at run time: no job-board reposts, no
+stale database, no expired or "ghost" jobs. If it is open on the career page today, it is in your results; if the
+company closed it, it is gone. You pay **$1.60 per 1,000 jobs**, and on scheduled runs with **Only new jobs** you
+pay only for jobs that are new since the last run.
+
 ## Supported job boards
 
-The ATS Jobs Scraper reads five applicant tracking systems. Mix them freely in one run.
+The Career Site Jobs Scraper reads five applicant tracking systems. Mix them freely in one run.
 
 | Platform | Enter | Salary ranges | Company name |
 |---|---|---|---|

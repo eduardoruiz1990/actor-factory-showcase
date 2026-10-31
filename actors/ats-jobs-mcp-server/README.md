@@ -88,7 +88,7 @@ and gets back, for each job (here a real answer):
 
 ## Related Actors
 
-- [ATS Jobs Scraper](https://apify.com/guayox/greenhouse-jobs-scraper): the same five job boards for bulk exports to JSON, CSV or Excel, and daily
+- [Career Site Jobs Scraper](https://apify.com/guayox/greenhouse-jobs-scraper): the same five job boards for bulk exports to JSON, CSV or Excel, and daily
   feeds of only new jobs on a schedule.
 
 ## FAQ

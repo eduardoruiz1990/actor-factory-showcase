@@ -1,5 +1,15 @@
 # Changelog
 
+## 🏷️ Jobs Actor repositioned for "career site" searches (2026-10-31, branch `career-page-seo`)
+
+- **Why:** buyers search for "career site" and "career page" jobs, not "ATS". The biggest Actor in the space, "Career Site Job Listing API", has about 1,660 users a month, and a "Job Search Scraper – Direct from Company Career Pages" charges $5.00 per 1,000 to 140 users. Our jobs Actor did not appear for those searches.
+- **Change** (the URL stays `greenhouse-jobs-scraper`):
+  - Title: "Career Site Jobs Scraper: Greenhouse, Lever, Ashby & More". New description.
+  - SEO title "Career Site Jobs API: Greenhouse, Lever, Ashby, Workable", and an SEO description with the price.
+  - New README section "Jobs straight from company career pages", and the H1 and first paragraph use the phrase.
+  - The MCP server's cross-link uses the new name.
+- **Checked:** our $1.60 per 1,000 is not the lowest. Several career-site Actors charge $0.10–1.15, so the README states the price without comparing.
+
 ## 📋 Publisher creates and publishes saved tasks (2026-10-31, branch `publisher-tasks`)
 
 - **Why:** Apify's quality score for the jobs Actor (78/100) asks for a published task. The owner preferred a PR to setting it up by hand.

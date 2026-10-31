@@ -2,8 +2,8 @@
     "$schema": "https://apify.com/schemas/v1/actor.ide.json",
     "actorSpecification": 1,
     "name": "greenhouse-jobs-scraper",
-    "title": "ATS Jobs Scraper: Greenhouse, Lever, Ashby & More",
-    "description": "Get every open job from any company's Greenhouse, Lever, Ashby, Workable or Personio job board, with departments, locations, salary ranges and full descriptions, as clean JSON from each platform's public feed.",
+    "title": "Career Site Jobs Scraper: Greenhouse, Lever, Ashby & More",
+    "description": "Get every open job straight from company career sites on Greenhouse, Lever, Ashby, Workable or Personio, live from each ATS, with departments, locations, salary ranges and full descriptions, as clean JSON or CSV.",
     "version": "0.5",
     "buildTag": "latest",
     "meta": {
