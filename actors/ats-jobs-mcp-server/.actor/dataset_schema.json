@@ -1,0 +1,233 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "platform": {
+                "type": "string",
+                "enum": [
+                    "greenhouse",
+                    "lever",
+                    "ashby",
+                    "workable",
+                    "personio"
+                ]
+            },
+            "board_token": {
+                "type": "string"
+            },
+            "company": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "job_id": {
+                "type": [
+                    "integer",
+                    "string"
+                ]
+            },
+            "internal_job_id": {
+                "type": [
+                    "integer",
+                    "null"
+                ]
+            },
+            "requisition_id": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "title": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "location": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "department": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "departments": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "office": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "offices": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "absolute_url": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "language": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "updated_at": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "first_published": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "content": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "content_text": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "employment_type": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "workplace_type": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "salary_currency": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "salary_interval": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "salary_min": {
+                "type": [
+                    "number",
+                    "null"
+                ]
+            },
+            "salary_max": {
+                "type": [
+                    "number",
+                    "null"
+                ]
+            },
+            "fetched_at": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "platform",
+            "board_token",
+            "job_id",
+            "fetched_at"
+        ]
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "company",
+                    "board_token",
+                    "title",
+                    "location",
+                    "department",
+                    "employment_type",
+                    "salary_min",
+                    "salary_max",
+                    "salary_currency",
+                    "absolute_url",
+                    "first_published"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "company": {
+                        "label": "Company",
+                        "format": "text"
+                    },
+                    "board_token": {
+                        "label": "Board",
+                        "format": "text"
+                    },
+                    "title": {
+                        "label": "Job title",
+                        "format": "text"
+                    },
+                    "location": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "department": {
+                        "label": "Department",
+                        "format": "text"
+                    },
+                    "employment_type": {
+                        "label": "Type",
+                        "format": "text"
+                    },
+                    "salary_min": {
+                        "label": "Salary from",
+                        "format": "number"
+                    },
+                    "salary_max": {
+                        "label": "Salary to",
+                        "format": "number"
+                    },
+                    "salary_currency": {
+                        "label": "Currency",
+                        "format": "text"
+                    },
+                    "absolute_url": {
+                        "label": "Job URL",
+                        "format": "link"
+                    },
+                    "first_published": {
+                        "label": "First published",
+                        "format": "date"
+                    }
+                }
+            }
+        }
+    }
+}

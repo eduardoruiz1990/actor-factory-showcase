@@ -1,0 +1,6 @@
+# Runtime dependencies, from Apify's official python-start template.
+apify >= 4.0.0, < 5.0.0
+beautifulsoup4[lxml] >= 4.0.0, < 5.0.0
+httpx2 >= 2.5.0, < 3.0.0
+mcp >= 2.3.0, < 3.0.0
+uvicorn >= 0.30.0, < 1.0.0

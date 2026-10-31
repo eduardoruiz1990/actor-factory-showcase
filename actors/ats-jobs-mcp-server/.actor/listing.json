@@ -1,0 +1,9 @@
+{
+    "_comment": "Actor Factory convention, not read by Apify. After each deploy the Publisher sets these, with the title and description from actor.json, through the Apify API. Categories use Apify Store category names (for example JOBS, BUSINESS, DEVELOPER_TOOLS, ECOMMERCE).",
+    "categories": [
+        "AGENTS",
+        "JOBS"
+    ],
+    "seoTitle": "ATS Jobs MCP Server: open jobs and salaries for AI agents",
+    "seoDescription": "MCP server that lets Claude, Cursor and other AI agents find any company's open jobs on Greenhouse, Lever, Ashby, Workable or Personio, with salaries."
+}

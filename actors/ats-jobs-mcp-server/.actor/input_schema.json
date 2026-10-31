@@ -1,0 +1,79 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Job boards input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "boardTokens": {
+            "title": "Job boards (Greenhouse, Lever, Ashby, Workable or Personio)",
+            "type": "array",
+            "description": "Companies to read. Greenhouse: a board token (the part after boards.greenhouse.io/, for example \"airbnb\") or any Greenhouse job board URL. Lever: \"lever:<company>\" (for example \"lever:zoox\") or any jobs.lever.co URL; use \"lever-eu:<company>\" or a jobs.eu.lever.co URL for EU-hosted boards. Ashby: \"ashby:<company>\" (for example \"ashby:ramp\") or any jobs.ashbyhq.com URL. Workable: \"workable:<account>\" (for example \"workable:blueground\") or any apply.workable.com URL. Personio: \"personio:<company>\" (for example \"personio:tado\") or any jobs.personio.com or jobs.personio.de URL. Put one board per line (several on a line, separated by commas, also work). Each board is one request.",
+            "editor": "stringList",
+            "prefill": [
+                "airbnb",
+                "lever:zoox",
+                "ashby:warp",
+                "workable:blueground",
+                "personio:ottonova"
+            ],
+            "default": [
+                "airbnb",
+                "lever:zoox",
+                "ashby:warp",
+                "workable:blueground",
+                "personio:ottonova"
+            ]
+        },
+        "includeContent": {
+            "title": "Include full job descriptions",
+            "type": "boolean",
+            "description": "Return each job's description (HTML and plain text) with its departments and offices. Turn off for a lighter list of titles, locations and links only.",
+            "default": true
+        },
+        "titleKeywords": {
+            "title": "Title keywords",
+            "type": "array",
+            "description": "Keep only jobs whose title contains at least one of these words (not case-sensitive). Leave empty for every job.",
+            "editor": "stringList",
+            "default": []
+        },
+        "locationKeywords": {
+            "title": "Location keywords",
+            "type": "array",
+            "description": "Keep only jobs whose location or office contains at least one of these words, for example \"Remote\" or \"London\" (not case-sensitive). Leave empty for every location.",
+            "editor": "stringList",
+            "default": []
+        },
+        "onlyNew": {
+            "title": "Only new jobs",
+            "type": "boolean",
+            "description": "Return, and charge for, only jobs that earlier runs with the same boards and keywords have not returned yet. Turn it on and schedule the Actor (for example daily) to get a feed of newly posted jobs; a run with no new jobs charges no results. The first run returns every open job.",
+            "default": false
+        },
+        "monitorName": {
+            "title": "Monitor name",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Optional, for \"Only new jobs\". Runs with the same name share one memory of returned jobs, even when you add or remove boards. Without a name, the memory follows the boards and keywords."
+        },
+        "maxResults": {
+            "title": "Maximum results",
+            "type": "integer",
+            "description": "Stop after this many jobs. Each job is charged once.",
+            "default": 1000,
+            "minimum": 1,
+            "maximum": 100000
+        },
+        "maxRequestsPerSecond": {
+            "title": "Maximum requests per second",
+            "type": "number",
+            "description": "Polite rate limit for the job board APIs. At most 1 request per second, which is what Lever's robots.txt asks for; the Actor also honours Retry-After and backs off on errors.",
+            "default": 1,
+            "minimum": 0.1,
+            "maximum": 1
+        }
+    },
+    "required": [
+        "boardTokens"
+    ]
+}

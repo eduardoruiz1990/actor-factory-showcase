@@ -1,5 +1,19 @@
 # Changelog
 
+## 🤖 ATS Jobs MCP Server, the second Actor (2026-10-31, branch `ats-jobs-mcp`)
+
+- **Why:** AI agents increasingly call Apify Actors as tools. MCP servers have about 890 users a month on the Store, and the goal names AI agents as a sales channel. A separate Actor gets its own "MCP" listing, counts toward Phase 2, and leaves the live jobs Actor's pricing alone.
+- **New Actor `actors/ats-jobs-mcp-server`:**
+  - It shares the jobs scraper's tested code. A factory test keeps `source.py`, `polite.py`, `robots.py`, `privacy.py` and `seen.py` identical in both Actors.
+  - Standby mode (`usesStandbyMode`, `webServerMcpPath: /mcp`) serves MCP over Streamable HTTP with the official MCP Python SDK 2.x (`MCPServer`). It answers Apify's readiness probe on `/`.
+  - The SDK's localhost-only host check is switched off, because requests arrive through Apify's public Standby URL.
+  - Tool `find_job_board` (free) tries the five platforms for a plain company name. Tool `search_jobs` returns filtered jobs, each pushed to the dataset and so charged ($1.60 per 1,000). It stops at the user's spending limit.
+  - A normal run, including Apify's daily test, reads the input's boards like the jobs scraper.
+- **Store text:**
+  - Title: "ATS Jobs MCP Server: Greenhouse, Lever, Ashby & More". Categories: Agents and Jobs.
+  - The README covers connecting from Claude Code and any MCP client.
+- **Tests:** 126 Actor tests, 6 of them new: tools, charging, the spending limit, and the HTTP app with a public host. A live local Standby run found that Notion uses Ashby (148 open jobs) and returned Airbnb engineering jobs with salaries.
+
 ## 🔁 "Only new results" for every Actor (2026-10-31, branch `only-new-items`)
 
 - **Why:** the jobs Actor has no repeat users. Scheduled runs that return only what is new turn one-off users into daily runs, which is recurring revenue, and repeat runs are what Store ranking rewards.
