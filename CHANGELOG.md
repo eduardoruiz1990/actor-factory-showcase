@@ -1,5 +1,14 @@
 # Changelog
 
+## 📋 Publisher creates and publishes saved tasks (2026-10-31, branch `publisher-tasks`)
+
+- **Why:** Apify's quality score for the jobs Actor (78/100) asks for a published task. The owner preferred a PR to setting it up by hand.
+- **Change:**
+  - New convention `.actor/tasks.json`, plus `factory/publisher/tasks.py`. After each deploy, the Publisher finds each task by `owner~name` and creates or updates it (title, description, input, options).
+  - Tasks marked `publish` are published in a second request, so a refused publish leaves the task in place and only warns, with Apify's reason. The Actor must be public, and `publicConfig` must name the input fields and a dataset view.
+- **Jobs Actor tasks:** "Daily new jobs at top tech companies" (12 boards on all five platforms, `onlyNew`) and "Remote engineering jobs with salaries" (same boards, filtered).
+- **Tests:** 265 factory tests (4 new). A check keeps every task to the Actor's own input fields, its dataset views and Apify's limits.
+
 ## 🔎 Store visibility: README headings, cross-links, icons (2026-10-31, branch `readme-visibility`)
 
 - **Why:** a week after launch, the jobs Actor ranked outside the top 100 for "ATS jobs", "Greenhouse jobs" and "Lever jobs". Its Actor quality score is 78/100. The README and reliability already rank in Apify's top 15% and 1%; the open items are an icon, Store discounts and a published task. Apify says search ranking correlates strongly with the quality score.

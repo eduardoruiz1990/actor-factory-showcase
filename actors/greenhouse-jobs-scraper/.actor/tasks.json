@@ -1,0 +1,83 @@
+{
+    "_comment": "Actor Factory convention, not read by Apify. After each deploy the Publisher creates or updates these saved tasks through the Apify API and publishes those with \"publish\": true (factory/publisher/tasks.py). Task names: 3-63 characters, lower case, digits and hyphens. An Actor can have up to 10 published tasks.",
+    "tasks": [
+        {
+            "name": "daily-new-tech-jobs",
+            "title": "Daily new jobs at top tech companies",
+            "description": "Every job newly posted at Airbnb, Stripe, Discord, Zoox, Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, ottonova and tado, across Greenhouse, Lever, Ashby, Workable and Personio. Schedule it daily: each run returns only jobs that are new since the last run.",
+            "input": {
+                "boardTokens": [
+                    "airbnb",
+                    "stripe",
+                    "discord",
+                    "lever:zoox",
+                    "lever:spotify",
+                    "ashby:notion",
+                    "ashby:ramp",
+                    "ashby:warp",
+                    "workable:huggingface",
+                    "workable:blueground",
+                    "personio:ottonova",
+                    "personio:tado"
+                ],
+                "onlyNew": true,
+                "includeContent": true,
+                "maxResults": 1000
+            },
+            "publish": true,
+            "publicConfig": {
+                "seoTitle": "Daily new tech jobs from Greenhouse, Lever and Ashby",
+                "seoDescription": "A daily feed of jobs newly posted at 12 tech companies on Greenhouse, Lever, Ashby, Workable and Personio, with salary ranges where published.",
+                "inputSchemaFields": [
+                    "boardTokens",
+                    "onlyNew",
+                    "titleKeywords",
+                    "locationKeywords",
+                    "maxResults"
+                ],
+                "datasetView": "overview"
+            }
+        },
+        {
+            "name": "remote-engineering-jobs-with-salaries",
+            "title": "Remote engineering jobs with salaries",
+            "description": "Open remote engineering jobs at 12 tech companies on Greenhouse, Lever, Ashby, Workable and Personio, with salary ranges where the company publishes them. Change the companies or keywords to fit your search.",
+            "input": {
+                "boardTokens": [
+                    "airbnb",
+                    "stripe",
+                    "discord",
+                    "lever:zoox",
+                    "lever:spotify",
+                    "ashby:notion",
+                    "ashby:ramp",
+                    "ashby:warp",
+                    "workable:huggingface",
+                    "workable:blueground",
+                    "personio:ottonova",
+                    "personio:tado"
+                ],
+                "titleKeywords": [
+                    "engineer"
+                ],
+                "locationKeywords": [
+                    "remote"
+                ],
+                "includeContent": true,
+                "maxResults": 500
+            },
+            "publish": true,
+            "publicConfig": {
+                "seoTitle": "Remote engineering jobs with salary ranges",
+                "seoDescription": "Open remote engineering jobs at 12 tech companies, read from their Greenhouse, Lever, Ashby, Workable and Personio boards, with salary ranges.",
+                "inputSchemaFields": [
+                    "boardTokens",
+                    "titleKeywords",
+                    "locationKeywords",
+                    "maxResults"
+                ],
+                "datasetView": "overview"
+            }
+        }
+    ]
+}
