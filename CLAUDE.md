@@ -17,7 +17,7 @@ factory/common/     config loader, PoliteClient (rate limit + retries), GitHub c
 factory/scout/      twice-weekly Store + Ideas scan -> 20 candidate niches -> one issue per run (Q20)
 factory/validator/  five checks per candidate (claude-sonnet-5-5 + code rules) -> brief comment
 factory/builder/    prepares a build brief (refuses non-passing niches) and checks a Builder PR's scope
-factory/publisher/  finds changed Actors after a merge and writes their Store listing and pricing issue
+factory/publisher/  after a merge: deploys changed Actors, syncs listing, pricing (only downwards) and tasks, and publishes new Actors after a passing test run (Q25)
 factory/watcher/    Phase 3 (not built yet)
 factory/digest/     Phase 4 (not built yet)
 factory/dry_run.py  offline Scout + Validator run on tests/fixtures

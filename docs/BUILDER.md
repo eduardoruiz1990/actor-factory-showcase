@@ -30,8 +30,10 @@ You are building one paid Actor for the Apify Store, in a GitHub Actions run sta
    - The prefill must work in a real run.
 4. **`.actor/dataset_schema.json`**: list every field the Actor outputs, plus an overview table view.
 5. **`.actor/actor.json`**: set `name` (exactly `<name>`), `title`, `description` (one sentence for buyers) and `version` `0.1`. Keep the memory limits low unless a browser is needed.
-6. **`.actor/pricing.json`**: set `pricePer1000Usd` on `apify-default-dataset-item` to the price in the brief. Results are charged per item pushed to the dataset; add no other per-result event.
+6. **`.actor/pricing.json`**: set `pricePer1000Usd` on `apify-default-dataset-item` to the price in the brief, and keep `managedByPublisher: true`. Results are charged per item pushed to the dataset; add no other per-result event. The Publisher creates this pricing on Apify (with the default Bronze/Silver/Gold discounts from `config.yaml`), so the owner never sets it by hand.
 7. **`.actor/listing.json`**: one or two Store categories, an SEO title of at most 60 characters, and an SEO description of at most 155.
+   - **`.actor/tasks.json`**: add one or two ready-made tasks with `"publish": true`, each a realistic input a buyer would run (for example the daily "only new" feed for a useful set of targets). Use only fields from the input schema, `publicConfig.inputSchemaFields` listing the fields to show and `publicConfig.datasetView` set to `overview`. Follow `actors/greenhouse-jobs-scraper/.actor/tasks.json`.
+   - After the owner merges, the Publisher test-runs the Actor with its **prefilled input** and publishes it only if that run succeeds with results within 5 minutes. A prefill that returns nothing keeps the Actor private.
 8. **`README.md`**: fill in every TODO of the Store README skeleton, in the same section order.
    - Write headings people search for (H2 and H3 can show in Google results): the source's name plus "scraper" or "API", and the price as a question, for example "How much does it cost to scrape Greenhouse jobs?". Put the main keyword in the first paragraph and repeat the Actor's name a few times.
    - Under **Related Actors**, link the factory's other Actors in the same category or for the same users (`apify.com/<owner>/<name>`). Apify recommends Actors within a category, so linked Actors lift each other.

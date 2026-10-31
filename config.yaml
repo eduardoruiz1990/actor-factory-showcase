@@ -232,6 +232,12 @@ publisher:
   # Sanity range for prices the Publisher sets from pricing.json (USD per 1,000 results). Outside it the
   # change is refused, so a typo cannot multiply a price. The Publisher only ever lowers prices.
   price_per_1000_bounds: [0.1, 10.0]
+  # Discounts for Apify's paid plans when an Actor's pricing.json sets none (share off the base price).
+  default_tier_discounts: {BRONZE: 0.10, SILVER: 0.20, GOLD: 0.30}
+  # After the owner merges a new Actor, the Publisher test-runs it with its default input and, if the run
+  # succeeds with results within this many seconds (Apify's daily test allows 5 minutes), makes it public (Q25).
+  auto_publish: true
+  test_run_timeout_seconds: 300
 
 watcher:
   # Phase 3: open a "broken" issue when the 24-hour failure rate passes this.

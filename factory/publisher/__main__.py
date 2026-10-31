@@ -14,6 +14,7 @@ opened: the push was an update. Otherwise it opens (or updates) the issue
 
 import argparse
 import os
+from datetime import datetime, timezone
 import subprocess
 import sys
 from pathlib import Path
@@ -21,8 +22,9 @@ from pathlib import Path
 from factory.common.config import REPO_ROOT, load_config
 from factory.common.github import GitHubClient
 from factory.common.http import PoliteClient
-from factory.publisher.listing import changed_actors, load_actor, render_listing, store_fields
+from factory.publisher.listing import changed_actors, load_actor, render_listing, render_published, store_fields
 from factory.publisher.pricing import load_pricing, sync_pricing
+from factory.publisher.publish import default_input, verify_and_publish
 from factory.publisher.tasks import load_tasks, sync_tasks
 
 
@@ -64,25 +66,45 @@ def main(argv: list[str] | None = None) -> int:
         for category in unknown:
             print(f"::warning title=Publisher::{args.name}: {category} is not an Apify Store category; left out")
         sync_listing(http, url, token, fields)
-        detail = http.get(url, headers={"Authorization": f"Bearer {token}"})
-        actor = (detail.json().get("data") or {}) if detail.status_code == 200 else {}
+        pub = config["publisher"]
+        actor_dir = REPO_ROOT / "actors" / args.name
+        actor = fetch_actor(http, url, token)
+        was_public = bool(actor.get("isPublic"))
         if actor.get("pricingInfos") is not None:
-            bounds = tuple(config["publisher"]["price_per_1000_bounds"])
-            sync_pricing(http, url, token, load_pricing(REPO_ROOT / "actors" / args.name), actor["pricingInfos"], bounds)
-        tasks = load_tasks(REPO_ROOT / "actors" / args.name)
+            if sync_pricing(http, url, token, load_pricing(actor_dir), actor["pricingInfos"],
+                            tuple(pub["price_per_1000_bounds"]), actor_public=was_public,
+                            default_discounts=pub.get("default_tier_discounts")):
+                actor = fetch_actor(http, url, token)
+        result = None
+        if not was_public and pub.get("auto_publish") and actor.get("id"):
+            result = verify_and_publish(http, config["apify"]["api_base"], actor, default_input(actor_dir), token,
+                                        int(pub["test_run_timeout_seconds"]), datetime.now(timezone.utc))
+            print(f"Publish {args.name}: {result.reason}" + (f" ({result.run_url})" if result.run_url else ""))
+        public = was_public or bool(result and result.published)
+        tasks = load_tasks(actor_dir)
         if tasks and actor.get("id"):
-            sync_tasks(http, config["apify"]["api_base"], owner, actor["id"], bool(actor.get("isPublic")), tasks, token)
-        if actor.get("isPublic"):
+            sync_tasks(http, config["apify"]["api_base"], owner, actor["id"], public, tasks, token)
+        if was_public:
             print(f"{args.name} is already public; no publish issue needed.")
             return 0
         github = GitHubClient.from_env(http)
-        label = config["publisher"]["publish_label"]
+        label = pub["publish_label"]
         github.ensure_label(label, "0e8a16", "Actors waiting for you to publish in Apify Console")
         title = f"Publish {args.name}"
         existing = github.find_open_issue(title, label)
+        if public:
+            body = render_published(args.name, owner, data, result, len([t for t in tasks if t.get("publish")]))
+        elif result is not None:
+            body = (f"> [!WARNING]\n> Not published automatically: {result.reason}."
+                    + (f" [Test run]({result.run_url})" if result.run_url else "") + "\n\n" + body)
         issue = github.update_issue(existing["number"], body=body) if existing else github.create_issue(title, body, [label])
         print(f"Publish issue #{issue['number']}: {issue['html_url']}")
     return 0
+
+
+def fetch_actor(http: PoliteClient, url: str, token: str) -> dict:
+    detail = http.get(url, headers={"Authorization": f"Bearer {token}"})
+    return (detail.json().get("data") or {}) if detail.status_code == 200 else {}
 
 
 def sync_listing(http: PoliteClient, url: str, token: str, fields: dict) -> bool:

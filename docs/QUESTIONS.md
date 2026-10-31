@@ -251,3 +251,12 @@ The factory was built to find scraping niches. Its Legality check needs a target
 - A tool with `outside_service: none` may return the user's input unchanged, personal data included, for example the text of the user's own PDF.
 - Such an Actor names the fields that carry the input in the template's `USER_SUPPLIED_KEYS`, and the privacy guard leaves only those fields unchanged.
 - Personal data from websites, even websites the user named, is never treated as the user's own.
+
+### Q25. Publishing new Actors without the Console (resolved 2026-10-31: owner approved test run + publish)
+
+The owner wants new Actors fully set up through the API, so they "virtually don't even have to log in". Asked how far the Publisher should go after a merge, the owner chose test run plus publish.
+
+- **Pricing:** created by the Publisher while the Actor is private, from `pricing.json` with `managedByPublisher: true`. Bronze, Silver and Gold discounts come from `publisher.default_tier_discounts` unless `tiersPer1000Usd` is set. Apify applies pricing at once when an Actor has no paying users. Afterwards the Publisher only lowers prices; increases stay in the Console.
+- **Publishing:** the owner's merge is the approval. The Publisher then runs the Actor once with its prefilled input. If that run succeeds with at least one result within `publisher.test_run_timeout_seconds` (300, Apify's daily-test limit), the Publisher makes the Actor public and publishes its tasks. It never publishes an Actor without pay-per-event pricing, so nothing goes public free. Any failure leaves the Actor private and opens a "Publish <name>" issue with the reason and the run link.
+- **Turn it off:** set `publisher.auto_publish: false`.
+- **Still manual:** the Store icon, because Apify's API does not accept one. The "is live" issue reminds the owner.

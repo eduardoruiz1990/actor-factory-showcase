@@ -1,5 +1,19 @@
 # Changelog
 
+## 🚀 New Actors go live without the Console (2026-10-31, branch `publisher-auto-publish`)
+
+- **Why:** the owner wants every aspect of a new Actor set through the API (Q25).
+- **After the owner merges a new Actor, the Publisher:**
+  1. deploys it and sets title, description, SEO text and categories (as before);
+  2. **creates its pay-per-event pricing** while it is private, with Bronze, Silver and Gold discounts (default 10/20/30% from `config.yaml`);
+  3. **test-runs it** with the prefilled input; the run must succeed with results within 300 s, as in Apify's daily test;
+  4. **makes it public** and publishes its tasks, then opens a "✅ live" issue whose only remaining step is the icon. Apify's API accepts no icons.
+
+  If any step fails, the Actor stays private, and the issue says why, with the run link. It never publishes without pricing. `publisher.auto_publish: false` turns it off.
+- **New `factory/publisher/publish.py`.** `pricing.py` can create a private Actor's first record, but still never raises a price.
+- **Template:** `pricing.json` with `managedByPublisher: true`, and a new `tasks.json`. `docs/BUILDER.md` asks for 1–2 tasks and a prefill that returns results.
+- **Tests:** 278 factory tests (6 new): first pricing, publish only after a successful run with results, no publishing without pricing, Apify refusals.
+
 ## 💲 Publisher lowers prices from pricing.json; jobs Actor to $0.99 (2026-10-31, branch `publisher-pricing`)
 
 - **Why:** several career-site Actors charge $0.99–1.15 per 1,000 jobs. With no paying users yet, the owner chose to cut the jobs Actor from $1.60 to $0.99, and preferred a PR to the Console.

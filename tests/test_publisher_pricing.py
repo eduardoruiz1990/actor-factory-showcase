@@ -87,3 +87,17 @@ def test_every_actor_pricing_file_is_sane():
             prices = desired_tiers(event)
             assert all(0.1 / 1000 <= p <= 10 / 1000 for p in prices.values()), actor_dir.name
             assert list(prices.values()) == sorted(prices.values(), reverse=True), actor_dir.name  # higher tiers pay less
+
+
+def test_a_new_private_actor_gets_its_first_price_with_default_discounts():
+    new = {"managedByPublisher": True, "minimalMaxTotalChargeUsd": 0.5, "events": {
+        "apify-default-dataset-item": {"title": "Result", "description": "One result.", "pricePer1000Usd": 2.0}}}
+    discounts = {"BRONZE": 0.1, "SILVER": 0.2, "GOLD": 0.3}
+    record, reason = plan_change(new, [], BOUNDS, NOW, actor_public=False, default_discounts=discounts)
+    assert reason == "first pricing: $2 per 1,000"
+    events = record["pricingPerEvent"]["actorChargeEvents"]
+    tiers = {t: v["tieredEventPriceUsd"] for t, v in events["apify-default-dataset-item"]["eventTieredPricingUsd"].items()}
+    assert tiers == {"FREE": 0.002, "BRONZE": 0.0018, "SILVER": 0.0016, "GOLD": 0.0014, "PLATINUM": 0.0014, "DIAMOND": 0.0014}
+    assert events["apify-default-dataset-item"]["isPrimaryEvent"] and events["apify-actor-start"]["eventPriceUsd"] == 5e-05
+    # Once public, a missing price is not created automatically: that would be a significant change.
+    assert plan_change(new, [], BOUNDS, NOW, actor_public=True)[0] is None
