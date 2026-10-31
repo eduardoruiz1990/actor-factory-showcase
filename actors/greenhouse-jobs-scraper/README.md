@@ -30,7 +30,7 @@ hiring, for which roles, where and for how much.
 
 Every job comes from the company's own career site, read live from its ATS at run time: no job-board reposts, no
 stale database, no expired or "ghost" jobs. If it is open on the career page today, it is in your results; if the
-company closed it, it is gone. You pay **$1.60 per 1,000 jobs**, and on scheduled runs with **Only new jobs** you
+company closed it, it is gone. You pay **$0.99 per 1,000 jobs** (less on Apify's paid plans), and on scheduled runs with **Only new jobs** you
 pay only for jobs that are new since the last run.
 
 ## Supported job boards
@@ -119,8 +119,9 @@ jobs it did not reach for the next run.
 
 ## How much does it cost to scrape Greenhouse, Lever, Ashby, Workable and Personio jobs?
 
-You pay per result: $1.60 per 1,000 jobs, plus a small fee per run that Apify sets. A run of 1,000 jobs costs about
-$1.60, whichever platform they come from. Set a maximum cost per run and the Actor stops when it is reached. Use
+You pay per result: $0.99 per 1,000 jobs, plus a small fee per run that Apify sets. On Apify's paid plans it is
+cheaper: $0.89 (Bronze), $0.79 (Silver) or $0.69 (Gold) per 1,000. A run of 1,000 jobs costs about $0.99, whichever
+platform they come from. Set a maximum cost per run and the Actor stops when it is reached. Use
 **Maximum results** and the keyword filters to pay only for the jobs you need; jobs removed by a filter are not charged.
 
 ## How to use it
