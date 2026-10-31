@@ -25,9 +25,9 @@ hiring, for which roles, where and for how much.
 - No personal data: names, e-mail addresses and phone numbers are never stored
 - Export to JSON, CSV, Excel or HTML, or connect through the Apify API, integrations and MCP
 
-## What data do you get?
+## Supported job boards
 
-One result per open job. Every job has the same fields; a field a platform does not publish is `null`.
+The ATS Jobs Scraper reads five applicant tracking systems. Mix them freely in one run.
 
 | Platform | Enter | Salary ranges | Company name |
 |---|---|---|---|
@@ -36,6 +36,38 @@ One result per open job. Every job has the same fields; a field a platform does 
 | Ashby | `ashby:ramp` or a `jobs.ashbyhq.com` URL | Where shown on the posting | No (use `board_token`) |
 | Workable | `workable:blueground` or an `apply.workable.com/<account>` URL | Not in the public feed | Yes |
 | Personio | `personio:tado` or a `<company>.jobs.personio.com` / `.de` URL | Where published | Yes |
+
+### Greenhouse jobs scraper
+
+Enter a Greenhouse board token such as `airbnb` or `stripe`, or paste any `boards.greenhouse.io` or
+`job-boards.greenhouse.io` link. You get every open job with its departments, offices, full description and, where
+the company publishes pay transparency ranges, the salary range.
+
+### Lever jobs scraper
+
+Enter `lever:<company>` (for example `lever:zoox`) or paste a `jobs.lever.co` link; EU-hosted boards work with
+`lever-eu:<company>`. Lever jobs come with employment type, workplace type and, where published, the salary range.
+
+### Ashby jobs scraper
+
+Enter `ashby:<company>` (for example `ashby:ramp` or `ashby:notion`) or paste a `jobs.ashbyhq.com` link. Ashby is
+popular with fast-growing tech companies, and many of them show a salary range on every posting.
+
+### Workable jobs scraper
+
+Enter `workable:<account>` (for example `workable:blueground`) or paste an `apply.workable.com` link. Workable jobs
+come with the company name, location, department and full description.
+
+### Personio jobs scraper
+
+Enter `personio:<company>` (for example `personio:tado`) or paste a `jobs.personio.com` or `jobs.personio.de` link.
+Personio is widely used by European small and mid-sized companies, and its feed includes salary ranges where
+published.
+
+## What data do you get?
+
+One result per open job. Every job has the same fields, whichever job board it comes from; a field a platform does
+not publish is `null`.
 
 | Field | Description |
 |---|---|
@@ -77,7 +109,7 @@ Apify account. Runs with the same boards and keywords share that memory, or give
 memory while you add or remove boards. A run that stops early (at **Maximum results** or your spending limit) keeps the
 jobs it did not reach for the next run.
 
-## How much does it cost?
+## How much does it cost to scrape Greenhouse, Lever, Ashby, Workable and Personio jobs?
 
 You pay per result: $1.60 per 1,000 jobs, plus a small fee per run that Apify sets. A run of 1,000 jobs costs about
 $1.60, whichever platform they come from. Set a maximum cost per run and the Actor stops when it is reached. Use
@@ -185,6 +217,14 @@ Call the Actor from your code with the [Apify API](https://docs.apify.com/api/v2
 [Apify's MCP server](https://mcp.apify.com). A typical automated use is a daily scheduled run over a list of
 companies on all five platforms that feeds new `job_id`s into a job board, a CRM, a salary benchmark or a hiring-signals
 dashboard.
+
+For AI agents there is a dedicated server: the [ATS Jobs MCP Server](https://apify.com/guayox/ats-jobs-mcp-server) gives Claude, Cursor and other
+MCP clients two tools, one that finds which job board a company uses and one that searches its open jobs.
+
+## Related Actors
+
+- [ATS Jobs MCP Server](https://apify.com/guayox/ats-jobs-mcp-server): the same five job boards as tools for AI agents. Ask "is Notion hiring
+  designers?" and the agent finds the board and the jobs, with salary ranges.
 
 ## FAQ
 

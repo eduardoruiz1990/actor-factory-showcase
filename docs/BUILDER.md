@@ -33,6 +33,8 @@ You are building one paid Actor for the Apify Store, in a GitHub Actions run sta
 6. **`.actor/pricing.json`**: set `pricePer1000Usd` on `apify-default-dataset-item` to the price in the brief. Results are charged per item pushed to the dataset; add no other per-result event.
 7. **`.actor/listing.json`**: one or two Store categories, an SEO title of at most 60 characters, and an SEO description of at most 155.
 8. **`README.md`**: fill in every TODO of the Store README skeleton, in the same section order.
+   - Write headings people search for (H2 and H3 can show in Google results): the source's name plus "scraper" or "API", and the price as a question, for example "How much does it cost to scrape Greenhouse jobs?". Put the main keyword in the first paragraph and repeat the Actor's name a few times.
+   - Under **Related Actors**, link the factory's other Actors in the same category or for the same users (`apify.com/<owner>/<name>`). Apify recommends Actors within a category, so linked Actors lift each other.
    - Name the source, and link the terms the brief cites. If the brief says the owner reviewed the terms (`terms-reviewed`), link them and describe the use plainly, without claiming the terms explicitly allow it.
    - Give real input and output examples.
    - State the price.
