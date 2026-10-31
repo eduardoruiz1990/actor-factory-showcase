@@ -5,7 +5,8 @@
 
 The listing step sets the Actor's Store listing (title, description, SEO text,
 categories) from actor.json and listing.json through the Apify API; `apify push`
-does not. Then it asks whether the Actor is already public. If it is, nothing is
+does not. It creates or updates the saved tasks in tasks.json, and publishes
+those marked `publish`. Then it asks whether the Actor is already public. If it is, nothing is
 opened: the push was an update. Otherwise it opens (or updates) the issue
 "Publish <name>" with the listing text and pricing to enter.
 """
@@ -20,6 +21,7 @@ from factory.common.config import REPO_ROOT, load_config
 from factory.common.github import GitHubClient
 from factory.common.http import PoliteClient
 from factory.publisher.listing import changed_actors, load_actor, render_listing, store_fields
+from factory.publisher.tasks import load_tasks, sync_tasks
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -61,7 +63,11 @@ def main(argv: list[str] | None = None) -> int:
             print(f"::warning title=Publisher::{args.name}: {category} is not an Apify Store category; left out")
         sync_listing(http, url, token, fields)
         detail = http.get(url, headers={"Authorization": f"Bearer {token}"})
-        if detail.status_code == 200 and (detail.json().get("data") or {}).get("isPublic"):
+        actor = (detail.json().get("data") or {}) if detail.status_code == 200 else {}
+        tasks = load_tasks(REPO_ROOT / "actors" / args.name)
+        if tasks and actor.get("id"):
+            sync_tasks(http, config["apify"]["api_base"], owner, actor["id"], bool(actor.get("isPublic")), tasks, token)
+        if actor.get("isPublic"):
             print(f"{args.name} is already public; no publish issue needed.")
             return 0
         github = GitHubClient.from_env(http)
