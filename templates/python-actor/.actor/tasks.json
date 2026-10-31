@@ -1,0 +1,4 @@
+{
+    "_comment": "Actor Factory convention, not read by Apify. Ready-made inputs users run in one click; the Publisher creates them and publishes those with \"publish\": true. See actors/greenhouse-jobs-scraper/.actor/tasks.json for a complete example. Task names: 3-63 characters, lower case, digits and hyphens.",
+    "tasks": []
+}

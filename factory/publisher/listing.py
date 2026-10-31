@@ -45,6 +45,27 @@ def store_fields(data: dict[str, Any], known_categories: list[str]) -> tuple[dic
     return fields, unknown
 
 
+def render_published(name: str, owner: str, data: dict[str, Any], result: Any, tasks: int) -> str:
+    """The issue body after the Publisher published a new Actor on its own: what is live, and the one step left."""
+    event = data["pricing"]["events"]["apify-default-dataset-item"]
+    store = f"https://apify.com/{owner}/{name}"
+    return "\n".join([
+        f"<!-- factory:publisher {name} -->",
+        f"## ✅ `{name}` is live on Apify Store",
+        "",
+        f"- Store page: {store}",
+        f"- Price: ${float(event['pricePer1000Usd']):.2f} per 1,000 results, with Bronze, Silver and Gold discounts",
+        f"- Test run with the default input: [{result.results} results]({result.run_url})",
+        f"- Published tasks: {tasks}",
+        "- Title, description, SEO text and categories: set from the repository",
+        "",
+        "**One step left:** upload the Actor's icon in Apify Console (Publishing → Display information → logo). "
+        "Apify's API does not accept icons. Ask Claude Code for one if you don't have it.",
+        "",
+        "Close this issue once the icon is uploaded.",
+    ]) + "\n"
+
+
 def render_listing(name: str, owner: str, data: dict[str, Any], build_url: str | None = None) -> str:
     actor, pricing, listing = data["actor"], data["pricing"], data["listing"]
     title = actor.get("title") or name

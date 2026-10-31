@@ -1,5 +1,6 @@
 {
-    "_comment": "Actor Factory convention, not read by Apify. The owner enters these values once in Apify Console > Actor > Publishing > Monetization; the Publisher prints them. Results are charged with Apify's synthetic per-item event, so keep no other per-result event.",
+    "_comment": "Actor Factory convention, not read by Apify. After the owner merges, the Publisher creates this pricing on Apify while the Actor is private, with Bronze/Silver/Gold discounts from config.yaml unless tiersPer1000Usd is set, and later only ever lowers it. Results are charged with Apify's synthetic per-item event, so keep no other per-result event.",
+    "managedByPublisher": true,
     "pricingModel": "PAY_PER_EVENT",
     "events": {
         "apify-default-dataset-item": {
