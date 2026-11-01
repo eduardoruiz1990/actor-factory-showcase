@@ -22,7 +22,7 @@
                 ],
                 "onlyNew": true,
                 "includeContent": true,
-                "maxResults": 1000
+                "maxResults": 3000
             },
             "publish": true,
             "publicConfig": {
@@ -101,7 +101,7 @@
                 "onlyNew": true,
                 "reportRemoved": true,
                 "includeContent": false,
-                "maxResults": 1000
+                "maxResults": 3000
             },
             "publish": true,
             "publicConfig": {
