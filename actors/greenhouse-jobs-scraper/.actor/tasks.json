@@ -78,6 +78,45 @@
                 ],
                 "datasetView": "overview"
             }
+        },
+        {
+            "name": "new-and-closed-tech-jobs",
+            "title": "New and closed jobs at top tech companies (hiring signals)",
+            "description": "Every job newly posted, and every job filled or closed, at 12 tech companies on Greenhouse, Lever, Ashby, Workable and Personio. Schedule it daily or weekly: each run returns only the changes since the last run, marked new or removed.",
+            "input": {
+                "boardTokens": [
+                    "airbnb",
+                    "stripe",
+                    "discord",
+                    "lever:zoox",
+                    "lever:spotify",
+                    "ashby:notion",
+                    "ashby:ramp",
+                    "ashby:warp",
+                    "workable:huggingface",
+                    "workable:blueground",
+                    "personio:ottonova",
+                    "personio:tado"
+                ],
+                "onlyNew": true,
+                "reportRemoved": true,
+                "includeContent": false,
+                "maxResults": 1000
+            },
+            "publish": true,
+            "publicConfig": {
+                "seoTitle": "New and closed tech jobs: hiring signals feed",
+                "seoDescription": "Daily feed of jobs opened and jobs filled or closed at 12 tech companies on Greenhouse, Lever, Ashby, Workable and Personio. A hiring-signal tracker.",
+                "inputSchemaFields": [
+                    "boardTokens",
+                    "onlyNew",
+                    "reportRemoved",
+                    "titleKeywords",
+                    "locationKeywords",
+                    "maxResults"
+                ],
+                "datasetView": "changes"
+            }
         }
     ]
 }

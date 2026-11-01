@@ -50,6 +50,12 @@
             "description": "Return, and charge for, only jobs that earlier runs with the same boards and keywords have not returned yet. Turn it on and schedule the Actor (for example daily) to get a feed of newly posted jobs; a run with no new jobs charges no results. The first run returns every open job.",
             "default": false
         },
+        "reportRemoved": {
+            "title": "Report removed jobs",
+            "type": "boolean",
+            "description": "Also return the jobs that earlier runs with the same boards and keywords returned and that are no longer listed: filled, closed or taken down. Each comes once, marked change \"removed\", with its title, company, location and link, and counts as one result. Every job is marked \"new\" or \"open\" too. A board that fails to load in a run keeps its jobs, so it never reports false closures.",
+            "default": false
+        },
         "monitorName": {
             "title": "Monitor name",
             "type": "string",

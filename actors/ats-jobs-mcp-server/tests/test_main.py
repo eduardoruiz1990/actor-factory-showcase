@@ -24,10 +24,10 @@ PRICING = {
 }
 
 
-def run(storage, n, max_results=100, only_new=False, **env):
-    tokens = ['blocked-5', f'acme-{n}', 'missing']
+def run(storage, n=0, max_results=100, only_new=False, report_removed=False, tokens=None, **env):
+    tokens = tokens or ['blocked-5', f'acme-{n}', 'missing']
     settings = {'board_tokens': tokens, 'max_results': max_results, 'max_requests_per_second': 1,
-                'only_new': only_new, 'state_key': 'test-search'}
+                'only_new': only_new, 'report_removed': report_removed, 'state_key': 'test-search'}
     clean_env = {k: v for k, v in os.environ.items() if not k.startswith(('APIFY_', 'ACTOR_', 'CRAWLEE_'))}
     clean_env.update(APIFY_LOCAL_STORAGE_DIR=str(storage), CRAWLEE_STORAGE_DIR=str(storage), **env)
     done = subprocess.run([sys.executable, '-m', 'tests.local_run', json.dumps(settings)], cwd=ROOT, env=clean_env,
@@ -71,6 +71,50 @@ def test_only_new_returns_each_job_once_across_scheduled_runs(tmp_path):
     assert run(tmp_path, 3) == 3
 
 
+def test_report_removed_returns_jobs_that_are_no_longer_listed_once(tmp_path):
+    feed = {'tokens': ['team'], 'only_new': True, 'report_removed': True}
+    assert run(tmp_path, **feed, TEAM_JOBS='1,2,3') == 3
+    assert {i['change'] for i in dataset_items(tmp_path)} == {'new'}
+    assert run(tmp_path, **feed, TEAM_JOBS='1,3,4') == 2  # job 4 is new, job 2 was filled or closed
+    new, gone = dataset_items(tmp_path)
+    assert (new['title'], new['change']) == ('Engineer 4', 'new')
+    assert gone['change'] == 'removed' and gone['job_id'] == 2 and gone['title'] == 'Engineer 2'
+    assert gone['platform'] == 'greenhouse' and gone['board_token'] == 'team' and gone['company'] == 'Acme'
+    assert gone['absolute_url'] == 'https://boards.greenhouse.io/team/jobs/2' and gone['fetched_at']
+    assert run(tmp_path, **feed, TEAM_JOBS='1,3,4') == 0  # reported once, then forgotten
+
+
+def test_report_removed_without_only_new_marks_every_job(tmp_path):
+    assert run(tmp_path, tokens=['team'], report_removed=True, TEAM_JOBS='1,2,3') == 3
+    assert run(tmp_path, tokens=['team'], report_removed=True, TEAM_JOBS='1,2') == 3
+    assert [(i['title'], i['change']) for i in dataset_items(tmp_path)] == [
+        ('Engineer 1', 'open'), ('Engineer 2', 'open'), ('Engineer 3', 'removed')]
+
+
+def test_a_board_that_fails_for_one_run_keeps_its_jobs(tmp_path):
+    feed = {'tokens': ['team', 'flaky'], 'only_new': True, 'report_removed': True}
+    assert run(tmp_path, **feed) == 5
+    assert run(tmp_path, **feed, FLAKY_DOWN='1') == 0  # flaky's jobs are not reported as removed...
+    assert run(tmp_path, **feed) == 0  # ...nor returned and charged again once it is back
+
+
+def test_a_run_stopped_early_reports_no_removed_jobs(tmp_path):
+    feed = {'tokens': ['team'], 'only_new': True, 'report_removed': True}
+    assert run(tmp_path, **feed, TEAM_JOBS='1,2,3') == 3
+    assert run(tmp_path, **feed, max_results=1, TEAM_JOBS='4,5') == 1  # stopped before reading every job
+    assert [i['title'] for i in dataset_items(tmp_path)] == ['Engineer 4']
+    assert run(tmp_path, **feed, TEAM_JOBS='4,5') == 4  # job 5, then 1, 2 and 3 removed
+
+
+def test_memories_from_before_removed_results_still_work():
+    from my_actor.seen import parse_record
+
+    assert parse_record(['greenhouse:team:1', 7]) == {'greenhouse:team:1': {}}
+    assert parse_record({'greenhouse:team:1': {'title': 'Engineer 1'}, 'x': 'bad'}) == {
+        'greenhouse:team:1': {'title': 'Engineer 1'}, 'x': {}}
+    assert parse_record(None) == {}
+
+
 def test_settings_validation():
     with pytest.raises(ValueError, match='boardTokens'):
         Settings.from_input({})
@@ -81,3 +125,4 @@ def test_settings_validation():
     assert s.board_tokens == ['airbnb', 'stripe'] and s.max_requests_per_second == 1.0 and s.max_results == 1000
     assert s.include_content is True and s.title_keywords == ['engineer', 'data'] and s.location_keywords == []
     assert Settings.from_input({'boardTokens': ['a'], 'includeContent': False}).include_content is False
+    assert s.report_removed is False and Settings.from_input({'boardTokens': ['a'], 'reportRemoved': True}).report_removed

@@ -1,5 +1,23 @@
 # Changelog
 
+## 🔔 Jobs Actor: report filled and closed jobs (2026-11-01, branch `removed-jobs`)
+
+- **Why:** the 2026-11-01 Scout found an "Expired Jobs API" whose source failed Legality. Our jobs Actor already remembers what earlier runs returned, so it can report closed jobs from the official feeds. Recruiters, sales teams and investors read that as a hiring signal (Q27).
+- **New input `reportRemoved` (off by default).** Each run also returns the jobs earlier runs returned that are no longer listed, once each, marked `change: "removed"`, with title, company, location, department and link.
+  - Every job is marked `new` or `open`.
+  - A removed job is one result at the usual price; no pricing change.
+- **No false closures.** Removed jobs are reported only by a run that read every board, and only for boards that answered.
+  - **Bug fixed:** with "Only new jobs" on, a board that failed for one run used to have all its jobs returned, and charged, again on the next run.
+- **Memory:** now keeps a short summary per job. Old memories (a plain list of keys) still work.
+- **Output:**
+  - a `change` field;
+  - a "New and removed jobs" dataset view;
+  - a third published task, "New and closed jobs at top tech companies (hiring signals)";
+  - a README section, "How to track filled and closed jobs (hiring signals)".
+- **The MCP Actor** shares the code (`source.py`, `seen.py`, `collect()`), so its normal runs get the option too.
+- **Versions:** jobs Actor 0.6, MCP Actor 0.3.
+- **Tests:** 125 jobs Actor tests and 133 MCP Actor tests (5 new in each): removed jobs reported once, failed boards keep their jobs, runs stopped early report none, old memories.
+
 ## 📉 Scout weekly, 40 niches (2026-11-01, branch `scout-weekly-40`)
 
 - **Why:** three full runs found no buildable niche, so the owner cut the Scout's Claude cost to about a quarter before the January checkpoint (Q26).

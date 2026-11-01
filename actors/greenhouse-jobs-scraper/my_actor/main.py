@@ -4,11 +4,15 @@ Charging uses Apify's synthetic `apify-default-dataset-item` event: every item
 pushed to the default dataset is one charged result, and push_data() stops at
 the user's spending limit. With "Only new results" on, items an earlier run
 with the same input already returned are skipped and not charged (seen.py).
+With "Report removed results" on, a run that read every board also returns the
+items earlier runs returned that are no longer listed, marked change="removed";
+each is one charged result.
 This file rarely needs changes; the niche lives in source.py.
 """
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
 from typing import Any
 
 from apify import Actor, Event
@@ -41,37 +45,68 @@ async def collect(settings: source.Settings, *, http: PoliteClient | None = None
     pay_per_event = Actor.get_charging_manager().get_pricing_info().is_pay_per_event
     removed: set[str] = set()
     pushed = 0
-    seen = await SeenItems.open(settings.state_key) if settings.only_new else None
+    remember = settings.only_new or settings.report_removed
+    seen = await SeenItems.open(settings.state_key) if remember else None
+    read: set[str] = set()  # boards that answered this run
     complete = False
     try:
         robots = RobotsCache(client)
-        async for item in source.iter_items(settings, client, robots):
+        async for item in source.iter_items(settings, client, robots, read):
             key = source.item_key(item)
-            if seen is not None and not seen.is_new(key):
-                continue  # returned by an earlier run: not pushed, not charged
-            result = await Actor.push_data(privacy.clean(item, removed))
-            if pay_per_event and result.charged_count == 0:
-                Actor.log.info('Spending limit reached; stopping.')
-                break  # the item was not stored: the user's spending limit is used up
+            if seen is not None:
+                new = seen.is_new(key)
+                if settings.only_new and not new:
+                    continue  # returned by an earlier run: not pushed, not charged
+                item = {**item, 'change': 'new' if new else 'open'}
+            item = privacy.clean(item, removed)
+            stored, more = await _push(item, pay_per_event)
+            if not stored:
+                break
             pushed += 1
             if seen is not None:
-                seen.pushed(key)
-            if pay_per_event and result.event_charge_limit_reached:
-                Actor.log.info('Spending limit reached; stopping.')
-                break
-            if pushed >= settings.max_results:
+                seen.pushed(key, item)
+            if not more or pushed >= settings.max_results:
                 break
         else:
             complete = True
+        if complete and seen is not None and settings.report_removed:
+            for key, summary in seen.removed(read):
+                stored, more = await _push(privacy.clean(_removed_item(key, summary), removed), pay_per_event)
+                if stored:
+                    pushed += 1
+                    seen.reported(key)
+                if not more:
+                    break
     finally:
         if http is None:
             await client.aclose()
         if seen is not None:
-            await seen.save(complete)
-            Actor.log.info(f'Only new results: skipped {seen.skipped} returned by earlier runs.')
+            await seen.save(read if complete else None)
+            if settings.only_new:
+                Actor.log.info(f'Only new results: skipped {seen.skipped} returned by earlier runs.')
     if removed:
         Actor.log.info(f'Dropped personal-data fields: {", ".join(sorted(removed))}')
     return pushed
+
+
+async def _push(item: dict[str, Any], pay_per_event: bool) -> tuple[bool, bool]:
+    """Store and charge one result: (stored, room for more) under the user's spending limit."""
+    result = await Actor.push_data(item)
+    if pay_per_event and result.charged_count == 0:
+        Actor.log.info('Spending limit reached; stopping.')
+        return False, False  # the item was not stored: the user's spending limit is used up
+    if pay_per_event and result.event_charge_limit_reached:
+        Actor.log.info('Spending limit reached; stopping.')
+        return True, False
+    return True, True
+
+
+def _removed_item(key: str, summary: dict[str, Any]) -> dict[str, Any]:
+    """A result for an item that is no longer listed: its key fields and what the memory kept about it."""
+    platform, board_token, job_id = key.split(':', 2)
+    # summary's job_id keeps the platform's type (Greenhouse IDs are numbers); memories from before it lack one.
+    return {'platform': platform, 'board_token': board_token, 'job_id': job_id, **summary, 'change': 'removed',
+            'fetched_at': datetime.now(UTC).isoformat(timespec='seconds')}
 
 
 async def _on_aborting(_event_data: Any) -> None:
