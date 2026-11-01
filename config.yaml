@@ -30,12 +30,12 @@ http:
   backoff_max_seconds: 60.0
 
 scout:
-  # Each Scout issue (Sundays and Wednesdays, Q20) lists this many niches...
+  # Each Scout issue (Sundays, Q26) lists this many niches...
   candidates_per_week: 20
   # ...chosen from this many: the Validator assesses them all (one Claude call each)
-  # and the issue keeps the best after validation (Q13). Raised from 40 on 2026-10-31: most
-  # niches fail Legality for good, so more assessments mean more chances of a pass (Q22).
-  candidates_to_validate: 80
+  # and the issue keeps the best after validation (Q13). Back to 40 on 2026-11-01: three runs
+  # (the last at 80) found no buildable niche, so the owner cut the cost (Q22, Q26).
+  candidates_to_validate: 40
   # Niches that can never pass, left out before ranking (Q13). A niche is excluded
   # when one of its title keywords is listed (lower case; plurals match the singular),
   # or when its leading Actor is in a listed Store category.

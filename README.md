@@ -4,7 +4,7 @@ Agents that find, build, publish and maintain paid Actors on the [Apify Store](h
 
 | Agent | When | Status |
 |---|---|---|
-| Scout | Sundays and Wednesdays: reads the Apify Store and Ideas page, opens an issue with 20 candidate niches (Q20) | Phase 1 ✅ |
+| Scout | Sundays: reads the Apify Store and Ideas page, opens an issue with 20 candidate niches (Q20, Q26) | Phase 1 ✅ |
 | Validator | After each Scout run: scores every candidate on five checks with `claude-sonnet-5-5` and posts a brief | Phase 1 ✅ |
 | Builder | `go` label + `/build <niche-id>`: the Claude Code GitHub Action opens a pull request with a new Actor | Phase 2: built, waiting for a passing niche |
 | Publisher | Merge to `main`: `apify push` and Store listing text | Phase 2: built |

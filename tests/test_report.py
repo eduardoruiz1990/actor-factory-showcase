@@ -17,7 +17,7 @@ def table_rows(body):
 
 
 def test_title_is_named_by_the_run_date(result, config, as_of):
-    # Two runs a week can fall in one ISO week (Wednesday and the next Sunday), so the date names the issue.
+    # A manual run and the Sunday run can fall in one ISO week, so the date names the issue.
     assert run_key(as_of) == "2026-10-24"
     assert issue_title(result, config) == "Scout 2026-10-24: 20 candidate niches"
 

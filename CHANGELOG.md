@@ -1,5 +1,13 @@
 # Changelog
 
+## 📉 Scout weekly, 40 niches (2026-11-01, branch `scout-weekly-40`)
+
+- **Why:** three full runs found no buildable niche, so the owner cut the Scout's Claude cost to about a quarter before the January checkpoint (Q26).
+- **Changes:**
+  - `scout.yml` runs on Sundays only.
+  - `scout.candidates_to_validate` goes back from 80 to 40.
+  - README, CLAUDE.md, QUESTIONS (Q20, Q22, new Q26) say so.
+
 ## 🎯 MCP server: CV matching and a use-case listing (2026-10-31, branch `mcp-skills-use-cases`)
 
 - **Why:** CV-to-jobs matching is a real need, but as a separate Actor it would have almost no buyers. The five Store Actors that do it have at most 4 monthly users, and job seekers use free consumer apps. Through our MCP server, the user's own AI assistant reads the CV and does the matching on its own subscription. We pay no AI cost and charge per job returned.

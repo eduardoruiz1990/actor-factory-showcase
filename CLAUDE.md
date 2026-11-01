@@ -14,7 +14,7 @@ The Actor Factory: agents that find, build, publish and maintain paid Actors on 
 
 ```
 factory/common/     config loader, PoliteClient (rate limit + retries), GitHub client
-factory/scout/      twice-weekly Store + Ideas scan -> 20 candidate niches -> one issue per run (Q20)
+factory/scout/      weekly Store + Ideas scan -> 20 candidate niches -> one issue per run (Q20, Q26)
 factory/validator/  five checks per candidate (claude-sonnet-5-5 + code rules) -> brief comment
 factory/builder/    prepares a build brief (refuses non-passing niches) and checks a Builder PR's scope
 factory/publisher/  after a merge: deploys changed Actors, syncs listing, pricing (only downwards) and tasks, and publishes new Actors after a passing test run (Q25)
@@ -25,7 +25,7 @@ templates/python-actor/  the Actor template every build starts from (official Ap
 actors/<name>/      one folder per Actor, built by the Builder
 tests/              pytest suite; tests/fixtures/ holds saved sample responses
 config.yaml         every threshold the agents apply
-.github/workflows/  scout.yml (Sundays and Wednesdays), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher); watcher.yml and digest.yml come in later phases
+.github/workflows/  scout.yml (Sundays), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher); watcher.yml and digest.yml come in later phases
 docs/BUILDER.md     what every Actor build must deliver (the Builder's definition of done)
 ```
 
