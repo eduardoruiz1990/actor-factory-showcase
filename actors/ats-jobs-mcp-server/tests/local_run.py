@@ -3,12 +3,15 @@
 The Apify SDK keeps its configuration and storage settings for the life of the
 process, so every end-to-end test runs in its own interpreter, like a real run.
 A board token 'acme-3' gets three jobs; 'blocked' is disallowed by robots.txt;
-any other token is an unknown board (HTTP 404).
+'team' has the jobs numbered in $TEAM_JOBS (default 1,2,3); 'flaky' has jobs 1
+and 2 but answers HTTP 500 while $FLAKY_DOWN is set; any other token is an
+unknown board (HTTP 404).
 Usage: python -m tests.local_run '<settings json>'  -> prints {"pushed": n}
 """
 
 import asyncio
 import json
+import os
 import re
 import sys
 
@@ -35,6 +38,13 @@ def job(token: str, n: int) -> dict:
 def api(request: httpx2.Request) -> httpx2.Response:
     if request.url.path == '/robots.txt':
         return httpx2.Response(200, text='User-agent: *\nDisallow: /v1/boards/blocked\n')
+    if request.url.path == '/v1/boards/team/jobs':
+        numbers = [int(n) for n in os.environ.get('TEAM_JOBS', '1,2,3').split(',') if n]
+        return httpx2.Response(200, json={'jobs': [job('team', n) for n in numbers], 'meta': {'total': len(numbers)}})
+    if request.url.path == '/v1/boards/flaky/jobs':
+        if os.environ.get('FLAKY_DOWN'):
+            return httpx2.Response(500, text='Internal Server Error')
+        return httpx2.Response(200, json={'jobs': [job('flaky', n) for n in (1, 2)], 'meta': {'total': 2}})
     match = re.fullmatch(r'/v1/boards/([^/]+)-(\d+)/jobs', request.url.path)
     if not match:
         return httpx2.Response(404, json={'status': 404, 'error': 'Job not found'})

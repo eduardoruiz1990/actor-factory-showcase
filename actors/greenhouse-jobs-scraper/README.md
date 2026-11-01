@@ -21,6 +21,7 @@ hiring, for which roles, where and for how much.
 - Filter by title keywords (for example "engineer", "data") and location keywords (for example "Remote", "London")
 - Turn descriptions off for a fast, light list of titles, locations and links
 - **Get only new jobs:** schedule it daily with **Only new jobs** on, and each run returns and charges only jobs posted since the last run
+- **Track filled and closed jobs:** with **Report removed jobs** on, each run also returns the jobs taken down since the last run, a hiring signal for recruiters, sales teams and investors
 - Skip unknown boards and bad responses with a clear log message, and carry on with the rest
 - Polite by design: it respects robots.txt and rate limits, and retries with back-off
 - No personal data: names, e-mail addresses and phone numbers are never stored
@@ -103,6 +104,7 @@ not publish is `null`.
 | `salary_currency` | For example `USD` |
 | `salary_interval` | `per-year-salary`, `per-month-salary`, `per-hour-wage` and so on, or `null` when the board does not say |
 | `fetched_at` | When the Actor read the job (UTC) |
+| `change` | With **Only new jobs** or **Report removed jobs** on: `new`, `open` (returned before, still listed) or `removed` (no longer listed) |
 
 With **Include full job descriptions** off, `content` and `content_text` are empty (and, on Greenhouse, the
 departments and offices too). The Actor does not return the companies' custom application questions or custom
@@ -117,12 +119,27 @@ Apify account. Runs with the same boards and keywords share that memory, or give
 memory while you add or remove boards. A run that stops early (at **Maximum results** or your spending limit) keeps the
 jobs it did not reach for the next run.
 
+## How to track filled and closed jobs (hiring signals)
+
+Turn on **Report removed jobs** as well, and each scheduled run also returns the jobs that were listed last time and
+are gone now: filled, closed or taken down. Each removed job comes once, marked `"change": "removed"`, with its title,
+company, location, department and link. Open the **New and removed jobs** view to see both lists side by side.
+
+- **Recruiters and agencies:** see which roles a client or competitor just filled, and which stay open for weeks.
+- **Sales and growth teams:** a new opening is a buying signal; a role that closes fast says the team is growing.
+- **Investors and analysts:** follow hiring momentum at the companies you watch, team by team.
+
+A removed job counts as one result, like a new one. Only a run that reads every board reports removed jobs, and a
+board that fails to load in a run keeps its jobs, so a hiccup on a platform never shows up as closures. Without
+**Only new jobs**, every run returns all open jobs marked `new` or `open`, plus the removed ones.
+
 ## How much does it cost to scrape Greenhouse, Lever, Ashby, Workable and Personio jobs?
 
 You pay per result: $0.99 per 1,000 jobs, plus a small fee per run that Apify sets. On Apify's paid plans it is
 cheaper: $0.89 (Bronze), $0.79 (Silver) or $0.69 (Gold) per 1,000. A run of 1,000 jobs costs about $0.99, whichever
 platform they come from. Set a maximum cost per run and the Actor stops when it is reached. Use
 **Maximum results** and the keyword filters to pay only for the jobs you need; jobs removed by a filter are not charged.
+With **Report removed jobs** on, each job reported as filled or closed is one result too.
 
 ## How to use it
 
@@ -139,6 +156,8 @@ platform they come from. Set a maximum cost per run and the Actor stops when it 
 - **Title keywords** (`titleKeywords`): keep jobs whose title contains any of these words.
 - **Location keywords** (`locationKeywords`): keep jobs whose location or office contains any of these words.
 - **Only new jobs** (`onlyNew`, default `false`): return only jobs earlier runs with the same search did not return.
+- **Report removed jobs** (`reportRemoved`, default `false`): also return jobs earlier runs returned that are no
+  longer listed, marked `removed`.
 - **Monitor name** (`monitorName`): optional name that keeps one memory of returned jobs across input changes.
 - **Maximum results** (`maxResults`, default 1,000): stop after this many jobs.
 - **Maximum requests per second** (`maxRequestsPerSecond`, default and maximum 1): polite rate limit.

@@ -268,3 +268,13 @@ Three full runs found no buildable niche: 2026-10-25, 2026-10-30 (40 assessed) a
 - `scout.yml` runs on Sundays at 05:17 UTC. GitHub may start a scheduled run hours late, or skip it on a busy day; the Actions tab can start one by hand (**Run workflow**).
 - `scout.candidates_to_validate: 40`. The pools (`details.niche_pool` 100, `store_search.pool` 250) stay, so the order check still holds.
 - `scout.history.skip_assessed_days` stays at 28: four weekly runs of new niches before one comes back.
+
+### Q27. Reporting removed jobs (decided 2026-11-01: opt-in, charged as results)
+
+The owner asked for a feature that reports jobs that disappeared since the last run, after the 2026-11-01 Scout found an "Expired Jobs API" with users but a source that failed Legality. Open questions and the conservative choices made:
+
+- **Opt-in.** The input `reportRemoved` is off by default, so no existing run or schedule changes what it returns or costs.
+- **Charged as results.** Each removed job is one dataset item, charged with the existing `apify-default-dataset-item` event at the same price. Nothing is added to the pricing, so it is not a pricing change on Apify. The input description, the README and the pricing section say so.
+- **No false closures.** Removed jobs are reported only by a run that read every board, and only for boards that answered in that run. A board that fails keeps its jobs in the memory. This also fixes an older bug: with "Only new jobs" on, a board that failed for one run had its jobs returned, and charged, again on the next run.
+- **Filters.** A job whose title or location no longer matches the keywords counts as removed, because the memory follows the search. The README describes removed jobs as "no longer listed" for the search.
+- **Old memories.** Records written before this change (a list of keys) still work. Jobs removed from them have no title or link, only platform, board and job ID.

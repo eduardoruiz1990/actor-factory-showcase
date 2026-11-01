@@ -152,6 +152,18 @@
             },
             "fetched_at": {
                 "type": "string"
+            },
+            "change": {
+                "type": [
+                    "string",
+                    "null"
+                ],
+                "enum": [
+                    "new",
+                    "open",
+                    "removed",
+                    null
+                ]
             }
         },
         "required": [
@@ -224,6 +236,58 @@
                     },
                     "first_published": {
                         "label": "First published",
+                        "format": "date"
+                    }
+                }
+            }
+        },
+        "changes": {
+            "title": "New and removed jobs",
+            "transformation": {
+                "fields": [
+                    "change",
+                    "company",
+                    "board_token",
+                    "title",
+                    "location",
+                    "department",
+                    "absolute_url",
+                    "fetched_at"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "change": {
+                        "label": "Change",
+                        "format": "text"
+                    },
+                    "company": {
+                        "label": "Company",
+                        "format": "text"
+                    },
+                    "board_token": {
+                        "label": "Board",
+                        "format": "text"
+                    },
+                    "title": {
+                        "label": "Job title",
+                        "format": "text"
+                    },
+                    "location": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "department": {
+                        "label": "Department",
+                        "format": "text"
+                    },
+                    "absolute_url": {
+                        "label": "Job URL",
+                        "format": "link"
+                    },
+                    "fetched_at": {
+                        "label": "Seen",
                         "format": "date"
                     }
                 }

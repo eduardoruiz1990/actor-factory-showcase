@@ -58,7 +58,8 @@ class Settings:
     title_keywords: list[str] = field(default_factory=list)
     location_keywords: list[str] = field(default_factory=list)
     only_new: bool = False
-    state_key: str = ''  # which earlier runs count as "the same search" for only_new
+    report_removed: bool = False
+    state_key: str = ''  # which earlier runs count as "the same search" for only_new and report_removed
 
     @classmethod
     def from_input(cls, actor_input: dict[str, Any]) -> Settings:
@@ -86,6 +87,7 @@ class Settings:
             title_keywords=title_keywords,
             location_keywords=location_keywords,
             only_new=actor_input.get('onlyNew') is True,
+            report_removed=actor_input.get('reportRemoved') is True,
             state_key=state_key(identity),
         )
 
@@ -93,6 +95,12 @@ class Settings:
 def item_key(item: dict[str, Any]) -> str:
     """The same job in every run gets the same key: platform, board and the platform's job ID."""
     return f"{item['platform']}:{item['board_token']}:{item['job_id']}"
+
+
+def board_of(key: str) -> str:
+    """An input board ('airbnb', 'lever-eu:zoox') named as its jobs' keys start: '<platform>:<board_token>'."""
+    platform, _, site = key.rpartition(':')
+    return f"{'lever' if platform in LEVER_API else platform or 'greenhouse'}:{site}"
 
 
 def _board_entries(value: Any) -> list[Any]:
@@ -191,7 +199,10 @@ def _keywords(value: Any) -> list[str]:
     return [k.strip().lower() for k in value if isinstance(k, str) and k.strip()]
 
 
-async def iter_items(settings: Settings, http: PoliteClient, robots: RobotsCache) -> AsyncIterator[dict[str, Any]]:
+async def iter_items(
+    settings: Settings, http: PoliteClient, robots: RobotsCache, read: set[str] | None = None
+) -> AsyncIterator[dict[str, Any]]:
+    """Every matching job; `read` collects the boards that answered (board_of), so a failed board's jobs are not gone."""
     for key in settings.board_tokens:
         platform, _, site = key.rpartition(':')
         if platform in LEVER_API:
@@ -213,6 +224,8 @@ async def iter_items(settings: Settings, http: PoliteClient, robots: RobotsCache
                 company = await board_name(key, http, robots)
                 for job in jobs:
                     job['company'] = job['company'] or company
+        if jobs is not None and read is not None:
+            read.add(board_of(key))
         for job in jobs or []:
             if matches(job, settings):
                 yield job
