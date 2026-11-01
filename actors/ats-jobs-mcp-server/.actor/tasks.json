@@ -1,0 +1,40 @@
+{
+    "_comment": "Actor Factory convention, not read by Apify. After each deploy the Publisher creates or updates these saved tasks through the Apify API and publishes those with \"publish\": true (factory/publisher/tasks.py). Task names: 3-63 characters, lower case, digits and hyphens. An Actor can have up to 10 published tasks.",
+    "tasks": [
+        {
+            "name": "tech-jobs-and-salaries-snapshot",
+            "title": "Open jobs and salaries at 12 tech companies",
+            "description": "A one-off list of every open job at Airbnb, Stripe, Discord, Zoox, Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, ottonova and tado, with salary ranges where published. The same data the MCP server gives AI agents, as a normal run you can export to JSON, CSV or Excel.",
+            "input": {
+                "boardTokens": [
+                    "airbnb",
+                    "stripe",
+                    "discord",
+                    "lever:zoox",
+                    "lever:spotify",
+                    "ashby:notion",
+                    "ashby:ramp",
+                    "ashby:warp",
+                    "workable:huggingface",
+                    "workable:blueground",
+                    "personio:ottonova",
+                    "personio:tado"
+                ],
+                "includeContent": false,
+                "maxResults": 1000
+            },
+            "publish": true,
+            "publicConfig": {
+                "seoTitle": "Open tech jobs and salaries from 12 company boards",
+                "seoDescription": "Every open job at 12 tech companies on Greenhouse, Lever, Ashby, Workable and Personio, with salary ranges where published. Export to JSON, CSV or Excel.",
+                "inputSchemaFields": [
+                    "boardTokens",
+                    "titleKeywords",
+                    "locationKeywords",
+                    "maxResults"
+                ],
+                "datasetView": "overview"
+            }
+        }
+    ]
+}

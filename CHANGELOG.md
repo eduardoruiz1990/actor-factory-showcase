@@ -1,5 +1,16 @@
 # Changelog
 
+## 🧩 MCP Actor: a published task, and what its health warning means (2026-11-01, branch `mcp-task`)
+
+- **Why:** the MCP Actor's quality score is 68, against 82 for the jobs Actor. Insights flagged "Publish a task", "Fix Actor health issues" and "Grow your user base".
+- **Task:** `tasks.json` adds "Open jobs and salaries at 12 tech companies", a normal run of the same five ATS feeds. The Publisher creates and publishes it after the deploy. The README points to it.
+- **Health warning: no code change.**
+  - The Debugging tab shows no user runs, and the owner's only run succeeded.
+  - Apify's daily test skips Actors with Standby enabled and those in the MCP servers category, so there was no test run either.
+  - The Store's 0.0% success rate and the warning therefore had no runs to measure; they should clear once real users run the Actor successfully.
+  - `docs/seo/ats-jobs-mcp-server.md` records this in its baseline row.
+- **"Grow your user base"** asks for promotion in communities, which is outreach; the factory does none.
+
 ## 🔔 Jobs Actor: report filled and closed jobs (2026-11-01, branch `removed-jobs`)
 
 - **Why:** the 2026-11-01 Scout found an "Expired Jobs API" whose source failed Legality. Our jobs Actor already remembers what earlier runs returned, so it can report closed jobs from the official feeds. Recruiters, sales teams and investors read that as a hiring signal (Q27).

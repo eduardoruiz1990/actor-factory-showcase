@@ -68,7 +68,8 @@ claude mcp add --transport http ats-jobs https://<your-apify-username>--ats-jobs
 `Authorization: Bearer <your-apify-token>`.
 
 You can also run the Actor normally from Apify Console or the API. A normal run reads the job boards in its input
-(for example `["airbnb", "lever:zoox", "ashby:warp"]`) and writes every open job to its dataset.
+(for example `["airbnb", "lever:zoox", "ashby:warp"]`) and writes every open job to its dataset. The ready-made task
+**Open jobs and salaries at 12 tech companies** on the Actor's page runs one with a single click.
 
 ## How much does the Job Search MCP Server cost?
 
