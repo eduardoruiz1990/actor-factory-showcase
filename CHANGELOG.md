@@ -1,5 +1,11 @@
 # Changelog
 
+## 📏 Tasks no longer cut off at 1,000 jobs (2026-11-01, branch `task-result-caps`)
+
+- **Why:** the owner ran the MCP Actor's new task and got exactly 1,000 results. The 12 boards have about 1,670 open jobs (Stripe alone has 745), so the run stopped partway through Zoox. Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, ottonova and tado were never read.
+- **Tasks:** "Maximum results" goes from 1,000 to 3,000 in the three tasks that promise every job at the 12 companies: daily-new-tech-jobs, new-and-closed-tech-jobs and tech-jobs-and-salaries-snapshot. The filtered remote-engineering task keeps 500.
+- **Both Actors:** a run that hits "Maximum results" now logs a warning that later boards were not read. Its status message ends with "Stopped at Maximum results: raise it to get every job." Before, a capped run looked complete.
+
 ## 🧩 MCP Actor: a published task, and what its health warning means (2026-11-01, branch `mcp-task`)
 
 - **Why:** the MCP Actor's quality score is 68, against 82 for the jobs Actor. Insights flagged "Publish a task", "Fix Actor health issues" and "Grow your user base".

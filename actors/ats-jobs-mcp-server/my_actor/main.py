@@ -43,7 +43,8 @@ async def main() -> None:
             return
 
         pushed = await collect(settings)
-        await Actor.set_status_message(f'Finished: {pushed} result(s).')
+        capped = ' Stopped at Maximum results: raise it to get every job.' if pushed >= settings.max_results else ''
+        await Actor.set_status_message(f'Finished: {pushed} result(s).{capped}')
 
 
 async def collect(settings: source.Settings, *, http: PoliteClient | None = None) -> int:
@@ -74,7 +75,11 @@ async def collect(settings: source.Settings, *, http: PoliteClient | None = None
             pushed += 1
             if seen is not None:
                 seen.pushed(key, item)
-            if not more or pushed >= settings.max_results:
+            if not more:
+                break
+            if pushed >= settings.max_results:
+                Actor.log.warning(f'Stopped at Maximum results ({settings.max_results}): the rest of this board and '
+                                  'the boards after it were not read. Raise Maximum results to get every job.')
                 break
         else:
             complete = True

@@ -21,7 +21,7 @@
                     "personio:tado"
                 ],
                 "includeContent": false,
-                "maxResults": 1000
+                "maxResults": 3000
             },
             "publish": true,
             "publicConfig": {
