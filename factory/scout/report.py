@@ -1,4 +1,4 @@
-"""Render the Scout issue (title and Markdown body); Scout runs twice a week (Q20)."""
+"""Render the Scout issue (title and Markdown body); Scout runs weekly, and on demand (Q26)."""
 
 import json
 from datetime import datetime, timezone

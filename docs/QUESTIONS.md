@@ -160,7 +160,7 @@ Ashby's public job posting API (`api.ashbyhq.com`) answers `/robots.txt` with **
   - **Owner decision on Ashby's terms (2026-10-30):** reviewed and accepted, as a REVIEW-style approval (Q17). Ashby boards were added to the Greenhouse & Lever Actor. As conservative limits, the Actor returns a salary only when the company shows pay on its posting (`shouldDisplayCompensationOnJobPostings`), and it leaves out jobs marked `isListed: false`.
 
 
-### Q20. Crowded niches, generic tools and a twice-weekly Scout (resolved 2026-10-30: owner approved)
+### Q20. Crowded niches, generic tools and a twice-weekly Scout (resolved 2026-10-30: owner approved; weekly again from 2026-11-01, Q26)
 
 Five days after launch, `guayox/greenhouse-jobs-scraper` had no users outside the owner. It ranked outside the top 100 in Store search for "greenhouse", "greenhouse jobs" and "lever jobs". The W43 Validator had passed Competition because Scout's title clustering found few rivals. The real Store search finds 86 Actors whose title holds "greenhouse" and "job", most of them recent clones with almost no users. A new Actor in such a niche is buried. W43 also spent many of its 40 assessments on generic tools (integrations, downloaders, bypassers, runners) that have no single target site, so they can never get past Legality.
 
@@ -199,7 +199,7 @@ Five platforms were checked on 2026-10-31:
 
 Workable's and Personio's docs describe these feeds for publishing a company's own jobs, and say nothing either way about third-party use. The owner reviewed this and approved both on 2026-10-31, as for Ashby (Q19).
 
-### Q22. Assessing 80 niches per Scout run (resolved 2026-10-31: owner approved)
+### Q22. Assessing 80 niches per Scout run (resolved 2026-10-31: owner approved; back to 40 from 2026-11-01, Q26)
 
 The 2026-10-30 run assessed 40 niches and none passed: 28 failed Legality for a reason no build can fix, and most of the rest had too little demand. Since most failures are legal, the number of passes depends mainly on how many niches are assessed. The owner approved raising `scout.candidates_to_validate` from 40 to 80, with `details.niche_pool` at 100 and `store_search.pool` at 250 to keep the pools in order.
 
@@ -260,3 +260,11 @@ The owner wants new Actors fully set up through the API, so they "virtually don'
 - **Publishing:** the owner's merge is the approval. The Publisher then runs the Actor once with its prefilled input. If that run succeeds with at least one result within `publisher.test_run_timeout_seconds` (300, Apify's daily-test limit), the Publisher makes the Actor public and publishes its tasks. It never publishes an Actor without pay-per-event pricing, so nothing goes public free. Any failure leaves the Actor private and opens a "Publish <name>" issue with the reason and the run link.
 - **Turn it off:** set `publisher.auto_publish: false`.
 - **Still manual:** the Store icon, because Apify's API does not accept one. The "is live" issue reminds the owner.
+
+### Q26. A weekly Scout of 40 niches (resolved 2026-11-01: owner approved)
+
+Three full runs found no buildable niche: 2026-10-25, 2026-10-30 (40 assessed) and 2026-11-01 (80 assessed). Each run skips niches already assessed or blocked, so later runs reach weaker ones. The 2026-11-01 run used about 3.7 million input tokens (almost all cached), 96,000 output tokens and 87 web searches. Asked to cut the cost before the January checkpoint, the owner chose a weekly run of 40.
+
+- `scout.yml` runs on Sundays at 05:17 UTC. GitHub may start a scheduled run hours late, or skip it on a busy day; the Actions tab can start one by hand (**Run workflow**).
+- `scout.candidates_to_validate: 40`. The pools (`details.niche_pool` 100, `store_search.pool` 250) stay, so the order check still holds.
+- `scout.history.skip_assessed_days` stays at 28: four weekly runs of new niches before one comes back.
