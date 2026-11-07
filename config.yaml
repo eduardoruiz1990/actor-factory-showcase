@@ -242,6 +242,15 @@ publisher:
 watcher:
   # Phase 3: open a "broken" issue when the 24-hour failure rate passes this.
   broken_failure_rate_24h_above: 0.10
+  # On-demand live check of the deployed MCP Actor (.github/workflows/mcp-check.yml).
+  mcp_check:
+    actor: "ats-jobs-mcp-server"
+    # A Standby run can take a while to start on the first request.
+    timeout_seconds: 300
+    tools: ["find_job_board", "search_jobs"]
+    # Name -> the board it must resolve to. Ramp also has a one-job Greenhouse board under its name.
+    board_checks: {notion: "ashby:notion", ramp: "ashby:ramp"}
+    paid_board: "ashby:notion"
 
 github:
   scout_label: "scout"

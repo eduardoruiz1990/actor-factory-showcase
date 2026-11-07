@@ -1,5 +1,18 @@
 # Changelog
 
+## 🔌 MCP live check (2026-11-07, branch `mcp-live-check`)
+
+- **Why:** the MCP Actor's real use has never been tested on Apify. The owner's runs were normal runs, and Apify's daily test skips Standby Actors. The owner asked the factory to test it, and `APIFY_TOKEN` exists only in GitHub Actions secrets.
+- **New `factory/watcher/mcp_check.py` and `mcp-check.yml` (on demand):** connects to the deployed Actor's Standby URL as an MCP client and checks that:
+  - it connects, and lists both tools;
+  - `find_job_board` resolves `notion` to `ashby:notion` and `ramp` to `ashby:ramp`;
+  - `search_jobs` returns and charges exactly one job, so the Standby run's dataset and charging are tested.
+
+  It also reports the newest run as Apify records it (status, origin, build). Any failed check fails the workflow.
+- **Cost:** one job (about $0.002) plus a little platform time for the Standby run, on the owner's account.
+- **Settings:** `watcher.mcp_check` in `config.yaml`.
+- **Tests:** 8 new tests against a fake server. The client also passed against the real MCP server code running locally, using live job feeds, with charging faked.
+
 ## 🎯 MCP server: a company name finds the right board (2026-11-07, branch `mcp-pick-right-board`)
 
 - **Bug:** for a plain company name, the server stopped at the first platform with any open jobs, and Greenhouse is tried first. Live on 2026-11-07:
