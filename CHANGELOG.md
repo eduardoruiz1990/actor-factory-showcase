@@ -1,5 +1,17 @@
 # Changelog
 
+## 🎯 MCP server: a company name finds the right board (2026-11-07, branch `mcp-pick-right-board`)
+
+- **Bug:** for a plain company name, the server stopped at the first platform with any open jobs, and Greenhouse is tried first. Live on 2026-11-07:
+  - "ramp" returned one job, "Copy of Chief Legal Officer", from a Greenhouse board named RAMP, while the Ashby board has 171;
+  - "warp" went to a 5-job Greenhouse board, so the README's "account executives" example returned nothing, while the Ashby board has 4 matches.
+
+  Users would have paid for those wrong results. The tests missed it because their saved data had no second board under the same name.
+- **Fix:** a plain name now reads all five platforms and uses the board with the most open jobs (the earlier platform on a tie). Any other boards found come back as `other_boards`, because a smaller board can still be the company the user means. An explicit key or URL reads only that board.
+- **Speed, measured live:** about 5 s for the first company and about 2 s per company after that (20 s for 10 companies). An explicit key took about 1 s.
+- **Docs:** tool descriptions, server instructions, README and a new FAQ entry. MCP Actor 0.4.
+- **Tests:** 136 MCP Actor tests (3 new).
+
 ## 📏 Tasks no longer cut off at 1,000 jobs (2026-11-01, branch `task-result-caps`)
 
 - **Why:** the owner ran the MCP Actor's new task and got exactly 1,000 results. The 12 boards have about 1,670 open jobs (Stripe alone has 745), so the run stopped partway through Zoox. Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, ottonova and tado were never read.
