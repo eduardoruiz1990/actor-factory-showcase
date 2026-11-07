@@ -1,0 +1,36 @@
+name: MCP registry
+
+# On demand: publish docs/mcp-registry/server.json to the official MCP Registry (Q30), which lists the
+# deployed MCP Actor. GitHub's OIDC token proves the io.github.eduardoruiz1990/* namespace; no secret is
+# needed. A new listing needs a new `version`. The publisher binary is pinned by version and checksum.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  MCP_PUBLISHER_VERSION: v1.8.1
+  MCP_PUBLISHER_SHA256: a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install the publisher
+        run: |
+          curl -fsSL -o publisher.tar.gz "https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/mcp-publisher_linux_amd64.tar.gz"
+          echo "${MCP_PUBLISHER_SHA256}  publisher.tar.gz" | sha256sum -c -
+          tar xzf publisher.tar.gz -C "$RUNNER_TEMP" mcp-publisher
+
+      - name: Publish
+        working-directory: docs/mcp-registry
+        run: |
+          "$RUNNER_TEMP/mcp-publisher" validate
+          "$RUNNER_TEMP/mcp-publisher" login github-oidc
+          "$RUNNER_TEMP/mcp-publisher" publish

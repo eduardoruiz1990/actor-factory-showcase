@@ -1,5 +1,6 @@
 """Repository-level guards: config thresholds match the spec, workflows are sane, no secrets are committed."""
 
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -68,3 +69,15 @@ def test_env_example_lists_every_secret_without_values():
     assigned = dict(line.split("=", 1) for line in lines if "=" in line and not line.startswith("#"))
     assert set(assigned) == ALLOWED_SECRETS - {"GITHUB_TOKEN"}
     assert all(value == "" for value in assigned.values())
+
+
+def test_the_mcp_registry_entry_points_at_the_deployed_actor(base_config):
+    # QUESTIONS Q30. The registry refuses a description over 100 characters; the name must match the GitHub login.
+    entry = json.loads((ROOT / "docs" / "mcp-registry" / "server.json").read_text())
+    owner, actor = base_config["owner"]["apify_username"], base_config["watcher"]["mcp_check"]["actor"]
+    assert entry["name"].startswith("io.github.eduardoruiz1990/") and len(entry["description"]) <= 100
+    remote = entry["remotes"][0]
+    assert remote["url"] == f"https://{owner}--{actor}.apify.actor/mcp" and remote["type"] == "streamable-http"
+    header = remote["headers"][0]
+    assert header["name"] == "Authorization" and header["isRequired"] and header["isSecret"]
+    assert "value" not in header and "default" not in header  # the entry must never carry a token

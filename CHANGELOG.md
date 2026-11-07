@@ -1,5 +1,11 @@
 # Changelog
 
+## 📇 MCP Registry listing, and three owner decisions (2026-11-07, branch `mcp-registry-and-decisions`)
+
+- **Listing:** `docs/mcp-registry/server.json` and an on-demand `mcp-registry.yml` publish the Job Search MCP Server to the official MCP Registry (Q30). The publisher binary is pinned by version and checksum, and GitHub OIDC replaces any secret.
+- **Decisions recorded:** Scout paused (Q28); the "search without naming companies" bet, its pre-build checks and its stop rule of 5 outside users by 2027-01-03 (Q29); MCP directories allowed, posts and messages not (Q30). CLAUDE.md updated.
+- **Tests:** 1 new test: the entry points at the deployed Actor and can't carry a token. The entry also passed validation against the registry's schema.
+
 ## 🔌 MCP live check (2026-11-07, branch `mcp-live-check`)
 
 - **Why:** the MCP Actor's real use has never been tested on Apify. The owner's runs were normal runs, and Apify's daily test skips Standby Actors. The owner asked the factory to test it, and `APIFY_TOKEN` exists only in GitHub Actions secrets.
