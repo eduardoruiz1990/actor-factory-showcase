@@ -86,6 +86,11 @@ class PoliteClient:
                 if response.status_code not in RETRY_STATUSES or attempt == self._max_retries:
                     return response
                 delay = self._retry_after(response)
+                if delay is not None and delay > self._backoff_max:
+                    # Asked to wait longer than we would: give up now rather than come back too soon.
+                    log.warning("%s %s returned %d and asked to wait %.0fs; not retrying",
+                                method, url, response.status_code, delay)
+                    return response
                 if delay is None:
                     delay = self._backoff(attempt)
                 log.warning(
@@ -138,4 +143,4 @@ class PoliteClient:
             if when.tzinfo is None:
                 when = when.replace(tzinfo=timezone.utc)
             seconds = (when - datetime.now(timezone.utc)).total_seconds()
-        return min(max(seconds, 0.0), self._backoff_max)
+        return max(seconds, 0.0)

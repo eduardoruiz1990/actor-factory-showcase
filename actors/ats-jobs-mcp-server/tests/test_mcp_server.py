@@ -254,3 +254,6 @@ def test_http_app_answers_apifys_readiness_probe_and_mcp_requests_from_any_host(
                        'clientInfo': {'name': 'test', 'version': '1'}}})
         assert init.status_code == 200, init.text
         assert init.json()['result']['serverInfo']['name'] == 'ats-jobs'
+        # What an agent sees must not drift from the deployed version again.
+        actor = json.loads((Path(__file__).parent.parent / '.actor' / 'actor.json').read_text())
+        assert init.json()['result']['serverInfo']['version'] == actor['version']

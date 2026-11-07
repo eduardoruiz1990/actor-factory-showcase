@@ -1,5 +1,12 @@
 # Changelog
 
+## 🧹 Retry waits, server version, and a pause on building (2026-11-07, branch `retry-after-and-notes`)
+
+- **Retry waits:** both HTTP clients capped a site's `Retry-After` at 60 seconds, so a site that asked for a longer wait got a retry too soon. A client now returns the response without retrying in that case. An MCP tool call also no longer waits out those retries.
+- **Server version:** the MCP server told agents it was `0.4` while running 0.5. It's corrected, and a test now compares it with `actor.json`.
+- **Decisions recorded (Q30):** PulseMCP needs nothing from us, Smithery isn't used for now, and building stops until the numbers come in.
+- **Tests:** 4 new tests, one per client copy (template, both Actors, factory); 1 existing test extended.
+
 ## 🔎 Job directory, part 2: search without naming companies (2026-11-07, branch `job-directory-search`)
 
 - **What users get:** the jobs Actor's **Search all companies** input and the MCP server's `search_all_companies` tool. Both search about 275 boards and 29,000 jobs by title and location, then read the matching boards live, so returned jobs are open now.
