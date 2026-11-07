@@ -327,4 +327,7 @@ The project rule is "no outreach of any kind". The owner decided that listing an
 
 - **Official MCP Registry:** first choice. It accepts closed-source servers that are publicly reachable, and removes only illegal content, malware, spam and broken servers. `mcp-registry.yml` publishes `docs/mcp-registry/server.json` using GitHub OIDC, so no secret is needed. The entry stays visible through the registry's API even after removal.
 - **Glama:** not used for now. Third-party sources say it indexes public GitHub repositories and needs a local server; this repository is private and the server is remote only.
-- **Others (Smithery, PulseMCP):** not checked against their own documentation yet.
+- **PulseMCP (checked 2026-11-07):** its [submit page](https://www.pulsemcp.com/submit) says it isn't taking new submissions, gives no reopening date, and will pick up servers from the Official MCP Registry automatically once it's back. Nothing to do.
+- **Smithery (checked 2026-11-07, not used for now):** its docs pages wouldn't load for an automated reader, so this comes from search summaries only. A server is listed by URL, and Smithery's gateway proxies requests to it, so users' Apify tokens might pass through a third party. The summaries mention OAuth for servers that need a login, and ours uses a Bearer token. A third-party page says its proxy shut down on 31 October, unconfirmed. Conservative choice: don't list it. The owner can reconsider after reading the current docs.
+
+**Effect:** directories won't bring much traffic soon, so Store search and Google are the main ways users can find the Actors. The owner agreed on 2026-11-07 to stop building and read the numbers: the SEO review on 2026-11-14, then the stop rule in Q29 on 2027-01-03.

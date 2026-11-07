@@ -112,7 +112,7 @@ def summary(job: dict[str, Any], include_description: bool) -> dict[str, Any]:
 
 def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer:
     """The MCP server; `client` makes the polite HTTP client for each tool call (tests pass a fake one)."""
-    server = MCPServer(name='ats-jobs', title='ATS Jobs', version='0.4', instructions=INSTRUCTIONS)
+    server = MCPServer(name='ats-jobs', title='ATS Jobs', version='0.5', instructions=INSTRUCTIONS)
 
     @server.custom_route('/', methods=['GET'], include_in_schema=False)
     async def ready(_request: Request) -> PlainTextResponse:

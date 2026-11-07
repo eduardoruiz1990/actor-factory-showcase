@@ -56,6 +56,18 @@ def test_honours_retry_after_header():
     assert 7.0 in clock.sleeps
 
 
+def test_a_longer_wait_than_we_would_keep_ends_the_retries_instead_of_coming_back_too_soon():
+    clock = FakeClock()
+    calls = []
+
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(429, headers={"Retry-After": "3600"})
+
+    assert make_client(handler, clock).get("https://api.example.com/x").status_code == 429
+    assert len(calls) == 1 and clock.sleeps == []
+
+
 def test_does_not_retry_client_errors():
     clock = FakeClock()
     calls = []
