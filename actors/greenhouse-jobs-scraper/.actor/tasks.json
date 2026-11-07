@@ -4,7 +4,7 @@
         {
             "name": "daily-new-tech-jobs",
             "title": "Daily new jobs at top tech companies",
-            "description": "Every job newly posted at Airbnb, Stripe, Discord, Zoox, Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, ottonova and tado, across Greenhouse, Lever, Ashby, Workable and Personio. Schedule it daily: each run returns only jobs that are new since the last run.",
+            "description": "Every job newly posted at Airbnb, Stripe, Discord, Zoox, Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, 1KOMMA5° and tado, across Greenhouse, Lever, Ashby, Workable and Personio. Schedule it daily: each run returns only jobs that are new since the last run.",
             "input": {
                 "boardTokens": [
                     "airbnb",
@@ -17,7 +17,7 @@
                     "ashby:warp",
                     "workable:huggingface",
                     "workable:blueground",
-                    "personio:ottonova",
+                    "personio:1komma5grad",
                     "personio:tado"
                 ],
                 "onlyNew": true,
@@ -54,7 +54,7 @@
                     "ashby:warp",
                     "workable:huggingface",
                     "workable:blueground",
-                    "personio:ottonova",
+                    "personio:1komma5grad",
                     "personio:tado"
                 ],
                 "titleKeywords": [
@@ -95,7 +95,7 @@
                     "ashby:warp",
                     "workable:huggingface",
                     "workable:blueground",
-                    "personio:ottonova",
+                    "personio:1komma5grad",
                     "personio:tado"
                 ],
                 "onlyNew": true,
@@ -116,6 +116,36 @@
                     "maxResults"
                 ],
                 "datasetView": "changes"
+            }
+        },
+        {
+            "name": "remote-product-manager-jobs",
+            "title": "Remote product manager jobs at about 275 companies",
+            "description": "Open remote product manager jobs across a directory of about 275 company job boards, mostly tech companies, with no company names to enter. Change the keywords to search any other role or place. Jobs are read live, with salary ranges where published.",
+            "input": {
+                "boardTokens": [
+                    "airbnb"
+                ],
+                "searchAllCompanies": true,
+                "titleKeywords": [
+                    "product manager"
+                ],
+                "locationKeywords": [
+                    "remote"
+                ],
+                "includeContent": false,
+                "maxResults": 500
+            },
+            "publish": true,
+            "publicConfig": {
+                "seoTitle": "Remote product manager jobs across company career sites",
+                "seoDescription": "Search remote product manager jobs at about 275 companies without naming them, read live from Greenhouse, Lever, Ashby and Personio, with salary ranges.",
+                "inputSchemaFields": [
+                    "titleKeywords",
+                    "locationKeywords",
+                    "maxResults"
+                ],
+                "datasetView": "overview"
             }
         }
     ]

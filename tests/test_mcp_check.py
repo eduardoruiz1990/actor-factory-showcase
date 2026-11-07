@@ -8,14 +8,15 @@ from factory.watcher.mcp_check import latest_run, main, render, run_checks
 
 URL = "https://guayox--ats-jobs-mcp-server.apify.actor/mcp"
 BOARDS = {"notion": "ashby:notion", "ramp": "ashby:ramp"}
-TOOLS = ["find_job_board", "search_jobs"]
+TOOLS = ["find_job_board", "search_jobs", "search_all_companies"]
 FOUND = {"notion": {"company": "notion", "board": "ashby:notion", "platform": "ashby", "open_jobs": 154},
          "ramp": {"company": "ramp", "board": "ashby:ramp", "platform": "ashby", "open_jobs": 171,
                   "other_boards": {"ramp": 1}}}
 SEARCH = {"boards": {"ashby:notion": "ashby:notion"}, "jobs": [{"title": "Engineer"}], "charged_results": 1}
+DIRECTORY = {"boards_matched": 120, "boards_read": 1, "jobs": [{"title": "Engineer"}], "charged_results": 1}
 
 
-def server(found=FOUND, search=SEARCH, status=200, sse=False, seen=None):
+def server(found=FOUND, search=SEARCH, directory=DIRECTORY, status=200, sse=False, seen=None):
     def handler(request):
         body = json.loads(request.content)
         if seen is not None:
@@ -29,6 +30,8 @@ def server(found=FOUND, search=SEARCH, status=200, sse=False, seen=None):
             result = {"tools": [{"name": n} for n in TOOLS]}
         elif body["params"]["name"] == "find_job_board":
             result = {"structuredContent": found[body["params"]["arguments"]["company"]]}
+        elif body["params"]["name"] == "search_all_companies":
+            result = {"structuredContent": directory}
         else:
             result = {"structuredContent": search}
         payload = json.dumps({"jsonrpc": "2.0", "id": body["id"], "result": result})
@@ -40,7 +43,7 @@ def server(found=FOUND, search=SEARCH, status=200, sse=False, seen=None):
 
 
 def run(http):
-    return run_checks(http, URL, "secret", TOOLS, BOARDS, "ashby:notion")
+    return run_checks(http, URL, "secret", TOOLS, BOARDS, "ashby:notion", {"title_keywords": ["engineer"]})
 
 
 @pytest.mark.parametrize("sse", [False, True])
@@ -48,7 +51,7 @@ def test_a_healthy_server_passes_every_check(sse):
     seen = []
     checks = run(server(sse=sse, seen=seen))
     assert [c.name for c in checks] == ["connect", "tools/list", "find_job_board notion", "find_job_board ramp",
-                                        "search_jobs one job"]
+                                        "search_jobs one job", "search_all_companies one job"]
     assert all(c.passed for c in checks)
     assert all(auth == "Bearer secret" for auth, _ in seen)
 
@@ -69,6 +72,13 @@ def test_a_name_resolved_to_the_wrong_board_fails():
 def test_a_search_that_charges_nothing_fails():
     failed = [c.name for c in run(server(search={"boards": {}, "jobs": [], "charged_results": 0})) if not c.passed]
     assert failed == ["search_jobs one job"]
+
+
+def test_a_directory_that_cannot_be_read_fails():
+    unavailable = {"jobs": [], "charged_results": 0, "note": "The company directory could not be read."}
+    checks = run(server(directory=unavailable))
+    assert [c.name for c in checks if not c.passed] == ["search_all_companies one job"]
+    assert "could not be read" in checks[-1].detail
 
 
 def test_latest_run_describes_the_newest_run_and_survives_an_error():

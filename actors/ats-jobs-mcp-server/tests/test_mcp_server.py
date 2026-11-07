@@ -122,6 +122,82 @@ def test_a_tie_keeps_the_earlier_platform(charged):
     assert found['board'] == 'warp' and found['other_boards'] == {'ashby:warp': 3}
 
 
+DIRECTORY = {'boards': {
+    'lever:zoox': {'company': None, 'jobs': [['Partner', 'CA']]},
+    'ashby:warp': {'company': None, 'jobs': [['Account Executive', 'New York'], ['Applied AI Engineer', 'New York']]},
+    'lever:nobody': {'company': None, 'jobs': [['Account Executive', 'Gone']]},
+}}
+DIRECTORY_ROUTES = ROUTES | {
+    f'api.apify.com/v2/key-value-stores/{mcp_server.directory.STORE_ID}/records/index.json.gz':
+        httpx2.Response(200, json=DIRECTORY),
+}
+
+
+def test_search_all_companies_needs_no_company_names_and_reads_only_matching_boards(charged):
+    seen = []
+    found = call(build_server(fake_client(DIRECTORY_ROUTES, seen)), 'search_all_companies', title_keywords=['account'])
+    assert [j['title'] for j in found['jobs']] == ['Account Executive'] and found['charged_results'] == len(charged) == 1
+    assert found['boards_matched'] == 2 and found['boards_read'] == 2  # one listed board answers 404 and is skipped
+    assert not any('zoox' in target for target in seen)
+
+
+def test_search_all_companies_stops_reading_once_it_has_enough(charged):
+    seen = []
+    found = call(build_server(fake_client(DIRECTORY_ROUTES, seen)), 'search_all_companies', title_keywords=['account'],
+                 max_results=1)
+    assert found['boards_matched'] == 2 and found['boards_read'] == 1 and len(found['jobs']) == 1
+    assert not any('nobody' in target for target in seen)
+
+
+def board_jobs(board, count):
+    return httpx2.Response(200, json={'meta': {'total': count}, 'jobs': [
+        {'id': n + 1, 'title': f'Engineer {board} {n}', 'company_name': board, 'location': {'name': 'Remote'},
+         'absolute_url': f'https://job-boards.greenhouse.io/{board}/jobs/{n}', 'updated_at': '2026-11-01T00:00:00-04:00'}
+        for n in range(count)]})
+
+
+def directory_of(sizes):
+    """A directory and live boards, each holding `size` engineering jobs."""
+    index = {'boards': {board: {'company': board, 'jobs': [['Engineer', 'Remote']] * size} for board, size in sizes.items()}}
+    return {f'api.apify.com/v2/key-value-stores/{mcp_server.directory.STORE_ID}/records/index.json.gz':
+            httpx2.Response(200, json=index)} | {
+        f'boards-api.greenhouse.io/v1/boards/{board}/jobs?pay_transparency=true': board_jobs(board, size)
+        for board, size in sizes.items()}
+
+
+def test_search_all_companies_does_not_let_one_big_company_fill_the_answer(charged):
+    routes = directory_of({'big': 30, 'mid': 3, 'small': 1})
+    found = call(build_server(fake_client(routes, [])), 'search_all_companies', title_keywords=['engineer'], max_results=7)
+    boards = [job['board_token'] for job in found['jobs']]
+    assert boards == ['big', 'mid', 'small', 'big', 'mid', 'big', 'mid'] and len(charged) == 7
+
+
+def test_search_all_companies_reads_several_boards_even_when_the_first_could_fill_the_answer(charged):
+    seen = []
+    routes = directory_of({f'b{n}': 30 - n for n in range(8)})
+    found = call(build_server(fake_client(routes, seen)), 'search_all_companies', title_keywords=['engineer'], max_results=25)
+    assert found['boards_matched'] == 8 and found['boards_read'] == mcp_server.BOARDS_TO_MIX
+    assert {job['board_token'] for job in found['jobs']} == {'b0', 'b1', 'b2', 'b3', 'b4'} and len(found['jobs']) == 25
+    assert not any('b5' in target for target in seen)
+
+
+def test_mixing_companies_still_puts_the_best_skill_matches_first():
+    job = lambda board: {'platform': 'greenhouse', 'board_token': board}  # noqa: E731
+    picked = [(job('a'), ['Go', 'SQL']), (job('a'), ['Go', 'SQL']), (job('a'), ['Go']), (job('b'), ['Go'])]
+    mixed = mcp_server.take_turns(picked, 3)
+    assert [(pair[0]['board_token'], len(pair[1])) for pair in mixed] == [('a', 2), ('a', 2), ('b', 1)]
+
+
+def test_search_all_companies_needs_a_keyword_and_charges_nothing_without_one(charged):
+    found = call(build_server(fake_client(DIRECTORY_ROUTES, [])), 'search_all_companies', skills=['Python'])
+    assert 'keyword' in found['note'] and found['jobs'] == [] and charged == []
+
+
+def test_search_all_companies_says_so_when_the_directory_is_unavailable(charged):
+    found = call(build_server(fake_client(ROUTES, [])), 'search_all_companies', title_keywords=['account'])
+    assert 'could not be read' in found['note'] and found['jobs'] == [] and charged == []
+
+
 def test_search_jobs_filters_charges_each_job_and_returns_a_compact_summary(charged):
     server = build_server(fake_client(ROUTES, []))
     found = call(server, 'search_jobs', companies=['warp', 'https://jobs.lever.co/zoox'], title_keywords=['account'])

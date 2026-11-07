@@ -3,8 +3,8 @@
     "actorSpecification": 1,
     "name": "greenhouse-jobs-scraper",
     "title": "Career Site Jobs Scraper: Greenhouse, Lever, Ashby & More",
-    "description": "Get every open job straight from company career sites on Greenhouse, Lever, Ashby, Workable or Personio, live from each ATS, with departments, locations, salary ranges and full descriptions, as clean JSON or CSV.",
-    "version": "0.6",
+    "description": "Get every open job straight from company career sites on Greenhouse, Lever, Ashby, Workable or Personio, or search them without naming companies, live from each ATS, with departments, locations, salary ranges and full descriptions, as clean JSON or CSV.",
+    "version": "0.7",
     "buildTag": "latest",
     "meta": {
         "templateId": "python-start",

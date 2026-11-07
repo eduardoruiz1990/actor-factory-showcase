@@ -308,6 +308,19 @@ The conservative choice is the hand-made list, checked against the official feed
 
 **Rate limits:** after the 60-board sample, at about one request per second, `apply.workable.com` answered HTTP 429 to the test machine on both its feed and its robots.txt. The Wikidata run also read no Workable boards, so that row has no Workable result. An index must read Workable far more slowly, or read fewer Workable boards, and must treat a 429 as "not read", never as "jobs removed".
 
+**First real build (2026-11-07):**
+
+| Measure | Result |
+|---|---|
+| Names with open jobs | 278 of 531 |
+| Index | 275 boards, 28,854 jobs, 0.29 MB compressed, readable by ID with no token |
+| By platform | Greenhouse 156 boards, Ashby 93, Lever 21, Personio 5, Workable 0 |
+| Build time | 33 minutes |
+
+- **Workable:** it answered 429 again at one request per 5 seconds, so the build stopped it after 304 of 531 names. It adds no boards for now; the 2 boards it found weren't read when the index was built.
+- **Size against the market:** 275 boards is about 0.1% of the leader's 275k+ sites. The search competes on price and MCP access, not on coverage, and the listings say so.
+- **Still to check:** who pays when another user's run reads the store.
+
 ### Q30. MCP directories (resolved 2026-11-07: owner approved)
 
 The project rule is "no outreach of any kind". The owner decided that listing an MCP server in MCP directories is allowed, because no one is contacted. Posts and messages stay excluded.

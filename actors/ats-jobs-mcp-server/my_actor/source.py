@@ -59,6 +59,7 @@ class Settings:
     location_keywords: list[str] = field(default_factory=list)
     only_new: bool = False
     report_removed: bool = False
+    search_directory: bool = False  # choose the boards from the directory (directory.py) instead of board_tokens
     state_key: str = ''  # which earlier runs count as "the same search" for only_new and report_removed
 
     @classmethod
@@ -70,15 +71,20 @@ class Settings:
                 Actor.log.warning(f'{raw!r} is not a Greenhouse, Lever, Ashby, Workable or Personio board token or URL; skipped')
             elif token not in tokens:
                 tokens.append(token)
-        if not tokens:
+        search_directory = actor_input.get('searchAllCompanies') is True
+        if search_directory:
+            tokens = []  # the search chooses the boards
+        elif not tokens:
             raise ValueError('Input needs at least one board in "boardTokens" (for example "airbnb", "lever:palantir" or "ashby:ramp").')
         max_results = int(actor_input.get('maxResults') or 1000)
         rate = float(actor_input.get('maxRequestsPerSecond') or 1)
         title_keywords = _keywords(actor_input.get('titleKeywords'))
         location_keywords = _keywords(actor_input.get('locationKeywords'))
+        if search_directory and not title_keywords and not location_keywords:
+            raise ValueError('"Search all companies" needs at least one title or location keyword.')
         # Runs with the same monitor name, or else the same boards and filters, share one memory of returned jobs.
         identity = (actor_input.get('monitorName') or '').strip() or {
-            'boards': sorted(tokens), 'titles': sorted(title_keywords), 'locations': sorted(location_keywords)}
+            'boards': 'directory' if search_directory else sorted(tokens), 'titles': sorted(title_keywords), 'locations': sorted(location_keywords)}
         return cls(
             board_tokens=tokens,
             max_results=max(1, max_results),
@@ -88,6 +94,7 @@ class Settings:
             location_keywords=location_keywords,
             only_new=actor_input.get('onlyNew') is True,
             report_removed=actor_input.get('reportRemoved') is True,
+            search_directory=search_directory,
             state_key=state_key(identity),
         )
 

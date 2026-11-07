@@ -14,15 +14,21 @@
                 "lever:zoox",
                 "ashby:warp",
                 "workable:blueground",
-                "personio:ottonova"
+                "personio:tado"
             ],
             "default": [
                 "airbnb",
                 "lever:zoox",
                 "ashby:warp",
                 "workable:blueground",
-                "personio:ottonova"
+                "personio:tado"
             ]
+        },
+        "searchAllCompanies": {
+            "title": "Search all companies (no company names needed)",
+            "type": "boolean",
+            "description": "Ignore \"Job boards\" and search the Actor's directory of company boards with your title and location keywords; at least one keyword is required. Boards with a matching job are read live. The directory is refreshed daily, so a job posted today can be missing until tomorrow. Each job returned is one result, as usual.",
+            "default": false
         },
         "includeContent": {
             "title": "Include full job descriptions",
