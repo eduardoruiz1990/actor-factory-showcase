@@ -1,5 +1,16 @@
 # Changelog
 
+## 🛑 Job directory: a build can't lose its results to one platform (2026-11-07, branch `directory-build-limits`)
+
+- **What happened:** the first build hit its 120-minute limit and lost everything. Greenhouse, Lever and Ashby finished in 12 minutes. From 18:49 UTC, Workable answered every request with 429, and each name cost 4 minutes of retries.
+- **Fix in `tools/build_directory.py`:**
+  - A platform that answers 429 three times in a row is left alone for the rest of the run.
+  - The build retries a failed request once, not four times.
+  - Each platform has a 45-minute budget. When it runs out, the boards already read are kept.
+  - A board that can't be reached is skipped and no longer stops the whole build.
+- **Effect:** the directory may hold only some Workable boards. A board that wasn't read keeps its last entry.
+- **Tests:** 5 new jobs Actor tests.
+
 ## 🗂️ Job directory, part 1: the daily index (2026-11-07, branch `job-directory-index`)
 
 - **Why:** the "search without naming companies" bet (Q29). No user sees a change yet; part 2 adds the search once the index exists.

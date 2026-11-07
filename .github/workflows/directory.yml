@@ -2,7 +2,7 @@ name: Job directory
 
 # Daily: rebuild the job directory that lets a search run without naming companies (QUESTIONS Q29), and
 # store it on Apify. Start it by hand with "verify" after changing tools/companies.txt: that tries every
-# company name on all five platforms, which takes about an hour.
+# company name on all five platforms, which takes up to 45 minutes (each platform's budget in build_directory.py).
 
 on:
   schedule:
