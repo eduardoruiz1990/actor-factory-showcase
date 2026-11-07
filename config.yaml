@@ -252,6 +252,12 @@ watcher:
     board_checks: {notion: "ashby:notion", ramp: "ashby:ramp"}
     paid_board: "ashby:notion"
 
+directory:
+  # The job directory's public, read-only Apify store (QUESTIONS Q29), built by .github/workflows/directory.yml.
+  store_name: "job-board-directory"
+  # Apify's documented request limit; a bigger index fails the build instead of the upload.
+  max_record_bytes: 9000000
+
 github:
   scout_label: "scout"
   go_label: "go"

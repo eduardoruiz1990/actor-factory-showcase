@@ -1,0 +1,66 @@
+name: Job directory
+
+# Daily: rebuild the job directory that lets a search run without naming companies (QUESTIONS Q29), and
+# store it on Apify. Start it by hand with "verify" after changing tools/companies.txt: that tries every
+# company name on all five platforms, which takes about an hour.
+
+on:
+  schedule:
+    - cron: "41 3 * * *"
+  workflow_dispatch:
+    inputs:
+      verify:
+        description: "Try every company name again (needed after changing tools/companies.txt)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: directory
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      OUT: ${{ github.workspace }}/out/directory
+      VERIFY: ${{ inputs.verify }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: |
+          pip install -e .
+          python -m venv "$RUNNER_TEMP/actor"
+          "$RUNNER_TEMP/actor/bin/pip" install -r actors/greenhouse-jobs-scraper/requirements.txt
+
+      # Only these two steps get the token; the rest read public job feeds and install third-party packages.
+      - name: Fetch the last directory
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+        run: python -m factory.directory fetch "$OUT"
+
+      - name: Try the company names
+        working-directory: actors/greenhouse-jobs-scraper
+        run: |
+          if [ "$VERIFY" = "true" ] || [ ! -f "$OUT/boards.json" ]; then
+            "$RUNNER_TEMP/actor/bin/python" -m tools.build_directory verify tools/companies.txt "$OUT/boards.json"
+          fi
+
+      - name: Build the index
+        working-directory: actors/greenhouse-jobs-scraper
+        run: '"$RUNNER_TEMP/actor/bin/python" -m tools.build_directory index "$OUT/boards.json" "$OUT/index.json" "$OUT/index.json.gz"'
+
+      - name: Store it on Apify
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+        run: python -m factory.directory upload "$OUT"

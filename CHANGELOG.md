@@ -1,5 +1,16 @@
 # Changelog
 
+## 🗂️ Job directory, part 1: the daily index (2026-11-07, branch `job-directory-index`)
+
+- **Why:** the "search without naming companies" bet (Q29). No user sees a change yet; part 2 adds the search once the index exists.
+- **`tools/companies.txt`:** a hand-made list of 531 company names, without pharma or health companies. A name filter also catches any that slip through on the company names the feeds report.
+- **`tools/build_directory.py`:** uses the Actor's own code, so robots.txt, rate limits and parsing are the same.
+  - `verify` tries each name on all five platforms and keeps the board with the most open jobs.
+  - `index` records job titles and locations only.
+  - A board that doesn't answer keeps its last entry, and Workable is read at one request every 5 seconds after it answered 429 at one per second.
+- **`factory/directory.py` and `directory.yml`:** a daily build stored in a named Apify store readable by ID. Only the fetch and upload steps get `APIFY_TOKEN`.
+- **Tests:** 7 new jobs Actor tests and 7 new factory tests.
+
 ## 📇 MCP Registry listing, and three owner decisions (2026-11-07, branch `mcp-registry-and-decisions`)
 
 - **Listing:** `docs/mcp-registry/server.json` and an on-demand `mcp-registry.yml` publish the Job Search MCP Server to the official MCP Registry (Q30). The publisher binary is pinned by version and checksum, and GitHub OIDC replaces any secret.

@@ -18,6 +18,7 @@ factory/scout/      weekly Store + Ideas scan -> 20 candidate niches -> one issu
 factory/validator/  five checks per candidate (claude-sonnet-5-5 + code rules) -> brief comment
 factory/builder/    prepares a build brief (refuses non-passing niches) and checks a Builder PR's scope
 factory/publisher/  after a merge: deploys changed Actors, syncs listing, pricing (only downwards) and tasks, and publishes new Actors after a passing test run (Q25)
+factory/directory.py  stores the job directory on Apify (Q29); the Actor's tools/build_directory.py builds it
 factory/watcher/    Phase 3 (not built yet, except mcp_check.py: an on-demand live check of the deployed MCP Actor)
 factory/digest/     Phase 4 (not built yet)
 factory/dry_run.py  offline Scout + Validator run on tests/fixtures
@@ -25,7 +26,7 @@ templates/python-actor/  the Actor template every build starts from (official Ap
 actors/<name>/      one folder per Actor, built by the Builder
 tests/              pytest suite; tests/fixtures/ holds saved sample responses
 config.yaml         every threshold the agents apply
-.github/workflows/  scout.yml (Sundays; disabled in GitHub since 2026-11-07, Q28), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher), mcp-check.yml (MCP live check, on demand), mcp-registry.yml (MCP Registry listing, on demand); watcher.yml and digest.yml come in later phases
+.github/workflows/  scout.yml (Sundays; disabled in GitHub since 2026-11-07, Q28), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher), mcp-check.yml (MCP live check, on demand), mcp-registry.yml (MCP Registry listing, on demand), directory.yml (job directory, daily); watcher.yml and digest.yml come in later phases
 docs/BUILDER.md     what every Actor build must deliver (the Builder's definition of done)
 ```
 
