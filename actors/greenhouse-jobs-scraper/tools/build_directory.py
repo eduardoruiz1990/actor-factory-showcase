@@ -10,6 +10,9 @@ source code so robots.txt, rate limits and parsing stay the same:
 the most open jobs. `index` records each board's job titles and locations, no
 descriptions, for a search to pick which boards to read live. A board that does
 not answer (a 429, a failure, robots.txt) is "not read": it keeps its last entry.
+
+A platform that keeps answering 429 is left alone for the rest of the run, and each
+platform has a time budget, so one platform cannot cost the others' results.
 """
 
 from __future__ import annotations
@@ -25,6 +28,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from httpx2 import HTTPError, Response
+
 from my_actor import privacy, source
 from my_actor.polite import PoliteClient
 from my_actor.robots import RobotsCache
@@ -33,6 +38,10 @@ PREFIXES = ('', 'lever:', 'ashby:', 'workable:', 'personio:')
 # Seconds between requests to one host. Workable answered 429 at one per second (Q29).
 INTERVALS = {'workable': 5.0}
 DEFAULT_INTERVAL = 1.0
+# A 429 asks us to stop: after this many in a row, the platform is left alone for the rest of the run.
+MAX_429_IN_A_ROW = 3
+RETRIES = 1
+PLATFORM_BUDGET_SECONDS = 45 * 60
 # The owner's contract rules out pharma and health (Q29). The list leaves them out; this catches a namesake.
 EXCLUDED = re.compile(
     r'pharma|health|biotech|therapeutic|medic|clinic|hospital|biolog|bioscience|drug|krankenversicherung', re.I
@@ -41,8 +50,27 @@ EXCLUDED = re.compile(
 Client = Callable[[float], PoliteClient]
 
 
+class TooManyRequests(Exception):
+    """A platform keeps answering 429."""
+
+
+class DirectoryClient(PoliteClient):
+    """A polite client that raises TooManyRequests after MAX_429_IN_A_ROW rate-limit answers in a row."""
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self._refused = 0
+
+    async def get(self, url: str, **kwargs: Any) -> Response:
+        response = await super().get(url, **kwargs)
+        self._refused = self._refused + 1 if response.status_code == 429 else 0
+        if self._refused >= MAX_429_IN_A_ROW:
+            raise TooManyRequests(url)
+        return response
+
+
 def default_client(interval: float) -> PoliteClient:
-    return PoliteClient(min_interval=interval)
+    return DirectoryClient(min_interval=interval, max_retries=RETRIES)
 
 
 def platform_of(key: str) -> str:
@@ -64,12 +92,20 @@ async def read_board(key: str, http: PoliteClient, robots: RobotsCache) -> list[
     settings = source.Settings(board_tokens=[key], max_results=10**7, max_requests_per_second=1.0,
                                include_content=False)
     read: set[str] = set()
-    jobs = [privacy.clean(job) async for job in source.iter_items(settings, http, robots, read)]
+    try:
+        jobs = [privacy.clean(job) async for job in source.iter_items(settings, http, robots, read)]
+    except HTTPError as exc:
+        print(f'{key} could not be reached ({exc!r}); skipped')
+        return None
     return jobs if read else None
 
 
-async def scan(keys: list[str], client: Client = default_client) -> dict[str, list[dict[str, Any]] | None]:
-    """Read every board: in turn within a platform, side by side across platforms, so a slow one holds up no other."""
+async def scan(keys: list[str], client: Client = default_client,
+               budget: float = PLATFORM_BUDGET_SECONDS) -> dict[str, list[dict[str, Any]] | None]:
+    """Read every board: in turn within a platform, side by side across platforms, so a slow one holds up no other.
+
+    A platform that stops early (too many 429s, or out of time) leaves its remaining boards out of the result.
+    """
     by_platform: dict[str, list[str]] = defaultdict(list)
     for key in keys:
         by_platform[platform_of(key)].append(key)
@@ -81,7 +117,19 @@ async def scan(keys: list[str], client: Client = default_client) -> dict[str, li
             for key in boards:
                 results[key] = await read_board(key, http, robots)
 
-    await asyncio.gather(*(read_platform(platform, boards) for platform, boards in by_platform.items()))
+    async def read_within_limits(platform: str, boards: list[str]) -> None:
+        try:
+            await asyncio.wait_for(read_platform(platform, boards), budget)
+        except TooManyRequests:
+            reason = f'answered 429 {MAX_429_IN_A_ROW} times in a row'
+        except TimeoutError:
+            reason = f'ran out of its {budget / 60:.0f} minutes'
+        else:
+            return
+        left = sum(1 for key in boards if key not in results)
+        print(f'{platform} {reason}; stopped with {left} of {len(boards)} boards not tried')
+
+    await asyncio.gather(*(read_within_limits(platform, boards) for platform, boards in by_platform.items()))
     return results
 
 
