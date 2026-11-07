@@ -4,7 +4,7 @@ Guidance for Claude Code in this repository, both in interactive sessions and as
 
 ## What this is
 
-The Actor Factory: agents that find, build, publish and maintain paid Actors on the Apify Store, with the owner approving the key steps. The goal is a portfolio of about 15 paid Actors by April 2027, sold only through the Apify Store, Google and AI agents. There is no outreach of any kind.
+The Actor Factory: agents that find, build, publish and maintain paid Actors on the Apify Store, with the owner approving the key steps. The goal is a portfolio of about 15 paid Actors by April 2027, sold only through the Apify Store, Google and AI agents. There is no outreach of any kind. Listing an MCP server in MCP directories is allowed; posts and messages are not (Q30).
 
 - Full specification: [docs/SPEC.md](docs/SPEC.md). Read it before changing behaviour.
 - Open questions and the conservative choices made for them: [docs/QUESTIONS.md](docs/QUESTIONS.md).
@@ -25,7 +25,7 @@ templates/python-actor/  the Actor template every build starts from (official Ap
 actors/<name>/      one folder per Actor, built by the Builder
 tests/              pytest suite; tests/fixtures/ holds saved sample responses
 config.yaml         every threshold the agents apply
-.github/workflows/  scout.yml (Sundays), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher), mcp-check.yml (MCP live check, on demand); watcher.yml and digest.yml come in later phases
+.github/workflows/  scout.yml (Sundays; disabled in GitHub since 2026-11-07, Q28), tests.yml (PRs and main), claude.yml (Builder), publish.yml (Publisher), mcp-check.yml (MCP live check, on demand), mcp-registry.yml (MCP Registry listing, on demand); watcher.yml and digest.yml come in later phases
 docs/BUILDER.md     what every Actor build must deliver (the Builder's definition of done)
 ```
 

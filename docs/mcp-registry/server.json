@@ -1,0 +1,22 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.eduardoruiz1990/job-search",
+    "title": "Job Search MCP Server",
+    "description": "Open jobs and salaries from company boards on Greenhouse, Lever, Ashby, Workable and Personio.",
+    "version": "0.4.0",
+    "websiteUrl": "https://apify.com/guayox/ats-jobs-mcp-server",
+    "remotes": [
+        {
+            "type": "streamable-http",
+            "url": "https://guayox--ats-jobs-mcp-server.apify.actor/mcp",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "description": "Bearer <your Apify API token>. Each job returned is charged on your Apify account.",
+                    "isRequired": true,
+                    "isSecret": true
+                }
+            ]
+        }
+    ]
+}

@@ -278,3 +278,38 @@ The owner asked for a feature that reports jobs that disappeared since the last 
 - **No false closures.** Removed jobs are reported only by a run that read every board, and only for boards that answered in that run. A board that fails keeps its jobs in the memory. This also fixes an older bug: with "Only new jobs" on, a board that failed for one run had its jobs returned, and charged, again on the next run.
 - **Filters.** A job whose title or location no longer matches the keywords counts as removed, because the memory follows the search. The README describes removed jobs as "no longer listed" for the search.
 - **Old memories.** Records written before this change (a list of keys) still work. Jobs removed from them have no title or link, only platform, board and job ID.
+
+### Q28. Pausing the Scout (resolved 2026-11-07: owner approved)
+
+Four full runs (2026-10-25, 10-30, 11-01, 11-07) found no buildable niche, and each run skips what it has seen, so it reaches weaker niches. The owner turned the schedule off.
+
+- The Scout workflow is disabled in GitHub (`gh workflow disable scout.yml`). The file still has its Sunday cron. **While disabled it can't be started by hand either**; `gh workflow enable scout.yml` undoes it.
+- The 2026-11-07 run used about 2.2 million cached input tokens, 16,000 uncached input tokens, 54,000 output tokens and 49 web searches.
+
+### Q29. One last bet: job search without naming companies (resolved 2026-11-07: owner approved, with a stop rule)
+
+The market leader, Career Site Job Listing API, has 1,635 monthly users at prices from $4 per 1,000 jobs. Its users search by title and location across 275k+ career sites without naming a company. Our Actors need the company names. Among smaller Actors the evidence is thin and mixed: optional ready-made lists 87 monthly users (`bovi`), companies required 9 (`automation-lab`), a curated list at $4 per 1,000 0 (`benthepythondev`).
+
+**Stop rule, agreed with the owner:** on 2027-01-03, with fewer than 5 outside users, building stops and the Actors stay live and idle. No more pivots.
+
+**Checks made before building (2026-11-07):**
+
+| Source of board names | Terms | Result |
+|---|---|---|
+| Common Crawl index | No ban on commercial use, no permission either; "strongly recommends" legal advice before use | 5,101 candidate boards. 60-board samples: Greenhouse 59 live, Ashby 59, Personio 39, Workable 32; none usable for Lever. Roughly 3,400 live boards and 120,000 jobs |
+| Wikidata software companies | CC0 | 0 of 50 names had a live board on Greenhouse, Ashby or Personio |
+| A hand-made list of well-known companies | No third-party data | 24 of 30 names had a live board, 4,534 jobs (a famous-name sample, so the long tail will be smaller) |
+
+The conservative choice is the hand-made list, checked against the official feeds. It excludes pharma and health companies because of the owner's contract.
+
+**Cost:** reading a board takes about 1 second, because each host is limited to one request per second. Scanning on every search would be charged to the owner (the jobs Actor passes no platform usage to users) and could cost more than the search earns: at 1 GB and $0.40 per compute unit, 10 minutes costs about $0.07, while 50 jobs earn about $0.04. So searches need a prepared index, refreshed on a schedule, with only the boards that match read live. Where to host the index is still to be checked.
+
+**Rate limits:** after the 60-board sample, at about one request per second, `apply.workable.com` answered HTTP 429 to the test machine on both its feed and its robots.txt. The Wikidata run also read no Workable boards, so that row has no Workable result. An index must read Workable far more slowly, or read fewer Workable boards, and must treat a 429 as "not read", never as "jobs removed".
+
+### Q30. MCP directories (resolved 2026-11-07: owner approved)
+
+The project rule is "no outreach of any kind". The owner decided that listing an MCP server in MCP directories is allowed, because no one is contacted. Posts and messages stay excluded.
+
+- **Official MCP Registry:** first choice. It accepts closed-source servers that are publicly reachable, and removes only illegal content, malware, spam and broken servers. `mcp-registry.yml` publishes `docs/mcp-registry/server.json` using GitHub OIDC, so no secret is needed. The entry stays visible through the registry's API even after removal.
+- **Glama:** not used for now. Third-party sources say it indexes public GitHub repositories and needs a local server; this repository is private and the server is remote only.
+- **Others (Smithery, PulseMCP):** not checked against their own documentation yet.
