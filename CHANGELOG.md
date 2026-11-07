@@ -1,5 +1,15 @@
 # Changelog
 
+## 🔎 Job directory, part 2: search without naming companies (2026-11-07, branch `job-directory-search`)
+
+- **What users get:** the jobs Actor's **Search all companies** input and the MCP server's `search_all_companies` tool. Both search about 275 boards and 29,000 jobs by title and location, then read the matching boards live, so returned jobs are open now.
+- **Mixed answers (MCP):** the tool reads at least 5 boards when that many match, and takes turns between them. Real searches showed why: "account executive" matched 140 companies, but all 25 jobs came from Toast.
+- **Limits:** the directory has no Workable boards at the moment, and keywords match titles and locations only. Both READMEs say so.
+- **Listings:** new task "Remote product manager jobs at about 275 companies", updated descriptions, jobs Actor 0.7, MCP server 0.5.
+- **Live check:** `mcp_check` now also calls `search_all_companies` for one charged job.
+- **Example boards:** ottonova is a health insurer, so it's out of the prefill and tasks because of the owner's contract. tado and 1KOMMA5° replace it.
+- **Tests:** new tests in both Actors and the factory suite, plus real searches against the real index and live boards.
+
 ## 🛑 Job directory: a build can't lose its results to one platform (2026-11-07, branch `directory-build-limits`)
 
 - **What happened:** the first build hit its 120-minute limit and lost everything. Greenhouse, Lever and Ashby finished in 12 minutes. From 18:49 UTC, Workable answered every request with 429, and each name cost 4 minutes of retries.

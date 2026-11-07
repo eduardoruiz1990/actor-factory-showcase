@@ -24,10 +24,12 @@ PRICING = {
 }
 
 
-def run(storage, n=0, max_results=100, only_new=False, report_removed=False, tokens=None, **env):
-    tokens = tokens or ['blocked-5', f'acme-{n}', 'missing']
+def run(storage, n=0, max_results=100, only_new=False, report_removed=False, tokens=None, title_keywords=None,
+        search_directory=False, **env):
+    tokens = [] if search_directory else tokens or ['blocked-5', f'acme-{n}', 'missing']
     settings = {'board_tokens': tokens, 'max_results': max_results, 'max_requests_per_second': 1,
-                'only_new': only_new, 'report_removed': report_removed, 'state_key': 'test-search'}
+                'only_new': only_new, 'report_removed': report_removed, 'state_key': 'test-search',
+                'title_keywords': title_keywords or [], 'search_directory': search_directory}
     clean_env = {k: v for k, v in os.environ.items() if not k.startswith(('APIFY_', 'ACTOR_', 'CRAWLEE_'))}
     clean_env.update(APIFY_LOCAL_STORAGE_DIR=str(storage), CRAWLEE_STORAGE_DIR=str(storage), **env)
     done = subprocess.run([sys.executable, '-m', 'tests.local_run', json.dumps(settings)], cwd=ROOT, env=clean_env,
@@ -113,6 +115,25 @@ def test_memories_from_before_removed_results_still_work():
     assert parse_record({'greenhouse:team:1': {'title': 'Engineer 1'}, 'x': 'bad'}) == {
         'greenhouse:team:1': {'title': 'Engineer 1'}, 'x': {}}
     assert parse_record(None) == {}
+
+
+def test_a_directory_search_reads_only_boards_with_a_match_and_returns_live_jobs(tmp_path):
+    assert run(tmp_path, search_directory=True, title_keywords=['engineer'], TEAM_JOBS='1,2,3') == 3
+    items = dataset_items(tmp_path)
+    # Job 3 is not in the index yet; reading the board live finds it. 'missing' is listed but answers 404: skipped.
+    assert [i['title'] for i in items] == ['Engineer 1', 'Engineer 2', 'Engineer 3']
+    assert {i['board_token'] for i in items} == {'team'}
+
+
+def test_settings_for_a_directory_search():
+    s = Settings.from_input({'boardTokens': ['airbnb'], 'searchAllCompanies': True, 'titleKeywords': ['data']})
+    assert s.search_directory is True and s.board_tokens == [] and s.title_keywords == ['data']
+    assert Settings.from_input({'searchAllCompanies': True, 'locationKeywords': ['Berlin']}).board_tokens == []
+    with pytest.raises(ValueError, match='at least one title or location keyword'):
+        Settings.from_input({'boardTokens': ['airbnb'], 'searchAllCompanies': True})
+    other = Settings.from_input({'searchAllCompanies': True, 'titleKeywords': ['sales']})
+    same_named = Settings.from_input({'boardTokens': ['airbnb'], 'titleKeywords': ['data']})
+    assert len({s.state_key, other.state_key, same_named.state_key}) == 3  # separate memories for only_new
 
 
 def test_settings_validation():

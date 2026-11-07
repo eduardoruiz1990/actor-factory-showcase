@@ -1,7 +1,8 @@
 """The MCP server AI agents connect to when the Actor runs in Apify's Standby mode.
 
-Two tools: find_job_board (which of the five platforms a company hires through)
-and search_jobs (its open jobs, filtered). With `skills` (for example the skills
+Three tools: find_job_board (which of the five platforms a company hires through),
+search_jobs (its open jobs, filtered) and search_all_companies (by title and
+location, without naming companies, through directory.py). With `skills` (for example the skills
 an agent read from a CV), search_jobs keeps the jobs whose title or description
 mentions at least one and ranks them by how many. Plain company names are resolved by
 reading every platform and taking the board with the most open jobs, so an agent
@@ -17,6 +18,7 @@ forwards MCP requests to /mcp (webServerMcpPath in .actor/actor.json).
 
 from __future__ import annotations
 
+import math
 import re
 from collections.abc import Callable
 from typing import Any
@@ -28,12 +30,14 @@ from mcp.server.transport_security import TransportSecuritySettings
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 
-from . import privacy, source
+from . import directory, privacy, source
 from .polite import PoliteClient
 from .robots import RobotsCache
 
 MAX_RESULTS = 100  # per call, to keep answers within an agent's context
 MAX_SKILLS = 40
+MAX_DIRECTORY_BOARDS = 40  # read per search_all_companies call, to keep an agent's wait reasonable
+BOARDS_TO_MIX = 5  # search_all_companies reads this many boards, if that many match, so one company can't fill an answer
 DESCRIPTION_CHARS = 1500
 # Tried in this order for a plain company name.
 PLATFORM_PREFIXES = ('', 'lever:', 'ashby:', 'workable:', 'personio:')
@@ -160,26 +164,84 @@ def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer
                 # Without skills the first jobs found are the answer; with skills every company is read to rank them.
                 if not wanted and len(found_jobs) >= limit:
                     break
-        picked = [(job, []) for job in found_jobs]
-        if wanted:
-            ranked = sorted(((job, matched_skills(job, wanted)) for job in found_jobs), key=lambda pair: -len(pair[1]))
-            picked = [(job, matched) for job, matched in ranked if matched]
-        jobs: list[dict[str, Any]] = []
-        stopped = False
-        for job, matched in picked[:limit]:
-            job = privacy.clean(job)
-            if not await _charge(job):
-                stopped = True
-                break
-            jobs.append(summary(job, include_descriptions) | ({'matched_skills': matched} if wanted else {}))
-        result: dict[str, Any] = {'boards': boards, 'jobs': jobs, 'charged_results': len(jobs)}
+        result = {'boards': boards} | await deliver(found_jobs, wanted, limit, include_descriptions)
         if other_boards:
             result['other_boards'] = other_boards
-        if stopped:
-            result['note'] = 'Stopped: the spending limit of this Actor run is used up.'
         return result
 
+    @server.tool(description='Search open jobs across a directory of company job boards by title and location, '
+                             'without naming companies. At least one title or location keyword is required (any '
+                             'match, not case-sensitive). Optional skills, as in search_jobs. Boards with a matching '
+                             'job are read live, the most matches first, and the answer mixes companies. Jobs posted '
+                             f'today can be missing until the directory refreshes tomorrow. Reads up to '
+                             f'{MAX_DIRECTORY_BOARDS} boards and returns '
+                             f'up to max_results jobs (at most {MAX_RESULTS}); each job returned is charged as one '
+                             'result.')
+    async def search_all_companies(title_keywords: list[str] | None = None, location_keywords: list[str] | None = None,
+                                   skills: list[str] | None = None, max_results: int = 25,
+                                   include_descriptions: bool = False) -> dict[str, Any]:
+        limit = max(1, min(int(max_results), MAX_RESULTS))
+        filters = source.Settings(board_tokens=['x'], max_results=limit, max_requests_per_second=1.0,
+                                  title_keywords=[k.strip().lower() for k in title_keywords or [] if k.strip()],
+                                  location_keywords=[k.strip().lower() for k in location_keywords or [] if k.strip()])
+        if not filters.title_keywords and not filters.location_keywords:
+            return {'jobs': [], 'charged_results': 0, 'note': 'Give at least one title or location keyword.'}
+        wanted = unique_skills(skills or [])
+        found_jobs: list[dict[str, Any]] = []
+        boards_read = 0
+        enough = 0
+        per_board = math.ceil(limit / BOARDS_TO_MIX)
+        async with client() as http:
+            try:
+                keys = directory.matching_boards(await directory.load(http), filters)
+            except directory.DirectoryUnavailable as exc:
+                return {'jobs': [], 'charged_results': 0, 'note': str(exc)}
+            robots = RobotsCache(http)
+            for key in keys[:MAX_DIRECTORY_BOARDS]:
+                jobs = await read_board(key, http, robots, include_descriptions or bool(wanted))
+                boards_read += 1
+                matching = [job for job in jobs if source.matches(job, filters)]
+                found_jobs.extend(matching)
+                enough += min(len(matching), per_board)
+                if not wanted and enough >= limit:
+                    break
+        result = {'boards_matched': len(keys), 'boards_read': boards_read}
+        return result | await deliver(found_jobs, wanted, limit, include_descriptions, mix_boards=True)
+
     return server
+
+
+def take_turns(picked: list[tuple[dict[str, Any], list[str]]], limit: int) -> list[tuple[dict[str, Any], list[str]]]:
+    """Up to `limit` jobs: each board's first, then each board's second and so on; the most skills matched come first."""
+    turns: dict[tuple[Any, Any], int] = {}
+    numbered = []
+    for pair in picked:
+        board = (pair[0].get('platform'), pair[0].get('board_token'))
+        turns[board] = turns.get(board, 0) + 1
+        numbered.append((turns[board], pair))
+    numbered.sort(key=lambda item: item[0])
+    return sorted((pair for _, pair in numbered[:limit]), key=lambda pair: -len(pair[1]))
+
+
+async def deliver(found_jobs: list[dict[str, Any]], wanted: list[str], limit: int, include_descriptions: bool,
+                  mix_boards: bool = False) -> dict[str, Any]:
+    """Charge and summarise up to `limit` jobs; with skills, only those mentioning one, the most matches first."""
+    picked: list[tuple[dict[str, Any], list[str]]] = [(job, []) for job in found_jobs]
+    if wanted:
+        ranked = sorted(((job, matched_skills(job, wanted)) for job in found_jobs), key=lambda pair: -len(pair[1]))
+        picked = [(job, matched) for job, matched in ranked if matched]
+    jobs: list[dict[str, Any]] = []
+    stopped = False
+    for job, matched in take_turns(picked, limit) if mix_boards else picked[:limit]:
+        job = privacy.clean(job)
+        if not await _charge(job):
+            stopped = True
+            break
+        jobs.append(summary(job, include_descriptions) | ({'matched_skills': matched} if wanted else {}))
+    result: dict[str, Any] = {'jobs': jobs, 'charged_results': len(jobs)}
+    if stopped:
+        result['note'] = 'Stopped: the spending limit of this Actor run is used up.'
+    return result
 
 
 async def _charge(job: dict[str, Any]) -> bool:

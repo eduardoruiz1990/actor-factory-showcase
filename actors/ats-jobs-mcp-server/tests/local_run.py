@@ -3,6 +3,7 @@
 The Apify SDK keeps its configuration and storage settings for the life of the
 process, so every end-to-end test runs in its own interpreter, like a real run.
 A board token 'acme-3' gets three jobs; 'blocked' is disallowed by robots.txt;
+the directory lists 'team' and, without a matching job, 'other';
 'team' has the jobs numbered in $TEAM_JOBS (default 1,2,3); 'flaky' has jobs 1
 and 2 but answers HTTP 500 while $FLAKY_DOWN is set; any other token is an
 unknown board (HTTP 404).
@@ -38,6 +39,11 @@ def job(token: str, n: int) -> dict:
 def api(request: httpx2.Request) -> httpx2.Response:
     if request.url.path == '/robots.txt':
         return httpx2.Response(200, text='User-agent: *\nDisallow: /v1/boards/blocked\n')
+    if request.url.path.endswith('/records/index.json.gz'):
+        return httpx2.Response(200, json={'boards': {
+            'other': {'company': 'Other', 'jobs': [['Designer', 'Remote']]},
+            'team': {'company': 'Acme', 'jobs': [['Engineer 1', 'Remote'], ['Engineer 2', 'Remote']]},
+            'missing': {'company': 'Gone', 'jobs': [['Engineer 9', 'Remote']]}}})
     if request.url.path == '/v1/boards/team/jobs':
         numbers = [int(n) for n in os.environ.get('TEAM_JOBS', '1,2,3').split(',') if n]
         return httpx2.Response(200, json={'jobs': [job('team', n) for n in numbers], 'meta': {'total': len(numbers)}})

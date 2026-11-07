@@ -64,7 +64,7 @@ def call_tool(http: PoliteClient, url: str, token: str, request_id: int, name: s
 
 
 def run_checks(http: PoliteClient, url: str, token: str, tools: list[str], board_checks: dict[str, str],
-               paid_board: str) -> list[Check]:
+               paid_board: str, directory_search: dict[str, Any]) -> list[Check]:
     """Every check in order; connecting comes first, because nothing else can pass without it."""
     checks: list[Check] = []
     try:
@@ -103,6 +103,16 @@ def run_checks(http: PoliteClient, url: str, token: str, tools: list[str], board
                      f"boards={found.get('boards')} titles={titles} charged={found.get('charged_results')}")
 
     attempt("search_jobs one job", paid)
+
+    def directory() -> Check:
+        # Charged too, for one job: the directory must load on Apify and lead to a live board.
+        found = call_tool(http, url, token, 91, "search_all_companies", {**directory_search, "max_results": 1})
+        titles = [job.get("title") for job in found.get("jobs", [])]
+        passed = found.get("charged_results") == 1 and len(titles) == 1 and int(found.get("boards_matched") or 0) > 0
+        return Check("search_all_companies one job", passed,
+                     f"matched={found.get('boards_matched')} titles={titles} note={found.get('note')}")
+
+    attempt("search_all_companies one job", directory)
     return checks
 
 
@@ -142,7 +152,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     url = args.url or f"https://{owner}--{actor}.apify.actor/mcp"
     with PoliteClient.from_config(config, timeout=float(cfg["timeout_seconds"])) as http:
-        checks = run_checks(http, url, token, list(cfg["tools"]), dict(cfg["board_checks"]), cfg["paid_board"])
+        checks = run_checks(http, url, token, list(cfg["tools"]), dict(cfg["board_checks"]), cfg["paid_board"],
+                            dict(cfg["directory_search"]))
         run = "not read (--url)" if args.url else latest_run(http, config["apify"]["api_base"], owner, actor, token)
     body = render(actor, url, checks, run)
     print(body)

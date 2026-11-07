@@ -13,6 +13,7 @@ hiring, for which roles, where and for how much.
 
 - Get every open job from any company's Greenhouse, Lever, Ashby, Workable or Personio board, with one request per
   company
+- **Search without naming companies:** turn on **Search all companies** and search about 275 company job boards by title and location
 - Mix the five platforms in one run, with the same output fields for every job
 - Accept board names or the URLs you copy from a careers page (see the table below)
 - Return salary ranges (minimum, maximum, currency, interval) from Greenhouse, Lever, Ashby and Personio, wherever the
@@ -110,6 +111,28 @@ With **Include full job descriptions** off, `content` and `content_text` are emp
 departments and offices too). The Actor does not return the companies' custom application questions or custom
 metadata fields. When a Greenhouse job lists one pay range per country, the salary fields hold the first one. E-mail addresses and phone numbers that appear in a description are replaced with `[removed]`.
 
+## How to search jobs without naming companies
+
+Turn on **Search all companies** and give title or location keywords, for example "product manager" and "Remote". The
+Actor looks them up in its directory, then reads every board with a match live, the boards with the most matches first, until it
+reaches **Maximum results**.
+
+```json
+{
+    "searchAllCompanies": true,
+    "titleKeywords": ["product manager"],
+    "locationKeywords": ["Remote"],
+    "maxResults": 200
+}
+```
+
+- **What it covers:** a hand-made directory of about 275 company job boards, about 29,000 open jobs in November 2026, mostly tech companies, from Greenhouse, Lever, Ashby and Personio. It isn't the whole job market, and it holds no Workable boards at the moment. Pharma and health companies are left out. To read any other company, list its board in **Job boards**.
+- **Live jobs:** the directory only picks which boards to read, so you get jobs that are open now. It refreshes daily, so a job posted today can be missing until the next refresh.
+- **Keywords match titles and locations:** a word that appears only in descriptions won't find a board.
+- **Daily feeds:** **Only new jobs** works here too, so you can schedule a search and get only new matches.
+
+You pay the same per job. Jobs that don't match your keywords aren't charged.
+
 ## Get a daily feed of new jobs
 
 Turn on **Only new jobs** and [schedule the Actor](https://docs.apify.com/platform/schedules), for example every
@@ -151,6 +174,8 @@ With **Report removed jobs** on, each job reported as filled or closed is one re
 ## Input
 
 - **Job boards** (`boardTokens`, required): the companies to read, on Greenhouse, Lever, Ashby, Workable or Personio.
+- **Search all companies** (`searchAllCompanies`, default `false`): ignore **Job boards** and search the Actor's
+  company directory; needs a title or location keyword.
 - **Include full job descriptions** (`includeContent`, default `true`): descriptions, plus departments and offices
   on Greenhouse.
 - **Title keywords** (`titleKeywords`): keep jobs whose title contains any of these words.
@@ -247,7 +272,8 @@ companies on all five platforms that feeds new `job_id`s into a job board, a CRM
 dashboard.
 
 For AI agents there is a dedicated server: the [Job Search MCP Server](https://apify.com/guayox/ats-jobs-mcp-server) gives Claude, Cursor and other
-MCP clients two tools, one that finds which job board a company uses and one that searches its open jobs.
+MCP clients three tools: one finds which job board a company uses, one searches a company's open jobs, and one searches
+without naming companies.
 
 ## Related Actors
 

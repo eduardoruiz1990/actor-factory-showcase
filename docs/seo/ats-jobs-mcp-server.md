@@ -19,6 +19,7 @@ server.
 | Use case | Who | Target phrases | Where they appear |
 |---|---|---|---|
 | Match a CV to open jobs | Job seekers, career assistants | resume job matching, match CV to jobs, find jobs matching my resume | SEO title and description, README heading "How to match your CV to open jobs with AI", `skills` argument |
+| Search without naming companies | Job seekers, agent builders | remote [role] jobs, job search without company names, search jobs across companies | Description, README heading "How to search jobs without naming companies", use-case table |
 | MCP access to jobs | Agent builders | job search MCP server, jobs MCP, jobs API for AI agents | Title, SEO title, README H1 |
 | Is a company hiring | Job seekers | is [company] hiring, remote jobs at [company] | README use-case table |
 | Salary research | Job seekers, recruiters, HR | salary data API, salary benchmarking, pay ranges | SEO title ("salaries"), use-case table |

@@ -21,7 +21,7 @@ from typing import Any
 
 from apify import Actor, Event
 
-from . import privacy, source
+from . import directory, privacy, source
 from .polite import PoliteClient
 from .robots import RobotsCache
 from .seen import SeenItems
@@ -42,7 +42,11 @@ async def main() -> None:
             await Actor.fail(status_message=str(exc))
             return
 
-        pushed = await collect(settings)
+        try:
+            pushed = await collect(settings)
+        except directory.DirectoryUnavailable as exc:
+            await Actor.fail(status_message=str(exc))
+            return
         capped = ' Stopped at Maximum results: raise it to get every job.' if pushed >= settings.max_results else ''
         await Actor.set_status_message(f'Finished: {pushed} result(s).{capped}')
 
@@ -60,6 +64,9 @@ async def collect(settings: source.Settings, *, http: PoliteClient | None = None
     read: set[str] = set()  # boards that answered this run
     complete = False
     try:
+        if settings.search_directory:
+            settings.board_tokens = directory.matching_boards(await directory.load(client), settings)
+            Actor.log.info(f'Company directory: {len(settings.board_tokens)} boards have a matching job')
         robots = RobotsCache(client)
         async for item in source.iter_items(settings, client, robots, read):
             key = source.item_key(item)

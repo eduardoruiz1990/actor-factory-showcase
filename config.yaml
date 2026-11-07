@@ -247,10 +247,11 @@ watcher:
     actor: "ats-jobs-mcp-server"
     # A Standby run can take a while to start on the first request.
     timeout_seconds: 300
-    tools: ["find_job_board", "search_jobs"]
+    tools: ["find_job_board", "search_jobs", "search_all_companies"]
     # Name -> the board it must resolve to. Ramp also has a one-job Greenhouse board under its name.
     board_checks: {notion: "ashby:notion", ramp: "ashby:ramp"}
     paid_board: "ashby:notion"
+    directory_search: {title_keywords: ["engineer"]}
 
 directory:
   # The job directory's public, read-only Apify store (QUESTIONS Q29), built by .github/workflows/directory.yml.

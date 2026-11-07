@@ -3,7 +3,8 @@
 Give Claude, Cursor or any MCP client live access to company job boards. Ask "what engineering roles is Notion
 hiring for?" or "here is my CV: which of these companies have a job for me?" and the agent finds which applicant
 tracking system (ATS) each company uses, then reads its open jobs from **Greenhouse**, **Lever**, **Ashby**,
-**Workable** or **Personio**, with **salary ranges** where the company publishes them.
+**Workable** or **Personio**, with **salary ranges** where the company publishes them. Don't have a company in mind?
+Ask "find remote product manager jobs" and it searches a directory of about 275 companies for you.
 
 ## What can the Job Search MCP Server do?
 
@@ -13,6 +14,8 @@ tracking system (ATS) each company uses, then reads its open jobs from **Greenho
 - **Search open jobs:** one or more companies (names or job board URLs), with optional title and location
   keywords. Each job comes with title, company, location, department, workplace and employment type, salary range,
   posting date and the link to apply.
+- **Search without naming companies:** give title or location keywords and it searches its company directory, reads
+  the matching boards live and mixes companies in the answer.
 - **Match skills or a CV to jobs:** pass skills (your agent can read them from a CV) and only jobs whose title or
   description mentions them come back, best matches first, each with the skills it matched.
 - **Short or full answers:** a compact summary per job by default, or the description too (first 1,500
@@ -25,6 +28,7 @@ tracking system (ATS) each company uses, then reads its open jobs from **Greenho
 | Who | Use case | Ask your agent, for example |
 |---|---|---|
 | Job seekers | **Match your CV to open jobs** at the companies you want to work for | "Here is my CV. Which open jobs at Notion, Ramp and Airbnb fit my skills?" |
+| Job seekers | **Find jobs without naming companies**, by title and location | "Find remote product manager jobs." |
 | Job seekers | **Check whether a company is hiring**, including remote roles | "Is Warp hiring remote engineers?" |
 | Job seekers, recruiters, HR | **Salary research and benchmarking** from published pay ranges | "What do Airbnb and Ramp pay account executives?" |
 | Recruiters, talent teams | **Competitor hiring intelligence:** which roles rivals open, in which teams and places | "Which sales roles have our three competitors opened, and where?" |
@@ -35,8 +39,9 @@ tracking system (ATS) each company uses, then reads its open jobs from **Greenho
 | HR teams, hiring managers | **Job description research:** how peers word the same role | "Show me how Airbnb and Ramp describe a product designer role." |
 | Agent builders | **Live job data for your own agent**, career assistant or job bot over MCP | Connect the server and call `search_jobs` from your agent |
 
-**What it does not do:** it does not discover companies for you (your agent names them, up to 20 per call), and it
-covers only these five ATS platforms, not Workday, iCIMS, SmartRecruiters or job boards like LinkedIn and Indeed.
+**What it does not do:** it does not cover every company. `search_all_companies` searches a hand-made directory of about 275 company job boards, about 29,000 open jobs in November 2026, mostly tech companies, not the whole
+job market, and `search_jobs` takes up to 20 companies per call. It covers only these five ATS platforms, not Workday,
+iCIMS, SmartRecruiters or job boards like LinkedIn and Indeed.
 Salaries appear only where the company publishes them. For scheduled tracking and bulk exports, use the
 [Career Site Jobs Scraper](https://apify.com/guayox/greenhouse-jobs-scraper).
 
@@ -46,6 +51,7 @@ Salaries appear only where the company publishes them. For scheduled tracking an
 |---|---|---|---|
 | `find_job_board` | `company` | the board (for example `ashby:notion`), its platform, the number of open jobs and any `other_boards` found under the name | No |
 | `search_jobs` | `companies`, `title_keywords`, `location_keywords`, `skills`, `max_results` (default 25, at most 100), `include_descriptions` | the jobs found (with `matched_skills` when skills are given), the board used for each company and any `other_boards` | Per job returned |
+| `search_all_companies` | `title_keywords` and/or `location_keywords`, `skills`, `max_results` (default 25, at most 100), `include_descriptions` | the jobs found across the directory, with `boards_matched` and `boards_read` | Per job returned |
 
 ## How to connect the Job Search MCP Server to Claude, Cursor or another MCP client
 
@@ -109,6 +115,26 @@ and gets back, for each job (here a real answer):
 }
 ```
 
+## How to search jobs without naming companies
+
+Ask your agent: *"Find remote product manager jobs."* The agent calls:
+
+```json
+{"tool": "search_all_companies", "arguments": {"title_keywords": ["product manager"], "location_keywords": ["remote"]}}
+```
+
+The server looks the keywords up in its directory, reads the boards with a match live and returns jobs from several
+companies. In a test on 7 November 2026, this search matched 50 companies and answered in seconds. Add `skills` to
+rank the jobs by what your CV mentions; that reads up to 40 boards with their descriptions, so expect about a minute.
+
+- **Live jobs:** every job returned is read from the company's board at that moment. The directory only picks which
+  boards to read, so a closed job isn't returned.
+- **Refreshed daily:** a job posted today can be missing until the next refresh.
+- **Keywords match job titles and locations:** "python" finds few jobs because few titles say Python. Search by
+  role, such as "backend engineer", and pass Python as a skill.
+- **Coverage:** the directory holds boards from Greenhouse, Lever, Ashby and Personio, and no Workable boards at the
+  moment. For a company it doesn't list, use `search_jobs`.
+
 ## How to match your CV to open jobs with AI
 
 Give your agent your CV and the companies you are interested in, and ask: *"Here is my CV. Which open jobs at
@@ -151,6 +177,9 @@ that your own use of the job postings suits your purpose and jurisdiction.
 **A company was not found.** It may not use one of these five platforms, or its board has a different name. Ask
 the agent to use the job board URL from the company's careers page instead (for example
 `https://jobs.lever.co/<company>`).
+
+**Which companies are in the directory?** About 275, chosen by hand and mostly tech companies. Pharma and health
+companies are left out. A company that isn't listed can still be read by name with `search_jobs`.
 
 **The jobs are from the wrong company.** Different companies can share a name across platforms. The server uses the
 board with the most open jobs and lists the rest in `other_boards`, for example `{"ramp": 1}` next to `ashby:ramp`

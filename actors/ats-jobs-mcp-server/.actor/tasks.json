@@ -4,7 +4,7 @@
         {
             "name": "tech-jobs-and-salaries-snapshot",
             "title": "Open jobs and salaries at 12 tech companies",
-            "description": "A one-off list of every open job at Airbnb, Stripe, Discord, Zoox, Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, ottonova and tado, with salary ranges where published. The same data the MCP server gives AI agents, as a normal run you can export to JSON, CSV or Excel.",
+            "description": "A one-off list of every open job at Airbnb, Stripe, Discord, Zoox, Spotify, Notion, Ramp, Warp, Hugging Face, Blueground, 1KOMMA5° and tado, with salary ranges where published. The same data the MCP server gives AI agents, as a normal run you can export to JSON, CSV or Excel.",
             "input": {
                 "boardTokens": [
                     "airbnb",
@@ -17,7 +17,7 @@
                     "ashby:warp",
                     "workable:huggingface",
                     "workable:blueground",
-                    "personio:ottonova",
+                    "personio:1komma5grad",
                     "personio:tado"
                 ],
                 "includeContent": false,
