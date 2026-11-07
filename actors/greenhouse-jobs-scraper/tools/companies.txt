@@ -1,0 +1,62 @@
+# Companies for the job directory (QUESTIONS Q29): a hand-made list of names, one per line, tried on all
+# five platforms by `build_directory verify`. No third-party list was copied. Pharma, biotech and health
+# companies are left out on purpose because of the owner's contract; do not add them.
+# AI and data
+anthropic openai cohere mistral perplexity scaleai scale huggingface runwayml runway stabilityai elevenlabs
+characterai adept inflectionai togetherai together replicate langchain pinecone weaviate qdrant chroma
+modal baseten fireworksai groq cerebras sambanova lightmatter glean harvey sierra decagon cresta writer
+jasper synthesia deepgram assemblyai labelbox snorkelai weightsandbiases wandb datarobot dataiku databricks
+snowflake dbtlabs fivetran airbyte hightouch census astronomer dagster prefect starburst clickhouse
+motherduck confluent redpanda singlestore cockroachlabs mongodb neo4j timescale planetscale neon supabase
+# Developer tools and infrastructure
+vercel netlify cloudflare fastly datadog grafanalabs newrelic sentry honeycomb launchdarkly postman
+gitlab github sourcegraph replit cursor anysphere warp linear retool hashicorp pulumi docker tailscale
+twilio sendgrid stripe plaid checkr temporal temporaltechnologies circleci buildkite render flyio railway
+digitalocean linode vultr akamai elastic algolia contentful sanity strapi webflow framer figma canva miro
+notion airtable coda asana clickup monday atlassian zapier make n8n smartsheet dropbox box zoom slack
+loom calendly docusign pagerduty okta auth0 onelogin onepassword 1password bitwarden snyk wiz lacework
+crowdstrike sentinelone rubrik cohesity zscaler abnormalsecurity abnormal vanta drata secureframe tanium
+arcticwolf huntress expel chainguard semgrep orca paloaltonetworks fortinet
+# Fintech and finance
+ramp brex mercury revolut monzo n26 wise klarna affirm adyen chime sofi robinhood coinbase kraken gemini
+ripple circle chainalysis fireblocks anchorage consensys alchemy opensea uniswap uniswaplabs dydx paxos
+marqeta gusto rippling deel remote oysterhr carta pilot bench modernTreasury moderntreasury unit lithic
+stripe toast squareup block square paypal intuit billcom bill tipalti airwallex nubank wealthfront betterment
+acorns dave current varo upgrade lendingclub oportun pagaya upstart payoneer checkoutcom sumup mollie gocardless
+# Commerce, marketplaces and consumer
+airbnb doordash instacart lyft uber grubhub deliveroo glovo wolt getir bolt rappi shopify faire etsy ebay
+wayfair chewy stitchfix poshmark depop vinted thredup rentthebunway warbyparker allbirds glossier gymshark
+strava duolingo discord reddit pinterest snap tiktok bytedance spotify soundcloud patreon substack
+medium quora yelp nextdoor tinder match bumble hinge grindr roblox epicgames unity riotgames supercell
+niantic scopely playtika zynga kabam twitch vimeo canva bereal zillow redfin opendoor compass offerup
+turo getaround booking expedia tripadvisor hopper getyourguide flixbus blablacar skyscanner omio sonder
+vacasa blueground tado
+# Mobility, hardware, climate and space
+zoox waymo cruise aurora nuro wayve motional rivian lucid tesla joby archer anduril shieldai palantir
+spacex relativityspace rocketlab planet astranis varda samsara flexport project44 convoy motive keeptruckin
+verkada ring nest sonos formlabs desktopmetal carbon redwoodmaterials northvolt climeworks
+arcadia wattbuy sunrun octopusenergy 1komma5grad enpal sonnen zolar
+# Business software and services
+salesforce hubspot gong outreach salesloft apollo zoominfo clari highspot seismic intercom zendesk freshworks
+front drift sprinklr braze iterable klaviyo attentive mailchimp customerio segment amplitude mixpanel
+heap fullstory contentsquare pendo gainsight servicenow workday greenhouse lever ashby workable personio
+lattice cultureamp leapsome hibob factorial bamboohr justworks namely paycor oyster multiplier papaya
+coursera udemy skillshare masterclass quizlet chegg khanacademy guild handshake
+tripactions navan expensify pleo spendesk payhawk qonto soldo moss
+procore autodesk buildertrend servicetitan housecallpro jobber toasttab olo lightspeed clover
+# News, media and research
+vox nytimes washingtonpost bloomberg theatlantic buzzfeed axios politico semafor morningbrew
+# European and other international scale-ups
+sumup n26 trade-republic traderepublic babbel getyourguide flix auto1 zalando delivery-hero deliveryhero
+celonis personio contentful mambu solarisbank wefox raisin taxfix adjust commercetools
+bitpanda gorillas tier voi lime bird spin cabify sipay jobandtalent wallapop factorial typeform
+travelperk glovo idealista fever redpoints seedtag lodgify holded
+doctrine backmarket mirakl contentsquare qonto swile payfit ledger sorare blablacar
+deezer dataiku algolia mistralai
+farfetch talkdesk feedzai outsystems unbabel remote-com
+truelayer monzo starlingbank starling-bank zopa gousto deliveroo darktrace snyk cazoo checkout
+spotify klarna northvolt tink trustly lovable epidemicsound
+adevinta schibsted vipps kahoot cognite
+grab gojek sea shopee canva atlassian airwallex safetyculture culture-amp
+razorpay zerodha swiggy zomato meesho cred phonepe freshworks
+rappi nubank creditas loft quintoandar ebanx
