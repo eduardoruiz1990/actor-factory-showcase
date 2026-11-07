@@ -7,8 +7,9 @@ tracking system (ATS) each company uses, then reads its open jobs from **Greenho
 
 ## What can the Job Search MCP Server do?
 
-- **Find a company's job board (ATS lookup):** give a company name and it tries the five platforms for you (for
-  example "notion" is on Ashby, "airbnb" on Greenhouse) and says how many jobs are open. Free: nothing is charged.
+- **Find a company's job board (ATS lookup):** give a company name and it checks all five platforms for you (for
+  example "notion" is on Ashby, "airbnb" on Greenhouse) and says how many jobs are open. If the name exists on several
+  platforms, it uses the board with the most open jobs and lists the others. Free: nothing is charged.
 - **Search open jobs:** one or more companies (names or job board URLs), with optional title and location
   keywords. Each job comes with title, company, location, department, workplace and employment type, salary range,
   posting date and the link to apply.
@@ -43,8 +44,8 @@ Salaries appear only where the company publishes them. For scheduled tracking an
 
 | Tool | Arguments | Returns | Charged |
 |---|---|---|---|
-| `find_job_board` | `company` | the board (for example `ashby:notion`), its platform and the number of open jobs | No |
-| `search_jobs` | `companies`, `title_keywords`, `location_keywords`, `skills`, `max_results` (default 25, at most 100), `include_descriptions` | the jobs found (with `matched_skills` when skills are given) and the board used for each company | Per job returned |
+| `find_job_board` | `company` | the board (for example `ashby:notion`), its platform, the number of open jobs and any `other_boards` found under the name | No |
+| `search_jobs` | `companies`, `title_keywords`, `location_keywords`, `skills`, `max_results` (default 25, at most 100), `include_descriptions` | the jobs found (with `matched_skills` when skills are given), the board used for each company and any `other_boards` | Per job returned |
 
 ## How to connect the Job Search MCP Server to Claude, Cursor or another MCP client
 
@@ -150,6 +151,11 @@ that your own use of the job postings suits your purpose and jurisdiction.
 **A company was not found.** It may not use one of these five platforms, or its board has a different name. Ask
 the agent to use the job board URL from the company's careers page instead (for example
 `https://jobs.lever.co/<company>`).
+
+**The jobs are from the wrong company.** Different companies can share a name across platforms. The server uses the
+board with the most open jobs and lists the rest in `other_boards`, for example `{"ramp": 1}` next to `ashby:ramp`
+with 171 jobs. Ask the agent to use the board you mean, by its key (`ashby:ramp`) or its URL. A key or URL also
+answers faster, because only that board is read.
 
 **Why is `company` sometimes empty?** Lever's and Ashby's feeds do not include the company's display name; every
 job carries its `board_token`, which identifies the company.

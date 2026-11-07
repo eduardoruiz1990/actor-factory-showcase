@@ -4,8 +4,10 @@ Two tools: find_job_board (which of the five platforms a company hires through)
 and search_jobs (its open jobs, filtered). With `skills` (for example the skills
 an agent read from a CV), search_jobs keeps the jobs whose title or description
 mentions at least one and ranks them by how many. Plain company names are resolved by
-trying each platform in turn, so an agent can ask for "notion" without knowing
-it uses Ashby. Every job search_jobs returns is also pushed to the run's dataset,
+reading every platform and taking the board with the most open jobs, so an agent
+can ask for "notion" without knowing it uses Ashby. The same name can be a
+different board elsewhere ("ramp" is one stale job on Greenhouse and about 170 on
+Ashby), so the other boards found are reported too. Every job search_jobs returns is also pushed to the run's dataset,
 which charges it with Apify's per-item event, exactly as a normal run does; the
 user's spending limit stops it the same way.
 
@@ -44,7 +46,9 @@ INSTRUCTIONS = (
     'Open jobs from company career boards on Greenhouse, Lever, Ashby, Workable and Personio, read from each '
     "platform's public job feed. Give company names (for example 'airbnb' or 'notion') or job board URLs; the server "
     'finds which platform each company uses. To match a CV or a list of skills to open jobs, pass the skills to '
-    'search_jobs; it ranks jobs by how many they mention. Each job returned is charged as one result.'
+    'search_jobs; it ranks jobs by how many they mention. A name can match boards on several platforms, possibly of '
+    'different companies: the board with the most open jobs is used and other_boards lists the rest; pass one '
+    "explicitly (for example 'ashby:ramp') to read it. Each job returned is charged as one result."
 )
 
 
@@ -66,13 +70,17 @@ async def read_board(key: str, http: PoliteClient, robots: RobotsCache, include_
 
 
 async def resolve(company: str, http: PoliteClient, robots: RobotsCache,
-                  include_content: bool = False) -> tuple[str | None, list[dict[str, Any]]]:
-    """The first candidate board with open jobs, and those jobs."""
+                  include_content: bool = False) -> tuple[str | None, list[dict[str, Any]], dict[str, int]]:
+    """The candidate board with the most open jobs (the earlier one on a tie), its jobs, and the other boards found."""
+    found: dict[str, list[dict[str, Any]]] = {}
     for key in candidates(company):
         jobs = await read_board(key, http, robots, include_content)
         if jobs:
-            return key, jobs
-    return None, []
+            found[key] = jobs
+    if not found:
+        return None, [], {}
+    best = max(found, key=lambda key: len(found[key]))
+    return best, found[best], {key: len(jobs) for key, jobs in found.items() if key != best}
 
 
 def matched_skills(job: dict[str, Any], skills: list[str]) -> list[str]:
@@ -100,25 +108,30 @@ def summary(job: dict[str, Any], include_description: bool) -> dict[str, Any]:
 
 def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer:
     """The MCP server; `client` makes the polite HTTP client for each tool call (tests pass a fake one)."""
-    server = MCPServer(name='ats-jobs', title='ATS Jobs', version='0.2', instructions=INSTRUCTIONS)
+    server = MCPServer(name='ats-jobs', title='ATS Jobs', version='0.4', instructions=INSTRUCTIONS)
 
     @server.custom_route('/', methods=['GET'], include_in_schema=False)
     async def ready(_request: Request) -> PlainTextResponse:
         return PlainTextResponse('ok')  # Apify's readiness probe
 
     @server.tool(description='Find which job board platform a company uses (Greenhouse, Lever, Ashby, Workable '
-                             'or Personio) and how many jobs it has open. Free: nothing is charged.')
+                             'or Personio) and how many jobs it has open. If the name matches boards on several '
+                             'platforms, the one with the most open jobs is returned and other_boards lists the rest, '
+                             'which may belong to a different company. Free: nothing is charged.')
     async def find_job_board(company: str) -> dict[str, Any]:
         async with client() as http:
-            key, jobs = await resolve(company, http, RobotsCache(http))
+            key, jobs, others = await resolve(company, http, RobotsCache(http))
         if key is None:
             return {'company': company, 'board': None, 'platform': None, 'open_jobs': 0,
                     'note': 'No open jobs found on Greenhouse, Lever, Ashby, Workable or Personio under this name. '
                             'Try the job board URL from the company careers page.'}
-        return {'company': company, 'board': key, 'platform': jobs[0]['platform'], 'open_jobs': len(jobs)}
+        return ({'company': company, 'board': key, 'platform': jobs[0]['platform'], 'open_jobs': len(jobs)}
+                | ({'other_boards': others} if others else {}))
 
-    @server.tool(description='Search the open jobs of one or more companies. Companies are names or job board '
-                             'URLs. Optional title and location keywords (any match, not case-sensitive). Optional '
+    @server.tool(description='Search the open jobs of one or more companies. Companies are names, board keys '
+                             "(such as 'ashby:ramp') or job board URLs; a name uses the board with the most open jobs "
+                             'and other_boards lists any others found under it. Optional title and location keywords '
+                             '(any match, not case-sensitive). Optional '
                              'skills, such as those listed on a CV: only jobs whose title or description mentions at '
                              'least one are kept, best matches first, each with its matched_skills. Returns up to '
                              f'max_results jobs (at most {MAX_RESULTS}) with salary ranges where published; each job '
@@ -132,13 +145,17 @@ def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer
                                   location_keywords=[k.strip().lower() for k in location_keywords or [] if k.strip()])
         wanted = unique_skills(skills or [])
         boards: dict[str, str | None] = {}
+        other_boards: dict[str, dict[str, int]] = {}
         found_jobs: list[dict[str, Any]] = []
         async with client() as http:
             robots = RobotsCache(http)
             for company in companies[:20]:
                 # Skills are matched against descriptions, so those are read whenever skills are given.
-                key, found = await resolve(company, http, robots, include_content=include_descriptions or bool(wanted))
+                key, found, others = await resolve(company, http, robots,
+                                                   include_content=include_descriptions or bool(wanted))
                 boards[company] = key
+                if others:
+                    other_boards[company] = others
                 found_jobs.extend(job for job in found if source.matches(job, filters))
                 # Without skills the first jobs found are the answer; with skills every company is read to rank them.
                 if not wanted and len(found_jobs) >= limit:
@@ -156,6 +173,8 @@ def build_server(client: Callable[[], PoliteClient] = PoliteClient) -> MCPServer
                 break
             jobs.append(summary(job, include_descriptions) | ({'matched_skills': matched} if wanted else {}))
         result: dict[str, Any] = {'boards': boards, 'jobs': jobs, 'charged_results': len(jobs)}
+        if other_boards:
+            result['other_boards'] = other_boards
         if stopped:
             result['note'] = 'Stopped: the spending limit of this Actor run is used up.'
         return result

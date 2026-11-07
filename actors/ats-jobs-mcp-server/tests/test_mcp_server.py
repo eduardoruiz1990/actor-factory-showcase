@@ -41,6 +41,16 @@ ROUTES = {
 }
 
 
+# A second, smaller board under the same name, as 'ramp' and 'warp' have on Greenhouse.
+NAMESAKE = {'jobs': [{'id': 1, 'title': 'Copy of Chief Legal Officer', 'company_name': 'WARP',
+                      'location': {'name': 'dublin'},
+                      'absolute_url': 'https://job-boards.greenhouse.io/warp/jobs/1',
+                      'updated_at': '2026-10-23T04:49:35-04:00'}], 'meta': {'total': 1}}
+NAMESAKE_ROUTES = ROUTES | {
+    'boards-api.greenhouse.io/v1/boards/warp/jobs?pay_transparency=true': httpx2.Response(200, json=NAMESAKE),
+}
+
+
 class Charges(list):
     """What search_jobs pushed (and so charged); pushes past `limit` report the spending limit as used up."""
 
@@ -81,6 +91,35 @@ def test_find_job_board_resolves_a_company_on_its_platform_for_free(charged):
     assert 'boards-api.greenhouse.io/v1/boards/warp/jobs?pay_transparency=true' in seen and charged == []
     missing = call(server, 'find_job_board', company='nobody-here')
     assert missing['board'] is None and missing['open_jobs'] == 0
+
+
+def test_a_name_on_several_platforms_uses_the_board_with_most_jobs_and_reports_the_others(charged):
+    server = build_server(fake_client(NAMESAKE_ROUTES, []))
+    found = call(server, 'find_job_board', company='warp')
+    assert found == {'company': 'warp', 'board': 'ashby:warp', 'platform': 'ashby', 'open_jobs': 3,
+                     'other_boards': {'warp': 1}}
+    jobs = call(server, 'search_jobs', companies=['warp'], title_keywords=['account'])
+    # Greenhouse answers first, but its stale board must not hide the real one.
+    assert jobs['boards'] == {'warp': 'ashby:warp'} and jobs['other_boards'] == {'warp': {'warp': 1}}
+    assert [j['title'] for j in jobs['jobs']] == ['Account Executive'] and len(charged) == 1
+
+
+def test_an_explicit_board_reads_only_that_board(charged):
+    seen = []
+    server = build_server(fake_client(NAMESAKE_ROUTES, seen))
+    found = call(server, 'search_jobs', companies=['https://job-boards.greenhouse.io/warp'])
+    assert found['boards'] == {'https://job-boards.greenhouse.io/warp': 'warp'} and 'other_boards' not in found
+    assert [j['title'] for j in found['jobs']] == ['Copy of Chief Legal Officer']
+    assert not any('ashbyhq' in target for target in seen)
+
+
+def test_a_tie_keeps_the_earlier_platform(charged):
+    tied = {'jobs': NAMESAKE['jobs'] * 3, 'meta': {'total': 3}}
+    routes = ROUTES | {
+        'boards-api.greenhouse.io/v1/boards/warp/jobs?pay_transparency=true': httpx2.Response(200, json=tied),
+    }
+    found = call(build_server(fake_client(routes, [])), 'find_job_board', company='warp')
+    assert found['board'] == 'warp' and found['other_boards'] == {'ashby:warp': 3}
 
 
 def test_search_jobs_filters_charges_each_job_and_returns_a_compact_summary(charged):

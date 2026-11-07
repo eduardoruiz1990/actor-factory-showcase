@@ -4,7 +4,7 @@
     "name": "ats-jobs-mcp-server",
     "title": "Job Search MCP Server: Greenhouse, Lever, Ashby & More",
     "description": "MCP server for AI agents: match a CV or skills to open jobs, check salary ranges, track competitor hiring and find which ATS a company uses, on Greenhouse, Lever, Ashby, Workable and Personio. Works with Claude, Cursor and any MCP client.",
-    "version": "0.3",
+    "version": "0.4",
     "buildTag": "latest",
     "meta": {
         "templateId": "python-start",
