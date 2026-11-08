@@ -46,6 +46,10 @@ PLATFORM_BUDGET_SECONDS = 45 * 60
 EXCLUDED = re.compile(
     r'pharma|health|biotech|therapeutic|medic|clinic|hospital|biolog|bioscience|drug|krankenversicherung', re.I
 )
+# Lever and Ashby boards carry no company name, so a health company under a harmless name gets past EXCLUDED.
+# These boards were found that way; verify never keeps them and the daily build drops them from a kept boards.json.
+# lever:arcadia is Arcadia.io, a health data company (Medicaid, payor, life sciences), not the energy company listed.
+EXCLUDED_BOARDS = frozenset({'lever:arcadia'})
 
 Client = Callable[[float], PoliteClient]
 
@@ -146,7 +150,7 @@ async def verify(names: list[str], client: Client = default_client) -> dict[str,
         found += 1
         best = max(live, key=lambda key: len(results[key] or []))
         company = (results[best] or [{}])[0].get('company')
-        if not excluded(name, company):
+        if not excluded(name, company) and best not in EXCLUDED_BOARDS:
             boards[best] = company
     unread = sum(1 for jobs in results.values() if jobs is None)
     print(f'{found} of {len(names)} names have open jobs; {len(boards)} boards kept; '
@@ -157,6 +161,7 @@ async def verify(names: list[str], client: Client = default_client) -> dict[str,
 async def build_index(boards: dict[str, str | None], previous: dict[str, Any], now: datetime,
                       client: Client = default_client) -> dict[str, Any]:
     """{'built_at', 'boards': {key: {'company', 'jobs': [[title, location], ...]}}}; unread boards stay as they were."""
+    boards = {key: company for key, company in boards.items() if key not in EXCLUDED_BOARDS}
     results = await scan(list(boards), client)
     index: dict[str, Any] = {}
     unread = 0

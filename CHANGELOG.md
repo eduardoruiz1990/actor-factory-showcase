@@ -1,5 +1,12 @@
 # Changelog
 
+## 🚫 Job directory: a health company under an energy name (2026-11-08, branch `directory-health-namesake`)
+
+- **What happened:** the first run of the "Remote product manager jobs" task returned 196 jobs from 50 companies, about $0.19 at $0.99 per 1,000. One of them came from `lever:arcadia`, which is Arcadia.io, a health data company. The list meant the energy company Arcadia. The word check couldn't catch it, because Lever and Ashby boards have no company name.
+- **Fix:** `EXCLUDED_BOARDS` in `tools/build_directory.py` names such boards. Verify never keeps them, and the daily build drops them from the stored `boards.json`, so the next nightly run removes Arcadia without a 45-minute verify.
+- **Checked:** the whole index was scanned for health words. No other board is a health company (Q29).
+- **Tests:** 2 new jobs Actor tests. Both fail without the fix.
+
 ## 🧹 Retry waits, server version, and a pause on building (2026-11-07, branch `retry-after-and-notes`)
 
 - **Retry waits:** both HTTP clients capped a site's `Retry-After` at 60 seconds, so a site that asked for a longer wait got a retry too soon. A client now returns the response without retrying in that case. An MCP tool call also no longer waits out those retries.

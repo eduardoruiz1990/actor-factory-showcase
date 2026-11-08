@@ -59,6 +59,20 @@ def test_verify_leaves_out_pharma_and_health_companies_even_under_a_harmless_nam
     assert asyncio.run(bd.verify(['acme', 'fine'], client(routes))) == {'boards': {'fine': 'Fine Inc'}}
 
 
+def test_verify_leaves_out_an_excluded_board_that_has_no_company_name():
+    lever = {'text': 'Technical Product Manager, Life Sciences', 'categories': {'location': 'Remote'},
+             'hostedUrl': 'https://jobs.lever.co/arcadia/1', 'id': '1', 'createdAt': 1760000000000}
+    routes = {'api.lever.co/v0/postings/arcadia': httpx2.Response(200, json=[lever])}
+    assert asyncio.run(bd.verify(['arcadia'], client(routes))) == {'boards': {}}
+
+
+def test_the_index_drops_an_excluded_board_kept_from_an_earlier_verify():
+    routes = {'boards-api.greenhouse.io/v1/boards/acme/jobs': greenhouse('Engineer')}
+    last = {'lever:arcadia': {'company': None, 'jobs': [['Technical Product Manager, Life Sciences', 'Remote']]}}
+    index = asyncio.run(bd.build_index({'acme': 'Acme', 'lever:arcadia': None}, last, NOW, client(routes)))
+    assert list(index['boards']) == ['acme']
+
+
 def test_the_index_keeps_titles_and_locations_only():
     routes = {'boards-api.greenhouse.io/v1/boards/acme/jobs': greenhouse('Engineer', 'Designer')}
     index = asyncio.run(bd.build_index({'acme': 'Acme'}, {}, NOW, client(routes)))
