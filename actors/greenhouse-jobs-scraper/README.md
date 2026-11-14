@@ -1,6 +1,6 @@
-# Career Site Jobs Scraper: every open job straight from company career sites, with salary ranges
+# Greenhouse, Lever, Ashby & Workable Jobs Scraper: every open job straight from company career sites, with salary ranges
 
-Get every open job straight from company career sites: the Career Site Jobs Scraper reads any company that hires
+Get every open job straight from company career sites: this jobs scraper reads any company that hires
 through **Greenhouse**, **Lever**, **Ashby**, **Workable** or **Personio**, five of the most widely used applicant
 tracking systems (ATS): US and European tech companies, scale-ups
 and thousands of small and mid-sized businesses. You get the job title, company, location, department, office, job
@@ -37,7 +37,7 @@ pay only for jobs that are new since the last run.
 
 ## Supported job boards
 
-The Career Site Jobs Scraper reads five applicant tracking systems. Mix them freely in one run.
+This scraper reads five applicant tracking systems. Mix them freely in one run.
 
 | Platform | Enter | Salary ranges | Company name |
 |---|---|---|---|

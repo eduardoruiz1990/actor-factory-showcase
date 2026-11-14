@@ -1,5 +1,16 @@
 # Changelog
 
+## 🏷️ Jobs Actor retitled around platform names (2026-11-14, branch `ccr-5f92142f-5egvif`)
+
+- **Why (SEO review 2026-11-14):** two weeks after the "Career Site" listing (2026-10-31) the jobs Actor still had no confirmed outside user; its 20 runs by others in 30 days look like Apify's daily test. In Store search it ranks #34 for "career site jobs", #142 for "greenhouse", #372 for "greenhouse jobs" and outside the top 1,000 for "lever jobs", "ashby jobs" and "ats jobs". The Actors that do get users in this niche lead with the platform names: `bovi` (80 monthly users), `yugenox` (148) and `factpipe` (156).
+- **Change:**
+  - Title: "Greenhouse, Lever, Ashby & Workable Jobs Scraper".
+  - SEO title: "Greenhouse, Lever & Ashby Jobs API: ATS career site jobs".
+  - The description and SEO description now start with the platform names. "Career site" stays in both and in the README.
+  - README heading updated to match.
+- **Not changed:** the price ($0.99 per 1,000 is already among the lowest in the niche), the URL name and the code. The MCP server's README still links to the jobs Actor as "Career Site Jobs Scraper"; it can be updated with the MCP server's next change.
+- **Measure:** `docs/seo/greenhouse-jobs-scraper.md` holds today's ranks as a baseline. Review on 2026-12-01.
+
 ## 🚫 Job directory: a health company under an energy name (2026-11-08, branch `directory-health-namesake`)
 
 - **What happened:** the first run of the "Remote product manager jobs" task returned 196 jobs from 50 companies, about $0.19 at $0.99 per 1,000. One of them came from `lever:arcadia`, which is Arcadia.io, a health data company. The list meant the energy company Arcadia. The word check couldn't catch it, because Lever and Ashby boards have no company name.
