@@ -41,6 +41,6 @@ shown). Google: search each "Target phrases" entry and note whether the Actor's 
 | Date | Total users | Monthly active users | Success rate | Store search "job search mcp" | Notes |
 |---|---|---|---|---|---|
 | 2026-10-31 | 1 | 0 | 0.0% (no user runs yet) | not checked | Baseline, before this listing. The only run, the owner's, succeeded; Apify's daily test skips Standby Actors, so the Store rate and the quality score's health warning had no runs to measure. Quality score 68; the jobs Actor had 82, 2 users, 1 monthly. |
-| 2026-11-14 | | | | | Two weeks after the listing change |
+| 2026-11-14 | 1 | 0 | no user runs | #2 of 374 ("jobs mcp": #10 of 560) | Two weeks after the listing change. Still only the owner's 7 runs (3 Standby), all succeeded; no reviews or bookmarks. The query is thin: the #1 result has 1 monthly user. Google and the quality score not checked (not readable from the API). |
 | 2026-12-01 | | | | | |
 | 2027-01-03 | | | | | January checkpoint |
